@@ -1651,7 +1651,6 @@ const EMPTY_INITIAL_STATE = {
     months: {
         "Październik 2026": {
             matches: [
-                { cost: 240, date: "2026-10-01", isCancelled: false, mvpClosed: false },
                 { cost: 240, date: "2026-10-05", isCancelled: false, mvpClosed: false },
                 { cost: 240, date: "2026-10-08", isCancelled: false, mvpClosed: false },
                 { cost: 240, date: "2026-10-12", isCancelled: false, mvpClosed: false },
@@ -1686,8 +1685,22 @@ const EMPTY_INITIAL_STATE = {
     }
 };
 
+function getLoggedPlayer() {
+    return (typeof loggedPlayer !== 'undefined' && loggedPlayer) ? loggedPlayer : '';
+}
+
 function getOrganizerName() {
     return (AppState && AppState.organizerName) ? AppState.organizerName : "Organizator";
+}
+
+function isOrganizerPlayer(name) {
+    if (!name) return false;
+    const org = getOrganizerName();
+    const clean = String(name).trim().toLowerCase();
+    if (org && clean === org.trim().toLowerCase()) return true;
+    if (clean === "arcadio morales" || clean === "arkadiusz kurdziałek") return true;
+    if (typeof loggedPlayer !== 'undefined' && loggedPlayer && name === loggedPlayer && typeof isAdmin !== 'undefined' && isAdmin) return true;
+    return false;
 }
 
 function getAdminPinHash() {
@@ -2362,24 +2375,133 @@ function initFirebaseSync() {
             }
         }
 
-        function getGlobalUpcomingMatchDate() {
-            const todayStr = getLocalDateKey();
-            let earliestDate = null;
-            Object.keys(AppState.months || {}).forEach(mName => {
+        function getNearestUpcomingMatchInfo() {
+            const now = new Date();
+            const warmupStr = (AppState.settings && AppState.settings.warmupTime) ? AppState.settings.warmupTime : "19:45";
+            const [wHour, wMin] = warmupStr.split(':').map(val => parseInt(val, 10) || 0);
+
+            const endStr = (AppState.settings && AppState.settings.gameEndTime) ? AppState.settings.gameEndTime : "21:45";
+            const [eHour, eMin] = endStr.split(':').map(val => parseInt(val, 10) || 0);
+
+            let nearestMatch = null;
+            let nearestStartTime = null;
+            let nearestEndTime = null;
+            let nearestMonthName = null;
+            let nearestMatchIndex = -1;
+
+            // 1. Search in existing months & matches in database
+            const monthNames = Object.keys(AppState.months || {});
+            for (const mName of monthNames) {
                 const matches = AppState.months[mName]?.matches || [];
-                matches.forEach(m => {
-                    if (m.date >= todayStr && !m.isCancelled) {
-                        if (!earliestDate || m.date < earliestDate) {
-                            earliestDate = m.date;
+                for (let idx = 0; idx < matches.length; idx++) {
+                    const m = matches[idx];
+                    if (!m || !m.date || m.isCancelled) continue;
+
+                    const parts = m.date.split('-').map(Number);
+                    if (parts.length !== 3 || parts.some(isNaN)) continue;
+
+                    const [year, month, day] = parts;
+                    const startTime = new Date(year, month - 1, day, wHour, wMin, 0);
+                    const endTime = new Date(year, month - 1, day, eHour, eMin, 0);
+
+                    // If match is ongoing or in the future
+                    if (endTime >= now) {
+                        if (!nearestStartTime || startTime < nearestStartTime) {
+                            nearestStartTime = startTime;
+                            nearestEndTime = endTime;
+                            nearestMatch = m;
+                            nearestMonthName = mName;
+                            nearestMatchIndex = idx;
                         }
                     }
-                });
-            });
-            return earliestDate;
+                }
+            }
+
+            if (nearestMatch) {
+                return {
+                    date: nearestMatch.date,
+                    startTime: nearestStartTime,
+                    endTime: nearestEndTime,
+                    match: nearestMatch,
+                    monthName: nearestMonthName,
+                    matchIndex: nearestMatchIndex,
+                    isLive: (now >= nearestStartTime && now <= nearestEndTime),
+                    isVirtual: false
+                };
+            }
+
+            // 2. Fallback: Virtual nearest upcoming match based on playingDays (default Mon [1] & Thu [4])
+            const playingDays = (AppState.settings?.playingDays && Array.isArray(AppState.settings.playingDays) && AppState.settings.playingDays.length > 0)
+                ? AppState.settings.playingDays
+                : [1, 4];
+
+            const checkDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            for (let offset = 0; offset <= 7; offset++) {
+                const d = new Date(checkDate.getTime() + offset * 86400000);
+                const dayOfWeek = d.getDay();
+                if (playingDays.includes(dayOfWeek)) {
+                    const startTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), wHour, wMin, 0);
+                    const endTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), eHour, eMin, 0);
+                    if (endTime >= now) {
+                        const y = d.getFullYear();
+                        const m = String(d.getMonth() + 1).padStart(2, '0');
+                        const dayStr = String(d.getDate()).padStart(2, '0');
+                        const dateStr = `${y}-${m}-${dayStr}`;
+                        return {
+                            date: dateStr,
+                            startTime: startTime,
+                            endTime: endTime,
+                            match: null,
+                            monthName: null,
+                            matchIndex: -1,
+                            isLive: (now >= startTime && now <= endTime),
+                            isVirtual: true
+                        };
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        function getGlobalUpcomingMatchDate() {
+            const nearest = getNearestUpcomingMatchInfo();
+            return nearest ? nearest.date : null;
+        }
+
+        function isMatchOpenForSignup(match) {
+            if (!match || !match.date) return false;
+            if (match.isCancelled) return false;
+
+            const nearest = getNearestUpcomingMatchInfo();
+            if (!nearest || !nearest.date) {
+                const todayStr = getLocalDateKey();
+                return match.date >= todayStr;
+            }
+
+            return match.date === nearest.date;
+        }
+
+        function isMatchLockedAdvance(match) {
+            if (!match || !match.date) return false;
+            if (match.isCancelled) return false;
+
+            const nearest = getNearestUpcomingMatchInfo();
+            if (!nearest || !nearest.date) return false;
+
+            return match.date > nearest.date;
         }
 
         function autoSelectUpcomingMatchOnLoad() {
             if (hasInitiallySelectedMonth) return;
+            const nearest = getNearestUpcomingMatchInfo();
+            if (nearest && nearest.monthName && nearest.matchIndex !== -1) {
+                AppState.currentMonth = nearest.monthName;
+                AppState.currentMatchIndex = nearest.matchIndex;
+                hasInitiallySelectedMonth = true;
+                return;
+            }
+
             const globalUpcomingDate = getGlobalUpcomingMatchDate();
             const sortedMonths = getSortedMonths();
             
@@ -2514,6 +2636,14 @@ function initFirebaseSync() {
                 AppState.player_positions = {};
             }
 
+            // Clean up obsolete 2026-10-01 if it was previously inserted (app launches 2026-10-05)
+            if (AppState.months && AppState.months["Październik 2026"]) {
+                const octMatches = AppState.months["Październik 2026"].matches;
+                if (Array.isArray(octMatches) && octMatches.some(m => m.date === "2026-10-01")) {
+                    AppState.months["Październik 2026"].matches = octMatches.filter(m => m.date !== "2026-10-01");
+                }
+            }
+
             const sortedMonths = getSortedMonths();
             if (sortedMonths.length > 0) {
                 if (!AppState.currentMonth || !AppState.months[AppState.currentMonth]) {
@@ -2586,56 +2716,58 @@ function initFirebaseSync() {
         function updateCountdownDisplay() {
             const labelEl = document.getElementById('countdownLabel');
             const valueEl = document.getElementById('countdownValue');
-            const monthData = AppState.months[AppState.currentMonth];
-            const currentMatch = monthData?.matches[AppState.currentMatchIndex];
+            if (!labelEl || !valueEl) return;
 
-            if (!labelEl || !valueEl || !currentMatch) return;
-
-            if (currentMatch.isCancelled) {
-                labelEl.innerText = "Status:";
-                valueEl.innerText = "🚫 MECZ ODWOŁANY";
-                valueEl.className = "text-xs sm:text-sm font-black font-mono text-rose-400 tracking-wider";
+            const nearest = getNearestUpcomingMatchInfo();
+            if (!nearest || !nearest.startTime) {
+                labelEl.innerText = "Do meczu:";
+                valueEl.innerText = "--:--:--";
+                valueEl.className = "text-xs sm:text-sm font-black font-mono text-slate-400 tracking-wider";
                 valueEl.onclick = null;
                 return;
             }
 
-            const parts = (currentMatch.date || '').split('-').map(Number);
-            if (parts.length !== 3 || parts.some(isNaN)) return;
-
-            const [year, month, day] = parts;
-            const warmupStr = (AppState.settings && AppState.settings.warmupTime) ? AppState.settings.warmupTime : "18:45";
-            const wParts = warmupStr.split(':').map(Number);
-            const matchStartTime = new Date(year, month - 1, day, wParts[0] || 18, wParts[1] || 45, 0);
-
-            const endStr = (AppState.settings && AppState.settings.gameEndTime) ? AppState.settings.gameEndTime : "21:00";
-            const eParts = endStr.split(':').map(Number);
-            const matchEndTime = new Date(year, month - 1, day, eParts[0] || 21, eParts[1] || 0, 0);
             const now = new Date();
+            const warmupStr = (AppState.settings && AppState.settings.warmupTime) ? AppState.settings.warmupTime : "19:45";
+            const endStr = (AppState.settings && AppState.settings.gameEndTime) ? AppState.settings.gameEndTime : "21:45";
 
-            if (now < matchStartTime) {
-                const diffMs = matchStartTime - now;
+            const dayNames = ['Nd', 'Pon.', 'Wt.', 'Śr.', 'Czw.', 'Pt.', 'Sob.'];
+            const targetDay = nearest.startTime.getDay();
+            const dayName = dayNames[targetDay] || '';
+            const dayNum = String(nearest.startTime.getDate()).padStart(2, '0');
+            const monthNum = String(nearest.startTime.getMonth() + 1).padStart(2, '0');
+            const dateFmt = `${dayNum}.${monthNum}`;
+
+            if (nearest.isLive) {
+                labelEl.innerText = `Status (${dayName} ${dateFmt}):`;
+                valueEl.innerHTML = `🔥 ROZGRZEWKA / MECZ! (${warmupStr} - ${endStr})`;
+                valueEl.className = "text-xs sm:text-sm font-black font-mono text-amber-400 animate-pulse tracking-wider";
+            } else {
+                const diffMs = Math.max(0, nearest.startTime - now);
                 const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
 
-                labelEl.innerText = "Do meczu:";
+                labelEl.innerText = `Do meczu (${dayName} ${dateFmt}):`;
                 valueEl.innerText = `${days > 0 ? days + 'd ' : ''}${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
                 valueEl.className = "text-xs sm:text-sm font-black font-mono text-emerald-400 tracking-wider";
-                valueEl.onclick = null;
-            } else if (now >= matchStartTime && now <= matchEndTime) {
-                labelEl.innerText = "Status:";
-                valueEl.innerHTML = "ROZGRZEWKA / MECZ! (" + warmupStr + " - " + endStr + ")";
-                valueEl.className = "text-xs sm:text-sm font-black font-mono text-amber-400 animate-pulse tracking-wider";
-                valueEl.onclick = null;
-            } else {
-                const isFinished = isMvpVotingFinished(currentMatch);
-                labelEl.innerText = "Mecz zakończony:";
-                valueEl.innerText = isFinished ? "🏆 WYNIKI MVP ODKRYTE" : "🔒 TAJNE GŁOSOWANIE MVP";
-                valueEl.className = "text-xs sm:text-sm font-black font-mono text-amber-400 tracking-wider cursor-pointer";
+            }
+
+            if (nearest.match && nearest.monthName && nearest.matchIndex !== -1) {
+                valueEl.title = `Kliknij, aby przejść do najbliższego meczu (${nearest.date})`;
+                valueEl.style.cursor = 'pointer';
                 valueEl.onclick = () => {
-                    document.getElementById('integratedMvpCard')?.scrollIntoView({ behavior: 'smooth' });
+                    if (AppState.currentMonth !== nearest.monthName || AppState.currentMatchIndex !== nearest.matchIndex) {
+                        AppState.currentMonth = nearest.monthName;
+                        AppState.currentMatchIndex = nearest.matchIndex;
+                        renderCurrentView();
+                    }
                 };
+            } else {
+                valueEl.title = "";
+                valueEl.style.cursor = 'default';
+                valueEl.onclick = null;
             }
         }
 
@@ -2943,23 +3075,28 @@ function initFirebaseSync() {
                     const mainCount = Math.min(14, attendeesCount);
                     const isFull = attendeesCount >= 14;
                     const isPast = (m.date || '') < todayStr;
+                    const isAdvanceLocked = isMatchLockedAdvance(m);
                     const dayDisplay = (getShortDayName(m.date) ? getShortDayName(m.date) + ' ' : '') + (m.date || '').slice(5);
 
                     return `
-                        <button type="button" id="match-date-btn-${idx}" onclick="selectMatch(${idx})" class="px-3 py-2 rounded-2xl border text-xs font-extrabold transition shrink-0 flex items-center gap-2 active:scale-95 shadow-sm ${
+                        <button type="button" id="match-date-btn-${idx}" onclick="selectMatch(${idx})" title="${isAdvanceLocked ? 'Zapisy zablokowane do zakończenia najbliższego meczu 🔒' : (isPast ? 'Mecz archiwalny' : 'Termin meczu')}" class="px-3 py-2 rounded-2xl border text-xs font-extrabold transition shrink-0 flex items-center gap-2 active:scale-95 shadow-sm ${
                             isSelected 
                                 ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 border-emerald-400 shadow-md shadow-emerald-500/20 ring-2 ring-emerald-400/40' 
                                 : isPast
                                     ? 'bg-slate-950 text-slate-500 border-slate-800/80 hover:border-slate-700'
-                                    : 'bg-slate-950 text-slate-200 border-slate-800 hover:border-slate-700'
+                                    : isAdvanceLocked
+                                        ? 'bg-slate-950 text-slate-300 border-slate-800/80 hover:border-slate-700'
+                                        : 'bg-slate-950 text-slate-200 border-slate-800 hover:border-slate-700'
                         }">
-                            <span>${isPast ? '&#9203;' : '&#128197;'} ${dayDisplay}</span>
+                            <span>${isPast ? '⏳' : (isAdvanceLocked ? '🔒' : '📅')} ${dayDisplay}</span>
                             <span class="text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
                                 isSelected 
                                     ? 'bg-slate-950/20 text-slate-950 font-black' 
                                     : isFull 
                                         ? 'bg-emerald-950 text-emerald-400 border border-emerald-800/60' 
-                                        : 'bg-slate-900 text-slate-400 border border-slate-800'
+                                        : isAdvanceLocked
+                                            ? 'bg-slate-900 text-amber-300 border border-amber-800/40'
+                                            : 'bg-slate-900 text-slate-400 border border-slate-800'
                             }">${mainCount}/14</span>
                         </button>
                     `;
@@ -3058,19 +3195,37 @@ function initFirebaseSync() {
 
             // Render Fast Join UI for Logged-In User or Guest
             if (fastJoinSection) {
-                if (loggedPlayer) {
-                    const isUserSigned = attendees.includes(loggedPlayer);
-                    const isInMain = mainPlayers.includes(loggedPlayer);
-                    const isReserve = isUserSigned && !isInMain;
+                const isAdvanceLocked = isMatchLockedAdvance(currentMatch);
+                const isPast = (currentMatch.date || '') < todayStr;
+                const nearest = getNearestUpcomingMatchInfo();
+                const nearestDateStr = nearest ? nearest.date : '';
+                const nearestDayDisplay = nearestDateStr ? `${getShortDayName(nearestDateStr)} ${nearestDateStr}` : 'najbliższej';
+
+                if (isCancelled) {
+                    fastJoinSection.innerHTML = `
+                        <div class="bg-rose-950/30 border border-rose-800/60 rounded-2xl p-3.5 text-center text-xs text-rose-300 font-medium">
+                            Ten mecz został odwołany przez organizatora.
+                        </div>
+                    `;
+                } else if (isPast) {
+                    fastJoinSection.innerHTML = `
+                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3 text-center text-xs text-slate-400">
+                            Ten mecz już się odbył (termin archiwalny).
+                        </div>
+                    `;
+                } else if (isAdvanceLocked && !isAdmin) {
+                    // Regular player or guest looking at a future match where signups are locked in advance:
+                    const isUserSigned = loggedPlayer && attendees.includes(loggedPlayer);
+                    const isInMain = isUserSigned && mainPlayers.includes(loggedPlayer);
 
                     fastJoinSection.innerHTML = `
                         <div class="space-y-2">
                             ${isUserSigned ? `
-                                <div class="bg-slate-950 border border-emerald-800/80 rounded-2xl p-3 flex items-center justify-between gap-2">
+                                <div class="bg-slate-950 border border-amber-800/80 rounded-2xl p-3 flex items-center justify-between gap-2">
                                     <div class="flex items-center gap-2.5 min-w-0">
                                         ${getPlayerAvatarHtml(loggedPlayer, 'sm')}
                                         <div class="min-w-0">
-                                            <p class="text-xs font-extrabold text-white truncate">Jesteś zapisany(a) na ten mecz!</p>
+                                            <p class="text-xs font-extrabold text-white truncate">Jesteś na liście tego meczu</p>
                                             <p class="text-[11px] ${isInMain ? 'text-emerald-400' : 'text-amber-400'} font-semibold">
                                                 ${isInMain ? '🟢 Skład Główny (14)' : '⏳ Lista Rezerwowa'}
                                             </p>
@@ -3080,54 +3235,113 @@ function initFirebaseSync() {
                                         Wypisz mnie ✕
                                     </button>
                                 </div>
-                            ` : `
-                                <button type="button" onclick="addSpecificPlayerToMatch(${toInlineArgument(loggedPlayer)})" class="w-full bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-slate-950 font-black px-4 py-3.5 rounded-2xl text-sm transition shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2.5">
-                                    ${getPlayerAvatarHtml(loggedPlayer, 'xs', 'ring-2 ring-slate-950')}
-                                    <span>ZAPISZ MNIE NA MECZ (${escapeHtml(loggedPlayer)})</span>
-                                </button>
-                            `}
+                            ` : ''}
 
-                            <button type="button" onclick="openGuestSignupModal()" class="w-full bg-slate-950 hover:bg-slate-850 border border-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-2xl text-xs transition flex items-center justify-center gap-2">
-                                <span>👥</span>
-                                <span>+ Dopisz znajomego / gościa do składu</span>
-                            </button>
+                            <div class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border border-amber-500/30 rounded-2xl p-4 text-center space-y-2 shadow-inner">
+                                <div class="w-10 h-10 mx-auto rounded-full bg-amber-950/60 border border-amber-700/60 flex items-center justify-center text-lg text-amber-300 shadow-sm">
+                                    🔒
+                                </div>
+                                <div class="space-y-1">
+                                    <h4 class="text-xs font-black uppercase tracking-wider text-amber-300">Zapisy zablokowane z wyprzedzeniem</h4>
+                                    <p class="text-[11px] text-slate-300 max-w-md mx-auto leading-relaxed">
+                                        Zapisy na ten mecz otworzą się automatycznie po zakończeniu najbliższego meczu (<strong class="text-emerald-400">${escapeHtml(nearestDayDisplay)}</strong>).
+                                    </p>
+                                </div>
+                                <div class="pt-1">
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950 border border-slate-800 text-[10px] text-slate-400 font-medium">
+                                        <span>🛡️</span> Zasada ekipy: gramy mecz po meczu, bez blokowania miejsc
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     `;
                 } else {
-                    // Not logged in -> Quick selector + link to profile login
-                    const sortedPlayers = [...AppState.all_players].sort((a, b) => a.localeCompare(b, 'pl'));
-                    fastJoinSection.innerHTML = `
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between">
-                                <label for="matchPlayerSelect" class="block text-xs font-extrabold text-slate-300 uppercase tracking-wider">
-                                    Wybierz gracza z listy:
-                                </label>
-                                <button type="button" onclick="switchTab('profile')" class="text-xs text-emerald-400 font-bold hover:underline">
-                                    🔑 Zaloguj się PIN-em
-                                </button>
+                    let adminLockNotice = '';
+                    if (isAdvanceLocked && isAdmin) {
+                        adminLockNotice = `
+                            <div class="bg-amber-950/40 border border-amber-600/50 rounded-2xl p-2.5 flex items-center justify-between gap-2 text-xs">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-amber-400 text-sm">🔒</span>
+                                    <span class="text-amber-200 text-[11px]">Dla graczy zapisy są zablokowane do końca najbliższego meczu (${escapeHtml(nearestDayDisplay)}). Jako Organizator masz uprawnienia do dopisywania.</span>
+                                </div>
+                                <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800 shrink-0">Admin</span>
                             </div>
-                            
-                            <div class="relative">
-                                <select id="matchPlayerSelect" aria-label="Wybierz zawodnika z listy" class="w-full bg-slate-950 border-2 border-slate-700 focus:border-emerald-400 rounded-2xl px-4 py-3 text-xs sm:text-sm font-bold text-white focus:outline-none transition cursor-pointer appearance-none">
-                                    <option value="">-- Wybierz swoje imię --</option>
-                                    ${sortedPlayers.map(p => {
-                                        const isAlreadySigned = attendees.includes(p);
-                                        return `<option value="${escapeHtml(p)}" ${isAlreadySigned ? 'disabled class="text-slate-600 bg-slate-900"' : 'class="text-white bg-slate-950 font-semibold"'}>${escapeHtml(p)}${isAlreadySigned ? ' (zapisany/a)' : ''}</option>`;
-                                    }).join('')}
-                                </select>
-                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-emerald-400 font-bold">▼</div>
-                            </div>
+                        `;
+                    }
 
-                            <div class="grid grid-cols-2 gap-2 pt-1">
-                                <button type="button" onclick="addPlayerToCurrentMatchFromSelect()" class="bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-slate-950 font-black py-3 rounded-2xl text-xs transition shadow-md shadow-emerald-500/20">
-                                    Zapisz wybranego 🏐
-                                </button>
-                                <button type="button" onclick="openGuestSignupModal()" class="bg-slate-950 hover:bg-slate-850 border border-slate-800 text-slate-300 font-bold py-3 rounded-2xl text-xs transition">
-                                    + Nowy gość 👥
+                    if (loggedPlayer) {
+                        const isUserSigned = attendees.includes(loggedPlayer);
+                        const isInMain = mainPlayers.includes(loggedPlayer);
+                        const isReserve = isUserSigned && !isInMain;
+
+                        fastJoinSection.innerHTML = `
+                            <div class="space-y-2">
+                                ${adminLockNotice}
+                                ${isUserSigned ? `
+                                    <div class="bg-slate-950 border border-emerald-800/80 rounded-2xl p-3 flex items-center justify-between gap-2">
+                                        <div class="flex items-center gap-2.5 min-w-0">
+                                            ${getPlayerAvatarHtml(loggedPlayer, 'sm')}
+                                            <div class="min-w-0">
+                                                <p class="text-xs font-extrabold text-white truncate">Jesteś zapisany(a) na ten mecz!</p>
+                                                <p class="text-[11px] ${isInMain ? 'text-emerald-400' : 'text-amber-400'} font-semibold">
+                                                    ${isInMain ? '🟢 Skład Główny (14)' : '⏳ Lista Rezerwowa'}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <button type="button" onclick="removePlayerFromCurrentMatch(${toInlineArgument(loggedPlayer)})" class="text-xs font-bold text-rose-400 hover:text-rose-300 bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-xl transition shrink-0">
+                                            Wypisz mnie ✕
+                                        </button>
+                                    </div>
+                                ` : `
+                                    <button type="button" onclick="addSpecificPlayerToMatch(${toInlineArgument(loggedPlayer)})" class="w-full bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-slate-950 font-black px-4 py-3.5 rounded-2xl text-sm transition shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2.5">
+                                        ${getPlayerAvatarHtml(loggedPlayer, 'xs', 'ring-2 ring-slate-950')}
+                                        <span>ZAPISZ MNIE NA MECZ (${escapeHtml(loggedPlayer)})</span>
+                                    </button>
+                                `}
+
+                                <button type="button" onclick="openGuestSignupModal()" class="w-full bg-slate-950 hover:bg-slate-850 border border-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-2xl text-xs transition flex items-center justify-center gap-2">
+                                    <span>👥</span>
+                                    <span>+ Dopisz znajomego / gościa do składu</span>
                                 </button>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else {
+                        // Not logged in -> Quick selector + link to profile login
+                        const sortedPlayers = [...AppState.all_players].sort((a, b) => a.localeCompare(b, 'pl'));
+                        fastJoinSection.innerHTML = `
+                            <div class="space-y-2">
+                                ${adminLockNotice}
+                                <div class="flex items-center justify-between">
+                                    <label for="matchPlayerSelect" class="block text-xs font-extrabold text-slate-300 uppercase tracking-wider">
+                                        Wybierz gracza z listy:
+                                    </label>
+                                    <button type="button" onclick="switchTab('profile')" class="text-xs text-emerald-400 font-bold hover:underline">
+                                        🔑 Zaloguj się PIN-em
+                                    </button>
+                                </div>
+                                
+                                <div class="relative">
+                                    <select id="matchPlayerSelect" aria-label="Wybierz zawodnika z listy" class="w-full bg-slate-950 border-2 border-slate-700 focus:border-emerald-400 rounded-2xl px-4 py-3 text-xs sm:text-sm font-bold text-white focus:outline-none transition cursor-pointer appearance-none">
+                                        <option value="">-- Wybierz swoje imię --</option>
+                                        ${sortedPlayers.map(p => {
+                                            const isAlreadySigned = attendees.includes(p);
+                                            return `<option value="${escapeHtml(p)}" ${isAlreadySigned ? 'disabled class="text-slate-600 bg-slate-900"' : 'class="text-white bg-slate-950 font-semibold"'}>${escapeHtml(p)}${isAlreadySigned ? ' (zapisany/a)' : ''}</option>`;
+                                        }).join('')}
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-emerald-400 font-bold">▼</div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2 pt-1">
+                                    <button type="button" onclick="addPlayerToCurrentMatchFromSelect()" class="bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-slate-950 font-black py-3 rounded-2xl text-xs transition shadow-md shadow-emerald-500/20">
+                                        Zapisz wybranego 🏐
+                                    </button>
+                                    <button type="button" onclick="openGuestSignupModal()" class="bg-slate-950 hover:bg-slate-850 border border-slate-800 text-slate-300 font-bold py-3 rounded-2xl text-xs transition">
+                                        + Nowy gość 👥
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             }
 
@@ -3269,6 +3483,13 @@ function initFirebaseSync() {
                 const currentMatch = monthData?.matches[AppState.currentMatchIndex];
                 if (!currentMatch) return;
 
+                if (!isAdmin && isMatchLockedAdvance(currentMatch)) {
+                    const nearest = getNearestUpcomingMatchInfo();
+                    const nearestDate = nearest ? `${getShortDayName(nearest.date)} ${nearest.date}` : 'najbliższej';
+                    alert(`Zapisy na ten mecz są zablokowane z wyprzedzeniem!\n\nZapisy odblokują się po zakończeniu najbliższego meczu (${nearestDate}). 🔒`);
+                    return;
+                }
+
                 if (!currentMatch.attendees) currentMatch.attendees = [];
                 if (currentMatch.attendees.includes(name)) {
                     alert(`${name} jest już zapisany na ten mecz!`);
@@ -3300,14 +3521,23 @@ function initFirebaseSync() {
         }
 
         function openGuestSignupModal() {
+            const monthData = AppState.months[AppState.currentMonth];
+            const currentMatch = monthData?.matches[AppState.currentMatchIndex];
+            if (!currentMatch) return;
+
+            if (!isAdmin && isMatchLockedAdvance(currentMatch)) {
+                const nearest = getNearestUpcomingMatchInfo();
+                const nearestDate = nearest ? `${getShortDayName(nearest.date)} ${nearest.date}` : 'najbliższej';
+                alert(`Zapisy na ten mecz są zablokowane z wyprzedzeniem!\n\nZapisy odblokują się po zakończeniu najbliższego meczu (${nearestDate}). 🔒`);
+                return;
+            }
+
             const select = document.getElementById('guestSelectFromDir');
             const input = document.getElementById('guestCustomNameInput');
             if (input) input.value = '';
 
             if (select) {
-                const monthData = AppState.months[AppState.currentMonth];
-                const currentMatch = monthData?.matches[AppState.currentMatchIndex];
-                const attendees = currentMatch ? (currentMatch.attendees || []) : [];
+                const attendees = currentMatch.attendees || [];
                 const sortedPlayers = [...AppState.all_players].sort((a, b) => a.localeCompare(b, 'pl'));
 
                 select.innerHTML = `<option value="">-- Wybierz gracza z bazy --</option>` +
@@ -4893,24 +5123,31 @@ function initFirebaseSync() {
                 const paidPlayers = Array.isArray(m.paidPlayers) ? m.paidPlayers : [];
 
                 mainSquad.forEach(p => {
+                    const isOrg = isOrganizerPlayer(p);
                     if (!playersMap[p]) {
-                        playersMap[p] = { games: 0, costDue: 0, paid: 0, paidGames: 0, matches: [] };
+                        playersMap[p] = { games: 0, costDue: 0, paid: 0, paidGames: 0, matches: [], isOrganizer: isOrg };
                     }
                     playersMap[p].games += 1;
-                    playersMap[p].costDue += 20.00;
-                    totalDue += 20.00;
 
-                    const isPaid = paidPlayers.includes(p);
+                    if (!isOrg) {
+                        playersMap[p].costDue += 20.00;
+                        totalDue += 20.00;
+                    }
+
+                    const isPaid = isOrg || paidPlayers.includes(p);
                     if (isPaid) {
                         playersMap[p].paidGames += 1;
-                        playersMap[p].paid += 20.00;
-                        totalPaid += 20.00;
+                        if (!isOrg) {
+                            playersMap[p].paid += 20.00;
+                            totalPaid += 20.00;
+                        }
                     }
 
                     playersMap[p].matches.push({
                         date: m.date,
                         matchIndex: idx,
-                        isPaid: isPaid
+                        isPaid: isPaid,
+                        isOrganizer: isOrg
                     });
                 });
             });
@@ -4982,20 +5219,21 @@ function initFirebaseSync() {
             if (!match) return;
 
             const mainSquad = (match.attendees || []).slice(0, 14);
-            if (!mainSquad.length) {
-                showToast("Brak graczy w składzie tego meczu.");
+            const regularSquad = mainSquad.filter(p => !isOrganizerPlayer(p));
+            if (!regularSquad.length) {
+                showToast("Brak graczy do rozliczenia w składzie tego meczu.");
                 return;
             }
 
             if (!Array.isArray(match.paidPlayers)) match.paidPlayers = [];
-            const allPaid = mainSquad.every(p => match.paidPlayers.includes(p));
+            const allPaid = regularSquad.every(p => match.paidPlayers.includes(p));
 
             if (allPaid) {
                 if (!confirm("Czy na pewno chcesz odznaczyć wszystkich jako nieopłaconych dla tej gierki?")) return;
-                match.paidPlayers = match.paidPlayers.filter(p => !mainSquad.includes(p));
+                match.paidPlayers = match.paidPlayers.filter(p => !regularSquad.includes(p));
                 showToast("Odznaczono graczy z tej gierki.");
             } else {
-                mainSquad.forEach(p => {
+                regularSquad.forEach(p => {
                     if (!match.paidPlayers.includes(p)) match.paidPlayers.push(p);
                 });
                 showToast("Oznaczono wszystkich graczy jako opłaconych (20 zł)! ✅");
@@ -5047,7 +5285,7 @@ function initFirebaseSync() {
 
             const mainSquad = (match.attendees || []).slice(0, 14);
             const paidPlayers = Array.isArray(match.paidPlayers) ? match.paidPlayers : [];
-            const unpaid = mainSquad.filter(p => !paidPlayers.includes(p));
+            const unpaid = mainSquad.filter(p => !paidPlayers.includes(p) && !isOrganizerPlayer(p));
 
             if (unpaid.length === 0) {
                 showToast("Wszyscy gracze z tej gierki już opłacili składkę (20 zł)! 🎉");
@@ -5070,6 +5308,7 @@ function initFirebaseSync() {
             const debtors = [];
 
             Object.entries(billingData.playersMap).forEach(([p, info]) => {
+                if (isOrganizerPlayer(p)) return;
                 const outstanding = Math.max(0, info.costDue - info.paid);
                 if (outstanding > 0.05) {
                     debtors.push({ name: p, due: outstanding, unpaidCount: info.games - (info.paidGames || 0) });
@@ -5117,6 +5356,51 @@ function initFirebaseSync() {
                     <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-3 flex items-center justify-between gap-3 text-xs">
                         <span class="text-slate-300">Zaloguj się swoim profilem, aby widzieć status swoich wpłat i szybki BLIK.</span>
                         <button type="button" onclick="openWelcomeGateModal()" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl shrink-0">Wybierz profil</button>
+                    </div>
+                `;
+                return;
+            }
+
+            if (isOrganizerPlayer(loggedPlayer)) {
+                const phone = (AppState.settings?.blikPhone || "697 013 447");
+                const currentMainSquad = selectedMatch ? (selectedMatch.attendees || []).slice(0, 14) : [];
+                const regularSquad = currentMainSquad.filter(p => !isOrganizerPlayer(p));
+                const paidCount = selectedMatch && Array.isArray(selectedMatch.paidPlayers)
+                    ? regularSquad.filter(p => selectedMatch.paidPlayers.includes(p)).length
+                    : 0;
+
+                container.innerHTML = `
+                    <div class="bg-gradient-to-br from-amber-950/40 via-slate-900 to-emerald-950/30 border border-amber-500/40 rounded-3xl p-4 shadow-xl space-y-3">
+                        <div class="flex items-center justify-between gap-2 flex-wrap">
+                            <div class="flex items-center gap-2 min-w-0">
+                                <span class="text-base shrink-0">👑</span>
+                                <span class="text-xs font-black text-white uppercase tracking-wider truncate">Konto Organizatora (${escapeHtml(loggedPlayer)})</span>
+                            </div>
+                            <span class="bg-amber-950 text-amber-300 border border-amber-800 font-black text-[10px] px-2.5 py-1 rounded-full font-mono">
+                                📲 Zbierasz BLIK: ${escapeHtml(phone)}
+                            </span>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-slate-800/80">
+                            <div class="text-xs space-y-1">
+                                <p class="text-slate-200">
+                                    Jako organizator pobierasz składki <strong>20 zł</strong> za gierkę od każdego gracza. Nie musisz opłacać samemu sobie.
+                                </p>
+                                ${selectedMatch ? `
+                                    <p class="text-[11px] text-slate-400">
+                                        Wybrana gierka (${selectedMatch.date}): 
+                                        ${selectedMatch.isCancelled 
+                                            ? '<strong class="text-rose-400 font-semibold">Odwołana</strong>' 
+                                            : `<strong class="text-emerald-400 font-mono font-bold">${paidCount}/${regularSquad.length}</strong> opłaciło (${paidCount * 20} zł / ${regularSquad.length * 20} zł)`}
+                                    </p>
+                                ` : ''}
+                            </div>
+                            <div class="shrink-0 flex items-center gap-2">
+                                <button type="button" onclick="copyBlikNumber()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-3 py-2 rounded-xl text-xs transition active:scale-95 flex items-center gap-1.5 shadow">
+                                    <span>📱</span> Kopiuj swój BLIK
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 `;
                 return;
@@ -5200,8 +5484,9 @@ function initFirebaseSync() {
             const mainSquad = attendees.slice(0, 14);
             const paidPlayers = Array.isArray(currentMatch.paidPlayers) ? currentMatch.paidPlayers : [];
 
-            const totalAttendees = mainSquad.length;
-            const paidCount = mainSquad.filter(p => paidPlayers.includes(p)).length;
+            const regularSquad = mainSquad.filter(p => !isOrganizerPlayer(p));
+            const totalAttendees = regularSquad.length;
+            const paidCount = regularSquad.filter(p => paidPlayers.includes(p)).length;
             const unpaidCount = Math.max(0, totalAttendees - paidCount);
             const totalMatchCost = isCancelled ? 0 : totalAttendees * 20.00;
             const totalMatchPaid = isCancelled ? 0 : paidCount * 20.00;
@@ -5212,30 +5497,32 @@ function initFirebaseSync() {
             const matchPillsHtml = matches.map((m, idx) => {
                 const isSelected = (idx === selectedIdx);
                 const mAttendees = (m.attendees || []).slice(0, 14);
-                const mPaidCount = (m.paidPlayers || []).filter(p => mAttendees.includes(p)).length;
-                const allPaid = (mAttendees.length > 0 && mPaidCount >= mAttendees.length);
+                const mRegular = mAttendees.filter(p => !isOrganizerPlayer(p));
+                const mPaidCount = (m.paidPlayers || []).filter(p => mRegular.includes(p)).length;
+                const allPaid = (mRegular.length > 0 && mPaidCount >= mRegular.length);
 
                 return `
                     <button type="button" onclick="selectBillingMatch(${idx})" class="px-3 py-2 rounded-2xl text-xs font-bold transition flex items-center gap-1.5 shrink-0 ${isSelected ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20' : 'bg-slate-950 text-slate-300 border border-slate-800 hover:border-slate-700'}">
                         <span>${m.isCancelled ? '❌' : (allPaid ? '✅' : '🏐')}</span>
                         <span>${escapeHtml(m.date)}</span>
-                        <span class="text-[10px] font-mono opacity-80">(${mPaidCount}/${mAttendees.length})</span>
+                        <span class="text-[10px] font-mono opacity-80">(${mPaidCount}/${mRegular.length})</span>
                     </button>
                 `;
             }).join('');
 
             // Roster cards
             let rosterHtml = '';
-            if (totalAttendees === 0) {
+            if (mainSquad.length === 0) {
                 rosterHtml = `<div class="p-6 text-center text-xs text-slate-500">Brak zapisanych graczy w składzie głównym na ten mecz.</div>`;
             } else {
                 rosterHtml = mainSquad.map((p, i) => {
-                    const isPaid = paidPlayers.includes(p);
+                    const isOrg = isOrganizerPlayer(p);
+                    const isPaid = isOrg || paidPlayers.includes(p);
                     const isMe = (p === loggedPlayer);
                     const posBadges = getPlayerPositionsBadgesHtml(p);
 
                     return `
-                        <div class="bg-slate-950 border ${isPaid ? 'border-emerald-500/40 bg-emerald-950/10' : 'border-slate-800/90'} rounded-2xl p-3 flex items-center justify-between gap-3 shadow-sm transition hover:border-slate-700">
+                        <div class="bg-slate-950 border ${isOrg ? 'border-amber-500/40 bg-amber-950/10' : (isPaid ? 'border-emerald-500/40 bg-emerald-950/10' : 'border-slate-800/90')} rounded-2xl p-3 flex items-center justify-between gap-3 shadow-sm transition hover:border-slate-700">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
                                 <span class="font-mono text-xs font-bold text-slate-500 w-4 shrink-0 text-right">${i + 1}.</span>
                                 ${getPlayerAvatarHtml(p, 'sm')}
@@ -5245,13 +5532,20 @@ function initFirebaseSync() {
                                         ${isMe ? `<span class="text-[9px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800 px-1.5 py-0.2 rounded-md">TY</span>` : ''}
                                         ${posBadges}
                                     </div>
-                                    <span class="text-[11px] font-mono font-bold text-slate-400">Składka: 20.00 zł</span>
+                                    ${isOrg 
+                                        ? `<span class="text-[11px] font-mono font-bold text-amber-400/90">👑 Zbiera wpłaty (Organizator)</span>` 
+                                        : `<span class="text-[11px] font-mono font-bold text-slate-400">Składka: 20.00 zł</span>`
+                                    }
                                 </div>
                             </div>
 
                             <!-- Action / Status -->
                             <div class="shrink-0 flex items-center gap-2">
-                                ${isAdmin ? `
+                                ${isOrg ? `
+                                    <span class="bg-amber-950/80 text-amber-300 border border-amber-700 text-xs font-black px-3.5 py-2 rounded-xl inline-flex items-center gap-1.5 shadow-sm whitespace-nowrap" title="Organizator grupy (zbiera wpłaty 20 zł na BLIK)">
+                                        <span>👑</span> Organizator
+                                    </span>
+                                ` : (isAdmin ? `
                                     <button type="button" onclick="toggleMatchPlayerPayment(${selectedIdx}, ${toInlineArgument(p)})" class="px-3.5 py-2 rounded-xl font-black text-xs transition active:scale-95 flex items-center gap-1.5 shadow-sm whitespace-nowrap ${isPaid ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-emerald-500/20' : 'bg-rose-950/80 hover:bg-rose-900 border border-rose-700 text-rose-300'}" title="${isPaid ? 'Kliknij, aby cofnąć wpłatę' : 'Kliknij, aby zaznaczyć wpłatę 20 zł'}">
                                         <span>${isPaid ? '✅ Opłacone (20 zł)' : '🔴 Zaznacz wpłatę'}</span>
                                     </button>
@@ -5260,7 +5554,7 @@ function initFirebaseSync() {
                                         ? `<span class="bg-emerald-950 text-emerald-400 border border-emerald-800 text-[11px] font-black px-2.5 py-1 rounded-xl inline-flex items-center gap-1 whitespace-nowrap"><span>✓</span> Opłacone</span>`
                                         : `<span class="bg-rose-950 text-rose-300 border border-rose-800 text-[11px] font-black px-2.5 py-1 rounded-xl inline-flex items-center gap-1 whitespace-nowrap"><span>🔴</span> Do zapłaty</span>`
                                     }
-                                `}
+                                `)}
                             </div>
                         </div>
                     `;
@@ -5287,7 +5581,7 @@ function initFirebaseSync() {
                                 <span class="text-xs font-bold text-slate-300">${getDayFullName(currentMatch.date)}</span>
                             </div>
                             <p class="text-[11px] text-slate-400 mt-0.5">
-                                ${isCancelled ? 'Mecz został odwołany' : `Skład główny: ${totalAttendees}/14 graczy (stawka: 20 zł / os.)`}
+                                ${isCancelled ? 'Mecz został odwołany' : `Skład główny: ${mainSquad.length}/14 graczy (do pobrania: ${totalAttendees} x 20 zł)`}
                             </p>
                         </div>
                         ${isAdmin && !isCancelled && totalAttendees > 0 ? `
@@ -5349,10 +5643,12 @@ function initFirebaseSync() {
 
             const allCount = playerNames.filter(p => playersMap[p].games > 0).length;
             const unpaidCount = playerNames.filter(p => {
+                if (isOrganizerPlayer(p)) return false;
                 const info = playersMap[p];
                 return info.games > 0 && (info.paid < info.costDue - 0.05);
             }).length;
             const paidCount = playerNames.filter(p => {
+                if (isOrganizerPlayer(p)) return false;
                 const info = playersMap[p];
                 return info.games > 0 && (info.paid >= info.costDue - 0.05);
             }).length;
@@ -5373,15 +5669,18 @@ function initFirebaseSync() {
                 listHtml = `<div class="p-6 text-center text-xs text-slate-500">Brak graczy dla wybranych kryteriów w miesiącu ${AppState.currentMonth}.</div>`;
             } else {
                 listHtml = filtered.map(p => {
+                    const isOrg = isOrganizerPlayer(p);
                     const info = playersMap[p];
                     const due = info.costDue;
                     const paid = info.paid;
                     const saldo = paid - due;
-                    const isFullyPaid = (saldo >= -0.05);
+                    const isFullyPaid = isOrg || (saldo >= -0.05);
                     const isMe = (p === loggedPlayer);
 
                     const matchHistoryPills = (info.matches || []).map(mInfo => {
-                        if (mInfo.isPaid) {
+                        if (isOrg) {
+                            return `<span class="px-2 py-0.5 rounded-lg bg-amber-950/80 border border-amber-800 text-amber-300 text-[10px] font-mono font-bold inline-flex items-center gap-1" title="Mecz ${mInfo.date}: Organizator (zbiera BLIK)"><span>${mInfo.date}</span><span>👑 Org</span></span>`;
+                        } else if (mInfo.isPaid) {
                             return `<span class="px-2 py-0.5 rounded-lg bg-emerald-950/80 border border-emerald-800 text-emerald-400 text-[10px] font-mono font-bold inline-flex items-center gap-1" title="Mecz ${mInfo.date}: Opłacone 20 zł"><span>${mInfo.date}</span><span>✓</span></span>`;
                         } else {
                             return `
@@ -5393,7 +5692,7 @@ function initFirebaseSync() {
                     }).join(' ');
 
                     return `
-                        <div class="bg-slate-950 border ${isMe ? 'border-emerald-500/70 bg-emerald-950/15' : 'border-slate-800/80'} rounded-2xl p-3.5 space-y-2.5 transition shadow-sm">
+                        <div class="bg-slate-950 border ${isOrg ? 'border-amber-500/50 bg-amber-950/10' : (isMe ? 'border-emerald-500/70 bg-emerald-950/15' : 'border-slate-800/80')} rounded-2xl p-3.5 space-y-2.5 transition shadow-sm">
                             <!-- Top: Player Name & Total Status -->
                             <div class="flex items-center justify-between gap-2">
                                 <div class="flex items-center gap-2.5 min-w-0">
@@ -5405,15 +5704,21 @@ function initFirebaseSync() {
                                             <span class="text-[10px] text-slate-400 font-mono">(${pluralizeGames(info.games)})</span>
                                         </div>
                                         <div class="text-[11px] text-slate-400 mt-0.5">
-                                            Opłacono: <strong class="text-emerald-400 font-mono font-bold">${paid.toFixed(0)} zł</strong> / ${due.toFixed(0)} zł
+                                            ${isOrg 
+                                                ? `<span class="text-amber-400 font-medium">Zbiera wpłaty 20 zł (Organizator)</span>` 
+                                                : `Opłacono: <strong class="text-emerald-400 font-mono font-bold">${paid.toFixed(0)} zł</strong> / ${due.toFixed(0)} zł`
+                                            }
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="shrink-0 text-right">
-                                    ${isFullyPaid 
-                                        ? `<span class="bg-emerald-950 text-emerald-400 border border-emerald-800 text-[11px] font-black px-2.5 py-1 rounded-xl inline-flex items-center gap-1"><span>✓</span> Na czysto</span>`
-                                        : `<span class="bg-rose-950 text-rose-400 border border-rose-800 text-[11px] font-black px-2.5 py-1 rounded-xl inline-flex items-center gap-1"><span>🔴</span> Brak: ${Math.abs(saldo).toFixed(0)} zł</span>`
+                                    ${isOrg 
+                                        ? `<span class="bg-amber-950 text-amber-300 border border-amber-800 text-[11px] font-black px-2.5 py-1 rounded-xl inline-flex items-center gap-1"><span>👑</span> Organizator</span>`
+                                        : (isFullyPaid 
+                                            ? `<span class="bg-emerald-950 text-emerald-400 border border-emerald-800 text-[11px] font-black px-2.5 py-1 rounded-xl inline-flex items-center gap-1"><span>✓</span> Na czysto</span>`
+                                            : `<span class="bg-rose-950 text-rose-400 border border-rose-800 text-[11px] font-black px-2.5 py-1 rounded-xl inline-flex items-center gap-1"><span>🔴</span> Brak: ${Math.abs(saldo).toFixed(0)} zł</span>`
+                                        )
                                     }
                                 </div>
                             </div>
@@ -5425,7 +5730,7 @@ function initFirebaseSync() {
                                     ${matchHistoryPills}
                                 </div>
 
-                                ${isAdmin && !isFullyPaid ? `
+                                ${!isOrg && isAdmin && !isFullyPaid ? `
                                     <button type="button" onclick="payAllPlayerDebts(${toInlineArgument(p)})" class="px-3 py-1 rounded-xl font-bold text-xs bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition active:scale-95 shadow-sm whitespace-nowrap ml-auto">
                                         <span>✅</span> Opłać zaległość (${Math.abs(saldo).toFixed(0)} zł)
                                     </button>
@@ -6379,7 +6684,7 @@ function initFirebaseSync() {
             const formOutcomes = calculatePlayerForm(loggedPlayer);
             const { bestPartner, topRival } = calculatePlayerChemistry(loggedPlayer);
             const playerHistory = calculatePlayerMatchHistory(loggedPlayer);
-            const isOrganizer = (loggedPlayer === getOrganizerName()) || isAdmin;
+            const isOrganizer = isOrganizerPlayer(loggedPlayer);
 
             // My Billing
             const billingData = calculateMonthlyBilling(AppState.currentMonth);
@@ -6563,39 +6868,66 @@ function initFirebaseSync() {
                     </div>
 
                     <!-- Moje Finanse & Rozliczenie BLIK -->
-                    <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-bold text-slate-200">Moje składki (${escapeHtml(AppState.currentMonth)}):</span>
-                            ${isMyPaid ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">✅ Opłacone</span>` : `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-950 text-rose-400 border border-rose-800 font-bold">Do zapłaty: ${Math.max(0, myDue - myPaid).toFixed(2)} zł</span>`}
-                        </div>
-
-                        <!-- Szczegóły wpłaty BLIK -->
-                        <div class="bg-slate-950/80 border border-slate-800/80 rounded-xl p-3 space-y-2 text-xs">
+                    ${isOrganizer ? `
+                        <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-amber-500/40 rounded-2xl p-3.5 space-y-3">
                             <div class="flex items-center justify-between">
-                                <span class="text-slate-400">Numer telefonu (BLIK):</span>
-                                <span class="font-mono font-black text-emerald-400 tracking-wider text-sm select-all">${escapeHtml(AppState.settings?.blikPhone || "697 013 447")}</span>
+                                <span class="text-xs font-bold text-slate-200">Konto Organizatora (${escapeHtml(AppState.currentMonth)}):</span>
+                                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800">👑 Zbierasz wpłaty</span>
                             </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-slate-400">Kwota do zapłaty:</span>
-                                <strong class="font-mono text-sm ${!isMyPaid && myDue > 0 ? 'text-rose-400 font-black' : 'text-emerald-400 font-bold'}">${Math.max(0, myDue - myPaid).toFixed(2)} zł</strong>
-                            </div>
-                            <div class="flex items-center justify-between text-[11px] pt-1.5 border-t border-slate-800/60">
-                                <span class="text-slate-400">Tytuł przelewu:</span>
-                                <span class="font-mono text-slate-200 font-medium truncate max-w-[190px]">Siatka ${escapeHtml(loggedPlayer)} ${escapeHtml(AppState.currentMonth)}</span>
-                            </div>
-                        </div>
 
-                        ${!isMyPaid && myDue > 0 ? `
-                            <div class="flex flex-col sm:flex-row gap-2 pt-0.5">
-                                <button type="button" onclick="copyTransferTitle(${toInlineArgument(loggedPlayer)})" class="flex-1 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-black py-2.5 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5">
-                                    <span>📋</span> Kopiuj tytuł przelewu
-                                </button>
-                                <button type="button" onclick="copyBlikNumber()" class="shrink-0 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-bold px-3.5 py-2.5 rounded-xl text-xs transition border border-slate-700 flex items-center justify-center gap-1.5">
-                                    <span>📱</span> Kopiuj nr BLIK
+                            <!-- Szczegóły konta organizatora -->
+                            <div class="bg-slate-950/80 border border-slate-800/80 rounded-xl p-3 space-y-2 text-xs">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-400">Twój numer telefonu (BLIK):</span>
+                                    <span class="font-mono font-black text-emerald-400 tracking-wider text-sm select-all">${escapeHtml(AppState.settings?.blikPhone || "697 013 447")}</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-400">Status składek:</span>
+                                    <span class="font-medium text-emerald-400">Pobierasz po 20 zł od graczy po każdej gierce</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-end pt-0.5">
+                                <button type="button" onclick="copyBlikNumber()" class="bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-bold px-3.5 py-2 rounded-xl text-xs transition border border-slate-700 flex items-center justify-center gap-1.5 shadow">
+                                    <span>📱</span> Kopiuj nr BLIK (${escapeHtml(AppState.settings?.blikPhone || "697 013 447")})
                                 </button>
                             </div>
-                        ` : ''}
-                    </div>
+                        </div>
+                    ` : `
+                        <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold text-slate-200">Moje składki (${escapeHtml(AppState.currentMonth)}):</span>
+                                ${isMyPaid ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">✅ Opłacone</span>` : `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-950 text-rose-400 border border-rose-800 font-bold">Do zapłaty: ${Math.max(0, myDue - myPaid).toFixed(2)} zł</span>`}
+                            </div>
+
+                            <!-- Szczegóły wpłaty BLIK -->
+                            <div class="bg-slate-950/80 border border-slate-800/80 rounded-xl p-3 space-y-2 text-xs">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-400">Numer telefonu (BLIK):</span>
+                                    <span class="font-mono font-black text-emerald-400 tracking-wider text-sm select-all">${escapeHtml(AppState.settings?.blikPhone || "697 013 447")}</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-400">Kwota do zapłaty:</span>
+                                    <strong class="font-mono text-sm ${!isMyPaid && myDue > 0 ? 'text-rose-400 font-black' : 'text-emerald-400 font-bold'}">${Math.max(0, myDue - myPaid).toFixed(2)} zł</strong>
+                                </div>
+                                <div class="flex items-center justify-between text-[11px] pt-1.5 border-t border-slate-800/60">
+                                    <span class="text-slate-400">Tytuł przelewu:</span>
+                                    <span class="font-mono text-slate-200 font-medium truncate max-w-[190px]">Siatka ${escapeHtml(loggedPlayer)} ${escapeHtml(AppState.currentMonth)}</span>
+                                </div>
+                            </div>
+
+                            ${!isMyPaid && myDue > 0 ? `
+                                <div class="flex flex-col sm:flex-row gap-2 pt-0.5">
+                                    <button type="button" onclick="copyTransferTitle(${toInlineArgument(loggedPlayer)})" class="flex-1 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-black py-2.5 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5">
+                                        <span>📋</span> Kopiuj tytuł przelewu
+                                    </button>
+                                    <button type="button" onclick="copyBlikNumber()" class="shrink-0 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-bold px-3.5 py-2.5 rounded-xl text-xs transition border border-slate-700 flex items-center justify-center gap-1.5">
+                                        <span>📱</span> Kopiuj nr BLIK
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `}
 
                     <!-- Ustawienia Konta -->
                     <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-xs flex-wrap gap-2">
