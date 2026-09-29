@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pl" class="dark">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
     <title>Siatka-App - Panel Meczu &amp; Frekwencja</title>
     
     <!-- Favicon & App Icons -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>đźŹ</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%8F%90</text></svg>">
     
     
     <!-- Google Fonts -->
@@ -173,8 +173,8 @@
             <!-- Row 1: Brand Logo, Title & Actions -->
             <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2 min-w-0">
-                    <div class="relative w-8 h-8 sm:w-9 sm:h-9 rounded-xl p-0.5 bg-gradient-to-tr from-emerald-500 via-amber-400 to-sky-500 shadow-md shadow-emerald-950/40 shrink-0">
-                        <span class="text-lg">đźŹ</span>
+                    <div class="relative w-8 h-8 sm:w-9 sm:h-9 rounded-xl p-0.5 bg-gradient-to-tr from-emerald-500 via-amber-400 to-sky-500 shadow-md shadow-emerald-950/40 shrink-0 flex items-center justify-center">
+                        <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center text-base sm:text-lg select-none">&#127952;</div>
                     </div>
                     <h1 id="headerGroupName" class="font-extrabold text-sm sm:text-base tracking-tight text-white whitespace-nowrap">Siatka-App</h1>
                 </div>
@@ -201,7 +201,7 @@
                     </span>
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
-                    <span id="headerHallAddress" class="text-[10px] text-slate-400 font-medium">đź“Ť Hala</span>
+                    <span id="headerHallAddress" class="text-[10px] text-slate-400 font-medium">&#128205; Hala</span>
                     <span id="syncStatusBadge" aria-live="polite" class="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-sky-950 text-sky-400 border border-sky-800 flex items-center gap-1 shrink-0">
                         <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span> ŁĄCZENIE
                     </span>
@@ -217,16 +217,29 @@
         <section id="tab-matches" class="space-y-4 animate-fade-in">
             
             <!-- Dates Carousel (Piątki) -->
+            <!-- Match Selector & Dates Row -->
             <div class="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-3 shadow-md space-y-2">
-                <div class="flex items-center justify-between px-1">
-                    <div class="flex items-center gap-2">
-                        <span class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Wybierz piątek:</span>
-                        <button type="button" onclick="toggleShowPastMatches()" id="togglePastMatchesBtn" class="text-[10px] text-slate-400 hover:text-slate-200 underline">
-                            Pokaż archiwalne
+                <div class="flex items-center justify-between gap-2 px-1">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Mecze:</span>
+                        <div class="inline-flex bg-slate-950 p-0.5 rounded-lg border border-slate-800 text-[10px] font-bold">
+                            <button type="button" id="datesFilterBtn-upcoming" onclick="setMatchDatesFilter('upcoming')" class="px-2 py-0.5 rounded-md transition text-slate-400 hover:text-white">NajbliĹĽszy</button>
+                            <button type="button" id="datesFilterBtn-all" onclick="setMatchDatesFilter('all')" class="px-2 py-0.5 rounded-md transition bg-emerald-500 text-slate-950 font-bold">Wszystkie</button>
+                        </div>
+                        <button type="button" onclick="toggleShowPastMatches()" id="togglePastMatchesBtn" class="text-[10px] text-slate-400 hover:text-slate-200 underline ml-0.5">
+                            Archiwum
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-1 shrink-0">
+                        <button type="button" onclick="scrollMatchDates(-1)" title="PrzewiĹ„ w lewo" class="w-7 h-7 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs font-bold transition active:scale-95 shadow-sm">
+                            â—€
+                        </button>
+                        <button type="button" onclick="scrollMatchDates(1)" title="PrzewiĹ„ w prawo" class="w-7 h-7 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs font-bold transition active:scale-95 shadow-sm">
+                            â–¶
                         </button>
                     </div>
                 </div>
-                <div id="matchDatesContainer" class="flex gap-2 overflow-x-auto pb-1 scroll-smooth">
+                <div id="matchDatesContainer" class="flex gap-2 overflow-x-auto pb-1 scroll-smooth" style="-webkit-overflow-scrolling: touch; touch-action: pan-x;">
                     <!-- Populated dynamically -->
                 </div>
             </div>
@@ -245,19 +258,32 @@
                     </span>
                 </div>
 
+                <div class="flex items-center justify-between gap-2 pt-1 border-b border-slate-800/60 pb-2">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                        <span id="matchDateBadge" class="text-[11px] font-extrabold text-emerald-400 uppercase tracking-wider bg-emerald-950/80 border border-emerald-800/80 px-2.5 py-0.5 rounded-full">
+                            2026-08-28
+                        </span>
+                        <span id="upcomingBadge" class="hidden text-[11px] font-extrabold text-sky-400 uppercase tracking-wider bg-sky-950/80 border border-sky-800/80 px-2.5 py-0.5 rounded-full">
+                            âŹł NAJBLIĹ»SZY
+                        </span>
+                        <span id="matchStatusBadge" class="hidden text-[11px] font-extrabold text-rose-400 uppercase tracking-wider bg-rose-950/80 border border-rose-800/80 px-2.5 py-0.5 rounded-full">
+                            đźš« ODWOĹANY
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-1 shrink-0">
+                        <button type="button" onclick="selectAdjacentMatch(-1)" title="Poprzedni mecz" class="px-2.5 py-1 bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold rounded-xl border border-slate-800 transition active:scale-95 flex items-center gap-1 shadow-sm">
+                            <span>â—€</span>
+                            <span class="hidden sm:inline">Poprzedni</span>
+                        </button>
+                        <button type="button" onclick="selectAdjacentMatch(1)" title="NastÄ™pny mecz" class="px-2.5 py-1 bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold rounded-xl border border-slate-800 transition active:scale-95 flex items-center gap-1 shadow-sm">
+                            <span class="hidden sm:inline">NastÄ™pny</span>
+                            <span>â–¶</span>
+                        </button>
+                    </div>
+                </div>
+
                 <div class="flex items-center justify-between gap-3">
                     <div class="min-w-0 flex-1">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span id="matchDateBadge" class="text-[11px] font-extrabold text-emerald-400 uppercase tracking-wider bg-emerald-950/80 border border-emerald-800/80 px-2.5 py-0.5 rounded-full">
-                                2026-08-28
-                            </span>
-                            <span id="upcomingBadge" class="hidden text-[11px] font-extrabold text-sky-400 uppercase tracking-wider bg-sky-950/80 border border-sky-800/80 px-2.5 py-0.5 rounded-full">
-                                ⏳ NAJBLIŻSZY
-                            </span>
-                            <span id="matchStatusBadge" class="hidden text-[11px] font-extrabold text-rose-400 uppercase tracking-wider bg-rose-950/80 border border-rose-800/80 px-2.5 py-0.5 rounded-full">
-                                🚫 ODWOŁANY
-                            </span>
-                        </div>
                         <h2 id="heroMatchTitle" class="text-xl sm:text-2xl font-black text-white mt-1">Mecz Siatkówki</h2>
 
                         <p id="heroMatchDetails" class="text-xs text-slate-400 mt-0.5 leading-relaxed">🕒 Rozgrzewka i gra • 📍 Hala sportowa</p>
@@ -866,7 +892,7 @@
             
             <div class="text-center space-y-2">
                 <div class="relative w-16 h-16 mx-auto rounded-3xl p-0.5 bg-gradient-to-tr from-emerald-500 via-amber-400 to-sky-500 shadow-xl shadow-emerald-950/50 flex items-center justify-center">
-                    <div class="w-full h-full flex items-center justify-center text-3xl">đźŹ</div>
+                    <div class="w-full h-full bg-slate-900 rounded-[22px] flex items-center justify-center text-3xl select-none">&#127952;</div>
                 </div>
                 <div>
                     <h2 id="welcomeModalTitle" class="text-xl font-black text-white tracking-tight">Witaj w Siatka-App 🏐</h2>
@@ -956,8 +982,8 @@
         <div class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-emerald-500/40 rounded-3xl p-5 sm:p-6 max-w-lg w-full space-y-5 shadow-2xl animate-fade-in my-auto">
             
             <div class="text-center space-y-1.5 border-b border-slate-800 pb-4">
-                <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-3xl shadow-lg shadow-emerald-950/50">
-                    🏐
+                    <div class="relative w-8 h-8 sm:w-9 sm:h-9 rounded-xl p-0.5 bg-gradient-to-tr from-emerald-500 via-amber-400 to-sky-500 shadow-md shadow-emerald-950/40 shrink-0 flex items-center justify-center">
+                        <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center text-base sm:text-lg select-none">&#127952;</div>
                 </div>
                 <h2 id="wizardTitle" class="text-xl sm:text-2xl font-black text-white tracking-tight">Witaj w Siatka-App!</h2>
                 <p class="text-xs text-slate-300">Skonfiguruj aplikację dla swojej grupy w 2 minuty prosto z tego ekranu.</p>
@@ -1127,11 +1153,11 @@
                     <div class="grid grid-cols-4 gap-1.5 text-center">
                         <label class="p-1.5 bg-slate-950 border border-slate-700 rounded-xl cursor-pointer block hover:border-slate-500">
                             <input type="checkbox" name="genDays" value="1" class="rounded text-emerald-500">
-                            <span class="block text-[11px] font-bold mt-0.5 text-slate-300">Pon</span>
+                            <span class="block text-[11px] font-bold mt-0.5 text-emerald-400">Pon</span>
                         </label>
                         <label class="p-1.5 bg-slate-950 border border-slate-700 rounded-xl cursor-pointer block hover:border-slate-500">
                             <input type="checkbox" name="genDays" value="2" class="rounded text-emerald-500">
-                            <span class="block text-[11px] font-bold mt-0.5 text-emerald-400">Wt</span>
+                            <span class="block text-[11px] font-bold mt-0.5 text-slate-300">Wt</span>
                         </label>
                         <label class="p-1.5 bg-slate-950 border border-slate-700 rounded-xl cursor-pointer block hover:border-slate-500">
                             <input type="checkbox" name="genDays" value="3" class="rounded text-emerald-500">
@@ -1157,7 +1183,7 @@
                 </div>
                 <div>
                     <label class="block font-bold text-slate-300 mb-1">Stawka za halę za każdy mecz (zł):</label>
-                    <input id="genCostInput" type="number" step="1" value="250" required class="w-full bg-slate-950 border border-slate-700 text-white rounded-xl px-3 py-2 font-mono">
+                    <input id="genCostInput" type="number" step="1" value="240" required class="w-full bg-slate-950 border border-slate-700 text-white rounded-xl px-3 py-2 font-mono">
                 </div>
                 <div class="pt-2 flex gap-2">
                     <button type="button" onclick="closeGenerateMonthModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2.5 rounded-xl transition">Anuluj</button>
@@ -1558,24 +1584,54 @@ const IS_ADMIN_KEY = 'siatka_arek_is_admin_v1';
 const FIREBASE_DB_NODE = 'siatka_custom_group_state';
 
 const EMPTY_INITIAL_STATE = {
-    isConfigured: false,
-    organizerName: "",
-    adminPinHash: "",
-    all_players: [],
-    player_pins: {},
+    isConfigured: true,
+    organizerName: "Arkadiusz Kurdziałek",
+    adminPinHash: "7b201375e92ad744f9bc9f3efe07763ffc72126cfd33ae84f7c671165fdf65fa",
+    all_players: [
+        "Arcadio Morales",
+        "Michał Chaciński"
+    ],
+    player_pins: {
+        "Arcadio Morales": "7b201375e92ad744f9bc9f3efe07763ffc72126cfd33ae84f7c671165fdf65fa",
+        "Arkadiusz Kurdziałek": "7b201375e92ad744f9bc9f3efe07763ffc72126cfd33ae84f7c671165fdf65fa",
+        "Michał Chaciński": "82a1db87bf60b1db2c3442abc27b12931fa9fbfca2d2bbe9f0c9350a22b34e5b"
+    },
     player_avatars: {},
-    base_games: {},
-    player_skills: {},
-    months: {},
+    base_games: {
+        "Arcadio Morales": 0,
+        "Michał Chaciński": 0
+    },
+    player_skills: {
+        "Arcadio Morales": 3,
+        "Michał Chaciński": 3
+    },
+    currentMonth: "Październik 2026",
+    currentMatchIndex: 0,
+    months: {
+        "Październik 2026": {
+            matches: [
+                { cost: 240, date: "2026-10-01", isCancelled: false, mvpClosed: false },
+                { cost: 240, date: "2026-10-05", isCancelled: false, mvpClosed: false },
+                { cost: 240, date: "2026-10-08", isCancelled: false, mvpClosed: false },
+                { cost: 240, date: "2026-10-12", isCancelled: false, mvpClosed: false },
+                { cost: 240, date: "2026-10-15", isCancelled: false, mvpClosed: false },
+                { cost: 240, date: "2026-10-19", isCancelled: false, mvpClosed: false },
+                { cost: 240, date: "2026-10-22", isCancelled: false, mvpClosed: false },
+                { cost: 240, date: "2026-10-26", isCancelled: false, mvpClosed: false },
+                { cost: 240, date: "2026-10-29", isCancelled: false, mvpClosed: false }
+            ]
+        }
+    },
     settings: {
-        groupName: "Siatkówka",
-        hallAddress: "",
-        warmupTime: "18:45",
-        startTime: "19:00",
-        gameEndTime: "21:00",
-        hallCost: 250,
-        blikPhone: "",
-        playingDays: [2, 4],
+        groupName: "AKS Laurowa",
+        organizerName: "Arkadiusz Kurdziałek",
+        hallAddress: "Ul. Myśliborska 25, Warszawa",
+        warmupTime: "19:45",
+        startTime: "20:00",
+        gameEndTime: "21:45",
+        hallCost: 240,
+        blikPhone: "697013447",
+        playingDays: [1, 4],
         firebaseConfig: {
             apiKey: "AIzaSyCBX0qgsx74oou6BLXToOZbe993chGmfx4",
             authDomain: "siatka-arek.firebaseapp.com",
@@ -1586,9 +1642,7 @@ const EMPTY_INITIAL_STATE = {
             appId: "1:176536167655:web:916d3eb9bead50b4ddee42",
             measurementId: "G-KDCDWXQS7K"
         }
-    },
-    currentMonth: "",
-    currentMatchIndex: 0
+    }
 };
 
 function getOrganizerName() {
@@ -1895,13 +1949,13 @@ function openGenerateMonthModal() {
             }
         }
 
-        const playingDays = AppState.settings?.playingDays || [2, 4];
+        const playingDays = AppState.settings?.playingDays || [1, 4];
         document.querySelectorAll('input[name="genDays"]').forEach(cb => {
             cb.checked = playingDays.includes(parseInt(cb.value, 10));
         });
 
         if (costInput) {
-            costInput.value = AppState.settings?.hallCost || 250;
+            costInput.value = AppState.settings?.hallCost || 240;
         }
 
         modal.classList.remove('hidden');
@@ -2282,8 +2336,10 @@ function initFirebaseSync() {
             }
 
             if (!AppState.isConfigured || !AppState.organizerName || !AppState.all_players || AppState.all_players.length === 0) {
-                openSetupWizardModal();
-                return;
+                if (!AppState.settings?.firebaseConfig) {
+                    openSetupWizardModal();
+                    return;
+                }
             }
 
             autoSelectUpcomingMatchOnLoad();
@@ -2360,14 +2416,14 @@ function initFirebaseSync() {
 
             if (!AppState.settings || typeof AppState.settings !== 'object') {
                 AppState.settings = {
-                    groupName: AppState.groupName || "Siatkówka",
-                    hallAddress: AppState.hallAddress || "Hala Sportowa",
-                    warmupTime: "18:45",
-                    startTime: "19:00",
-                    gameEndTime: "21:00",
-                    hallCost: 250,
-                    blikPhone: "",
-                    playingDays: [2, 4]
+                    groupName: AppState.groupName || "AKS Laurowa",
+                    hallAddress: AppState.hallAddress || "Ul. Myśliborska 25, Warszawa",
+                    warmupTime: "19:45",
+                    startTime: "20:00",
+                    gameEndTime: "21:45",
+                    hallCost: 240,
+                    blikPhone: "697013447",
+                    playingDays: [1, 4]
                 };
             }
 
@@ -2525,12 +2581,14 @@ function initFirebaseSync() {
             const teamsAdminControls = document.getElementById('teamsAdminControls');
             const teamEditBtns = document.querySelectorAll('.team-edit-name-btn');
 
+            const shareBtn = document.getElementById('headerShareBtn');
             if (isAdmin) {
                 if (badge) { badge.classList.remove('hidden'); badge.classList.add('flex'); }
                 if (matchAdminBar) matchAdminBar.classList.remove('hidden');
                 if (billingAdminRow) billingAdminRow.classList.remove('hidden');
                 if (editScoreBtn) editScoreBtn.classList.remove('hidden');
                 if (teamsAdminControls) teamsAdminControls.classList.remove('hidden');
+                if (shareBtn) { shareBtn.classList.remove('hidden'); shareBtn.classList.add('flex'); }
                 teamEditBtns.forEach(btn => btn.classList.remove('hidden'));
             } else {
                 if (badge) { badge.classList.add('hidden'); badge.classList.remove('flex'); }
@@ -2538,6 +2596,7 @@ function initFirebaseSync() {
                 if (billingAdminRow) billingAdminRow.classList.add('hidden');
                 if (editScoreBtn) editScoreBtn.classList.add('hidden');
                 if (teamsAdminControls) teamsAdminControls.classList.add('hidden');
+                if (shareBtn) { shareBtn.classList.add('hidden'); shareBtn.classList.remove('flex'); }
                 teamEditBtns.forEach(btn => btn.classList.add('hidden'));
             }
         }
@@ -2733,6 +2792,40 @@ function initFirebaseSync() {
         }
 
         // ================= TAB 1: MATCHES & ATTENDANCE =================
+        let matchDatesFilterMode = 'all';
+
+        function setMatchDatesFilter(mode) {
+            matchDatesFilterMode = mode;
+            const upBtn = document.getElementById('datesFilterBtn-upcoming');
+            const allBtn = document.getElementById('datesFilterBtn-all');
+            if (upBtn && allBtn) {
+                if (mode === 'upcoming') {
+                    upBtn.className = "px-2 py-0.5 rounded-md transition bg-emerald-500 text-slate-950 font-bold";
+                    allBtn.className = "px-2 py-0.5 rounded-md transition text-slate-400 hover:text-white";
+                } else {
+                    allBtn.className = "px-2 py-0.5 rounded-md transition bg-emerald-500 text-slate-950 font-bold";
+                    upBtn.className = "px-2 py-0.5 rounded-md transition text-slate-400 hover:text-white";
+                }
+            }
+            renderMatchesTab();
+        }
+
+        function scrollMatchDates(direction) {
+            const container = document.getElementById('matchDatesContainer');
+            if (!container) return;
+            container.scrollBy({ left: direction * 180, behavior: 'smooth' });
+        }
+
+        function selectAdjacentMatch(direction) {
+            const monthData = AppState.months[AppState.currentMonth];
+            if (!monthData?.matches?.length) return;
+            const newIdx = AppState.currentMatchIndex + direction;
+            if (newIdx >= 0 && newIdx < monthData.matches.length) {
+                selectMatch(newIdx);
+            }
+        }
+
+        // ================= TAB 1: MATCHES & ATTENDANCE =================
         function renderMatchesTab() {
             renderMonthSelector();
             if (!AppState.months || !AppState.currentMonth) return;
@@ -2743,14 +2836,21 @@ function initFirebaseSync() {
             const globalUpcomingDate = getGlobalUpcomingMatchDate();
             const datesContainer = document.getElementById('matchDatesContainer');
             const allMatches = monthData.matches || [];
+            const upcomingIdx = allMatches.findIndex(m => m.date >= todayStr && !m.isCancelled);
 
             const visibleMatches = allMatches.map((m, idx) => ({ match: m, originalIndex: idx })).filter(item => {
                 if (showPastMatches) return true;
+                if (matchDatesFilterMode === 'upcoming') {
+                    if (upcomingIdx !== -1 && item.originalIndex === upcomingIdx) return true;
+                    if (item.originalIndex === AppState.currentMatchIndex) return true;
+                    if (upcomingIdx !== -1 && item.originalIndex === upcomingIdx + 1) return true;
+                    return false;
+                }
                 return item.match.date >= todayStr || item.originalIndex === AppState.currentMatchIndex;
             });
 
             if (visibleMatches.length === 0) {
-                datesContainer.innerHTML = `<span class="text-xs text-slate-500 py-2">Brak nadchodzących meczów. Kliknij "Pokaż archiwalne".</span>`;
+                datesContainer.innerHTML = `<span class="text-xs text-slate-500 py-2">Brak meczĂłw. Kliknij "Wszystkie" lub "Archiwum".</span>`;
             } else {
                 datesContainer.innerHTML = visibleMatches.map(item => {
                     const m = item.match;
@@ -2763,14 +2863,14 @@ function initFirebaseSync() {
                     const dayDisplay = (getShortDayName(m.date) ? getShortDayName(m.date) + ' ' : '') + (m.date || '').slice(5);
 
                     return `
-                        <button type="button" onclick="selectMatch(${idx})" class="px-3 py-2 rounded-2xl border text-xs font-extrabold transition shrink-0 flex items-center gap-2 active:scale-95 shadow-sm ${
+                        <button type="button" id="match-date-btn-${idx}" onclick="selectMatch(${idx})" class="px-3 py-2 rounded-2xl border text-xs font-extrabold transition shrink-0 flex items-center gap-2 active:scale-95 shadow-sm ${
                             isSelected 
                                 ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 border-emerald-400 shadow-md shadow-emerald-500/20 ring-2 ring-emerald-400/40' 
                                 : isPast
                                     ? 'bg-slate-950 text-slate-500 border-slate-800/80 hover:border-slate-700'
                                     : 'bg-slate-950 text-slate-200 border-slate-800 hover:border-slate-700'
                         }">
-                            <span>${isPast ? '⏳' : '📅'} ${dayDisplay}</span>
+                            <span>${isPast ? 'âŹł' : 'đź“…'} ${dayDisplay}</span>
                             <span class="text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
                                 isSelected 
                                     ? 'bg-slate-950/20 text-slate-950 font-black' 
@@ -2781,6 +2881,13 @@ function initFirebaseSync() {
                         </button>
                     `;
                 }).join('');
+
+                setTimeout(() => {
+                    const activePill = document.getElementById(`match-date-btn-${AppState.currentMatchIndex}`);
+                    if (activePill) {
+                        activePill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                    }
+                }, 60);
             }
 
             const currentMatch = monthData.matches[AppState.currentMatchIndex];
@@ -2791,24 +2898,26 @@ function initFirebaseSync() {
             }
             const headerHall = document.getElementById('headerHallAddress');
             if (headerHall && AppState.settings && AppState.settings.hallAddress) {
-                headerHall.innerText = '📍 ' + AppState.settings.hallAddress;
+                headerHall.innerText = 'đź“Ť ' + AppState.settings.hallAddress;
             }
 
             const heroTitle = document.getElementById('heroMatchTitle');
             if (heroTitle) {
-                heroTitle.innerText = getDayFullName(currentMatch ? currentMatch.date : '') + ' Mecz';
+                const dayName = currentMatch?.date ? getDayFullName(currentMatch.date) : '';
+                const dayCap = dayName ? (dayName.charAt(0).toUpperCase() + dayName.slice(1)) : 'Mecz';
+                heroTitle.innerText = dayCap + ' â€˘ ' + (AppState.settings?.groupName || 'SiatkĂłwka');
             }
 
             const heroDetails = document.getElementById('heroMatchDetails');
             if (heroDetails) {
-                const warmup = (AppState.settings && AppState.settings.warmupTime) ? AppState.settings.warmupTime : '18:45';
-                const start = (AppState.settings && AppState.settings.startTime) ? AppState.settings.startTime : '19:00';
-                const end = (AppState.settings && AppState.settings.gameEndTime) ? AppState.settings.gameEndTime : '21:00';
+                const warmup = (AppState.settings && AppState.settings.warmupTime) ? AppState.settings.warmupTime : '19:45';
+                const start = (AppState.settings && AppState.settings.startTime) ? AppState.settings.startTime : '20:00';
+                const end = (AppState.settings && AppState.settings.gameEndTime) ? AppState.settings.gameEndTime : '21:45';
                 const hall = (AppState.settings && AppState.settings.hallAddress) ? AppState.settings.hallAddress : 'Hala';
-                heroDetails.innerHTML = '🕒 Rozgrzewka: <span class="text-emerald-400 font-bold">' + warmup + '</span> • Gra: <span class="text-emerald-400 font-bold">' + start + ' - ' + end + '</span> • 📍 <span class="text-slate-300 font-semibold">' + escapeHtml(hall) + '</span>';
+                heroDetails.innerHTML = 'đź•’ Rozgrzewka: <span class="text-emerald-400 font-bold">' + warmup + '</span> â€˘ Gra: <span class="text-emerald-400 font-bold">' + start + ' - ' + end + '</span> â€˘ đź“Ť <span class="text-slate-300 font-semibold">' + escapeHtml(hall) + '</span>';
             }
 
-const cancelBtn = document.getElementById('cancelMatchBtn');
+            const cancelBtn = document.getElementById('cancelMatchBtn');
             const statusBadge = document.getElementById('matchStatusBadge');
             const upcomingBadge = document.getElementById('upcomingBadge');
             const scoreTextEl = document.getElementById('scoreText');
@@ -2817,16 +2926,15 @@ const cancelBtn = document.getElementById('cancelMatchBtn');
             if (!currentMatch) {
                 document.getElementById('matchDateBadge').innerText = "Brak meczu";
                 const costEl = document.getElementById('matchCostPerPerson');
-                if (costEl) costEl.innerText = "0.00 zł";
+                if (costEl) costEl.innerText = "0.00 zĹ‚";
                 document.getElementById('matchPlayerCount').innerText = "0/12";
-                document.getElementById('mainSquadList').innerHTML = `<div class="p-4 text-center text-xs text-slate-600">Dodaj piątek powyżej.</div>`;
+                document.getElementById('mainSquadList').innerHTML = `<div class="p-4 text-center text-xs text-slate-600">Brak meczĂłw w tym miesiÄ…cu.</div>`;
                 document.getElementById('reserveCardContainer').classList.add('hidden');
                 if (upcomingBadge) upcomingBadge.classList.add('hidden');
                 if (scoreTextEl) scoreTextEl.innerText = "-";
                 if (fastJoinSection) fastJoinSection.innerHTML = '';
                 return;
             }
-
             const isCancelled = !!currentMatch.isCancelled;
             const attendees = currentMatch.attendees || [];
             const mainPlayers = attendees.slice(0, 12);
@@ -6369,41 +6477,59 @@ const cancelBtn = document.getElementById('cancelMatchBtn');
         function generateShareMessage(type = 'match') {
             const monthData = AppState.months[AppState.currentMonth];
             const currentMatch = monthData?.matches[AppState.currentMatchIndex];
-            const dateStr = currentMatch ? currentMatch.date : "najbliższy piątek";
+            const dateStr = currentMatch ? currentMatch.date : (getGlobalUpcomingMatchDate() || "");
+            
+            const dayFullName = dateStr ? getDayFullName(dateStr) : "mecz";
+            const dayCap = dayFullName ? (dayFullName.charAt(0).toUpperCase() + dayFullName.slice(1)) : "Mecz";
+            
             const attendees = currentMatch ? (currentMatch.attendees || []) : [];
             const count = attendees.slice(0, 12).length;
             const freeSlots = Math.max(0, 12 - count);
-            const cost = (currentMatch && currentMatch.isCancelled) ? 0 : 250;
-            const costPerPerson = count > 0 ? (cost / count).toFixed(2) : "20.83";
-            const blikPhone = String(AppState.settings?.blikPhone || "517 077 482");
+            const hallCost = (currentMatch && currentMatch.cost !== undefined) ? currentMatch.cost : (AppState.settings?.hallCost || 240);
+            const cost = (currentMatch && currentMatch.isCancelled) ? 0 : hallCost;
+            const costPerPerson = count > 0 ? (cost / count).toFixed(2) : (cost / 12).toFixed(2);
+            
+            const warmup = AppState.settings?.warmupTime || "19:45";
+            const start = AppState.settings?.startTime || "20:00";
+            const end = AppState.settings?.gameEndTime || "21:45";
+            const hall = AppState.settings?.hallAddress || "Hala Sportowa";
+            const blikPhone = String(AppState.settings?.blikPhone || "").trim();
+            const groupName = AppState.settings?.groupName || "SiatkĂłwka";
             const url = window.location.href;
 
-            if (type === 'monday') {
-                return `🔔 SIATKÓWKA - ZAPISY NA PIĄTEK (${dateStr}) 🔔\n\n` +
-                       `Siemanko! Ruszyły zapisy na ten piątek. Rozgrzewka 18:45, gramy 19:00 - 21:00!\n\n` +
-                       `👉 Zapiszcie się przez link:\n${url}\n\n` +
-                       `Limit składu to 12 osób, decyduje kolejność zgłoszeń!`;
+            if (type === 'monday' || type === 'signup') {
+                return `đź”” ${groupName.toUpperCase()} - ZAPISY NA ${dayCap.toUpperCase()} (${dateStr}) đź””\n\n` +
+                       `Siemanko! RuszyĹ‚y zapisy na ${dayFullName}.\n` +
+                       `âŹ° Rozgrzewka: ${warmup} â€˘ Gramy: ${start} - ${end}!\n` +
+                       `đź“Ť Miejsce: ${hall}\n\n` +
+                       `đź‘‰ Zapiszcie siÄ™ przez link:\n${url}\n\n` +
+                       `Limit skĹ‚adu to 12 osĂłb (6v6), decyduje kolejnoĹ›Ä‡ zgĹ‚oszeĹ„! đźŹđź”Ą`;
             } else if (type === 'mvp') {
-                return `🏆 GŁOSOWANIE NA MVP MECZU (${dateStr}) 🏆\n\n` +
-                       `Dzięki za piątkową walkę na parkiecie! 🔥🏐\n\n` +
-                       `Głosowanie jest tajne 🔒 Kto Twoim zdaniem zasłużył na MVP? Oddaj głos:\n${url}\n\n` +
-                       `Wyniki i oficjalne podsumowanie pojawią się, gdy wszyscy zagłosują! 🌟`;
+                return `đźŹ† GĹOSOWANIE NA MVP MECZU (${dayCap} ${dateStr}) đźŹ†\n\n` +
+                       `DziÄ™ki wszystkim za Ĺ›wietnÄ… walkÄ™ na parkiecie! đź”ĄđźŹ\n\n` +
+                       `GĹ‚osowanie jest tajne đź”’ Kto Twoim zdaniem zasĹ‚uĹĽyĹ‚ na MVP? Oddaj gĹ‚os:\n${url}\n\n` +
+                       `Podium đźĄ‡đźĄđźĄ‰ i oficjalne wyniki pojawiÄ… siÄ™ na stronie po zebraniu gĹ‚osĂłw! đźŚź`;
             } else if (type === 'billing') {
-                return `💰 ROZLICZENIE SIATKÓWKI (${AppState.currentMonth}) 💰\n\n` +
-                       `Ekipa, faktura za halę za ${AppState.currentMonth} podsumowana!\n\n` +
-                       `👉 Sprawdź swoją kwotę na stronie:\n${url}\n\n` +
-                       `💸 Przelew BLIK na numer: ${blikPhone} (w tytule imię i nazwisko)`;
+                return `đź’° ROZLICZENIE SKĹADEK ZA HALÄ (${AppState.currentMonth}) đź’°\n\n` +
+                       `Ekipa, podsumowanie skĹ‚adek za halÄ™ za miesiÄ…c ${AppState.currentMonth} jest juĹĽ gotowe!\n\n` +
+                       `đź‘‰ SprawdĹş swojÄ… kwotÄ™ do wpĹ‚aty na stronie:\n${url}\n` +
+                       (blikPhone ? `\nđź’¸ Przelew BLIK na numer: ${blikPhone} (w tytule wpisz swoje imiÄ™ i nazwisko)` : '');
             }
 
-            return `🏐 SIATKÓWKA DZISIAJ (${dateStr}) 🏐\n\n` +
-                   `⏰ Rozgrzewka: 18:45 • Gra: 19:00 - 21:00 (spotykamy i przebieramy się na hali)!\n` +
-                   `📍 Skład: ${count}/12 (Wolne miejsca: ${freeSlots})\n` +
-                   `💰 Koszt: ~${costPerPerson} zł / os.\n\n` +
-                   `📲 Zapisy / Losowarka Składów / Wyniki:\n${url}\n\n` +
-                   `💸 BLIK: ${blikPhone}`;
+            return `đźŹ ${groupName.toUpperCase()} - DZISIAJ (${dayCap} ${dateStr}) đźŹ\n\n` +
+                   `âŹ° Rozgrzewka: ${warmup} â€˘ Gra: ${start} - ${end} (spotykamy i przebieramy siÄ™ na hali)!\n` +
+                   `đź“Ť Miejsce: ${hall}\n` +
+                   `đź‘Ą SkĹ‚ad: ${count}/12 (Wolne miejsca: ${freeSlots})\n` +
+                   `đź’° Koszt: ~${costPerPerson} zĹ‚ / os.\n\n` +
+                   `đź“˛ Zapisy / SkĹ‚ady / Wyniki:\n${url}\n` +
+                   (blikPhone ? `\nđź’¸ WpĹ‚aty BLIK: ${blikPhone}` : '');
         }
 
         function openShareModal() {
+            if (!isAdmin) {
+                alert("OgĹ‚oszenia na grupÄ™ moĹĽe kopiowaÄ‡ wyĹ‚Ä…cznie Organizator.");
+                return;
+            }
             selectTemplate('match');
             document.getElementById('shareModal')?.classList.remove('hidden');
         }
@@ -6411,7 +6537,6 @@ const cancelBtn = document.getElementById('cancelMatchBtn');
         function closeShareModal() {
             document.getElementById('shareModal')?.classList.add('hidden');
         }
-
         async function executeShare() {
             const msg = document.getElementById('shareMessagePreview')?.value || '';
             if (navigator.share) {
