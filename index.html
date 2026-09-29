@@ -612,7 +612,7 @@
                     <!-- Compact BLIK Pill (Copies ONLY phone number) -->
                     <button type="button" onclick="copyBlikNumber()" title="Kliknij, aby skopiować numer BLIK" class="bg-slate-950 hover:bg-slate-850 active:scale-95 border border-emerald-500/40 hover:border-emerald-400 text-slate-200 px-3 py-1.5 rounded-2xl text-xs font-bold transition flex items-center gap-2 shadow-sm group">
                         <span class="text-emerald-400 text-[11px]">📲 BLIK:</span>
-                        <span class="font-mono font-black text-emerald-400 text-xs tracking-wider" id="blikPhoneDisplay">517 077 482</span>
+                        <span class="font-mono font-black text-emerald-400 text-xs tracking-wider" id="blikPhoneDisplay">697 013 447</span>
                         <span class="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800/80 px-1.5 py-0.5 rounded-md group-hover:bg-emerald-500 group-hover:text-slate-950 transition">Kopiuj</span>
                     </button>
                 </div>
@@ -4805,7 +4805,7 @@ function initFirebaseSync() {
         // ================= TAB 5: BILLING (ROZLICZENIE SKŁADEK 20 ZŁ / GIERKA) =================
         let billingMode = 'match'; // 'match' | 'month'
         let selectedBillingMatchIndex = null;
-        let currentBillingFilter = 'all'; // 'all', 'unpaid', 'paid'
+        // currentBillingFilter is already declared at the top level
 
         function setBillingFilter(filter) {
             currentBillingFilter = filter;
@@ -4925,12 +4925,12 @@ function initFirebaseSync() {
         }
 
         function copyBlikNumber() {
-            const blik = (AppState.settings?.blikPhone || "517 077 482").replace(/\s+/g, '');
+            const blik = (AppState.settings?.blikPhone || "697 013 447").replace(/\s+/g, '');
             copyToClipboard(blik, `Skopiowano numer BLIK: ${blik} 📋`);
         }
 
         function copySinglePlayerBlik(playerName, dueAmount) {
-            const phone = (AppState.settings?.blikPhone || "517 077 482").replace(/\s+/g, '');
+            const phone = (AppState.settings?.blikPhone || "697 013 447").replace(/\s+/g, '');
             copyToClipboard(phone, `Skopiowano numer BLIK: ${phone} (należność: ${dueAmount.toFixed(2)} zł)`);
         }
 
@@ -5054,7 +5054,7 @@ function initFirebaseSync() {
                 return;
             }
 
-            const blikPhone = String(AppState.settings?.blikPhone || "517 077 482");
+            const blikPhone = String(AppState.settings?.blikPhone || "697 013 447");
             const dateFormatted = match.date;
             const msg = `📢 ROZLICZENIE GIERKI - ${dateFormatted} 🏐\n\n` +
                         `Siema ekipa! Składka za gierkę to 20 zł. Brakuje jeszcze wpłaty od:\n` +
@@ -5083,7 +5083,7 @@ function initFirebaseSync() {
 
             debtors.sort((a, b) => b.due - a.due || a.name.localeCompare(b.name, 'pl'));
 
-            const blikPhone = String(AppState.settings?.blikPhone || "517 077 482");
+            const blikPhone = String(AppState.settings?.blikPhone || "697 013 447");
             const msg = `📢 ROZLICZENIE SIATKÓWKI - ${AppState.currentMonth.toUpperCase()} 🏐\n\n` +
                         `Siema ekipa! Przypominajka o składkach (20 zł za gierkę). Do opłacenia pozostało:\n` +
                         debtors.map(d => `• ${d.name} - ${d.due.toFixed(0)} zł (${pluralizeGames(d.unpaidCount)})`).join('\n') +
@@ -5130,7 +5130,7 @@ function initFirebaseSync() {
             const due = myInfo ? myInfo.costDue : 0;
             const paid = myInfo ? myInfo.paid : 0;
             const saldo = paid - due;
-            const phone = (AppState.settings?.blikPhone || "517 077 482").replace(/\s+/g, '');
+            const phone = (AppState.settings?.blikPhone || "697 013 447").replace(/\s+/g, '');
 
             if (!myInfo && !isPlayingSelected) {
                 container.innerHTML = '';
@@ -5511,7 +5511,7 @@ function initFirebaseSync() {
 
             // Update BLIK Phone
             const blikDisp = document.getElementById('blikPhoneDisplay');
-            if (blikDisp) blikDisp.innerText = AppState.settings?.blikPhone || "517 077 482";
+            if (blikDisp) blikDisp.innerText = AppState.settings?.blikPhone || "697 013 447";
 
             // Update Subtitle
             const subEl = document.getElementById('billingMonthSubtitle');
@@ -6573,7 +6573,7 @@ function initFirebaseSync() {
                         <div class="bg-slate-950/80 border border-slate-800/80 rounded-xl p-3 space-y-2 text-xs">
                             <div class="flex items-center justify-between">
                                 <span class="text-slate-400">Numer telefonu (BLIK):</span>
-                                <span class="font-mono font-black text-emerald-400 tracking-wider text-sm select-all">${escapeHtml(AppState.settings?.blikPhone || "517 077 482")}</span>
+                                <span class="font-mono font-black text-emerald-400 tracking-wider text-sm select-all">${escapeHtml(AppState.settings?.blikPhone || "697 013 447")}</span>
                             </div>
                             <div class="flex items-center justify-between">
                                 <span class="text-slate-400">Kwota do zapłaty:</span>
