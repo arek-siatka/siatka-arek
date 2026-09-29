@@ -293,7 +293,7 @@
                     <!-- Slots metric badge (Tylko Skład) -->
                     <div class="bg-slate-950/90 border border-slate-800 rounded-2xl py-2 px-3 sm:px-4 text-center shrink-0 shadow-inner min-w-[70px]">
                         <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Skład</p>
-                        <p id="matchPlayerCount" class="text-lg sm:text-xl font-black text-sky-400 mt-0.5 font-mono">0/12</p>
+                        <p id="matchPlayerCount" class="text-lg sm:text-xl font-black text-sky-400 mt-0.5 font-mono">0/14</p>
                     </div>
                 </div>
 
@@ -338,14 +338,14 @@
             <!-- Squad Lists -->
             <div class="space-y-4">
                 
-                <!-- Main Squad (12) -->
+                <!-- Main Squad (14) -->
                 <div class="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-4 shadow-md space-y-2.5">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                            <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Skład Główny (Maks 12)</h3>
+                            <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Skład Główny (Maks 14)</h3>
                         </div>
-                        <span id="mainSquadBadge" class="text-xs font-mono font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-md">0/12</span>
+                        <span id="mainSquadBadge" class="text-xs font-mono font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-md">0/14</span>
                     </div>
 
                     <div id="mainSquadList" class="space-y-1.5">
@@ -465,8 +465,11 @@
                         </h2>
                     </div>
                     <div id="teamsAdminControls" class="flex items-center gap-2 flex-wrap hidden">
-                        <button type="button" onclick="generateRandomTeams()" class="bg-indigo-500 hover:bg-indigo-400 text-slate-950 font-black px-3.5 py-2 rounded-2xl text-xs transition active:scale-95 shadow-lg shadow-indigo-500/20 flex items-center gap-1.5">
-                            <span>🎲</span> Losuj równe składy
+                        <button type="button" onclick="generatePositionBalancedTeams()" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-3.5 py-2 rounded-2xl text-xs transition active:scale-95 shadow-lg shadow-emerald-500/20 flex items-center gap-1.5" title="Losuj składy z uwzględnieniem pozycji siatkarskich (S, OP, OH, MB, L) i gwiazdek">
+                            <span>🎯</span> Losuj na pozycje
+                        </button>
+                        <button type="button" onclick="generateRandomTeams()" class="bg-indigo-500 hover:bg-indigo-400 text-slate-950 font-black px-3.5 py-2 rounded-2xl text-xs transition active:scale-95 shadow-lg shadow-indigo-500/20 flex items-center gap-1.5" title="Losuj klasycznie w oparciu o gwiazdki (w kółko)">
+                            <span>🎲</span> Losuj klasycznie
                         </button>
                         <button type="button" onclick="clearCurrentMatchTeams()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-3 py-2 rounded-2xl text-xs transition border border-slate-700" title="Zresetuj podział na drużyny">
                             🧹 Resetuj
@@ -888,7 +891,7 @@
 
     <!-- Welcome Gate / First-Time Login Modal -->
     <div id="welcomeGateModal" role="dialog" aria-modal="true" aria-labelledby="welcomeModalTitle" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-5 sm:p-6 max-w-sm w-full space-y-4 shadow-2xl animate-fade-in relative">
+        <div class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-5 sm:p-6 max-w-sm w-full space-y-4 shadow-2xl animate-fade-in relative max-h-[92vh] max-h-[92dvh] overflow-y-auto">
             
             <div class="text-center space-y-2">
                 <div class="relative w-16 h-16 mx-auto rounded-3xl p-0.5 bg-gradient-to-tr from-emerald-500 via-amber-400 to-sky-500 shadow-xl shadow-emerald-950/50 flex items-center justify-center">
@@ -896,12 +899,12 @@
                 </div>
                 <div>
                     <h2 id="welcomeModalTitle" class="text-xl font-black text-white tracking-tight">Witaj w Siatka-App 🏐</h2>
-
-                    <p class="text-xs text-slate-400 mt-1">Wybierz swój profil zawodnika, aby wejść do gry i zapamiętać sesję na telefonie:</p>
+                    <p id="welcomeModalSubtitle" class="text-xs text-slate-400 mt-1">Wybierz swój profil zawodnika, aby wejść do gry i zapamiętać sesję na telefonie:</p>
                 </div>
             </div>
 
-            <form onsubmit="event.preventDefault(); handleWelcomeLogin();" class="space-y-3.5 pt-1">
+            <!-- 1. Formularz Logowania z Listy -->
+            <form id="welcomeLoginForm" onsubmit="event.preventDefault(); handleWelcomeLogin();" class="space-y-3.5 pt-1">
                 <div>
                     <label for="welcomePlayerSelect" class="block text-xs font-bold text-slate-300 mb-1">1. Kim jesteś? (Wybierz siebie):</label>
                     <select id="welcomePlayerSelect" onchange="checkWelcomePlayerHasPin(this.value)" required class="w-full bg-slate-950 border border-slate-700 text-xs font-semibold text-white rounded-xl px-3 py-3 focus:outline-none focus:border-emerald-500 cursor-pointer">
@@ -924,6 +927,44 @@
 
                     <button type="button" onclick="continueAsGuest()" class="w-full bg-slate-950/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200 font-semibold py-2.5 rounded-xl text-xs transition border border-slate-800">
                         Przeglądaj jako gość (tylko podgląd) 👀
+                    </button>
+
+                    <button type="button" onclick="showWelcomeRegisterView(true)" class="w-full bg-indigo-950/40 hover:bg-indigo-900/50 border border-indigo-800/60 text-indigo-300 font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1.5 mt-1">
+                        <span>✨</span>
+                        <span>Nie ma Cię na liście? Stwórz nowy profil</span>
+                    </button>
+                </div>
+            </form>
+
+            <!-- 2. Formularz Rejestracji Nowego Gracza (Self-onboarding) -->
+            <form id="welcomeRegisterForm" onsubmit="event.preventDefault(); handleWelcomeRegister();" class="space-y-3 pt-1 hidden">
+                <div>
+                    <label for="regPlayerName" class="block text-xs font-bold text-slate-300 mb-1">1. Twoje Imię i Nazwisko (lub ksywka):</label>
+                    <input id="regPlayerName" type="text" placeholder="np. Jan Kowalski" required class="w-full bg-slate-950 border border-slate-700 text-xs font-semibold text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-emerald-500">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block text-xs font-bold text-slate-300">2. Twoje pozycje na boisku (zaznacz jedną lub kilka):</label>
+                    <div id="regPositionsGrid" class="grid grid-cols-2 gap-1.5 pt-0.5">
+                        <!-- Populated by JS -->
+                    </div>
+                    <p class="text-[10px] text-slate-400">Możesz wybrać kilka pozycji!</p>
+                </div>
+
+                <div class="space-y-1">
+                    <label for="regPlayerPin" class="block text-xs font-bold text-slate-300">3. Ustal swój 4-cyfrowy PIN:</label>
+                    <input id="regPlayerPin" type="password" maxlength="6" inputmode="numeric" placeholder="••••" required class="w-full bg-slate-950 border border-slate-700 text-center font-mono text-xl tracking-widest font-black text-emerald-400 rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-500">
+                    <p class="text-[10px] text-slate-400">Zapamiętaj ten PIN do logowania na swoim telefonie.</p>
+                </div>
+
+                <div class="space-y-2 pt-1">
+                    <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 active:scale-[0.98] text-slate-950 font-black py-3 rounded-2xl text-xs sm:text-sm transition shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2">
+                        <span>Dołącz do ekipy i wejdź</span>
+                        <span>🏐🚀</span>
+                    </button>
+
+                    <button type="button" onclick="showWelcomeRegisterView(false)" class="w-full bg-slate-950/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200 font-semibold py-2 rounded-xl text-xs transition border border-slate-800">
+                        ← Wróć do wyboru z listy
                     </button>
                 </div>
             </form>
@@ -1412,6 +1453,7 @@
                                 🏐 Zawodnik
                             </span>
                         </div>
+                        <div id="playerCardPositions" class="flex items-center gap-1 mt-1 flex-wrap"></div>
                         <p id="playerCardSubtext" class="text-xs text-slate-400 mt-0.5">Karta zawodnika w sezonie 2026</p>
                     </div>
                 </div>
@@ -1472,6 +1514,33 @@
             <button type="button" onclick="closePlayerCardModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2.5 rounded-2xl text-xs transition">
                 Zamknij
             </button>
+        </div>
+    </div>
+
+    <!-- Modal Edycji Pozycji Gracza (dla Organizatora) -->
+    <div id="playerPositionEditModal" role="dialog" aria-modal="true" aria-labelledby="posEditTitle" onclick="if(event.target === this) closePlayerPositionEditModal()" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 max-w-sm w-full space-y-4 shadow-2xl animate-fade-in relative">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+                <h3 id="posEditTitle" class="font-black text-white text-base flex items-center gap-2">
+                    <span>🏐</span> Pozycje na boisku
+                </h3>
+                <button type="button" onclick="closePlayerPositionEditModal()" aria-label="Zamknij" class="text-slate-400 hover:text-white font-bold text-lg min-w-[36px] min-h-[36px] flex items-center justify-center -mr-2 -my-1">✕</button>
+            </div>
+            <div>
+                <p class="text-xs text-slate-300">Zawodnik: <strong id="posEditPlayerName" class="text-emerald-400"></strong></p>
+                <p class="text-[11px] text-slate-400 mt-0.5">Zaznacz pozycje, na których może grać ten zawodnik (jedna lub kilka):</p>
+            </div>
+            <div id="posEditGrid" class="grid grid-cols-2 gap-1.5 pt-1">
+                <!-- Rendered dynamically -->
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button type="button" onclick="savePlayerPositionsModal()" class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-2.5 rounded-xl text-xs transition shadow-lg shadow-emerald-500/20">
+                    Zapisz pozycje ✓
+                </button>
+                <button type="button" onclick="closePlayerPositionEditModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-3 py-2.5 rounded-xl text-xs transition">
+                    Anuluj
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1597,6 +1666,7 @@ const EMPTY_INITIAL_STATE = {
         "Michał Chaciński": "82a1db87bf60b1db2c3442abc27b12931fa9fbfca2d2bbe9f0c9350a22b34e5b"
     },
     player_avatars: {},
+    player_positions: {},
     base_games: {
         "Arcadio Morales": 0,
         "Michał Chaciński": 0
@@ -1804,6 +1874,7 @@ function submitSetupWizard() {
             [organizerName]: adminHash
         },
         player_avatars: {},
+        player_positions: {},
         base_games: {},
         player_skills: {},
         months: {
@@ -2174,6 +2245,44 @@ function initFirebaseSync() {
 
         let currentBillingFilter = 'all';
 
+        // ================= VOLLEYBALL POSITIONS SYSTEM =================
+        const VOLLEYBALL_POSITIONS = {
+            'S': { code: 'S', name: 'Rozgrywający', icon: '🎯', short: 'S', color: 'text-sky-300 bg-sky-950/80 border-sky-800' },
+            'OP': { code: 'OP', name: 'Atakujący', icon: '🔨', short: 'OP', color: 'text-amber-300 bg-amber-950/80 border-amber-800' },
+            'OH': { code: 'OH', name: 'Przyjmujący', icon: '🛡️', short: 'OH', color: 'text-emerald-300 bg-emerald-950/80 border-emerald-800' },
+            'MB': { code: 'MB', name: 'Środkowy', icon: '🧱', short: 'MB', color: 'text-purple-300 bg-purple-950/80 border-purple-800' },
+            'L': { code: 'L', name: 'Libero', icon: '⚡', short: 'L', color: 'text-rose-300 bg-rose-950/80 border-rose-800' },
+            'UNI': { code: 'UNI', name: 'Uniwersalny', icon: '🔄', short: 'UNI', color: 'text-slate-300 bg-slate-900 border-slate-700' }
+        };
+
+        function getPlayerPositions(playerName) {
+            if (!playerName || !AppState.player_positions) return ['UNI'];
+            const val = AppState.player_positions[playerName];
+            if (Array.isArray(val) && val.length > 0) return val;
+            if (typeof val === 'string' && val.trim()) {
+                const parts = val.split(',').map(s => s.trim().toUpperCase()).filter(s => VOLLEYBALL_POSITIONS[s]);
+                if (parts.length > 0) return parts;
+            }
+            return ['UNI'];
+        }
+
+        function getPlayerPositionsBadgesHtml(playerName) {
+            const positions = getPlayerPositions(playerName);
+            return positions.map(code => {
+                const def = VOLLEYBALL_POSITIONS[code] || VOLLEYBALL_POSITIONS['UNI'];
+                return `<span class="inline-flex items-center gap-0.5 text-[9px] font-black px-1.5 py-0.5 rounded ${def.color} border shrink-0 select-none shadow-sm" title="${escapeHtml(def.name)}">${def.icon} ${def.short}</span>`;
+            }).join(' ');
+        }
+
+        function getSinglePositionBadgeHtml(roleKey) {
+            const def = VOLLEYBALL_POSITIONS[roleKey] || VOLLEYBALL_POSITIONS['UNI'];
+            return `<span class="inline-flex items-center gap-0.5 text-[9px] font-black px-1.5 py-0.5 rounded ${def.color} border shrink-0 select-none shadow-sm" title="${escapeHtml(def.name)}">${def.icon} ${def.name}</span>`;
+        }
+
+        let regSelectedPositions = ['UNI'];
+        let editingPositionsPlayer = '';
+        let editingPositionsSelected = ['UNI'];
+
         // ================= UTILITIES & DATA SANITIZATION =================
         function escapeHtml(str) {
             if (str == null) return '';
@@ -2229,7 +2338,7 @@ function initFirebaseSync() {
 
         function isMvpVotingFinished(match) {
             if (!match || match.isCancelled) return false;
-            const attendees = (match.attendees || []).slice(0, 12);
+            const attendees = (match.attendees || []).slice(0, 14);
             if (attendees.length === 0) return false;
             if (match.mvpClosed === true) return true;
             const votesCount = Object.keys(match.votes || {}).length;
@@ -2429,6 +2538,9 @@ function initFirebaseSync() {
 
             if (!AppState.player_avatars || typeof AppState.player_avatars !== 'object') {
                 AppState.player_avatars = {};
+            }
+            if (!AppState.player_positions || typeof AppState.player_positions !== 'object') {
+                AppState.player_positions = {};
             }
 
             const sortedMonths = getSortedMonths();
@@ -2857,8 +2969,8 @@ function initFirebaseSync() {
                     const idx = item.originalIndex;
                     const isSelected = idx === AppState.currentMatchIndex;
                     const attendeesCount = (m.attendees || []).length;
-                    const mainCount = Math.min(12, attendeesCount);
-                    const isFull = attendeesCount >= 12;
+                    const mainCount = Math.min(14, attendeesCount);
+                    const isFull = attendeesCount >= 14;
                     const isPast = (m.date || '') < todayStr;
                     const dayDisplay = (getShortDayName(m.date) ? getShortDayName(m.date) + ' ' : '') + (m.date || '').slice(5);
 
@@ -2877,7 +2989,7 @@ function initFirebaseSync() {
                                     : isFull 
                                         ? 'bg-emerald-950 text-emerald-400 border border-emerald-800/60' 
                                         : 'bg-slate-900 text-slate-400 border border-slate-800'
-                            }">${mainCount}/12</span>
+                            }">${mainCount}/14</span>
                         </button>
                     `;
                 }).join('');
@@ -2926,8 +3038,8 @@ function initFirebaseSync() {
             if (!currentMatch) {
                 document.getElementById('matchDateBadge').innerText = "Brak meczu";
                 const costEl = document.getElementById('matchCostPerPerson');
-                if (costEl) costEl.innerText = "0.00 zł";
-                document.getElementById('matchPlayerCount').innerText = "0/12";
+                if (costEl) costEl.innerText = "20.00 zł";
+                document.getElementById('matchPlayerCount').innerText = "0/14";
                 document.getElementById('mainSquadList').innerHTML = `<div class="p-4 text-center text-xs text-slate-600">Brak meczów w tym miesiącu.</div>`;
                 document.getElementById('reserveCardContainer').classList.add('hidden');
                 if (upcomingBadge) upcomingBadge.classList.add('hidden');
@@ -2937,17 +3049,16 @@ function initFirebaseSync() {
             }
             const isCancelled = !!currentMatch.isCancelled;
             const attendees = currentMatch.attendees || [];
-            const mainPlayers = attendees.slice(0, 12);
-            const reservePlayers = attendees.slice(12);
+            const mainPlayers = attendees.slice(0, 14);
+            const reservePlayers = attendees.slice(14);
 
-            const cost = isCancelled ? 0 : (currentMatch.cost !== undefined ? currentMatch.cost : 250);
-            const costPerPerson = (isCancelled || mainPlayers.length === 0) ? "0.00" : (cost / mainPlayers.length).toFixed(2);
+            const costPerPerson = isCancelled ? "0.00" : "20.00";
 
             document.getElementById('matchDateBadge').innerText = currentMatch.date;
             const costEl = document.getElementById('matchCostPerPerson');
             if (costEl) costEl.innerText = `${costPerPerson} zł`;
-            document.getElementById('matchPlayerCount').innerText = `${mainPlayers.length}/12`;
-            document.getElementById('mainSquadBadge').innerText = `${mainPlayers.length}/12`;
+            document.getElementById('matchPlayerCount').innerText = `${mainPlayers.length}/14`;
+            document.getElementById('mainSquadBadge').innerText = `${mainPlayers.length}/14`;
 
             if (scoreTextEl) {
                 const editLabel = document.getElementById('editScoreBtnLabel');
@@ -2990,7 +3101,7 @@ function initFirebaseSync() {
                                         <div class="min-w-0">
                                             <p class="text-xs font-extrabold text-white truncate">Jesteś zapisany(a) na ten mecz!</p>
                                             <p class="text-[11px] ${isInMain ? 'text-emerald-400' : 'text-amber-400'} font-semibold">
-                                                ${isInMain ? '🟢 Skład Główny (12)' : '⏳ Lista Rezerwowa'}
+                                                ${isInMain ? '🟢 Skład Główny (14)' : '⏳ Lista Rezerwowa'}
                                             </p>
                                         </div>
                                     </div>
@@ -3053,7 +3164,7 @@ function initFirebaseSync() {
             const mainListEl = document.getElementById('mainSquadList');
             const allStreaks = typeof getAllPlayersStreaks === 'function' ? getAllPlayersStreaks() : {};
             let squadHtml = "";
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 14; i++) {
                 if (i < mainPlayers.length) {
                     const p = mainPlayers[i];
                     const isMe = (p === loggedPlayer);
@@ -3071,6 +3182,7 @@ function initFirebaseSync() {
                                 ${getPlayerAvatarHtml(p, 'xs')}
                                 <span class="font-semibold ${isMe ? 'text-emerald-300 font-bold' : 'text-slate-200'} group-hover:text-amber-300 transition truncate" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐ (Ty)' : ''}</span>
                                 ${streakBadge}
+                                ${getPlayerPositionsBadgesHtml(p)}
                             </div>
                             ${canRemove ? `
                                 <button type="button" onclick="removePlayerFromCurrentMatch(${toInlineArgument(p)})" title="${isMe ? 'Wypisz się z meczu' : 'Usuń z listy (Organizator)'}" class="text-slate-500 hover:text-rose-400 font-bold min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:min-h-[44px] flex items-center justify-center transition text-sm shrink-0 -mr-1">✕</button>
@@ -3115,6 +3227,7 @@ function initFirebaseSync() {
                                 ${getPlayerAvatarHtml(p, 'xs')}
                                 <span class="font-medium ${isMe ? 'text-amber-300 font-bold' : 'text-slate-300'} group-hover:text-amber-300 transition truncate" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐ (Ty)' : ''}</span>
                                 ${streakBadge}
+                                ${getPlayerPositionsBadgesHtml(p)}
                             </div>
                             ${canRemove ? `
                                 <button type="button" onclick="removePlayerFromCurrentMatch(${toInlineArgument(p)})" title="${isMe ? 'Wypisz się z rezerwy' : 'Usuń z rezerwy (Organizator)'}" class="text-slate-500 hover:text-rose-400 font-bold min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:min-h-[44px] flex items-center justify-center transition text-sm shrink-0 -mr-1">✕</button>
@@ -3272,8 +3385,8 @@ function initFirebaseSync() {
                 if (!currentMatch) return;
 
                 const oldAttendees = currentMatch.attendees || [];
-                const wasInMainSquad = oldAttendees.slice(0, 12).includes(name);
-                const firstReserve = oldAttendees.length > 12 ? oldAttendees[12] : null;
+                const wasInMainSquad = oldAttendees.slice(0, 14).includes(name);
+                const firstReserve = oldAttendees.length > 14 ? oldAttendees[14] : null;
 
                 currentMatch.attendees = oldAttendees.filter(p => p !== name);
                 if (currentMatch.votes && currentMatch.votes[name]) {
@@ -3400,7 +3513,7 @@ function initFirebaseSync() {
             const currentMatch = monthData?.matches[AppState.currentMatchIndex];
             if (!currentMatch) return;
 
-            const mainSquad = (currentMatch.attendees || []).slice(0, 12);
+            const mainSquad = (currentMatch.attendees || []).slice(0, 14);
             if (!mainSquad.includes(playerName)) {
                 return alert("Gracz musi znajdować się w składzie głównym tego meczu!");
             }
@@ -3412,8 +3525,8 @@ function initFirebaseSync() {
 
             if (targetList.includes(playerName)) return;
 
-            if (targetList.length >= 6) {
-                return alert(`"${teamTitle}" ma już komplet graczy (maks 6)!`);
+            if (targetList.length >= 7) {
+                return alert(`"${teamTitle}" ma już komplet graczy (maks 7)!`);
             }
 
             const otherIdx = otherList.indexOf(playerName);
@@ -3457,6 +3570,207 @@ function initFirebaseSync() {
             showToast(`Przeniesiono ${playerName} do graczy nieprzypisanych.`);
         }
 
+        // ================= DYNAMIC POSITION-BALANCED TEAM DRAFTING =================
+        function generatePositionBalancedTeams() {
+            if (!isAdmin) {
+                showToast("Tylko Organizator może losować składy! 🔒");
+                return;
+            }
+            const monthData = AppState.months[AppState.currentMonth];
+            const currentMatch = monthData?.matches[AppState.currentMatchIndex];
+            if (!currentMatch) return;
+
+            const mainSquad = (currentMatch.attendees || []).slice(0, 14);
+            if (mainSquad.length < 2) {
+                alert("Potrzebujesz co najmniej 2 graczy w składzie głównym do losowania!");
+                return;
+            }
+
+            const skills = AppState.player_skills || {};
+            const playersData = mainSquad.map(name => ({
+                name,
+                skill: (skills[name] || 3) + (Math.random() * 0.4 - 0.2),
+                positions: getPlayerPositions(name)
+            }));
+
+            const n = playersData.length;
+            const sizeA = Math.ceil(n / 2);
+            const sizeB = Math.floor(n / 2);
+
+            function getCombinationsWithAnchor(arr, k, anchorFirst) {
+                const result = [];
+                function backtrack(start, current) {
+                    if (current.length === k) {
+                        result.push([...current]);
+                        return;
+                    }
+                    for (let i = start; i < arr.length; i++) {
+                        current.push(arr[i]);
+                        backtrack(i + 1, current);
+                        current.pop();
+                    }
+                }
+                if (anchorFirst && arr.length > 0) {
+                    backtrack(1, [arr[0]]);
+                } else {
+                    backtrack(0, []);
+                }
+                return result;
+            }
+
+            const anchor = (sizeA === sizeB);
+            const allCombosA = getCombinationsWithAnchor(playersData, sizeA, anchor);
+
+            let bestScore = Infinity;
+            let bestTeamA = null;
+            let bestTeamB = null;
+
+            function evaluatePositionPenalty(team, targetSize) {
+                let pen = 0;
+                const hasS = team.some(p => p.positions.includes('S'));
+                const hasOP = team.some(p => p.positions.includes('OP'));
+                const ohCount = team.filter(p => p.positions.includes('OH')).length;
+                const mbCount = team.filter(p => p.positions.includes('MB')).length;
+                const hasL = team.some(p => p.positions.includes('L'));
+                const uniCount = team.filter(p => p.positions.includes('UNI')).length;
+
+                // Setter check
+                if (!hasS) {
+                    if (uniCount > 0) pen += 50;
+                    else pen += 300;
+                }
+
+                // Opposite check
+                if (!hasOP && uniCount === 0) pen += 40;
+
+                // Outside hitters (need 2)
+                if (ohCount === 0) pen += 100;
+                else if (ohCount === 1) pen += 25;
+
+                // Middle blockers (need 2)
+                if (mbCount === 0) pen += 100;
+                else if (mbCount === 1) pen += 25;
+
+                // Libero handling
+                if (targetSize === 7 && hasL) pen -= 30; // bonus for Libero in 7-man team
+                if (targetSize === 6 && hasL) pen += 120; // 6-man team cannot swap Libero properly
+
+                return pen;
+            }
+
+            const totalL = playersData.filter(p => p.positions.includes('L')).length;
+            const totalS = playersData.filter(p => p.positions.includes('S')).length;
+
+            for (let i = 0; i < allCombosA.length; i++) {
+                const teamA = allCombosA[i];
+                const teamANames = new Set(teamA.map(p => p.name));
+                const teamB = playersData.filter(p => !teamANames.has(p.name));
+
+                const sumA = teamA.reduce((s, p) => s + p.skill, 0);
+                const sumB = teamB.reduce((s, p) => s + p.skill, 0);
+
+                let skillPenalty = 0;
+                if (sizeA === sizeB) {
+                    skillPenalty = Math.abs(sumA - sumB) * 20;
+                } else {
+                    const avgA = sumA / sizeA;
+                    const avgB = sumB / sizeB;
+                    skillPenalty = Math.abs(avgA - avgB) * 80;
+                }
+
+                let posPenalty = evaluatePositionPenalty(teamA, sizeA) + evaluatePositionPenalty(teamB, sizeB);
+
+                if (totalS >= 2) {
+                    const sA = teamA.filter(p => p.positions.includes('S')).length;
+                    const sB = teamB.filter(p => p.positions.includes('S')).length;
+                    if (sA === 0 || sB === 0) posPenalty += 250;
+                }
+
+                if (totalL >= 2) {
+                    const lA = teamA.filter(p => p.positions.includes('L')).length;
+                    const lB = teamB.filter(p => p.positions.includes('L')).length;
+                    if (lA === 0 || lB === 0) posPenalty += 200;
+                }
+
+                const totalScore = skillPenalty + posPenalty + (Math.random() * 3.5);
+
+                if (totalScore < bestScore) {
+                    bestScore = totalScore;
+                    bestTeamA = teamA;
+                    bestTeamB = teamB;
+                }
+            }
+
+            if (!bestTeamA || !bestTeamB) {
+                return generateRandomTeams();
+            }
+
+            function assignRoles(team, targetSize) {
+                const roles = {};
+                const available = [...team];
+
+                function takeBest(posKey) {
+                    const idx = available.findIndex(p => p.positions.includes(posKey));
+                    if (idx !== -1) {
+                        const picked = available.splice(idx, 1)[0];
+                        return picked.name;
+                    }
+                    return null;
+                }
+
+                if (targetSize === 7) {
+                    const lPlayer = takeBest('L');
+                    if (lPlayer) roles[lPlayer] = 'L';
+                }
+
+                const sPlayer = takeBest('S') || (available.length ? available.splice(0, 1)[0].name : null);
+                if (sPlayer) roles[sPlayer] = 'S';
+
+                const opPlayer = takeBest('OP');
+                if (opPlayer) roles[opPlayer] = 'OP';
+
+                const mb1 = takeBest('MB');
+                if (mb1) roles[mb1] = 'MB';
+                const mb2 = takeBest('MB');
+                if (mb2) roles[mb2] = 'MB';
+
+                const oh1 = takeBest('OH');
+                if (oh1) roles[oh1] = 'OH';
+                const oh2 = takeBest('OH');
+                if (oh2) roles[oh2] = 'OH';
+
+                while (available.length > 0) {
+                    const p = available.shift();
+                    roles[p.name] = p.positions[0] || 'UNI';
+                }
+
+                return roles;
+            }
+
+            const darkRoles = assignRoles(bestTeamA, sizeA);
+            const lightRoles = assignRoles(bestTeamB, sizeB);
+
+            const namesA = bestTeamA.map(p => p.name);
+            const namesB = bestTeamB.map(p => p.name);
+
+            const flip = Math.random() > 0.5;
+            const existingDarkName = currentMatch.teams?.darkName || "Drużyna Ciemna";
+            const existingLightName = currentMatch.teams?.lightName || "Drużyna Jasna";
+
+            currentMatch.teams = {
+                dark: flip ? namesA : namesB,
+                light: flip ? namesB : namesA,
+                darkRoles: flip ? darkRoles : lightRoles,
+                lightRoles: flip ? lightRoles : darkRoles,
+                darkName: existingDarkName,
+                lightName: existingLightName
+            };
+
+            syncState();
+            renderTeamsTab();
+            showToast("Wylosowano zbalansowane składy NA POZYCJE! 🎯🏐");
+        }
+
         function generateRandomTeams() {
             if (!isAdmin) {
                 showToast("Tylko Organizator może losować składy! 🔒");
@@ -3466,15 +3780,13 @@ function initFirebaseSync() {
             const currentMatch = monthData?.matches[AppState.currentMatchIndex];
             if (!currentMatch) return;
 
-            const mainSquad = (currentMatch.attendees || []).slice(0, 12);
+            const mainSquad = (currentMatch.attendees || []).slice(0, 14);
             if (mainSquad.length < 2) {
                 alert("Potrzebujesz co najmniej 2 graczy w składzie głównym do losowania!");
                 return;
             }
 
             const skills = AppState.player_skills || {};
-            const p1 = "Kuba Parszewski";
-            const p2 = "Kondziu Parszewski";
 
             const ratedPlayers = mainSquad.map(name => ({
                 name,
@@ -3489,28 +3801,7 @@ function initFirebaseSync() {
             let sumB = 0;
             const maxPerTeam = Math.ceil(mainSquad.length / 2);
 
-            const hasP1 = mainSquad.includes(p1);
-            const hasP2 = mainSquad.includes(p2);
-            let remaining = [];
-
-            // PARSZEWSKI BROTHERS RULE: Rozdzielenie braci
-            if (hasP1 && hasP2) {
-                const p1Obj = ratedPlayers.find(x => x.name === p1);
-                const p2Obj = ratedPlayers.find(x => x.name === p2);
-
-                if (p1Obj.skill >= p2Obj.skill) {
-                    teamA.push(p1); sumA += p1Obj.skill;
-                    teamB.push(p2); sumB += p2Obj.skill;
-                } else {
-                    teamA.push(p2); sumA += p2Obj.skill;
-                    teamB.push(p1); sumB += p1Obj.skill;
-                }
-                remaining = ratedPlayers.filter(x => x.name !== p1 && x.name !== p2);
-            } else {
-                remaining = ratedPlayers;
-            }
-
-            remaining.forEach((player) => {
+            ratedPlayers.forEach((player) => {
                 if (teamA.length >= maxPerTeam) {
                     teamB.push(player.name);
                     sumB += player.skill;
@@ -3605,7 +3896,7 @@ function initFirebaseSync() {
                 return;
             }
 
-            const mainSquad = (currentMatch.attendees || []).slice(0, 12);
+            const mainSquad = (currentMatch.attendees || []).slice(0, 14);
             const teams = currentMatch.teams || { dark: [], light: [], darkName: "Drużyna Ciemna", lightName: "Drużyna Jasna" };
 
             const dark = (teams.dark || []).filter(p => mainSquad.includes(p));
@@ -3618,8 +3909,8 @@ function initFirebaseSync() {
             if (courtDarkTitle) courtDarkTitle.innerText = `⬛ ${darkName}`;
             if (courtLightTitle) courtLightTitle.innerText = `⬜ ${lightName}`;
 
-            if (darkCountEl) darkCountEl.innerText = `${dark.length}/6`;
-            if (lightCountEl) lightCountEl.innerText = `${light.length}/6`;
+            if (darkCountEl) darkCountEl.innerText = `${dark.length}/7`;
+            if (lightCountEl) lightCountEl.innerText = `${light.length}/7`;
 
             const unassigned = mainSquad.filter(p => !dark.includes(p) && !light.includes(p));
 
@@ -3662,14 +3953,18 @@ function initFirebaseSync() {
             if (dark.length === 0) {
                 darkListEl.innerHTML = `<div class="p-6 text-center text-xs text-slate-600">Brak graczy. ${isAdmin ? 'Przypisz ręcznie z listy powyżej lub kliknij "🎲 Losuj równe składy".' : 'Organizator nie przydzielił jeszcze składów.'}</div>`;
             } else {
+                const darkRoles = teams.darkRoles || {};
                 darkListEl.innerHTML = dark.map((p, i) => {
                     const isMe = (p === loggedPlayer);
+                    const pRole = darkRoles[p];
+                    const roleBadge = pRole ? getSinglePositionBadgeHtml(pRole) : getPlayerPositionsBadgesHtml(p);
                     return `
                         <div class="bg-slate-900 border ${isMe ? 'border-emerald-500/60 bg-emerald-950/10' : 'border-slate-800/90'} px-2.5 py-2 rounded-xl text-xs flex items-center justify-between gap-2 shadow-sm">
                             <div class="flex items-center gap-1.5 min-w-0 flex-1">
-                                <span class="w-2 h-2 rounded-full bg-slate-600 border border-slate-400 shrink-0" title="Drużyna Ciemna"></span>
+                                <span class="w-2 h-2 rounded-full bg-slate-400 border border-slate-300 shadow-sm shrink-0" title="Drużyna Ciemna"></span>
                                 <span class="font-mono text-slate-500 font-bold w-4 shrink-0 text-right">${i+1}.</span>
                                 <span class="font-semibold ${isMe ? 'text-emerald-300 font-bold' : 'text-slate-200'} truncate" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐' : ''}</span>
+                                ${roleBadge}
                             </div>
                             ${isAdmin ? `
                             <div class="flex items-center gap-1 shrink-0">
@@ -3688,7 +3983,7 @@ function initFirebaseSync() {
 
             // Quick Add Select for Dark Team
             if (darkAddContainer) {
-                if (isAdmin && dark.length < 6 && unassigned.length > 0) {
+                if (isAdmin && dark.length < 7 && unassigned.length > 0) {
                     darkAddContainer.innerHTML = `
                         <select onchange="if(this.value){ assignPlayerToTeam(this.value, 'dark'); this.value=''; }" class="w-full bg-slate-900 border border-dashed border-slate-700 hover:border-indigo-500 text-slate-300 text-xs font-semibold rounded-xl px-3 py-2 focus:outline-none cursor-pointer">
                             <option value="">+ Przypisz gracza do Ciemnych...</option>
@@ -3704,14 +3999,18 @@ function initFirebaseSync() {
             if (light.length === 0) {
                 lightListEl.innerHTML = `<div class="p-6 text-center text-xs text-slate-600">Brak graczy. ${isAdmin ? 'Przypisz ręcznie z listy powyżej lub kliknij "🎲 Losuj równe składy".' : 'Organizator nie przydzielił jeszcze składów.'}</div>`;
             } else {
+                const lightRoles = teams.lightRoles || {};
                 lightListEl.innerHTML = light.map((p, i) => {
                     const isMe = (p === loggedPlayer);
+                    const pRole = lightRoles[p];
+                    const roleBadge = pRole ? getSinglePositionBadgeHtml(pRole) : getPlayerPositionsBadgesHtml(p);
                     return `
                         <div class="bg-slate-900 border ${isMe ? 'border-emerald-500/60 bg-emerald-950/10' : 'border-slate-800/90'} px-2.5 py-2 rounded-xl text-xs flex items-center justify-between gap-2 shadow-sm">
                             <div class="flex items-center gap-1.5 min-w-0 flex-1">
                                 <span class="w-2 h-2 rounded-full bg-amber-400 border border-amber-300 shadow-sm shadow-amber-400/50 shrink-0" title="Drużyna Jasna"></span>
                                 <span class="font-mono text-slate-500 font-bold w-4 shrink-0 text-right">${i+1}.</span>
                                 <span class="font-semibold ${isMe ? 'text-emerald-300 font-bold' : 'text-slate-200'} truncate" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐' : ''}</span>
+                                ${roleBadge}
                             </div>
                             ${isAdmin ? `
                             <div class="flex items-center gap-1 shrink-0">
@@ -3730,7 +4029,7 @@ function initFirebaseSync() {
 
             // Quick Add Select for Light Team
             if (lightAddContainer) {
-                if (isAdmin && light.length < 6 && unassigned.length > 0) {
+                if (isAdmin && light.length < 7 && unassigned.length > 0) {
                     lightAddContainer.innerHTML = `
                         <select onchange="if(this.value){ assignPlayerToTeam(this.value, 'light'); this.value=''; }" class="w-full bg-slate-900 border border-dashed border-slate-700 hover:border-indigo-500 text-slate-300 text-xs font-semibold rounded-xl px-3 py-2 focus:outline-none cursor-pointer">
                             <option value="">+ Przypisz gracza do Jasnych...</option>
@@ -3742,16 +4041,21 @@ function initFirebaseSync() {
                 }
             }
 
-            // 4. Render Volleyball Court Grid 6v6
+            // 4. Render Volleyball Court Grid
+            const courtSlotsCount = Math.max(6, Math.max(dark.length, light.length));
             if (courtDarkGrid) {
                 let darkCourtHtml = "";
-                for (let i = 0; i < 6; i++) {
+                for (let i = 0; i < courtSlotsCount; i++) {
                     if (i < dark.length) {
                         const p = dark[i];
+                        const darkRoles = teams.darkRoles || {};
+                        const pRole = darkRoles[p] || getPlayerPositions(p)[0] || 'UNI';
+                        const roleDef = VOLLEYBALL_POSITIONS[pRole] || VOLLEYBALL_POSITIONS['UNI'];
                         darkCourtHtml += `
                             <div class="bg-slate-950/90 border border-slate-700 p-2 rounded-2xl shadow flex flex-col items-center justify-center gap-1">
                                 ${getPlayerAvatarHtml(p, 'md')}
                                 <span class="font-bold text-[11px] text-white truncate max-w-[80px]">${escapeHtml(p.split(' ')[0])}</span>
+                                <span class="text-[8.5px] font-black px-1.5 py-0.5 rounded ${roleDef.color} border text-center truncate max-w-[85px] shadow-sm">${roleDef.icon} ${roleDef.name}</span>
                             </div>
                         `;
                     } else {
@@ -3768,13 +4072,17 @@ function initFirebaseSync() {
 
             if (courtLightGrid) {
                 let lightCourtHtml = "";
-                for (let i = 0; i < 6; i++) {
+                for (let i = 0; i < courtSlotsCount; i++) {
                     if (i < light.length) {
                         const p = light[i];
+                        const lightRoles = teams.lightRoles || {};
+                        const pRole = lightRoles[p] || getPlayerPositions(p)[0] || 'UNI';
+                        const roleDef = VOLLEYBALL_POSITIONS[pRole] || VOLLEYBALL_POSITIONS['UNI'];
                         lightCourtHtml += `
                             <div class="bg-amber-950/80 border border-amber-600/80 p-2 rounded-2xl shadow flex flex-col items-center justify-center gap-1">
                                 ${getPlayerAvatarHtml(p, 'md')}
                                 <span class="font-bold text-[11px] text-amber-200 truncate max-w-[80px]">${escapeHtml(p.split(' ')[0])}</span>
+                                <span class="text-[8.5px] font-black px-1.5 py-0.5 rounded ${roleDef.color} border text-center truncate max-w-[85px] shadow-sm">${roleDef.icon} ${roleDef.name}</span>
                             </div>
                         `;
                     } else {
@@ -3795,8 +4103,8 @@ function initFirebaseSync() {
                 if (totalAssigned === 0) {
                     balanceInd.innerText = "Status: Wybierz składy ręcznie lub wylosuj 🎲";
                     balanceInd.className = "font-bold text-slate-400 text-[11px] ml-2";
-                } else if (dark.length === 6 && light.length === 6) {
-                    balanceInd.innerText = "Status: Składy gotowe (6v6) ✅";
+                } else if (dark.length >= 6 && light.length >= 6 && dark.length === light.length) {
+                    balanceInd.innerText = `Status: Składy gotowe (${dark.length}v${light.length}) ✅`;
                     balanceInd.className = "font-bold text-emerald-400 text-[11px] ml-2";
                 } else {
                     balanceInd.innerText = `Status: Przypisano ${totalAssigned}/${mainSquad.length} graczy (${dark.length} vs ${light.length})`;
@@ -3865,7 +4173,7 @@ function initFirebaseSync() {
             }
 
             if (dateBadge) dateBadge.innerText = `Mecz: ${currentMatch.date}`;
-            const attendees = (currentMatch.attendees || []).slice(0, 12);
+            const attendees = (currentMatch.attendees || []).slice(0, 14);
             const votes = currentMatch.votes || {};
             const totalVotesCast = Object.keys(votes).length;
             const isFinished = isMvpVotingFinished(currentMatch);
@@ -4083,7 +4391,7 @@ function initFirebaseSync() {
                 if (!currentMatch.votes) currentMatch.votes = {};
                 currentMatch.votes[voter] = nominee;
 
-                const attendees = (currentMatch.attendees || []).slice(0, 12);
+                const attendees = (currentMatch.attendees || []).slice(0, 14);
                 const totalVotes = Object.keys(currentMatch.votes).length;
                 const isNowCompleted = totalVotes >= attendees.length && attendees.length > 0;
 
@@ -4173,7 +4481,7 @@ function initFirebaseSync() {
             }
 
             container.innerHTML = historyMatches.map(m => {
-                const attendees = (m.attendees || []).slice(0, 12);
+                const attendees = (m.attendees || []).slice(0, 14);
                 const score = m.score || "Brak wpisanego wyniku";
                 const teams = m.teams || null;
                 const darkName = teams?.darkName || "Drużyna Ciemna";
@@ -4197,7 +4505,7 @@ function initFirebaseSync() {
                                 </span>
                                 <span class="text-[11px] text-slate-400 font-semibold">${escapeHtml(m.monthName)}</span>
                             </div>
-                            <span class="text-[10px] font-bold text-slate-400 font-mono">Frekwencja: ${attendees.length}/12</span>
+                            <span class="text-[10px] font-bold text-slate-400 font-mono">Frekwencja: ${attendees.length}/14</span>
                         </div>
 
                         <div class="bg-slate-900/80 border border-slate-800/80 p-3 rounded-2xl space-y-2">
@@ -4261,11 +4569,11 @@ function initFirebaseSync() {
                 if (m.isCancelled) return;
                 activeMatchesCount++;
                 const attendees = m.attendees || [];
-                const mainSquad = attendees.slice(0, 12);
-                const cost = m.cost !== undefined ? m.cost : 250;
+                const mainSquad = attendees.slice(0, 14);
+                const cost = m.cost !== undefined ? m.cost : 240;
                 totalHallCost += cost;
 
-                const costPerPerson = mainSquad.length > 0 ? (cost / mainSquad.length) : 0;
+                const costPerPerson = 20.00;
                 mainSquad.forEach(p => {
                     if (!playersMap[p]) playersMap[p] = { games: 0, costDue: 0, paid: 0 };
                     playersMap[p].games += 1;
@@ -4686,7 +4994,7 @@ function initFirebaseSync() {
 
             Object.keys(AppState.months || {}).forEach(mName => {
                 (AppState.months[mName]?.matches || []).forEach((m) => {
-                    const attendees = (m.attendees || []).slice(0, 12);
+                    const attendees = (m.attendees || []).slice(0, 14);
                     if (!attendees.includes(playerName)) return;
 
                     const teams = m.teams || null;
@@ -4774,7 +5082,7 @@ function initFirebaseSync() {
             const outcomes = [];
 
             allMatches.forEach(m => {
-                const attendees = (m.attendees || []).slice(0, 12);
+                const attendees = (m.attendees || []).slice(0, 14);
                 if (!attendees.includes(playerName)) return;
 
                 const scoreStr = m.score || '';
@@ -4830,7 +5138,7 @@ function initFirebaseSync() {
                     if (isPlayedMatch) {
                         activeMatches++;
                         totalAvailableSeasonMatches++;
-                        const mainSquad = (m.attendees || []).slice(0, 12);
+                        const mainSquad = (m.attendees || []).slice(0, 14);
                         if (mainSquad.includes(playerName)) {
                             playerAttended++;
                             attendedMatches++;
@@ -5115,6 +5423,9 @@ function initFirebaseSync() {
                 }
             }
 
+            const posEl = document.getElementById('playerCardPositions');
+            if (posEl) posEl.innerHTML = getPlayerPositionsBadgesHtml(playerName);
+
             const gamesEl = document.getElementById('playerCardGames');
             if (gamesEl) gamesEl.innerText = totalGames;
 
@@ -5194,6 +5505,68 @@ function initFirebaseSync() {
             if (modal) modal.classList.add('hidden');
         }
 
+        function openPlayerPositionEditModal(playerName) {
+            if (!isAdmin) return;
+            editingPositionsPlayer = playerName;
+            editingPositionsSelected = [...getPlayerPositions(playerName)];
+            const modal = document.getElementById('playerPositionEditModal');
+            const nameEl = document.getElementById('posEditPlayerName');
+            if (nameEl) nameEl.innerText = playerName;
+            renderPosEditGrid();
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closePlayerPositionEditModal() {
+            const modal = document.getElementById('playerPositionEditModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function renderPosEditGrid() {
+            const grid = document.getElementById('posEditGrid');
+            if (!grid) return;
+            grid.innerHTML = Object.entries(VOLLEYBALL_POSITIONS).map(([code, def]) => {
+                const isSelected = editingPositionsSelected.includes(code);
+                return `
+                    <button type="button" onclick="toggleEditPosition('${code}')" class="px-2 py-2 rounded-xl text-xs font-bold border transition flex items-center justify-between gap-1 active:scale-95 ${isSelected ? 'bg-indigo-600/90 border-indigo-400 text-white shadow-sm' : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'}">
+                        <span class="flex items-center gap-1.5 truncate">
+                            <span>${def.icon}</span>
+                            <span class="truncate">${def.name}</span>
+                        </span>
+                        <span class="text-[10px] font-mono shrink-0">${isSelected ? '✓' : ''}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function toggleEditPosition(code) {
+            if (code !== 'UNI') {
+                editingPositionsSelected = editingPositionsSelected.filter(c => c !== 'UNI');
+            }
+            if (editingPositionsSelected.includes(code)) {
+                editingPositionsSelected = editingPositionsSelected.filter(c => c !== code);
+                if (editingPositionsSelected.length === 0) editingPositionsSelected = ['UNI'];
+            } else {
+                if (code === 'UNI') {
+                    editingPositionsSelected = ['UNI'];
+                } else {
+                    editingPositionsSelected.push(code);
+                }
+            }
+            renderPosEditGrid();
+        }
+
+        function savePlayerPositionsModal() {
+            if (!editingPositionsPlayer) return;
+            if (!AppState.player_positions) AppState.player_positions = {};
+            AppState.player_positions[editingPositionsPlayer] = editingPositionsSelected.length > 0 ? [...editingPositionsSelected] : ['UNI'];
+            syncState();
+            closePlayerPositionEditModal();
+            renderPlayerSkillsGrid();
+            renderCurrentView();
+            const names = editingPositionsSelected.map(c => VOLLEYBALL_POSITIONS[c]?.name || c).join(', ');
+            showToast(`${editingPositionsPlayer}: ${names} 🏐`);
+        }
+
         function renderSeasonRecords() {
             const mvpTally = {};
             Object.keys(AppState.months || {}).forEach(mName => {
@@ -5222,7 +5595,7 @@ function initFirebaseSync() {
                 const base = AppState.base_games[p] || 0;
                 let games = 0;
                 Object.keys(AppState.months || {}).forEach(m => {
-                    games += (AppState.months[m]?.matches || []).filter(x => !x.isCancelled && (x.attendees || []).slice(0, 12).includes(p)).length;
+                    games += (AppState.months[m]?.matches || []).filter(x => !x.isCancelled && (x.attendees || []).slice(0, 14).includes(p)).length;
                 });
                 return { name: p, total: base + games };
             });
@@ -5265,14 +5638,14 @@ function initFirebaseSync() {
 
             const scores = AppState.all_players.map(p => {
                 const base = AppState.base_games[p] || 0;
-                const lip = (AppState.months['Lipiec']?.matches || []).filter(m => isPlayed(m) && (m.attendees || []).slice(0, 12).includes(p)).length;
-                const sie = (AppState.months['Sierpień']?.matches || []).filter(m => isPlayed(m) && (m.attendees || []).slice(0, 12).includes(p)).length;
-                const wrz = (AppState.months['Wrzesień']?.matches || []).filter(m => isPlayed(m) && (m.attendees || []).slice(0, 12).includes(p)).length;
+                const lip = (AppState.months['Lipiec']?.matches || []).filter(m => isPlayed(m) && (m.attendees || []).slice(0, 14).includes(p)).length;
+                const sie = (AppState.months['Sierpień']?.matches || []).filter(m => isPlayed(m) && (m.attendees || []).slice(0, 14).includes(p)).length;
+                const wrz = (AppState.months['Wrzesień']?.matches || []).filter(m => isPlayed(m) && (m.attendees || []).slice(0, 14).includes(p)).length;
                 
                 let other = 0;
                 Object.keys(AppState.months || {}).forEach(m => {
                     if (!['Lipiec', 'Sierpień', 'Wrzesień'].includes(m)) {
-                        other += (AppState.months[m]?.matches || []).filter(x => isPlayed(x) && (x.attendees || []).slice(0, 12).includes(p)).length;
+                        other += (AppState.months[m]?.matches || []).filter(x => isPlayed(x) && (x.attendees || []).slice(0, 14).includes(p)).length;
                     }
                 });
                 const total = base + lip + sie + wrz + other;
@@ -5392,7 +5765,8 @@ function initFirebaseSync() {
             const currentMatch = AppState.months[AppState.currentMonth]?.matches[AppState.currentMatchIndex];
             const attendees = currentMatch ? (currentMatch.attendees || []) : [];
             const isSigned = attendees.includes(loggedPlayer);
-            const isInMain = (attendees.slice(0, 12)).includes(loggedPlayer);
+            const isInMain = (attendees.slice(0, 14)).includes(loggedPlayer);
+            const myPositions = getPlayerPositions(loggedPlayer);
 
             container.innerHTML = `
                 <!-- 1. Karta Główna Gracza (Player Hub) -->
@@ -5414,13 +5788,41 @@ function initFirebaseSync() {
                                         ${isOrganizer ? '👑 Organizator' : '🏐 Zawodnik'}
                                     </span>
                                 </div>
-                                <p class="text-[11px] text-slate-400 mt-0.5">Twój profil jest aktywny i zapamiętany na tym telefonie</p>
+                                <div class="flex items-center gap-1 mt-1 flex-wrap">
+                                    ${getPlayerPositionsBadgesHtml(loggedPlayer)}
+                                </div>
+                                <p class="text-[11px] text-slate-400 mt-1">Twój profil jest aktywny i zapamiętany na tym telefonie</p>
                             </div>
                         </div>
 
                         <button type="button" onclick="logoutPlayerAccount()" title="Wyloguj z profilu" class="text-xs text-rose-400 hover:text-rose-300 font-bold bg-slate-950 border border-slate-800 px-2.5 py-1.5 rounded-xl transition shrink-0">
                             Wyloguj 🚪
                         </button>
+                    </div>
+
+                    <!-- Moje Pozycje na boisku (Multi-select) -->
+                    <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-3 sm:p-3.5 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-extrabold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                                <span>🏐</span> Moje Pozycje na boisku:
+                            </span>
+                            <span class="text-[10px] text-indigo-400 font-semibold">Zaznacz swoje role</span>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                            ${Object.entries(VOLLEYBALL_POSITIONS).map(([code, def]) => {
+                                const isSelected = myPositions.includes(code);
+                                return `
+                                    <button type="button" onclick="toggleMyPosition('${code}')" class="px-2.5 py-2 rounded-xl text-xs font-bold border transition flex items-center justify-between gap-1.5 active:scale-95 ${isSelected ? 'bg-indigo-600/90 border-indigo-400 text-white shadow-md shadow-indigo-600/20' : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'}">
+                                        <span class="flex items-center gap-1.5 truncate">
+                                            <span>${def.icon}</span>
+                                            <span class="truncate">${def.name}</span>
+                                        </span>
+                                        <span class="text-[11px] font-mono shrink-0">${isSelected ? '✓' : ''}</span>
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+                        <p class="text-[10px] text-slate-400 leading-tight">Możesz zaznaczyć kilka pozycji! Ułatwia to automatyczne losowanie składów na pozycje (z podziałem na rozgrywających, skrzydłowych i środkowych).</p>
                     </div>
 
                     <!-- Statystyki Gracza w Kapsułach -->
@@ -5724,6 +6126,30 @@ function initFirebaseSync() {
             }
         }
 
+        function toggleMyPosition(code) {
+            if (!loggedPlayer) return;
+            if (!AppState.player_positions) AppState.player_positions = {};
+            let current = [...getPlayerPositions(loggedPlayer)];
+            if (code !== 'UNI') {
+                current = current.filter(c => c !== 'UNI');
+            }
+            if (current.includes(code)) {
+                current = current.filter(c => c !== code);
+                if (current.length === 0) current = ['UNI'];
+            } else {
+                if (code === 'UNI') {
+                    current = ['UNI'];
+                } else {
+                    current.push(code);
+                }
+            }
+            AppState.player_positions[loggedPlayer] = current;
+            syncState();
+            renderProfileTab();
+            const names = current.map(c => VOLLEYBALL_POSITIONS[c]?.name || c).join(', ');
+            showToast(`Zaktualizowano Twoje pozycje: ${names} 🏐`);
+        }
+
         // ================= WELCOME GATE & LOGIN LOGIC =================
         function openWelcomeGateModal() {
             const modal = document.getElementById('welcomeGateModal');
@@ -5750,6 +6176,115 @@ function initFirebaseSync() {
         function closeWelcomeGateModal() {
             const modal = document.getElementById('welcomeGateModal');
             if (modal) modal.classList.add('hidden');
+            showWelcomeRegisterView(false);
+        }
+
+        function renderRegPositionsGrid() {
+            const grid = document.getElementById('regPositionsGrid');
+            if (!grid) return;
+            grid.innerHTML = Object.entries(VOLLEYBALL_POSITIONS).map(([code, def]) => {
+                const isSelected = regSelectedPositions.includes(code);
+                return `
+                    <button type="button" onclick="toggleRegPosition('${code}')" class="px-2 py-1.5 rounded-xl text-[11px] font-bold border transition flex items-center justify-between gap-1 active:scale-95 ${isSelected ? 'bg-indigo-600/90 border-indigo-400 text-white shadow-sm' : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'}">
+                        <span class="flex items-center gap-1 truncate">
+                            <span>${def.icon}</span>
+                            <span class="truncate">${def.name}</span>
+                        </span>
+                        <span class="text-[10px] font-mono shrink-0">${isSelected ? '✓' : ''}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function toggleRegPosition(code) {
+            if (code !== 'UNI') {
+                regSelectedPositions = regSelectedPositions.filter(c => c !== 'UNI');
+            }
+            if (regSelectedPositions.includes(code)) {
+                regSelectedPositions = regSelectedPositions.filter(c => c !== code);
+                if (regSelectedPositions.length === 0) regSelectedPositions = ['UNI'];
+            } else {
+                if (code === 'UNI') {
+                    regSelectedPositions = ['UNI'];
+                } else {
+                    regSelectedPositions.push(code);
+                }
+            }
+            renderRegPositionsGrid();
+        }
+
+        function showWelcomeRegisterView(show) {
+            const loginForm = document.getElementById('welcomeLoginForm');
+            const regForm = document.getElementById('welcomeRegisterForm');
+            const title = document.getElementById('welcomeModalTitle');
+            const sub = document.getElementById('welcomeModalSubtitle');
+
+            if (show) {
+                if (loginForm) loginForm.classList.add('hidden');
+                if (regForm) regForm.classList.remove('hidden');
+                if (title) title.innerText = "Stwórz profil zawodnika 🏐";
+                if (sub) sub.innerText = "Wpisz swoje dane i pozycje, aby dołączyć do bazy grupy:";
+                regSelectedPositions = ['UNI'];
+                renderRegPositionsGrid();
+                const nameInput = document.getElementById('regPlayerName');
+                if (nameInput) { nameInput.value = ''; nameInput.focus(); }
+                const pinInput = document.getElementById('regPlayerPin');
+                if (pinInput) pinInput.value = '';
+            } else {
+                if (regForm) regForm.classList.add('hidden');
+                if (loginForm) loginForm.classList.remove('hidden');
+                if (title) title.innerText = "Witaj w Siatka-App 🏐";
+                if (sub) sub.innerText = "Wybierz swój profil zawodnika, aby wejść do gry i zapamiętać sesję na telefonie:";
+            }
+        }
+
+        function handleWelcomeRegister() {
+            const nameInput = document.getElementById('regPlayerName');
+            const pinInput = document.getElementById('regPlayerPin');
+            const rawName = nameInput ? nameInput.value : '';
+            const pin = pinInput ? pinInput.value.trim() : '';
+
+            const name = normalizePlayerName(rawName);
+            if (!name || name.length < 2) {
+                alert("Podaj prawidłowe imię i nazwisko (co najmniej 2 znaki)!");
+                return;
+            }
+
+            if (!AppState.all_players) AppState.all_players = [];
+            const exists = AppState.all_players.some(p => p.localeCompare(name, 'pl', { sensitivity: 'base' }) === 0);
+            if (exists) {
+                alert(`Gracz "${name}" już istnieje w bazie! Jeśli to Ty, wybierz swoje nazwisko z listy i zaloguj się kodem PIN.`);
+                showWelcomeRegisterView(false);
+                const sel = document.getElementById('welcomePlayerSelect');
+                if (sel) sel.value = name;
+                return;
+            }
+
+            if (!pin || pin.length < 4) {
+                alert("Podaj co najmniej 4-cyfrowy kod PIN!");
+                return;
+            }
+
+            if (!AppState.player_pins) AppState.player_pins = {};
+            if (!AppState.player_positions) AppState.player_positions = {};
+            if (!AppState.player_skills) AppState.player_skills = {};
+            if (!AppState.base_games) AppState.base_games = {};
+
+            AppState.all_players.push(name);
+            AppState.player_pins[name] = hashPin(pin);
+            AppState.player_positions[name] = regSelectedPositions.length > 0 ? [...regSelectedPositions] : ['UNI'];
+            AppState.player_skills[name] = 3;
+            AppState.base_games[name] = 0;
+
+            syncState();
+
+            loggedPlayer = name;
+            localStorage.setItem(ACTIVE_PLAYER_KEY, name);
+            sessionStorage.removeItem('siatka_custom_group_guest_mode');
+            checkUserAuthSession();
+            closeWelcomeGateModal();
+            renderCurrentView();
+            showToast(`Witaj w ekipie, ${name}! Twój profil został utworzony 🎉`);
         }
 
         function checkWelcomePlayerHasPin(playerName) {
@@ -5976,6 +6511,11 @@ function initFirebaseSync() {
                 delete AppState.player_avatars[oldName];
             }
 
+            if (AppState.player_positions && AppState.player_positions[oldName] !== undefined) {
+                AppState.player_positions[newName] = AppState.player_positions[oldName];
+                delete AppState.player_positions[oldName];
+            }
+
             if (loggedPlayer === oldName) {
                 loggedPlayer = newName;
                 localStorage.setItem(ACTIVE_PLAYER_KEY, newName);
@@ -6110,7 +6650,13 @@ function initFirebaseSync() {
                     <div class="bg-slate-900/60 hover:bg-slate-900/90 border border-slate-800/80 px-2.5 py-1.5 rounded-xl flex items-center justify-between gap-2 text-xs transition">
                         <div class="flex items-center gap-2 min-w-0 flex-1">
                             ${getPlayerAvatarHtml(p, 'xs')}
-                            <span class="font-bold text-slate-200 truncate" title="${escapeHtml(p)}">${escapeHtml(p)}</span>
+                            <div class="min-w-0">
+                                <span class="font-bold text-slate-200 truncate block" title="${escapeHtml(p)}">${escapeHtml(p)}</span>
+                                <div class="flex items-center gap-1 mt-0.5 cursor-pointer group" onclick="openPlayerPositionEditModal(${toInlineArgument(p)})" title="Kliknij, aby zmienić pozycje gracza">
+                                    ${getPlayerPositionsBadgesHtml(p)}
+                                    <span class="text-[9px] text-indigo-400 group-hover:text-indigo-300 font-bold ml-0.5">✏️</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="flex items-center gap-1.5 shrink-0">
                             <div class="flex items-center gap-0.5 bg-slate-950/90 px-1.5 py-1 rounded-lg border border-slate-800/80">
@@ -6178,6 +6724,12 @@ function initFirebaseSync() {
                 }
                 if (AppState.player_pins && AppState.player_pins[name]) {
                     delete AppState.player_pins[name];
+                }
+                if (AppState.player_positions && AppState.player_positions[name]) {
+                    delete AppState.player_positions[name];
+                }
+                if (AppState.player_avatars && AppState.player_avatars[name]) {
+                    delete AppState.player_avatars[name];
                 }
                 syncState();
                 renderProfileTab();
@@ -6483,11 +7035,9 @@ function initFirebaseSync() {
             const dayCap = dayFullName ? (dayFullName.charAt(0).toUpperCase() + dayFullName.slice(1)) : "Mecz";
             
             const attendees = currentMatch ? (currentMatch.attendees || []) : [];
-            const count = attendees.slice(0, 12).length;
-            const freeSlots = Math.max(0, 12 - count);
-            const hallCost = (currentMatch && currentMatch.cost !== undefined) ? currentMatch.cost : (AppState.settings?.hallCost || 240);
-            const cost = (currentMatch && currentMatch.isCancelled) ? 0 : hallCost;
-            const costPerPerson = count > 0 ? (cost / count).toFixed(2) : (cost / 12).toFixed(2);
+            const count = attendees.slice(0, 14).length;
+            const freeSlots = Math.max(0, 14 - count);
+            const costPerPerson = (currentMatch && currentMatch.isCancelled) ? "0.00" : "20.00";
             
             const warmup = AppState.settings?.warmupTime || "19:45";
             const start = AppState.settings?.startTime || "20:00";
@@ -6498,36 +7048,36 @@ function initFirebaseSync() {
             const url = window.location.href;
 
             if (type === 'monday' || type === 'signup') {
-                return `\uD83D\uDD14 ${groupName.toUpperCase()} - ZAPISY NA ${dayCap.toUpperCase()} (${dateStr}) \uD83D\uDD14\n\n` +
-                       `Siemanko! Ruszy\u0142y zapisy na ${dayFullName}.\n` +
-                       `\u23F0 Rozgrzewka: ${warmup} \u2022 Gramy: ${start} - ${end}!\n` +
-                       `\uD83D\uDCCD Miejsce: ${hall}\n\n` +
-                       `\uD83D\uDC49 Zapiszcie si\u0119 przez link:\n${url}\n\n` +
-                       `Limit sk\u0142adu to 12 os\u00f3b (6v6), decyduje kolejno\u015b\u0107 zg\u0142osze\u0144! \uD83C\uDFD0\uD83D\uDD25`;
+                return `🔔 ${groupName.toUpperCase()} - ZAPISY NA ${dayCap.toUpperCase()} (${dateStr}) 🔔\n\n` +
+                       `Siemanko! Ruszyły zapisy na ${dayFullName}.\n` +
+                       `⏰ Rozgrzewka: ${warmup} • Gramy: ${start} - ${end}!\n` +
+                       `📍 Miejsce: ${hall}\n\n` +
+                       `👉 Zapiszcie się przez link:\n${url}\n\n` +
+                       `Limit składu to 14 osób, decyduje kolejność zgłoszeń! 🏐🔥`;
             } else if (type === 'mvp') {
-                return `\uD83C\uDFC6 G\u0141OSOWANIE NA MVP MECZU (${dayCap} ${dateStr}) \uD83C\uDFC6\n\n` +
-                       `Dzi\u0119ki wszystkim za \u015bwietn\u0105 walk\u0119 na parkiecie! \uD83D\uDD25\uD83C\uDFD0\n\n` +
-                       `G\u0142osowanie jest tajne \uD83D\uDD12 Kto Twoim zdaniem zas\u0142u\u017cy\u0142 na MVP? Oddaj g\u0142os:\n${url}\n\n` +
-                       `Podium \uD83E\uDD47\uD83E\uDD48\uD83E\uDD49 i oficjalne wyniki pojawi\u0105 si\u0119 na stronie po zebraniu g\u0142os\u00f3w! \uD83E\uDD85`;
+                return `🏆 GŁOSOWANIE NA MVP MECZU (${dayCap} ${dateStr}) 🏆\n\n` +
+                       `Dzięki wszystkim za świetną walkę na parkiecie! 🔥🏐\n\n` +
+                       `Głosowanie jest tajne 🔒 Kto Twoim zdaniem zasłużył na MVP? Oddaj głos:\n${url}\n\n` +
+                       `Podium 🥇🥈🥉 i oficjalne wyniki pojawią się na stronie po zebraniu głosów! 🦅`;
             } else if (type === 'billing') {
-                return `\uD83D\uDCB0 ROZLICZENIE SK\u0141ADEK ZA HAL\u0118 (${AppState.currentMonth}) \uD83D\uDCB0\n\n` +
-                       `Ekipa, podsumowanie sk\u0142adek za hal\u0119 za miesi\u0105c ${AppState.currentMonth} jest ju\u017c gotowe!\n\n` +
-                       `\uD83D\uDC49 Sprawd\u017a swoj\u0105 kwot\u0119 do wp\u0142aty na stronie:\n${url}\n` +
-                       (blikPhone ? `\n\uD83D\uDCB8 Przelew BLIK na numer: ${blikPhone} (w tytule wpisz swoje imi\u0119 i nazwisko)` : '');
+                return `💰 ROZLICZENIE SKŁADEK ZA HALĘ (${AppState.currentMonth}) 💰\n\n` +
+                       `Ekipa, podsumowanie składek za halę za miesiąc ${AppState.currentMonth} jest już gotowe!\n\n` +
+                       `👉 Sprawdź swoją kwotę do wpłaty na stronie:\n${url}\n` +
+                       (blikPhone ? `\n💸 Przelew BLIK na numer: ${blikPhone} (w tytule wpisz swoje imię i nazwisko)` : '');
             }
 
-            return `\uD83C\uDFD0 ${groupName.toUpperCase()} - DZISIAJ (${dayCap} ${dateStr}) \uD83C\uDFD0\n\n` +
-                   `\u23F0 Rozgrzewka: ${warmup} \u2022 Gra: ${start} - ${end} (spotykamy i przebieramy si\u0119 na hali)!\n` +
-                   `\uD83D\uDCCD Miejsce: ${hall}\n` +
-                   `\uD83D\uDC65 Sk\u0142ad: ${count}/12 (Wolne miejsca: ${freeSlots})\n` +
-                   `\uD83D\uDCB0 Koszt: ~${costPerPerson} z\u0142 / os.\n\n` +
-                   `\uD83D\uDCF2 Zapisy / Sk\u0142ady / Wyniki:\n${url}\n` +
-                   (blikPhone ? `\n\uD83D\uDCB8 Wp\u0142aty BLIK: ${blikPhone}` : '');
+            return `🏐 ${groupName.toUpperCase()} - DZISIAJ (${dayCap} ${dateStr}) 🏐\n\n` +
+                   `⏰ Rozgrzewka: ${warmup} • Gra: ${start} - ${end} (spotykamy i przebieramy się na hali)!\n` +
+                   `📍 Miejsce: ${hall}\n` +
+                   `👥 Skład: ${count}/14 (Wolne miejsca: ${freeSlots})\n` +
+                   `💰 Koszt: 20 zł / os.\n\n` +
+                   `📲 Zapisy / Składy / Wyniki:\n${url}\n` +
+                   (blikPhone ? `\n💸 Wpłaty BLIK: ${blikPhone}` : '');
         }
 
         function openShareModal() {
             if (!isAdmin) {
-                alert("Tylko Organizator mo\u017ce kopiowa\u0107 og\u0142oszenia na grup\u0119!");
+                alert("Tylko Organizator może kopiować ogłoszenia na grupę!");
                 return;
             }
             selectTemplate('match');
@@ -6542,7 +7092,7 @@ function initFirebaseSync() {
             if (navigator.share) {
                 try {
                     await navigator.share({
-                        title: "Siatkówka Piątek",
+                        title: "Siatkówka " + (AppState.settings?.groupName || "AKS Laurowa"),
                         text: msg,
                         url: window.location.href
                     });
@@ -6627,7 +7177,7 @@ function initFirebaseSync() {
             let current = 0;
             let max = 0;
             playedMatches.forEach(m => {
-                const attendees = (m.attendees || []).slice(0, 12);
+                const attendees = (m.attendees || []).slice(0, 14);
                 if (attendees.includes(playerName)) {
                     current++;
                     if (current > max) max = current;
@@ -6647,7 +7197,7 @@ function initFirebaseSync() {
             });
 
             playedMatches.forEach(m => {
-                const attendees = (m.attendees || []).slice(0, 12);
+                const attendees = (m.attendees || []).slice(0, 14);
                 const attendeeSet = new Set(attendees);
 
                 attendees.forEach(p => {
