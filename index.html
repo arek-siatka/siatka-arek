@@ -125,34 +125,10 @@
 
         /* Stylizowane Boisko Siatkarskie */
         .volleyball-court {
-            background: linear-gradient(180deg, #0d1627 0%, #070c18 100%);
-            border: 2px solid #38bdf8;
+            background: linear-gradient(180deg, #0b1426 0%, #060a14 50%, #0b1426 100%);
+            border: 2px solid rgba(56, 189, 248, 0.45);
             position: relative;
-        }
-        .court-net {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: #f8fafc;
-            box-shadow: 0 0 12px rgba(255,255,255,0.7);
-            transform: translateY(-50%);
-            z-index: 10;
-        }
-        .court-attack-line-top {
-            position: absolute;
-            top: 30%;
-            left: 0;
-            right: 0;
-            border-top: 1px dashed rgba(56, 189, 248, 0.35);
-        }
-        .court-attack-line-bottom {
-            position: absolute;
-            bottom: 30%;
-            left: 0;
-            right: 0;
-            border-top: 1px dashed rgba(56, 189, 248, 0.35);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.7), 0 20px 40px -15px rgba(0, 0, 0, 0.7);
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -481,11 +457,11 @@
                 <div class="flex items-center justify-between bg-slate-950/80 p-1.5 rounded-2xl border border-slate-800 text-xs">
                     <span id="balanceIndicator" class="font-bold text-emerald-400 text-[11px] ml-2">Status: Gotowy</span>
                     <div class="flex gap-1">
-                        <button type="button" id="viewModeListBtn" onclick="setTeamsViewMode('list')" class="px-3 py-1 rounded-xl font-bold bg-indigo-600 text-white transition text-[11px]">
-                            📋 Wybór & Lista
+                        <button type="button" id="viewModeListBtn" onclick="setTeamsViewMode('list')" class="px-3 py-1 rounded-xl font-bold bg-indigo-600 text-white transition text-[11px] flex items-center gap-1">
+                            <span>📋</span><span>Lista & Wybór</span>
                         </button>
-                        <button type="button" id="viewModeCourtBtn" onclick="setTeamsViewMode('court')" class="px-3 py-1 rounded-xl font-bold text-slate-400 hover:text-white transition text-[11px]">
-                            🏐 Boisko 6v6
+                        <button type="button" id="viewModeCourtBtn" onclick="setTeamsViewMode('court')" class="px-3 py-1 rounded-xl font-bold text-slate-400 hover:text-white transition text-[11px] flex items-center gap-1">
+                            <span>🏐</span><span>Boisko & Pozycje</span>
                         </button>
                     </div>
                 </div>
@@ -552,34 +528,62 @@
 
                 </div>
 
-                <!-- WIDOK 2: GRAFICZNE BOISKO SIATKARSKIE -->
+                <!-- WIDOK 2: GRAFICZNE BOISKO SIATKARSKIE (GRA NA POZYCJE) -->
                 <div id="teamsCourtView" class="hidden space-y-3">
-                    <div class="volleyball-court rounded-3xl p-4 min-h-[380px] flex flex-col justify-between overflow-hidden shadow-2xl relative">
-                        <div class="court-attack-line-top"></div>
-                        <div class="court-net flex items-center justify-center">
-                            <span class="bg-slate-950 border border-slate-600 text-[10px] font-black px-3 py-0.5 rounded-full text-slate-200 shadow-md">SIATKA</span>
+                    
+                    <!-- Baner Taktyczny & Legenda Pozycji -->
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3 shadow-lg space-y-2">
+                        <div class="flex items-center justify-between gap-2 flex-wrap">
+                            <div class="flex items-center gap-2">
+                                <span class="text-base">🏐</span>
+                                <div>
+                                    <h4 class="font-extrabold text-xs text-white">Ustawienie Taktyczne (Rotacja Wyjściowa)</h4>
+                                    <p id="courtTacticalSubtitle" class="text-[10px] text-slate-400">Pozycje strefowe: P4, P3, P2 (Atak) • P5, P6, P1 (Obrona)</p>
+                                </div>
+                            </div>
+                            <div id="courtMatchFormatBadge" class="bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 px-2.5 py-1 rounded-xl font-mono text-[10px] font-black">
+                                6v6
+                            </div>
                         </div>
-                        <div class="court-attack-line-bottom"></div>
 
-                        <!-- Dark Team Half (Top) -->
-                        <div class="z-20 space-y-2 pb-4">
-                            <div class="flex items-center justify-between px-2">
-                                <span id="courtDarkTitle" class="text-xs font-black text-slate-300 uppercase tracking-wider bg-slate-950/80 px-2.5 py-1 rounded-xl border border-slate-700">⬛ Drużyna Ciemna</span>
-                            </div>
-                            <div id="courtDarkPlayersGrid" class="grid grid-cols-3 gap-2 pt-1 text-center">
-                                <!-- Populated dynamically -->
-                            </div>
+                        <!-- Legenda Pozycji -->
+                        <div class="flex items-center gap-1.5 flex-wrap pt-1 border-t border-slate-800/60 text-[9.5px]">
+                            <span class="text-slate-500 font-bold uppercase tracking-wider text-[8px] mr-1">Rola:</span>
+                            <span class="px-2 py-0.5 rounded-lg bg-indigo-950/80 text-indigo-300 border border-indigo-500/40 font-bold" title="Rozgrywający">🎯 S: Rozegranie</span>
+                            <span class="px-2 py-0.5 rounded-lg bg-rose-950/80 text-rose-300 border border-rose-500/40 font-bold" title="Atakujący">🔨 OP: Atak</span>
+                            <span class="px-2 py-0.5 rounded-lg bg-sky-950/80 text-sky-300 border border-sky-500/40 font-bold" title="Przyjmujący">🛡️ OH: Przyjęcie</span>
+                            <span class="px-2 py-0.5 rounded-lg bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 font-bold" title="Środkowy bloku">🧱 MB: Środek</span>
+                            <span class="px-2 py-0.5 rounded-lg bg-amber-950/80 text-amber-300 border border-amber-500/40 font-bold" title="Libero (Obrona)">⚡ L: Libero</span>
+                        </div>
+                    </div>
+
+                    <!-- Stylizowane Boisko Siatkarskie z Podziałem na Strefy -->
+                    <div class="volleyball-court rounded-3xl p-3 sm:p-4 min-h-[460px] flex flex-col justify-between overflow-hidden shadow-2xl relative border-2 border-sky-500/40 bg-gradient-to-b from-[#0a1222] via-[#070d18] to-[#0a1222]">
+                        
+                        <!-- Dark Team Half (Top Half) -->
+                        <div id="courtDarkHalf" class="space-y-2 z-10">
+                            <!-- Populated dynamically -->
                         </div>
 
-                        <!-- Light Team Half (Bottom) -->
-                        <div class="z-20 space-y-2 pt-4">
-                            <div id="courtLightPlayersGrid" class="grid grid-cols-3 gap-2 pb-1 text-center">
-                                <!-- Populated dynamically -->
+                        <!-- Central Net (SIATKA) -->
+                        <div class="relative my-3 py-1 flex items-center justify-center z-20">
+                            <div class="absolute left-0 top-0 bottom-0 w-2 bg-[repeating-linear-gradient(0deg,#ef4444,#ef4444_6px,#ffffff_6px,#ffffff_12px)] rounded-full shadow-lg border border-red-950" title="Antenka lewa"></div>
+                            <div class="w-full h-8 bg-slate-950/95 border-y-2 border-white/90 relative overflow-hidden flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.15)]">
+                                <div class="absolute inset-0 opacity-25 bg-[radial-gradient(#ffffff_1.2px,transparent_1.2px)] [background-size:6px_6px]"></div>
+                                <span class="relative z-10 bg-slate-950 border border-slate-700 text-[10px] font-black px-4 py-0.5 rounded-full text-slate-100 tracking-widest shadow-md flex items-center gap-1.5">
+                                    <span class="text-amber-400">🏐</span>
+                                    <span>SIATKA</span>
+                                    <span class="text-amber-400">🏐</span>
+                                </span>
                             </div>
-                            <div class="flex items-center justify-between px-2">
-                                <span id="courtLightTitle" class="text-xs font-black text-amber-300 uppercase tracking-wider bg-slate-950/80 px-2.5 py-1 rounded-xl border border-amber-700">⬜ Drużyna Jasna</span>
-                            </div>
+                            <div class="absolute right-0 top-0 bottom-0 w-2 bg-[repeating-linear-gradient(0deg,#ef4444,#ef4444_6px,#ffffff_6px,#ffffff_12px)] rounded-full shadow-lg border border-red-950" title="Antenka prawa"></div>
                         </div>
+
+                        <!-- Light Team Half (Bottom Half) -->
+                        <div id="courtLightHalf" class="space-y-2 z-10">
+                            <!-- Populated dynamically -->
+                        </div>
+
                     </div>
                 </div>
 
@@ -3473,14 +3477,14 @@ function initFirebaseSync() {
             const unassignedCard = document.getElementById('unassignedPlayersCard');
 
             if (mode === 'list') {
-                listBtn.className = "px-3 py-1 rounded-xl font-bold bg-indigo-600 text-white transition text-[11px]";
-                courtBtn.className = "px-3 py-1 rounded-xl font-bold text-slate-400 hover:text-white transition text-[11px]";
+                listBtn.className = "px-3 py-1 rounded-xl font-bold bg-indigo-600 text-white transition text-[11px] flex items-center gap-1";
+                courtBtn.className = "px-3 py-1 rounded-xl font-bold text-slate-400 hover:text-white transition text-[11px] flex items-center gap-1";
                 listView.classList.remove('hidden');
                 courtView.classList.add('hidden');
                 if (unassignedCard) unassignedCard.classList.remove('hidden');
             } else {
-                courtBtn.className = "px-3 py-1 rounded-xl font-bold bg-indigo-600 text-white transition text-[11px]";
-                listBtn.className = "px-3 py-1 rounded-xl font-bold text-slate-400 hover:text-white transition text-[11px]";
+                courtBtn.className = "px-3 py-1 rounded-xl font-bold bg-indigo-600 text-white transition text-[11px] flex items-center gap-1";
+                listBtn.className = "px-3 py-1 rounded-xl font-bold text-slate-400 hover:text-white transition text-[11px] flex items-center gap-1";
                 courtView.classList.remove('hidden');
                 listView.classList.add('hidden');
             }
@@ -3864,6 +3868,225 @@ function initFirebaseSync() {
             showToast("Zresetowano podział na drużyny. Wszyscy gracze są w puli wyboru.");
         }
 
+        // ================= BOISKO TAKTYCZNE & GRA NA POZYCJE (STREFY I-VI + LIBERO) =================
+        const ZONE_DEFINITIONS = {
+            z4: { code: 'IV', shortName: 'Lewy Atak', fullName: 'Strefa 4 • Lewe Skrzydło (Atak)', defaultRole: 'OH' },
+            z3: { code: 'III', shortName: 'Środek Siatki', fullName: 'Strefa 3 • Środek Siatki (Blok / Środek)', defaultRole: 'MB' },
+            z2: { code: 'II', shortName: 'Rozegranie', fullName: 'Strefa 2 • Prawe Skrzydło (Rozegranie / Atak)', defaultRole: 'S' },
+            z5: { code: 'V', shortName: 'Lewy Tył', fullName: 'Strefa 5 • Lewy Tył (Przyjęcie / Obrona)', defaultRole: 'OH' },
+            z6: { code: 'VI', shortName: 'Środek Obrony', fullName: 'Strefa 6 • Środek Tyłu (Obrona / Libero)', defaultRole: 'MB' },
+            z1: { code: 'I', shortName: 'Zagrywka / Tył', fullName: 'Strefa 1 • Prawy Tył (Zagrywka / Obrona)', defaultRole: 'OP' }
+        };
+
+        function getTacticalPositionsForTeam(teamPlayers, teamRoles) {
+            teamRoles = teamRoles || {};
+            const skills = AppState.player_skills || {};
+            const players = (teamPlayers || []).map(name => {
+                const role = teamRoles[name] || getPlayerPositions(name)[0] || 'UNI';
+                return {
+                    name,
+                    role,
+                    positions: getPlayerPositions(name),
+                    skill: skills[name] || 3
+                };
+            });
+
+            let liberoPlayer = null;
+            let pool = [...players];
+
+            // Jeśli drużyna ma 7 lub więcej graczy, wyznaczamy Libero (7. gracz)
+            if (pool.length >= 7) {
+                const lIdx = pool.findIndex(p => p.role === 'L');
+                if (lIdx !== -1) {
+                    liberoPlayer = pool.splice(lIdx, 1)[0];
+                } else {
+                    const lProfIdx = pool.findIndex(p => p.positions.includes('L'));
+                    if (lProfIdx !== -1) {
+                        liberoPlayer = pool.splice(lProfIdx, 1)[0];
+                    } else {
+                        const uniIdx = pool.findIndex(p => p.positions.includes('UNI') || p.role === 'UNI');
+                        if (uniIdx !== -1) {
+                            liberoPlayer = pool.splice(uniIdx, 1)[0];
+                        } else {
+                            liberoPlayer = pool.pop();
+                        }
+                    }
+                }
+            }
+
+            const zones = {
+                z4: null,
+                z3: null,
+                z2: null,
+                z5: null,
+                z6: null,
+                z1: null
+            };
+
+            function pickFromPool(predicate) {
+                const idx = pool.findIndex(predicate);
+                if (idx !== -1) {
+                    return pool.splice(idx, 1)[0];
+                }
+                return null;
+            }
+
+            // 1. Rozgrywający -> Strefa 2 (Rozegranie)
+            zones.z2 = pickFromPool(p => p.role === 'S') || pickFromPool(p => p.positions.includes('S'));
+
+            // 2. Atakujący -> Strefa 1 (Prawy Tył / Zagrywka)
+            zones.z1 = pickFromPool(p => p.role === 'OP') || pickFromPool(p => p.positions.includes('OP'));
+
+            // 3. Środkowi bloku -> Strefa 3 (Przód) oraz Strefa 6 (Tył)
+            zones.z3 = pickFromPool(p => p.role === 'MB') || pickFromPool(p => p.positions.includes('MB'));
+            zones.z6 = pickFromPool(p => p.role === 'MB') || pickFromPool(p => p.positions.includes('MB'));
+
+            // 4. Przyjmujący -> Strefa 4 (Lewe Skrzydło) oraz Strefa 5 (Lewy Tył)
+            zones.z4 = pickFromPool(p => p.role === 'OH') || pickFromPool(p => p.positions.includes('OH'));
+            zones.z5 = pickFromPool(p => p.role === 'OH') || pickFromPool(p => p.positions.includes('OH'));
+
+            // 5. Jeśli drużyna ma Libero na 6 osób, wejdź na Strefę 6
+            if (!zones.z6) {
+                zones.z6 = pickFromPool(p => p.role === 'L') || pickFromPool(p => p.positions.includes('L'));
+            }
+
+            // 6. Uzupełnij puste strefy pozostałymi graczami
+            const zoneOrder = ['z2', 'z4', 'z3', 'z1', 'z5', 'z6'];
+            for (const zk of zoneOrder) {
+                if (!zones[zk] && pool.length > 0) {
+                    zones[zk] = pool.shift();
+                }
+            }
+
+            return {
+                zones,
+                libero: liberoPlayer,
+                extraReserves: [...pool]
+            };
+        }
+
+        function renderTacticalZoneCard(slotData, zoneDef, isDark) {
+            const loggedPlayer = getLoggedPlayer();
+            if (!slotData) {
+                const defRoleInfo = VOLLEYBALL_POSITIONS[zoneDef.defaultRole] || VOLLEYBALL_POSITIONS['UNI'];
+                return `
+                    <div class="border border-dashed border-slate-800/80 bg-slate-950/40 rounded-2xl p-2 flex flex-col items-center justify-between text-center min-h-[92px] shadow-inner">
+                        <div class="flex items-center justify-between w-full px-1">
+                            <span class="text-[8px] font-black font-mono text-slate-500 uppercase">${zoneDef.code}</span>
+                            <span class="text-[8px] font-bold text-slate-500 truncate max-w-[65px]">${zoneDef.shortName}</span>
+                        </div>
+                        <div class="my-auto flex flex-col items-center gap-0.5 text-slate-600">
+                            <span class="text-xs">➕</span>
+                            <span class="text-[9px] italic font-medium">Wolne</span>
+                        </div>
+                        <span class="text-[7.5px] font-semibold text-slate-600/90 truncate max-w-[85px]">(${defRoleInfo.name})</span>
+                    </div>
+                `;
+            }
+
+            const pName = slotData.name;
+            const isMe = (pName === loggedPlayer);
+            const roleKey = slotData.role || 'UNI';
+            const roleDef = VOLLEYBALL_POSITIONS[roleKey] || VOLLEYBALL_POSITIONS['UNI'];
+
+            const nameParts = pName.trim().split(/\s+/);
+            const displayName = nameParts.length > 1 ? `${nameParts[0]} ${nameParts[1][0]}.` : nameParts[0];
+
+            const cardBg = isDark
+                ? (isMe ? 'bg-emerald-950/40 border-emerald-500 ring-1 ring-emerald-500/50' : 'bg-slate-950/90 border-slate-700/80 hover:border-slate-500')
+                : (isMe ? 'bg-emerald-950/40 border-emerald-500 ring-1 ring-emerald-500/50' : 'bg-amber-950/50 border-amber-600/70 hover:border-amber-400');
+
+            const textColor = isMe ? 'text-emerald-300 font-black' : (isDark ? 'text-slate-100' : 'text-amber-100');
+            const zoneBadgeColor = isDark ? 'text-sky-300 bg-sky-950/60 border-sky-500/40' : 'text-amber-300 bg-amber-950/60 border-amber-500/40';
+
+            return `
+                <div onclick="openPlayerCardModal(${toInlineArgument(pName)})" title="${escapeHtml(pName)} • ${roleDef.name} (${zoneDef.fullName}) - Dotknij profil" class="cursor-pointer transition transform active:scale-95 rounded-2xl p-2 flex flex-col items-center justify-between text-center min-h-[92px] shadow-lg border ${cardBg}">
+                    <!-- Header: Zone Code + Name -->
+                    <div class="flex items-center justify-between w-full px-0.5">
+                        <span class="text-[8px] font-black font-mono px-1 py-0.2 rounded border ${zoneBadgeColor}">${zoneDef.code}</span>
+                        <span class="text-[8px] font-bold text-slate-400 truncate max-w-[65px]">${zoneDef.shortName}</span>
+                    </div>
+
+                    <!-- Avatar -->
+                    <div class="relative my-0.5">
+                        ${getPlayerAvatarHtml(pName, 'sm')}
+                        ${isMe ? '<span class="absolute -top-1.5 -right-2 text-[11px] filter drop-shadow">⭐</span>' : ''}
+                    </div>
+
+                    <!-- Name -->
+                    <div class="w-full px-0.5 truncate">
+                        <span class="font-extrabold text-[11px] leading-tight ${textColor} truncate block">${escapeHtml(displayName)}</span>
+                    </div>
+
+                    <!-- Role Badge -->
+                    <div class="mt-0.5 w-full flex justify-center">
+                        <span class="text-[8px] font-black px-1.5 py-0.5 rounded ${roleDef.color} border shadow-sm text-center truncate max-w-[95px] flex items-center justify-center gap-1">
+                            <span>${roleDef.icon}</span><span class="truncate">${roleDef.name}</span>
+                        </span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTacticalLiberoBanner(liberoData, isDark, teamSize) {
+            const loggedPlayer = getLoggedPlayer();
+            if (!liberoData) {
+                if (teamSize === 6) {
+                    return `
+                        <div class="mx-1 my-1 px-3 py-1.5 rounded-xl bg-slate-950/60 border border-slate-800/80 text-[10px] text-slate-400 flex items-center justify-between shadow-sm">
+                            <span class="flex items-center gap-1.5 truncate">
+                                <span>🔄</span>
+                                <span class="font-semibold text-slate-300">Skład 6-osobowy</span>
+                                <span class="text-slate-500 truncate">(Pełna rotacja w kółko bez libero)</span>
+                            </span>
+                            <span class="text-[9px] font-mono text-slate-500 font-bold shrink-0 ml-1">6 graczy</span>
+                        </div>
+                    `;
+                }
+                return '';
+            }
+
+            const pName = liberoData.name;
+            const isMe = (pName === loggedPlayer);
+            const bgClass = isMe 
+                ? 'bg-emerald-950/30 border-emerald-500/70 ring-1 ring-emerald-500/50' 
+                : (isDark ? 'bg-amber-950/30 border-amber-600/50 hover:border-amber-400' : 'bg-amber-950/40 border-amber-500/60 hover:border-amber-400');
+
+            return `
+                <div onclick="openPlayerCardModal(${toInlineArgument(pName)})" title="${escapeHtml(pName)} • Dedykowany Libero (Obrona i przyjęcie)" class="mx-1 my-1.5 p-2 rounded-2xl border ${bgClass} flex items-center justify-between gap-2 shadow-md cursor-pointer transition active:scale-98">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <div class="relative shrink-0">
+                            ${getPlayerAvatarHtml(pName, 'sm')}
+                            <span class="absolute -bottom-1 -right-1 text-[11px]">⚡</span>
+                        </div>
+                        <div class="min-w-0 text-left">
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                <span class="font-extrabold text-xs text-amber-200 truncate">${escapeHtml(pName)}${isMe ? ' ⭐ (Ty)' : ''}</span>
+                                <span class="text-[8.5px] font-black px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">⚡ Libero</span>
+                            </div>
+                            <div class="text-[9.5px] text-amber-300/80 font-medium truncate">
+                                7. Zawodnik • Obrona & Przyjęcie (wchodzi za środkowego w II linii)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shrink-0 text-right">
+                        <span class="text-[8.5px] font-mono font-bold bg-amber-500/10 border border-amber-500/30 text-amber-300 px-2 py-1 rounded-xl uppercase">Strefa Libero</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCourtAttackLineDivider() {
+            return `
+                <div class="relative py-1 my-0.5 flex items-center justify-center">
+                    <div class="w-full border-t border-dashed border-sky-400/40"></div>
+                    <span class="absolute bg-slate-950/90 border border-sky-500/40 text-[8px] font-mono font-black text-sky-300 px-2.5 py-0.5 rounded-full uppercase tracking-widest shadow-sm">
+                        Linia 3m (Atak)
+                    </span>
+                </div>
+            `;
+        }
+
         function renderTeamsTab() {
             const monthData = AppState.months[AppState.currentMonth];
             const currentMatch = monthData?.matches[AppState.currentMatchIndex];
@@ -3880,8 +4103,8 @@ function initFirebaseSync() {
             const darkAddContainer = document.getElementById('teamDarkAddContainer');
             const lightAddContainer = document.getElementById('teamLightAddContainer');
 
-            const courtDarkGrid = document.getElementById('courtDarkPlayersGrid');
-            const courtLightGrid = document.getElementById('courtLightPlayersGrid');
+            const courtDarkHalf = document.getElementById('courtDarkHalf');
+            const courtLightHalf = document.getElementById('courtLightHalf');
             const courtDarkTitle = document.getElementById('courtDarkTitle');
             const courtLightTitle = document.getElementById('courtLightTitle');
 
@@ -4041,60 +4264,122 @@ function initFirebaseSync() {
                 }
             }
 
-            // 4. Render Volleyball Court Grid
-            const courtSlotsCount = Math.max(6, Math.max(dark.length, light.length));
-            if (courtDarkGrid) {
-                let darkCourtHtml = "";
-                for (let i = 0; i < courtSlotsCount; i++) {
-                    if (i < dark.length) {
-                        const p = dark[i];
-                        const darkRoles = teams.darkRoles || {};
-                        const pRole = darkRoles[p] || getPlayerPositions(p)[0] || 'UNI';
-                        const roleDef = VOLLEYBALL_POSITIONS[pRole] || VOLLEYBALL_POSITIONS['UNI'];
-                        darkCourtHtml += `
-                            <div class="bg-slate-950/90 border border-slate-700 p-2 rounded-2xl shadow flex flex-col items-center justify-center gap-1">
-                                ${getPlayerAvatarHtml(p, 'md')}
-                                <span class="font-bold text-[11px] text-white truncate max-w-[80px]">${escapeHtml(p.split(' ')[0])}</span>
-                                <span class="text-[8.5px] font-black px-1.5 py-0.5 rounded ${roleDef.color} border text-center truncate max-w-[85px] shadow-sm">${roleDef.icon} ${roleDef.name}</span>
-                            </div>
-                        `;
-                    } else {
-                        darkCourtHtml += `
-                            <div class="bg-slate-950/40 border border-dashed border-slate-800 p-2 rounded-2xl flex flex-col items-center justify-center text-slate-600">
-                                <span class="text-xs">➕</span>
-                                <span class="text-[10px] italic">Wolne</span>
-                            </div>
-                        `;
-                    }
+            // 4. Render Volleyball Court (Gra na pozycje & Ustawienie Taktyczne)
+            const tacticalSubtitle = document.getElementById('courtTacticalSubtitle');
+            const matchFormatBadge = document.getElementById('courtMatchFormatBadge');
+
+            if (matchFormatBadge) {
+                if (dark.length === 7 && light.length === 7) {
+                    matchFormatBadge.innerText = "7v7 • z Libero";
+                    matchFormatBadge.className = "bg-amber-500/20 border border-amber-500/40 text-amber-300 px-2.5 py-1 rounded-xl font-mono text-[10px] font-black";
+                } else if (dark.length === 7 && light.length === 6) {
+                    matchFormatBadge.innerText = "7v6 • Ciemni z Libero";
+                    matchFormatBadge.className = "bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 px-2.5 py-1 rounded-xl font-mono text-[10px] font-black";
+                } else if (dark.length === 6 && light.length === 7) {
+                    matchFormatBadge.innerText = "6v7 • Jasni z Libero";
+                    matchFormatBadge.className = "bg-amber-500/20 border border-amber-500/40 text-amber-300 px-2.5 py-1 rounded-xl font-mono text-[10px] font-black";
+                } else if (dark.length === 6 && light.length === 6) {
+                    matchFormatBadge.innerText = "6v6 • Skład Klasyczny";
+                    matchFormatBadge.className = "bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 px-2.5 py-1 rounded-xl font-mono text-[10px] font-black";
+                } else {
+                    matchFormatBadge.innerText = `${dark.length}v${light.length}`;
+                    matchFormatBadge.className = "bg-slate-800 border border-slate-700 text-slate-300 px-2.5 py-1 rounded-xl font-mono text-[10px] font-black";
                 }
-                courtDarkGrid.innerHTML = darkCourtHtml;
             }
 
-            if (courtLightGrid) {
-                let lightCourtHtml = "";
-                for (let i = 0; i < courtSlotsCount; i++) {
-                    if (i < light.length) {
-                        const p = light[i];
-                        const lightRoles = teams.lightRoles || {};
-                        const pRole = lightRoles[p] || getPlayerPositions(p)[0] || 'UNI';
-                        const roleDef = VOLLEYBALL_POSITIONS[pRole] || VOLLEYBALL_POSITIONS['UNI'];
-                        lightCourtHtml += `
-                            <div class="bg-amber-950/80 border border-amber-600/80 p-2 rounded-2xl shadow flex flex-col items-center justify-center gap-1">
-                                ${getPlayerAvatarHtml(p, 'md')}
-                                <span class="font-bold text-[11px] text-amber-200 truncate max-w-[80px]">${escapeHtml(p.split(' ')[0])}</span>
-                                <span class="text-[8.5px] font-black px-1.5 py-0.5 rounded ${roleDef.color} border text-center truncate max-w-[85px] shadow-sm">${roleDef.icon} ${roleDef.name}</span>
-                            </div>
-                        `;
-                    } else {
-                        lightCourtHtml += `
-                            <div class="bg-slate-950/40 border border-dashed border-slate-800 p-2 rounded-2xl flex flex-col items-center justify-center text-slate-600">
-                                <span class="text-xs">➕</span>
-                                <span class="text-[10px] italic">Wolne</span>
-                            </div>
-                        `;
-                    }
+            if (tacticalSubtitle) {
+                const hasCustomRoles = !!(teams.darkRoles || teams.lightRoles);
+                if (hasCustomRoles) {
+                    tacticalSubtitle.innerText = "🎯 Ustawienie zoptymalizowane pod pozycje (S, OP, OH, MB, L)";
+                } else {
+                    tacticalSubtitle.innerText = "🎲 Ustawienie wg preferencji pozycji z profili graczy";
                 }
-                courtLightGrid.innerHTML = lightCourtHtml;
+            }
+
+            if (courtDarkHalf) {
+                const darkAvg = dark.length ? (dark.reduce((sum, p) => sum + (AppState.player_skills?.[p] || 3), 0) / dark.length).toFixed(1) : '0.0';
+                const tacticalDark = getTacticalPositionsForTeam(dark, teams.darkRoles);
+
+                let darkHalfHtml = `
+                    <!-- Dark Team Header -->
+                    <div class="flex items-center justify-between px-2 py-1 flex-wrap gap-1">
+                        <div class="flex items-center gap-2 cursor-pointer group" onclick="${isAdmin ? `editTeamNamePrompt('dark')` : ''}" title="${isAdmin ? 'Kliknij, aby zmienić nazwę drużyny' : ''}">
+                            <span id="courtDarkTitle" class="text-xs font-black text-slate-300 uppercase tracking-wider bg-slate-950/90 px-2.5 py-1 rounded-xl border border-slate-700 flex items-center gap-1.5 group-hover:border-slate-500 transition">
+                                <span>⬛</span>
+                                <span>${escapeHtml(darkName)}</span>
+                                ${isAdmin ? '<span class="text-[10px] text-slate-500 group-hover:text-slate-300">✏️</span>' : ''}
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-[10px] font-bold text-amber-400 bg-slate-950/80 border border-slate-800 px-2 py-0.5 rounded-lg" title="Średnia ocena drużyny">★ ${darkAvg}</span>
+                            <span class="text-[10px] font-mono font-bold text-slate-400 bg-slate-950/80 border border-slate-800 px-2 py-0.5 rounded-lg">${dark.length}/7</span>
+                        </div>
+                    </div>
+
+                    <!-- Libero / 7th Player Slot -->
+                    ${renderTacticalLiberoBanner(tacticalDark.libero, true, dark.length)}
+
+                    <!-- Linia Obrony (Back Row: P5, P6, P1) -->
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        ${renderTacticalZoneCard(tacticalDark.zones.z5, ZONE_DEFINITIONS.z5, true)}
+                        ${renderTacticalZoneCard(tacticalDark.zones.z6, ZONE_DEFINITIONS.z6, true)}
+                        ${renderTacticalZoneCard(tacticalDark.zones.z1, ZONE_DEFINITIONS.z1, true)}
+                    </div>
+
+                    <!-- 3-meter Attack Line Divider -->
+                    ${renderCourtAttackLineDivider()}
+
+                    <!-- Linia Ataku (Front Row przy siatce: P4, P3, P2) -->
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        ${renderTacticalZoneCard(tacticalDark.zones.z4, ZONE_DEFINITIONS.z4, true)}
+                        ${renderTacticalZoneCard(tacticalDark.zones.z3, ZONE_DEFINITIONS.z3, true)}
+                        ${renderTacticalZoneCard(tacticalDark.zones.z2, ZONE_DEFINITIONS.z2, true)}
+                    </div>
+                `;
+                courtDarkHalf.innerHTML = darkHalfHtml;
+            }
+
+            if (courtLightHalf) {
+                const lightAvg = light.length ? (light.reduce((sum, p) => sum + (AppState.player_skills?.[p] || 3), 0) / light.length).toFixed(1) : '0.0';
+                const tacticalLight = getTacticalPositionsForTeam(light, teams.lightRoles);
+
+                let lightHalfHtml = `
+                    <!-- Linia Ataku (Front Row przy siatce: P4, P3, P2) -->
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        ${renderTacticalZoneCard(tacticalLight.zones.z4, ZONE_DEFINITIONS.z4, false)}
+                        ${renderTacticalZoneCard(tacticalLight.zones.z3, ZONE_DEFINITIONS.z3, false)}
+                        ${renderTacticalZoneCard(tacticalLight.zones.z2, ZONE_DEFINITIONS.z2, false)}
+                    </div>
+
+                    <!-- 3-meter Attack Line Divider -->
+                    ${renderCourtAttackLineDivider()}
+
+                    <!-- Linia Obrony (Back Row: P5, P6, P1) -->
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        ${renderTacticalZoneCard(tacticalLight.zones.z5, ZONE_DEFINITIONS.z5, false)}
+                        ${renderTacticalZoneCard(tacticalLight.zones.z6, ZONE_DEFINITIONS.z6, false)}
+                        ${renderTacticalZoneCard(tacticalLight.zones.z1, ZONE_DEFINITIONS.z1, false)}
+                    </div>
+
+                    <!-- Libero / 7th Player Slot -->
+                    ${renderTacticalLiberoBanner(tacticalLight.libero, false, light.length)}
+
+                    <!-- Light Team Header -->
+                    <div class="flex items-center justify-between px-2 py-1 flex-wrap gap-1">
+                        <div class="flex items-center gap-2 cursor-pointer group" onclick="${isAdmin ? `editTeamNamePrompt('light')` : ''}" title="${isAdmin ? 'Kliknij, aby zmienić nazwę drużyny' : ''}">
+                            <span id="courtLightTitle" class="text-xs font-black text-amber-300 uppercase tracking-wider bg-slate-950/90 px-2.5 py-1 rounded-xl border border-amber-700/80 flex items-center gap-1.5 group-hover:border-amber-500 transition">
+                                <span>⬜</span>
+                                <span>${escapeHtml(lightName)}</span>
+                                ${isAdmin ? '<span class="text-[10px] text-amber-500 group-hover:text-amber-300">✏️</span>' : ''}
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-[10px] font-bold text-amber-400 bg-slate-950/80 border border-slate-800 px-2 py-0.5 rounded-lg" title="Średnia ocena drużyny">★ ${lightAvg}</span>
+                            <span class="text-[10px] font-mono font-bold text-amber-400 bg-slate-950/80 border border-slate-800 px-2 py-0.5 rounded-lg">${light.length}/7</span>
+                        </div>
+                    </div>
+                `;
+                courtLightHalf.innerHTML = lightHalfHtml;
             }
 
             // 5. Update Balance indicator
