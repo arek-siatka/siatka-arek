@@ -591,7 +591,7 @@
         </section>
 
 
-        <!-- ================= TAB 3: ROZLICZENIE MIESIĘCZNE & BLIK ================= -->
+        <!-- ================= TAB 3: ROZLICZENIE SKŁADEK (20 ZŁ / GIERKA) ================= -->
         <section id="tab-billing" class="space-y-3.5 hidden animate-fade-in">
             
             <!-- Modern Unified Financial Dashboard -->
@@ -604,75 +604,42 @@
                             💸
                         </div>
                         <div>
-                            <h3 class="font-black text-sm text-white leading-tight">Rozliczenie hali</h3>
-                            <p class="text-[11px] text-slate-400" id="billingMonthSubtitle">Miesiąc: bieżący</p>
+                            <h3 class="font-black text-sm text-white leading-tight">Rozliczenie składek (20 zł)</h3>
+                            <p class="text-[11px] text-slate-400" id="billingMonthSubtitle">20 zł od osoby za każdą rozegraną gierkę</p>
                         </div>
                     </div>
 
                     <!-- Compact BLIK Pill (Copies ONLY phone number) -->
-                    <button type="button" onclick="copyBlikNumber()" title="Kliknij, aby skopiować sam numer telefonu" class="bg-slate-950 hover:bg-slate-850 active:scale-95 border border-emerald-500/40 hover:border-emerald-400 text-slate-200 px-3 py-1.5 rounded-2xl text-xs font-bold transition flex items-center gap-2 shadow-sm group">
+                    <button type="button" onclick="copyBlikNumber()" title="Kliknij, aby skopiować numer BLIK" class="bg-slate-950 hover:bg-slate-850 active:scale-95 border border-emerald-500/40 hover:border-emerald-400 text-slate-200 px-3 py-1.5 rounded-2xl text-xs font-bold transition flex items-center gap-2 shadow-sm group">
                         <span class="text-emerald-400 text-[11px]">📲 BLIK:</span>
                         <span class="font-mono font-black text-emerald-400 text-xs tracking-wider" id="blikPhoneDisplay">517 077 482</span>
                         <span class="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800/80 px-1.5 py-0.5 rounded-md group-hover:bg-emerald-500 group-hover:text-slate-950 transition">Kopiuj</span>
                     </button>
                 </div>
 
-                <!-- Financial Progress Bar -->
-                <div class="space-y-1.5 bg-slate-950/70 border border-slate-800/70 rounded-2xl p-3">
-                    <div class="flex items-center justify-between text-xs">
-                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Postęp zbiórki</span>
-                        <span id="billingProgressPercent" class="font-mono font-black text-emerald-400 text-xs">0%</span>
-                    </div>
-                    <div class="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden border border-slate-800">
-                        <div id="billingProgressBar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
-                    </div>
-                    <div class="flex items-center justify-between text-[11px] font-mono pt-0.5 gap-2 whitespace-nowrap">
-                        <span class="text-slate-400 truncate">Zebrano: <strong id="monthTotalPaid" class="text-emerald-400 font-bold whitespace-nowrap">0.00 zł</strong> / <span id="monthTotalCost" class="text-slate-300 whitespace-nowrap">0.00 zł</span></span>
-                        <span class="text-slate-400 shrink-0 whitespace-nowrap">Brak: <strong id="monthTotalOutstanding" class="text-rose-400 font-bold whitespace-nowrap">0.00 zł</strong></span>
+                <!-- Przełącznik Widoków: Rozlicz gierkę (20 zł) vs Cały miesiąc (Bilans) -->
+                <div class="flex items-center justify-between bg-slate-950/80 p-1.5 rounded-2xl border border-slate-800 text-xs">
+                    <span class="text-[11px] font-bold text-slate-400 ml-2 hidden sm:inline">Tryb:</span>
+                    <div class="flex gap-1 w-full sm:w-auto">
+                        <button type="button" id="billingModeMatchBtn" onclick="setBillingMode('match')" class="flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl font-bold bg-emerald-500 text-slate-950 transition text-[11px] flex items-center justify-center gap-1.5 shadow-sm">
+                            <span>🏐</span><span>Rozlicz gierkę (20 zł)</span>
+                        </button>
+                        <button type="button" id="billingModeMonthBtn" onclick="setBillingMode('month')" class="flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl font-bold text-slate-400 hover:text-white transition text-[11px] flex items-center justify-center gap-1.5">
+                            <span>📊</span><span>Cały miesiąc (Bilans)</span>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Organizer Tool: Copy Debtors to Messenger (Only for Organizer) -->
-                <div id="billingAdminActionsRow" class="flex items-center justify-end pt-0.5 text-[11px] hidden">
-                    <button type="button" onclick="copyDebtorsListMessage()" title="Kopiuj listę nieopłaconych składek na Messengera" class="bg-slate-900 hover:bg-slate-850 active:scale-95 text-slate-300 hover:text-white font-bold px-3 py-1.5 rounded-xl border border-slate-700/80 transition flex items-center gap-1.5 shadow-sm">
-                        <span>📢</span> Kopiuj na Messengera
-                    </button>
-                </div>
             </div>
 
             <!-- Logged-in Player Personal Card (Rendered dynamically if user is logged in) -->
             <div id="myBillingCardContainer"></div>
 
-            <!-- Billing Cards with Search & Filters -->
-            <div class="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-3 sm:p-4 shadow-lg space-y-3">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-                    <div>
-                        <h3 class="font-bold text-xs sm:text-sm text-white">Zestawienie składek graczy</h3>
-                        <p class="text-[10px] text-slate-400">Lista obecnych i rozliczenia za ten miesiąc.</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <input id="billingSearchInput" oninput="renderBilling()" type="text" placeholder="Szukaj gracza..." aria-label="Wyszukaj gracza w rozliczeniu" class="w-full sm:w-40 bg-slate-950 border border-slate-700 text-xs px-2.5 py-1.5 rounded-xl text-white focus:outline-none focus:border-emerald-500">
-                    </div>
-                </div>
-
-                <!-- Filters with Dynamic Counts: Wszyscy / Nieopłacone / Opłacone -->
-                <div class="flex gap-1.5 text-[11px] pt-1">
-                    <button type="button" id="billingFilterAll" onclick="setBillingFilter('all')" class="px-3 py-1.5 rounded-xl font-bold bg-emerald-500 text-slate-950 transition shadow-sm">
-                        Wszyscy
-                    </button>
-                    <button type="button" id="billingFilterUnpaid" onclick="setBillingFilter('unpaid')" class="px-3 py-1.5 rounded-xl font-bold bg-slate-950 text-rose-400 border border-rose-900/40 hover:bg-slate-850 transition">
-                        🔴 Nieopłacone
-                    </button>
-                    <button type="button" id="billingFilterPaid" onclick="setBillingFilter('paid')" class="px-3 py-1.5 rounded-xl font-bold bg-slate-950 text-emerald-400 border border-emerald-900/40 hover:bg-slate-850 transition">
-                        🟢 Opłacone
-                    </button>
-                </div>
-
-                <!-- Cards List -->
-                <div id="billingCardsList" class="space-y-2">
-                    <!-- Rendered dynamically -->
-                </div>
+            <!-- Dynamic Billing Main Content (Match View OR Month View) -->
+            <div id="billingMainContent" class="space-y-3">
+                <!-- Rendered dynamically via renderBilling() -->
             </div>
+
         </section>
 
 
@@ -4835,50 +4802,126 @@ function initFirebaseSync() {
             }).join('');
         }
 
-        // ================= TAB 5: BILLING =================
+        // ================= TAB 5: BILLING (ROZLICZENIE SKŁADEK 20 ZŁ / GIERKA) =================
+        let billingMode = 'match'; // 'match' | 'month'
+        let selectedBillingMatchIndex = null;
+        let currentBillingFilter = 'all'; // 'all', 'unpaid', 'paid'
+
         function setBillingFilter(filter) {
             currentBillingFilter = filter;
             renderBilling();
+        }
+
+        function setBillingMode(mode) {
+            billingMode = mode;
+            renderBilling();
+        }
+
+        function selectBillingMatch(matchIndex) {
+            selectedBillingMatchIndex = matchIndex;
+            renderBilling();
+        }
+
+        function ensureMatchPaymentsMigrated(monthName) {
+            const monthData = AppState.months[monthName];
+            if (!monthData || !Array.isArray(monthData.matches)) return;
+            const rozliczenia = monthData.rozliczenia || {};
+
+            const hasAnyPaid = monthData.matches.some(m => Array.isArray(m.paidPlayers) && m.paidPlayers.length > 0);
+            if (hasAnyPaid) return;
+
+            // Migrate from legacy rozliczenia
+            Object.entries(rozliczenia).forEach(([pName, rData]) => {
+                let remainingPaid = parseFloat(rData?.paid) || 0;
+                if (remainingPaid <= 0) return;
+
+                monthData.matches.forEach(m => {
+                    if (m.isCancelled) return;
+                    const mainSquad = (m.attendees || []).slice(0, 14);
+                    if (!mainSquad.includes(pName)) return;
+
+                    if (!Array.isArray(m.paidPlayers)) m.paidPlayers = [];
+                    if (remainingPaid >= 20 && !m.paidPlayers.includes(pName)) {
+                        m.paidPlayers.push(pName);
+                        remainingPaid -= 20;
+                    }
+                });
+            });
+        }
+
+        function updateMonthlyRozliczeniaFromMatches(monthName) {
+            const monthData = AppState.months[monthName];
+            if (!monthData) return;
+            if (!monthData.rozliczenia) monthData.rozliczenia = {};
+
+            const playerPaidCounts = {};
+            (monthData.matches || []).forEach(m => {
+                if (m.isCancelled || !Array.isArray(m.paidPlayers)) return;
+                m.paidPlayers.forEach(p => {
+                    playerPaidCounts[p] = (playerPaidCounts[p] || 0) + 1;
+                });
+            });
+
+            Object.keys(monthData.rozliczenia).forEach(p => {
+                monthData.rozliczenia[p] = { paid: (playerPaidCounts[p] || 0) * 20.00 };
+            });
+            Object.keys(playerPaidCounts).forEach(p => {
+                if (!monthData.rozliczenia[p]) {
+                    monthData.rozliczenia[p] = { paid: playerPaidCounts[p] * 20.00 };
+                }
+            });
         }
 
         function calculateMonthlyBilling(monthName) {
             const monthData = AppState.months[monthName];
             if (!monthData) return { playersMap: {}, totalHallCost: 0, totalPaid: 0, totalDue: 0, matchesCount: 0 };
 
+            ensureMatchPaymentsMigrated(monthName);
+
             const matches = monthData.matches || [];
-            let totalHallCost = 0;
+            let totalPaid = 0;
+            let totalDue = 0;
             const playersMap = {};
             let activeMatchesCount = 0;
 
-            matches.forEach(m => {
+            matches.forEach((m, idx) => {
                 if (m.isCancelled) return;
                 activeMatchesCount++;
+
                 const attendees = m.attendees || [];
                 const mainSquad = attendees.slice(0, 14);
-                const cost = m.cost !== undefined ? m.cost : 240;
-                totalHallCost += cost;
+                const paidPlayers = Array.isArray(m.paidPlayers) ? m.paidPlayers : [];
 
-                const costPerPerson = 20.00;
                 mainSquad.forEach(p => {
-                    if (!playersMap[p]) playersMap[p] = { games: 0, costDue: 0, paid: 0 };
+                    if (!playersMap[p]) {
+                        playersMap[p] = { games: 0, costDue: 0, paid: 0, paidGames: 0, matches: [] };
+                    }
                     playersMap[p].games += 1;
-                    playersMap[p].costDue += costPerPerson;
+                    playersMap[p].costDue += 20.00;
+                    totalDue += 20.00;
+
+                    const isPaid = paidPlayers.includes(p);
+                    if (isPaid) {
+                        playersMap[p].paidGames += 1;
+                        playersMap[p].paid += 20.00;
+                        totalPaid += 20.00;
+                    }
+
+                    playersMap[p].matches.push({
+                        date: m.date,
+                        matchIndex: idx,
+                        isPaid: isPaid
+                    });
                 });
             });
 
-            const rozliczenia = monthData.rozliczenia || {};
-            Object.keys(rozliczenia).forEach(p => {
-                if (!playersMap[p]) playersMap[p] = { games: 0, costDue: 0, paid: 0 };
-                playersMap[p].paid = rozliczenia[p]?.paid || 0;
-            });
-
-            let totalPaid = 0, totalDue = 0;
-            Object.values(playersMap).forEach(v => { 
-                totalPaid += v.paid; 
-                totalDue += v.costDue; 
-            });
-
-            return { playersMap, totalHallCost, totalPaid, totalDue, matchesCount: activeMatchesCount };
+            return {
+                playersMap,
+                totalHallCost: totalDue,
+                totalPaid,
+                totalDue,
+                matchesCount: activeMatchesCount
+            };
         }
 
         function copyBlikNumber() {
@@ -4896,258 +4939,158 @@ function initFirebaseSync() {
             copyToClipboard(title, `Skopiowano tytuł przelewu: "${title}" 📋`);
         }
 
-        function renderMyBillingHero(playersMap) {
-            const container = document.getElementById('myBillingCardContainer');
-            if (!container) return;
-
-            if (!loggedPlayer) {
-                container.innerHTML = '';
+        function toggleMatchPlayerPayment(matchIndex, playerName) {
+            if (!isAdmin) {
+                showToast("Tylko Organizator może oznaczać wpłaty! 🔒");
                 return;
             }
+            const monthData = AppState.months[AppState.currentMonth];
+            const match = monthData?.matches?.[matchIndex];
+            if (!match) return;
 
-            const myInfo = playersMap[loggedPlayer];
-            if (!myInfo || (myInfo.games === 0 && myInfo.paid === 0)) {
-                container.innerHTML = '';
-                return;
+            if (!Array.isArray(match.paidPlayers)) match.paidPlayers = [];
+
+            const idx = match.paidPlayers.indexOf(playerName);
+            let isNowPaid = false;
+            if (idx !== -1) {
+                match.paidPlayers.splice(idx, 1);
+                isNowPaid = false;
+            } else {
+                match.paidPlayers.push(playerName);
+                isNowPaid = true;
             }
 
-            const due = myInfo.costDue;
-            const paid = myInfo.paid;
-            const saldo = paid - due;
-            const isPaid = (due > 0 && saldo >= -0.05);
-            const phone = (AppState.settings?.blikPhone || "517 077 482").replace(/\s+/g, '');
-            const title = `Siatka ${loggedPlayer} ${AppState.currentMonth}`;
+            updateMonthlyRozliczeniaFromMatches(AppState.currentMonth);
+            syncState();
+            renderBilling();
+            renderProfileTab();
 
-            container.innerHTML = `
-                <div class="bg-gradient-to-br ${isPaid ? 'from-emerald-950/80 via-slate-900 to-emerald-950/30 border-emerald-500/50' : 'from-amber-950/50 via-slate-900 to-rose-950/30 border-amber-500/50'} border rounded-3xl p-4 shadow-xl space-y-3">
-                    <div class="flex items-center justify-between gap-2">
-                        <div class="flex items-center gap-2 min-w-0">
-                            <span class="text-base shrink-0">${isPaid ? '🎉' : '💳'}</span>
-                            <span class="text-xs font-black text-white uppercase tracking-wider truncate">Twoja składka</span>
-                        </div>
-                        ${isPaid 
-                            ? `<span class="bg-emerald-500 text-slate-950 text-[10px] font-black px-2.5 py-1 rounded-full shadow-sm whitespace-nowrap shrink-0">✓ Uregulowane</span>`
-                            : `<span class="bg-rose-950 text-rose-300 border border-rose-800 text-[10px] font-black px-2.5 py-1 rounded-full font-mono whitespace-nowrap shrink-0">Do zapłaty: ${Math.abs(saldo).toFixed(2)}&nbsp;zł</span>`
-                        }
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-slate-800/80">
-                        <div class="text-xs space-y-1">
-                            <p class="text-slate-200">
-                                ${isPaid 
-                                    ? `Super! Wszystko opłacone na ten miesiąc: <strong class="text-emerald-400 font-mono font-bold whitespace-nowrap">${paid.toFixed(2)}&nbsp;zł</strong> (${pluralizeGames(myInfo.games)}). Dzięki! ✨`
-                                    : `Zagrano: <strong class="text-white">${pluralizeGames(myInfo.games)}</strong> • Należność: <strong class="text-amber-300 font-mono font-bold whitespace-nowrap">${due.toFixed(2)}&nbsp;zł</strong>`
-                                }
-                            </p>
-                            <div class="flex items-center gap-1.5 text-[11px] text-slate-400 flex-wrap">
-                                <span>Tytuł przelewu:</span>
-                                <span class="text-slate-200 font-mono bg-slate-950 px-2 py-0.5 rounded-lg border border-slate-800 font-semibold">${escapeHtml(title)}</span>
-                                <button type="button" onclick="copyTransferTitle(${toInlineArgument(loggedPlayer)})" class="text-emerald-400 hover:text-emerald-300 font-bold text-[10px] underline ml-0.5">
-                                    kopiuj tytuł
-                                </button>
-                            </div>
-                        </div>
-
-                        ${!isPaid ? `
-                            <button type="button" onclick="copyBlikNumber()" class="bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black px-4 py-2.5 rounded-2xl text-xs transition shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 shrink-0">
-                                <span>📲</span> Kopiuj nr BLIK (${phone})
-                            </button>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
+            if (isNowPaid) {
+                showToast(`Zaznaczono wpłatę 20 zł dla: ${playerName} ✅`);
+            } else {
+                showToast(`Cofnięto wpłatę dla: ${playerName} ↩️`);
+            }
         }
 
-        function renderBilling() {
-            renderMonthSelector();
-            const { playersMap, totalHallCost, totalPaid, totalDue } = calculateMonthlyBilling(AppState.currentMonth);
-            const totalOutstanding = Math.max(0, totalDue - totalPaid);
-
-            const costEl = document.getElementById('monthTotalCost');
-            const paidEl = document.getElementById('monthTotalPaid');
-            const outEl = document.getElementById('monthTotalOutstanding');
-            if (costEl) costEl.innerHTML = `${totalHallCost.toFixed(2)}&nbsp;zł`;
-            if (paidEl) paidEl.innerHTML = `${totalPaid.toFixed(2)}&nbsp;zł`;
-            if (outEl) outEl.innerHTML = `${totalOutstanding.toFixed(2)}&nbsp;zł`;
-
-            // Update Progress Bar
-            const percent = totalHallCost > 0 ? Math.min(100, Math.round((totalPaid / totalHallCost) * 100)) : 0;
-            const barEl = document.getElementById('billingProgressBar');
-            const percentEl = document.getElementById('billingProgressPercent');
-            if (barEl) barEl.style.width = `${percent}%`;
-            if (percentEl) percentEl.innerText = `${percent}%`;
-
-            const subEl = document.getElementById('billingMonthSubtitle');
-            if (subEl) subEl.innerText = `Miesiąc: ${AppState.currentMonth}`;
-
-            const blikDisp = document.getElementById('blikPhoneDisplay');
-            if (blikDisp) blikDisp.innerText = AppState.settings?.blikPhone || "517 077 482";
-
-            const billingAdminRow = document.getElementById('billingAdminActionsRow');
-            if (billingAdminRow) {
-                if (isAdmin) billingAdminRow.classList.remove('hidden');
-                else billingAdminRow.classList.add('hidden');
+        function markAllMatchPlayersPaid(matchIndex) {
+            if (!isAdmin) {
+                showToast("Tylko Organizator może zarządzać składkami! 🔒");
+                return;
             }
+            const monthData = AppState.months[AppState.currentMonth];
+            const match = monthData?.matches?.[matchIndex];
+            if (!match) return;
 
-            // Render Personal Card for logged player
-            renderMyBillingHero(playersMap);
-
-            const query = (document.getElementById('billingSearchInput')?.value || '').toLowerCase().trim();
-            const listEl = document.getElementById('billingCardsList');
-            if (!listEl) return;
-
-            const playerNames = Object.keys(playersMap).sort((a, b) => a.localeCompare(b, 'pl'));
-
-            // Calculate live counts
-            const allCount = playerNames.filter(p => (playersMap[p].games > 0 || playersMap[p].paid > 0)).length;
-            const unpaidCount = playerNames.filter(p => {
-                const info = playersMap[p];
-                const saldo = info.paid - info.costDue;
-                const isPaid = (info.costDue > 0 && saldo >= -0.05);
-                return !isPaid && (info.games > 0 || info.paid > 0);
-            }).length;
-            const paidCount = playerNames.filter(p => {
-                const info = playersMap[p];
-                const saldo = info.paid - info.costDue;
-                return (info.costDue > 0 && saldo >= -0.05);
-            }).length;
-
-            // Update Filter buttons UI with counts
-            const fAll = document.getElementById('billingFilterAll');
-            const fUnpaid = document.getElementById('billingFilterUnpaid');
-            const fPaid = document.getElementById('billingFilterPaid');
-
-            if (fAll) {
-                fAll.innerHTML = `Wszyscy <span class="text-[10px] opacity-80">(${allCount})</span>`;
-                fAll.className = currentBillingFilter === 'all' 
-                    ? "px-3 py-1.5 rounded-xl font-bold bg-emerald-500 text-slate-950 transition shadow-sm" 
-                    : "px-3 py-1.5 rounded-xl font-bold bg-slate-950 text-slate-400 border border-slate-800 hover:bg-slate-850 transition";
-            }
-            if (fUnpaid) {
-                fUnpaid.innerHTML = `🔴 Do zapłaty <span class="text-[10px] opacity-80">(${unpaidCount})</span>`;
-                fUnpaid.className = currentBillingFilter === 'unpaid' 
-                    ? "px-3 py-1.5 rounded-xl font-bold bg-rose-500 text-white transition shadow-sm" 
-                    : "px-3 py-1.5 rounded-xl font-bold bg-slate-950 text-rose-400 border border-rose-900/40 hover:bg-slate-850 transition";
-            }
-            if (fPaid) {
-                fPaid.innerHTML = `🟢 Opłacone <span class="text-[10px] opacity-80">(${paidCount})</span>`;
-                fPaid.className = currentBillingFilter === 'paid' 
-                    ? "px-3 py-1.5 rounded-xl font-bold bg-emerald-500 text-slate-950 transition shadow-sm" 
-                    : "px-3 py-1.5 rounded-xl font-bold bg-slate-950 text-emerald-400 border border-emerald-900/40 hover:bg-slate-850 transition";
-            }
-
-            const filtered = playerNames.filter(p => {
-                const info = playersMap[p];
-                const saldo = info.paid - info.costDue;
-                const isPaid = (info.costDue > 0 && saldo >= -0.05);
-
-                if (currentBillingFilter === 'unpaid' && isPaid) return false;
-                if (currentBillingFilter === 'paid' && !isPaid) return false;
-
-                return p.toLowerCase().includes(query) && (info.games > 0 || info.paid > 0);
-            });
-
-            if (filtered.length === 0) {
-                listEl.innerHTML = `<div class="p-6 text-center text-xs text-slate-500">Brak wyników dla wybranych filtrów.</div>`;
+            const mainSquad = (match.attendees || []).slice(0, 14);
+            if (!mainSquad.length) {
+                showToast("Brak graczy w składzie tego meczu.");
                 return;
             }
 
-            listEl.innerHTML = filtered.map(p => {
-                const info = playersMap[p];
-                const due = info.costDue;
-                const paid = info.paid;
-                const saldo = paid - due;
-                const isPaid = (due > 0 && saldo >= -0.05);
-                const isMe = (p === loggedPlayer);
+            if (!Array.isArray(match.paidPlayers)) match.paidPlayers = [];
+            const allPaid = mainSquad.every(p => match.paidPlayers.includes(p));
 
-                return `
-                    <div class="bg-slate-950 border ${isMe ? 'border-emerald-500/70 bg-emerald-950/15 ring-1 ring-emerald-500/30' : 'border-slate-800/80'} rounded-2xl p-3 sm:p-3.5 space-y-2.5 transition shadow-sm">
-                        <!-- Row 1: Player Info & Status -->
-                        <div class="flex items-center justify-between gap-2">
-                            <div class="flex items-center gap-2.5 min-w-0">
-                                ${getPlayerAvatarHtml(p, 'sm')}
-                                <div class="min-w-0">
-                                    <div class="flex items-center gap-1.5 flex-wrap">
-                                        <span class="font-extrabold text-xs sm:text-sm ${isMe ? 'text-emerald-300 font-black' : 'text-white'} truncate">${escapeHtml(p)}</span>
-                                        ${isMe ? `<span class="text-[9px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800/80 px-1.5 py-0.2 rounded-md">TY</span>` : ''}
-                                        <span class="text-[10px] text-slate-400 font-mono">(${pluralizeGames(info.games)})</span>
-                                    </div>
-                                    <div class="text-[11px] text-slate-400 mt-0.5 whitespace-nowrap">
-                                        Należność: <strong class="text-slate-200 font-mono font-bold whitespace-nowrap">${due.toFixed(2)}&nbsp;zł</strong>
-                                    </div>
-                                </div>
-                            </div>
+            if (allPaid) {
+                if (!confirm("Czy na pewno chcesz odznaczyć wszystkich jako nieopłaconych dla tej gierki?")) return;
+                match.paidPlayers = match.paidPlayers.filter(p => !mainSquad.includes(p));
+                showToast("Odznaczono graczy z tej gierki.");
+            } else {
+                mainSquad.forEach(p => {
+                    if (!match.paidPlayers.includes(p)) match.paidPlayers.push(p);
+                });
+                showToast("Oznaczono wszystkich graczy jako opłaconych (20 zł)! ✅");
+            }
 
-                            <!-- Status Tag -->
-                            <div class="shrink-0 text-right whitespace-nowrap">
-                                ${isPaid 
-                                    ? `<span class="bg-emerald-950 text-emerald-400 border border-emerald-800/80 text-[11px] font-black px-2.5 py-1 rounded-xl inline-flex items-center gap-1 whitespace-nowrap">
-                                        <span>✓</span> Opłacone
-                                       </span>` 
-                                    : (paid > 0 
-                                        ? `<div class="space-y-0.5 text-right whitespace-nowrap">
-                                            <span class="bg-amber-950/80 text-amber-300 border border-amber-800/80 text-[10px] font-black px-2 py-0.5 rounded-lg inline-flex items-center gap-1 whitespace-nowrap">
-                                                <span>⏳</span> Częściowo
-                                            </span>
-                                            <div class="text-[10px] font-mono text-rose-400 font-bold whitespace-nowrap">
-                                                Brak: ${Math.abs(saldo).toFixed(2)}&nbsp;zł
-                                            </div>
-                                           </div>`
-                                        : `<div class="space-y-0.5 text-right whitespace-nowrap">
-                                            <span class="bg-rose-950/80 text-rose-400 border border-rose-900/60 text-[10px] font-black px-2 py-0.5 rounded-lg inline-flex items-center gap-1 whitespace-nowrap">
-                                                <span>🔴</span> Brak wpłaty
-                                            </span>
-                                            <div class="text-[10px] font-mono text-rose-400 font-bold whitespace-nowrap">
-                                                ${due > 0 ? `Do zapłaty: ${due.toFixed(2)}&nbsp;zł` : ''}
-                                            </div>
-                                           </div>`
-                                      )
-                                }
-                            </div>
-                        </div>
+            updateMonthlyRozliczeniaFromMatches(AppState.currentMonth);
+            syncState();
+            renderBilling();
+            renderProfileTab();
+        }
 
-                        <!-- Row 2: Fixed Two-Sided Action Bar (Never wraps unexpectedly!) -->
-                        <div class="pt-2 border-t border-slate-800/60 flex items-center justify-between gap-2">
-                            ${isAdmin ? `
-                                <!-- Left: Paid amount input -->
-                                <div class="flex items-center bg-slate-900 border border-slate-700/80 rounded-xl px-2.5 py-1 shrink-0 whitespace-nowrap">
-                                    <span class="text-[11px] text-slate-400 mr-1.5 font-semibold">Wpłata:</span>
-                                    <input type="number" step="0.01" value="${paid || 0}" 
-                                           onchange="updatePlayerPaidAmount(${toInlineArgument(p)}, this.value)" 
-                                           aria-label="Wpisz kwotę wpłaty dla gracza ${escapeHtml(p)}"
-                                           class="w-16 bg-transparent text-xs font-black text-emerald-400 text-right focus:outline-none font-mono">
-                                    <span class="text-[11px] text-slate-400 ml-1">zł</span>
-                                </div>
+        function payAllPlayerDebts(playerName) {
+            if (!isAdmin) {
+                showToast("Tylko Organizator może zarządzać składkami! 🔒");
+                return;
+            }
+            const monthData = AppState.months[AppState.currentMonth];
+            if (!monthData?.matches) return;
 
-                                <!-- Right: Action button (Całość or Zeruj) -->
-                                <div class="shrink-0">
-                                    ${!isPaid && due > 0 ? `
-                                        <button type="button" onclick="setFullPayment(${toInlineArgument(p)}, ${due.toFixed(2)})" class="bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black px-3.5 py-1.5 rounded-xl text-xs transition shadow-md shadow-emerald-500/20 flex items-center gap-1.5 whitespace-nowrap">
-                                            <span>✅</span> Opłać całość
-                                        </button>
-                                    ` : `
-                                        <button type="button" onclick="updatePlayerPaidAmount(${toInlineArgument(p)}, 0)" class="bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-rose-400 font-bold px-3 py-1.5 rounded-xl text-xs border border-slate-700/80 transition active:scale-95 flex items-center gap-1 whitespace-nowrap" title="Wyzeruj wpłatę">
-                                            <span>↩️</span> Cofnij
-                                        </button>
-                                    `}
-                                </div>
-                            ` : `
-                                <!-- Non-admin view -->
-                                <div class="text-xs text-slate-400 whitespace-nowrap">
-                                    Wpłacono: <strong class="${saldo >= -0.05 ? 'text-emerald-400' : 'text-slate-200'} font-mono font-bold whitespace-nowrap">${paid.toFixed(2)}&nbsp;zł</strong>
-                                </div>
-                                <div class="shrink-0">
-                                    ${!isPaid && due > 0 ? `
-                                        <button type="button" onclick="copyBlikNumber()" class="px-3 py-1.5 bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-800 text-emerald-300 font-bold text-xs rounded-xl transition flex items-center gap-1.5 active:scale-95">
-                                            <span>📲</span> Kopiuj BLIK
-                                        </button>
-                                    ` : ''}
-                                </div>
-                            `}
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            let markedCount = 0;
+            monthData.matches.forEach(m => {
+                if (m.isCancelled) return;
+                const mainSquad = (m.attendees || []).slice(0, 14);
+                if (!mainSquad.includes(playerName)) return;
+
+                if (!Array.isArray(m.paidPlayers)) m.paidPlayers = [];
+                if (!m.paidPlayers.includes(playerName)) {
+                    m.paidPlayers.push(playerName);
+                    markedCount++;
+                }
+            });
+
+            if (markedCount === 0) {
+                showToast(`${playerName} nie ma zaległości w tym miesiącu! ✨`);
+                return;
+            }
+
+            updateMonthlyRozliczeniaFromMatches(AppState.currentMonth);
+            syncState();
+            renderBilling();
+            renderProfileTab();
+            showToast(`Opłacono ${markedCount} zaległych gierek (${markedCount * 20} zł) dla: ${playerName} ✅`);
+        }
+
+        function copyMatchDebtorsMessage(matchIndex) {
+            const monthData = AppState.months[AppState.currentMonth];
+            const match = monthData?.matches?.[matchIndex];
+            if (!match) return;
+
+            const mainSquad = (match.attendees || []).slice(0, 14);
+            const paidPlayers = Array.isArray(match.paidPlayers) ? match.paidPlayers : [];
+            const unpaid = mainSquad.filter(p => !paidPlayers.includes(p));
+
+            if (unpaid.length === 0) {
+                showToast("Wszyscy gracze z tej gierki już opłacili składkę (20 zł)! 🎉");
+                return;
+            }
+
+            const blikPhone = String(AppState.settings?.blikPhone || "517 077 482");
+            const dateFormatted = match.date;
+            const msg = `📢 ROZLICZENIE GIERKI - ${dateFormatted} 🏐\n\n` +
+                        `Siema ekipa! Składka za gierkę to 20 zł. Brakuje jeszcze wpłaty od:\n` +
+                        unpaid.map(p => `• ${p} - 20 zł`).join('\n') +
+                        `\n\n💸 BLIK na numer: ${blikPhone} (w tytule: ${dateFormatted} Imię Nazwisko)\n` +
+                        `Dzięki za szybkie przelewy! 🔥`;
+
+            copyToClipboard(msg, "Skopiowano listę nieopłaconych z tej gierki na Messengera! 📋");
+        }
+
+        function copyDebtorsListMessage() {
+            const billingData = calculateMonthlyBilling(AppState.currentMonth);
+            const debtors = [];
+
+            Object.entries(billingData.playersMap).forEach(([p, info]) => {
+                const outstanding = Math.max(0, info.costDue - info.paid);
+                if (outstanding > 0.05) {
+                    debtors.push({ name: p, due: outstanding, unpaidCount: info.games - (info.paidGames || 0) });
+                }
+            });
+
+            if (debtors.length === 0) {
+                showToast("Wszystkie składki na ten miesiąc są w 100% opłacone! 🎉");
+                return;
+            }
+
+            debtors.sort((a, b) => b.due - a.due || a.name.localeCompare(b.name, 'pl'));
+
+            const blikPhone = String(AppState.settings?.blikPhone || "517 077 482");
+            const msg = `📢 ROZLICZENIE SIATKÓWKI - ${AppState.currentMonth.toUpperCase()} 🏐\n\n` +
+                        `Siema ekipa! Przypominajka o składkach (20 zł za gierkę). Do opłacenia pozostało:\n` +
+                        debtors.map(d => `• ${d.name} - ${d.due.toFixed(0)} zł (${pluralizeGames(d.unpaidCount)})`).join('\n') +
+                        `\n\n💸 BLIK na numer: ${blikPhone} (w tytule: Imię Nazwisko Siatka)\n` +
+                        `Dzięki za szybkie przelewy! 🔥`;
+
+            copyToClipboard(msg, "Skopiowano listę dłużników miesiąca na Messengera! 📋");
         }
 
         function updatePlayerPaidAmount(pName, amountStr) {
@@ -5162,43 +5105,443 @@ function initFirebaseSync() {
         }
 
         function setFullPayment(pName, dueAmount) {
-            const val = parseFloat(dueAmount) || 0;
-            const monthData = AppState.months[AppState.currentMonth];
-            if (!monthData.rozliczenia) monthData.rozliczenia = {};
-            monthData.rozliczenia[pName] = { paid: val };
-            syncState();
-            renderBilling();
-            renderProfileTab();
-            showToast(`Opłacono całość (${val.toFixed(2)} zł) dla: ${pName} ✅`);
+            payAllPlayerDebts(pName);
         }
 
-        function copyDebtorsListMessage() {
-            const billingData = calculateMonthlyBilling(AppState.currentMonth);
-            const debtors = [];
+        function renderMyBillingHero(playersMap, selectedMatch, selectedMatchIndex) {
+            const container = document.getElementById('myBillingCardContainer');
+            if (!container) return;
 
-            AppState.all_players.forEach(p => {
-                const info = billingData.playersMap[p] || { costDue: 0, paid: 0 };
-                const outstanding = Math.max(0, info.costDue - info.paid);
-                if (outstanding > 0.05) {
-                    debtors.push({ name: p, due: outstanding });
-                }
-            });
-
-            if (debtors.length === 0) {
-                showToast("Wszystkie składki na ten miesiąc są w 100% opłacone! 🎉");
+            if (!loggedPlayer) {
+                container.innerHTML = `
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-3 flex items-center justify-between gap-3 text-xs">
+                        <span class="text-slate-300">Zaloguj się swoim profilem, aby widzieć status swoich wpłat i szybki BLIK.</span>
+                        <button type="button" onclick="openWelcomeGateModal()" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl shrink-0">Wybierz profil</button>
+                    </div>
+                `;
                 return;
             }
 
-            debtors.sort((a, b) => b.due - a.due || a.name.localeCompare(b.name, 'pl'));
+            const myInfo = playersMap[loggedPlayer];
+            const currentMainSquad = selectedMatch ? (selectedMatch.attendees || []).slice(0, 14) : [];
+            const isPlayingSelected = currentMainSquad.includes(loggedPlayer);
+            const isPaidSelected = selectedMatch && Array.isArray(selectedMatch.paidPlayers) && selectedMatch.paidPlayers.includes(loggedPlayer);
 
-            const blikPhone = String(AppState.settings?.blikPhone || "517 077 482");
-            const msg = `📢 ROZLICZENIE SIATKÓWKI - ${AppState.currentMonth.toUpperCase()} 🏐\n\n` +
-                        `Siema ekipa! Przypominajka o składkach za halę. Do opłacenia pozostało:\n` +
-                        debtors.map(d => `• ${d.name} - ${d.due.toFixed(2)} zł`).join('\n') +
-                        `\n\n💸 BLIK na numer: ${blikPhone} (w tytule: Imię Nazwisko Siatka)\n` +
-                        `Dzięki za szybkie przelewy! 🔥`;
+            const due = myInfo ? myInfo.costDue : 0;
+            const paid = myInfo ? myInfo.paid : 0;
+            const saldo = paid - due;
+            const phone = (AppState.settings?.blikPhone || "517 077 482").replace(/\s+/g, '');
 
-            copyToClipboard(msg, "Skopiowano listę do opłacenia! Gotowa do wklejenia na Messengera 📋");
+            if (!myInfo && !isPlayingSelected) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let matchStatusHtml = '';
+            if (selectedMatch) {
+                if (selectedMatch.isCancelled) {
+                    matchStatusHtml = `<span class="text-slate-400 font-semibold text-xs">Mecz ${selectedMatch.date} odwołany (0 zł)</span>`;
+                } else if (isPlayingSelected) {
+                    matchStatusHtml = isPaidSelected
+                        ? `<span class="bg-emerald-500 text-slate-950 font-black text-[10px] px-2.5 py-1 rounded-full shadow-sm">✓ Gierka ${selectedMatch.date}: Opłacona (20 zł)</span>`
+                        : `<span class="bg-rose-950 text-rose-300 border border-rose-800 font-black text-[10px] px-2.5 py-1 rounded-full font-mono">🔴 Gierka ${selectedMatch.date}: Do zapłaty 20 zł</span>`;
+                } else {
+                    matchStatusHtml = `<span class="text-slate-400 text-[10px] italic">Brak obecności na gierce ${selectedMatch.date}</span>`;
+                }
+            }
+
+            const hasAnyDebt = saldo < -0.05 || (isPlayingSelected && !isPaidSelected);
+
+            container.innerHTML = `
+                <div class="bg-gradient-to-br ${!hasAnyDebt ? 'from-emerald-950/80 via-slate-900 to-emerald-950/30 border-emerald-500/50' : 'from-amber-950/50 via-slate-900 to-rose-950/30 border-amber-500/50'} border rounded-3xl p-4 shadow-xl space-y-3">
+                    <div class="flex items-center justify-between gap-2 flex-wrap">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="text-base shrink-0">${!hasAnyDebt ? '🎉' : '💳'}</span>
+                            <span class="text-xs font-black text-white uppercase tracking-wider truncate">Twoje składki (${escapeHtml(loggedPlayer)})</span>
+                        </div>
+                        ${matchStatusHtml}
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-slate-800/80">
+                        <div class="text-xs space-y-1">
+                            <p class="text-slate-200">
+                                ${!hasAnyDebt
+                                    ? `Wszystko uregulowane! Rozegrano: <strong class="text-white">${pluralizeGames(myInfo?.games || 0)}</strong> • Opłacono: <strong class="text-emerald-400 font-mono font-bold whitespace-nowrap">${paid.toFixed(0)} zł</strong>. Dzięki! ✨`
+                                    : `Zagrano: <strong class="text-white">${pluralizeGames(myInfo?.games || 0)}</strong> • Opłacono: <strong class="text-emerald-400 font-mono font-bold">${paid.toFixed(0)} zł</strong> • Zalegasz: <strong class="text-rose-400 font-mono font-bold whitespace-nowrap">${Math.abs(saldo).toFixed(0)} zł</strong>`
+                                }
+                            </p>
+                            <div class="flex items-center gap-1.5 text-[11px] text-slate-400 flex-wrap">
+                                <span>Tytuł przelewu:</span>
+                                <span class="text-slate-200 font-mono bg-slate-950 px-2 py-0.5 rounded-lg border border-slate-800 font-semibold">Siatka ${escapeHtml(loggedPlayer)} 20zł</span>
+                                <button type="button" onclick="copyTransferTitle(${toInlineArgument(loggedPlayer)})" class="text-emerald-400 hover:text-emerald-300 font-bold text-[10px] underline ml-0.5">
+                                    kopiuj
+                                </button>
+                            </div>
+                        </div>
+
+                        ${hasAnyDebt ? `
+                            <button type="button" onclick="copyBlikNumber()" class="bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black px-4 py-2.5 rounded-2xl text-xs transition shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 shrink-0">
+                                <span>📲</span> Kopiuj BLIK (${phone})
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMatchBillingContent(monthData, matches, selectedIdx, isAdmin) {
+            if (!matches || !matches.length) {
+                return `<div class="p-8 text-center text-xs text-slate-500 bg-slate-900/80 border border-slate-800 rounded-3xl">Brak meczów w wybranym miesiącu (${AppState.currentMonth}). Dodaj mecz, aby móc rozliczać składki.</div>`;
+            }
+
+            const currentMatch = matches[selectedIdx] || matches[0];
+            const isCancelled = currentMatch.isCancelled;
+            const attendees = currentMatch.attendees || [];
+            const mainSquad = attendees.slice(0, 14);
+            const paidPlayers = Array.isArray(currentMatch.paidPlayers) ? currentMatch.paidPlayers : [];
+
+            const totalAttendees = mainSquad.length;
+            const paidCount = mainSquad.filter(p => paidPlayers.includes(p)).length;
+            const unpaidCount = Math.max(0, totalAttendees - paidCount);
+            const totalMatchCost = isCancelled ? 0 : totalAttendees * 20.00;
+            const totalMatchPaid = isCancelled ? 0 : paidCount * 20.00;
+            const totalMatchUnpaid = isCancelled ? 0 : unpaidCount * 20.00;
+            const percent = totalMatchCost > 0 ? Math.min(100, Math.round((totalMatchPaid / totalMatchCost) * 100)) : (isCancelled ? 100 : 0);
+
+            // Match selector pills
+            const matchPillsHtml = matches.map((m, idx) => {
+                const isSelected = (idx === selectedIdx);
+                const mAttendees = (m.attendees || []).slice(0, 14);
+                const mPaidCount = (m.paidPlayers || []).filter(p => mAttendees.includes(p)).length;
+                const allPaid = (mAttendees.length > 0 && mPaidCount >= mAttendees.length);
+
+                return `
+                    <button type="button" onclick="selectBillingMatch(${idx})" class="px-3 py-2 rounded-2xl text-xs font-bold transition flex items-center gap-1.5 shrink-0 ${isSelected ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20' : 'bg-slate-950 text-slate-300 border border-slate-800 hover:border-slate-700'}">
+                        <span>${m.isCancelled ? '❌' : (allPaid ? '✅' : '🏐')}</span>
+                        <span>${escapeHtml(m.date)}</span>
+                        <span class="text-[10px] font-mono opacity-80">(${mPaidCount}/${mAttendees.length})</span>
+                    </button>
+                `;
+            }).join('');
+
+            // Roster cards
+            let rosterHtml = '';
+            if (totalAttendees === 0) {
+                rosterHtml = `<div class="p-6 text-center text-xs text-slate-500">Brak zapisanych graczy w składzie głównym na ten mecz.</div>`;
+            } else {
+                rosterHtml = mainSquad.map((p, i) => {
+                    const isPaid = paidPlayers.includes(p);
+                    const isMe = (p === loggedPlayer);
+                    const posBadges = getPlayerPositionsBadgesHtml(p);
+
+                    return `
+                        <div class="bg-slate-950 border ${isPaid ? 'border-emerald-500/40 bg-emerald-950/10' : 'border-slate-800/90'} rounded-2xl p-3 flex items-center justify-between gap-3 shadow-sm transition hover:border-slate-700">
+                            <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                                <span class="font-mono text-xs font-bold text-slate-500 w-4 shrink-0 text-right">${i + 1}.</span>
+                                ${getPlayerAvatarHtml(p, 'sm')}
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center gap-1.5 flex-wrap">
+                                        <span class="font-extrabold text-xs sm:text-sm ${isMe ? 'text-emerald-300' : 'text-white'} truncate" title="${escapeHtml(p)}">${escapeHtml(p)}</span>
+                                        ${isMe ? `<span class="text-[9px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800 px-1.5 py-0.2 rounded-md">TY</span>` : ''}
+                                        ${posBadges}
+                                    </div>
+                                    <span class="text-[11px] font-mono font-bold text-slate-400">Składka: 20.00 zł</span>
+                                </div>
+                            </div>
+
+                            <!-- Action / Status -->
+                            <div class="shrink-0 flex items-center gap-2">
+                                ${isAdmin ? `
+                                    <button type="button" onclick="toggleMatchPlayerPayment(${selectedIdx}, ${toInlineArgument(p)})" class="px-3.5 py-2 rounded-xl font-black text-xs transition active:scale-95 flex items-center gap-1.5 shadow-sm whitespace-nowrap ${isPaid ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-emerald-500/20' : 'bg-rose-950/80 hover:bg-rose-900 border border-rose-700 text-rose-300'}" title="${isPaid ? 'Kliknij, aby cofnąć wpłatę' : 'Kliknij, aby zaznaczyć wpłatę 20 zł'}">
+                                        <span>${isPaid ? '✅ Opłacone (20 zł)' : '🔴 Zaznacz wpłatę'}</span>
+                                    </button>
+                                ` : `
+                                    ${isPaid 
+                                        ? `<span class="bg-emerald-950 text-emerald-400 border border-emerald-800 text-[11px] font-black px-2.5 py-1 rounded-xl inline-flex items-center gap-1 whitespace-nowrap"><span>✓</span> Opłacone</span>`
+                                        : `<span class="bg-rose-950 text-rose-300 border border-rose-800 text-[11px] font-black px-2.5 py-1 rounded-xl inline-flex items-center gap-1 whitespace-nowrap"><span>🔴</span> Do zapłaty</span>`
+                                    }
+                                `}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            return `
+                <!-- Match Selector Pills -->
+                <div class="space-y-1.5">
+                    <span class="text-[10px] font-black uppercase tracking-wider text-slate-400">Wybierz gierkę do rozliczenia:</span>
+                    <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+                        ${matchPillsHtml}
+                    </div>
+                </div>
+
+                <!-- Selected Match Financial Hero -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 shadow-lg space-y-3">
+                    <div class="flex items-center justify-between gap-2 flex-wrap border-b border-slate-800/80 pb-2.5">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-mono font-black px-2.5 py-0.5 rounded-lg ${isCancelled ? 'bg-rose-950 text-rose-300 border border-rose-800' : 'bg-emerald-950 text-emerald-300 border border-emerald-800'}">
+                                    ${escapeHtml(currentMatch.date)}
+                                </span>
+                                <span class="text-xs font-bold text-slate-300">${getDayFullName(currentMatch.date)}</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-0.5">
+                                ${isCancelled ? 'Mecz został odwołany' : `Skład główny: ${totalAttendees}/14 graczy (stawka: 20 zł / os.)`}
+                            </p>
+                        </div>
+                        ${isAdmin && !isCancelled && totalAttendees > 0 ? `
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <button type="button" onclick="markAllMatchPlayersPaid(${selectedIdx})" class="px-3 py-1.5 rounded-xl font-bold text-xs bg-slate-950 hover:bg-slate-850 text-slate-200 border border-slate-700 transition active:scale-95 flex items-center gap-1">
+                                    <span>${paidCount >= totalAttendees ? '↩️ Odznacz wszystkich' : '✅ Opłać wszystkich'}</span>
+                                </button>
+                                <button type="button" onclick="copyMatchDebtorsMessage(${selectedIdx})" class="px-3 py-1.5 rounded-xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 transition active:scale-95 flex items-center gap-1">
+                                    <span>📢</span> Kopiuj na Messengera
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    <!-- Progress Bar for this match -->
+                    ${!isCancelled ? `
+                        <div class="space-y-1.5 bg-slate-950/70 border border-slate-800/70 rounded-2xl p-3">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Wpłaty za tę gierkę</span>
+                                <span class="font-mono font-black text-emerald-400 text-xs">${percent}% (${paidCount}/${totalAttendees} graczy)</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden border border-slate-800">
+                                <div class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full transition-all duration-500" style="width: ${percent}%;"></div>
+                            </div>
+                            <div class="flex items-center justify-between text-[11px] font-mono pt-0.5 gap-2">
+                                <span class="text-slate-400">Zebrano: <strong class="text-emerald-400 font-bold">${totalMatchPaid.toFixed(0)} zł</strong> / ${totalMatchCost.toFixed(0)} zł</span>
+                                <span class="text-slate-400">Do pobrania: <strong class="${totalMatchUnpaid > 0 ? 'text-rose-400' : 'text-emerald-400'} font-bold">${totalMatchUnpaid.toFixed(0)} zł</strong></span>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+
+                <!-- Roster Checklist for this match -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-3.5 sm:p-4 shadow-lg space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="font-extrabold text-xs sm:text-sm text-white flex items-center gap-2">
+                                <span>👥</span> Skład gierki & Status 20 zł
+                            </h4>
+                            <p class="text-[10px] text-slate-400">${isAdmin ? 'Dotknij przycisk obok gracza, aby błyskawicznie oznaczyć lub cofnąć wpłatę 20 zł.' : 'Lista obecnych i status wpłat 20 zł.'}</p>
+                        </div>
+                        <span class="text-xs font-mono font-bold text-slate-400">${paidCount}/${totalAttendees} opłacone</span>
+                    </div>
+
+                    <div class="space-y-2 pt-1">
+                        ${rosterHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMonthlyBillingContent(monthData, playersMap, isAdmin) {
+            const { totalHallCost, totalPaid, totalDue, matchesCount } = calculateMonthlyBilling(AppState.currentMonth);
+            const totalOutstanding = Math.max(0, totalDue - totalPaid);
+            const percent = totalDue > 0 ? Math.min(100, Math.round((totalPaid / totalDue) * 100)) : 0;
+
+            const query = (document.getElementById('billingSearchInput')?.value || '').toLowerCase().trim();
+            const playerNames = Object.keys(playersMap).sort((a, b) => a.localeCompare(b, 'pl'));
+
+            const allCount = playerNames.filter(p => playersMap[p].games > 0).length;
+            const unpaidCount = playerNames.filter(p => {
+                const info = playersMap[p];
+                return info.games > 0 && (info.paid < info.costDue - 0.05);
+            }).length;
+            const paidCount = playerNames.filter(p => {
+                const info = playersMap[p];
+                return info.games > 0 && (info.paid >= info.costDue - 0.05);
+            }).length;
+
+            const filtered = playerNames.filter(p => {
+                const info = playersMap[p];
+                if (info.games === 0) return false;
+                const isPaid = (info.paid >= info.costDue - 0.05);
+
+                if (currentBillingFilter === 'unpaid' && isPaid) return false;
+                if (currentBillingFilter === 'paid' && !isPaid) return false;
+
+                return p.toLowerCase().includes(query);
+            });
+
+            let listHtml = '';
+            if (filtered.length === 0) {
+                listHtml = `<div class="p-6 text-center text-xs text-slate-500">Brak graczy dla wybranych kryteriów w miesiącu ${AppState.currentMonth}.</div>`;
+            } else {
+                listHtml = filtered.map(p => {
+                    const info = playersMap[p];
+                    const due = info.costDue;
+                    const paid = info.paid;
+                    const saldo = paid - due;
+                    const isFullyPaid = (saldo >= -0.05);
+                    const isMe = (p === loggedPlayer);
+
+                    const matchHistoryPills = (info.matches || []).map(mInfo => {
+                        if (mInfo.isPaid) {
+                            return `<span class="px-2 py-0.5 rounded-lg bg-emerald-950/80 border border-emerald-800 text-emerald-400 text-[10px] font-mono font-bold inline-flex items-center gap-1" title="Mecz ${mInfo.date}: Opłacone 20 zł"><span>${mInfo.date}</span><span>✓</span></span>`;
+                        } else {
+                            return `
+                                <button type="button" onclick="${isAdmin ? `toggleMatchPlayerPayment(${mInfo.matchIndex}, ${toInlineArgument(p)})` : ''}" class="px-2 py-0.5 rounded-lg bg-rose-950/80 border border-rose-800 text-rose-300 hover:text-white text-[10px] font-mono font-bold inline-flex items-center gap-1 transition ${isAdmin ? 'cursor-pointer active:scale-95 hover:bg-rose-900' : ''}" title="${isAdmin ? `Kliknij, aby oznaczyć mecz ${mInfo.date} jako opłacony (20 zł)` : `Brak wpłaty 20 zł za mecz ${mInfo.date}`}">
+                                    <span>${mInfo.date}</span><span>🔴 20 zł</span>
+                                </button>
+                            `;
+                        }
+                    }).join(' ');
+
+                    return `
+                        <div class="bg-slate-950 border ${isMe ? 'border-emerald-500/70 bg-emerald-950/15' : 'border-slate-800/80'} rounded-2xl p-3.5 space-y-2.5 transition shadow-sm">
+                            <!-- Top: Player Name & Total Status -->
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    ${getPlayerAvatarHtml(p, 'sm')}
+                                    <div class="min-w-0">
+                                        <div class="flex items-center gap-1.5 flex-wrap">
+                                            <span class="font-extrabold text-xs sm:text-sm ${isMe ? 'text-emerald-300' : 'text-white'} truncate">${escapeHtml(p)}</span>
+                                            ${isMe ? `<span class="text-[9px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800 px-1.5 py-0.2 rounded-md">TY</span>` : ''}
+                                            <span class="text-[10px] text-slate-400 font-mono">(${pluralizeGames(info.games)})</span>
+                                        </div>
+                                        <div class="text-[11px] text-slate-400 mt-0.5">
+                                            Opłacono: <strong class="text-emerald-400 font-mono font-bold">${paid.toFixed(0)} zł</strong> / ${due.toFixed(0)} zł
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="shrink-0 text-right">
+                                    ${isFullyPaid 
+                                        ? `<span class="bg-emerald-950 text-emerald-400 border border-emerald-800 text-[11px] font-black px-2.5 py-1 rounded-xl inline-flex items-center gap-1"><span>✓</span> Na czysto</span>`
+                                        : `<span class="bg-rose-950 text-rose-400 border border-rose-800 text-[11px] font-black px-2.5 py-1 rounded-xl inline-flex items-center gap-1"><span>🔴</span> Brak: ${Math.abs(saldo).toFixed(0)} zł</span>`
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- Per-match history pills -->
+                            <div class="pt-2 border-t border-slate-800/60 flex items-center justify-between gap-2 flex-wrap">
+                                <div class="flex items-center gap-1.5 flex-wrap">
+                                    <span class="text-[10px] text-slate-500 font-bold uppercase mr-0.5">Mecze:</span>
+                                    ${matchHistoryPills}
+                                </div>
+
+                                ${isAdmin && !isFullyPaid ? `
+                                    <button type="button" onclick="payAllPlayerDebts(${toInlineArgument(p)})" class="px-3 py-1 rounded-xl font-bold text-xs bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition active:scale-95 shadow-sm whitespace-nowrap ml-auto">
+                                        <span>✅</span> Opłać zaległość (${Math.abs(saldo).toFixed(0)} zł)
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            return `
+                <!-- Month Progress Dashboard -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 shadow-lg space-y-3">
+                    <div class="flex items-center justify-between gap-2 flex-wrap">
+                        <div>
+                            <h4 class="font-extrabold text-sm text-white">Podsumowanie miesiąca: ${escapeHtml(AppState.currentMonth)}</h4>
+                            <p class="text-[11px] text-slate-400">Rozegrano ${matchesCount} gierek • Stawka 20 zł / gierka</p>
+                        </div>
+                        ${isAdmin && totalOutstanding > 0 ? `
+                            <button type="button" onclick="copyDebtorsListMessage()" class="px-3.5 py-1.5 rounded-xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 transition active:scale-95 flex items-center gap-1.5">
+                                <span>📢</span> Kopiuj dłużników miesiąca
+                            </button>
+                        ` : ''}
+                    </div>
+
+                    <div class="space-y-1.5 bg-slate-950/70 border border-slate-800/70 rounded-2xl p-3">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Stan zbiórki w miesiącu</span>
+                            <span class="font-mono font-black text-emerald-400 text-xs">${percent}%</span>
+                        </div>
+                        <div class="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden border border-slate-800">
+                            <div class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full transition-all duration-500" style="width: ${percent}%;"></div>
+                        </div>
+                        <div class="flex items-center justify-between text-[11px] font-mono pt-0.5 gap-2">
+                            <span class="text-slate-400">Zebrano: <strong class="text-emerald-400 font-bold">${totalPaid.toFixed(0)} zł</strong> / ${totalDue.toFixed(0)} zł</span>
+                            <span class="text-slate-400">Pozostało: <strong class="${totalOutstanding > 0 ? 'text-rose-400' : 'text-emerald-400'} font-bold">${totalOutstanding.toFixed(0)} zł</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter & Search Bar -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-3.5 sm:p-4 shadow-lg space-y-3">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                        <div class="flex gap-1.5 text-[11px] overflow-x-auto">
+                            <button type="button" onclick="setBillingFilter('all')" class="px-3 py-1.5 rounded-xl font-bold transition text-xs ${currentBillingFilter === 'all' ? 'bg-emerald-500 text-slate-950 shadow-sm' : 'bg-slate-950 text-slate-400 border border-slate-800'}">
+                                Wszyscy (${allCount})
+                            </button>
+                            <button type="button" onclick="setBillingFilter('unpaid')" class="px-3 py-1.5 rounded-xl font-bold transition text-xs ${currentBillingFilter === 'unpaid' ? 'bg-rose-500 text-white shadow-sm' : 'bg-slate-950 text-rose-400 border border-rose-900/40'}">
+                                🔴 Zaległości (${unpaidCount})
+                            </button>
+                            <button type="button" onclick="setBillingFilter('paid')" class="px-3 py-1.5 rounded-xl font-bold transition text-xs ${currentBillingFilter === 'paid' ? 'bg-emerald-500 text-slate-950 shadow-sm' : 'bg-slate-950 text-emerald-400 border border-emerald-900/40'}">
+                                🟢 Na czysto (${paidCount})
+                            </button>
+                        </div>
+                        <input id="billingSearchInput" oninput="renderBilling()" type="text" value="${escapeHtml(query)}" placeholder="Szukaj gracza..." class="w-full sm:w-44 bg-slate-950 border border-slate-700 text-xs px-2.5 py-1.5 rounded-xl text-white focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <div class="space-y-2 pt-1">
+                        ${listHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderBilling() {
+            renderMonthSelector();
+            ensureMatchPaymentsMigrated(AppState.currentMonth);
+
+            const monthData = AppState.months[AppState.currentMonth];
+            const matches = monthData?.matches || [];
+
+            // Auto-select match index
+            if (selectedBillingMatchIndex === null || selectedBillingMatchIndex >= matches.length || selectedBillingMatchIndex < 0) {
+                if (AppState.currentMatchIndex !== undefined && AppState.currentMatchIndex < matches.length) {
+                    selectedBillingMatchIndex = AppState.currentMatchIndex;
+                } else {
+                    selectedBillingMatchIndex = Math.max(0, matches.length - 1);
+                }
+            }
+
+            const { playersMap, totalHallCost, totalPaid, totalDue, matchesCount } = calculateMonthlyBilling(AppState.currentMonth);
+            const selectedMatch = matches[selectedBillingMatchIndex] || null;
+
+            // Update BLIK Phone
+            const blikDisp = document.getElementById('blikPhoneDisplay');
+            if (blikDisp) blikDisp.innerText = AppState.settings?.blikPhone || "517 077 482";
+
+            // Update Subtitle
+            const subEl = document.getElementById('billingMonthSubtitle');
+            if (subEl) subEl.innerText = `Miesiąc: ${AppState.currentMonth} (20 zł / gierka)`;
+
+            // Update Mode Buttons
+            const matchBtn = document.getElementById('billingModeMatchBtn');
+            const monthBtn = document.getElementById('billingModeMonthBtn');
+            if (matchBtn && monthBtn) {
+                if (billingMode === 'match') {
+                    matchBtn.className = "flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl font-bold bg-emerald-500 text-slate-950 transition text-[11px] flex items-center justify-center gap-1.5 shadow-sm";
+                    monthBtn.className = "flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl font-bold text-slate-400 hover:text-white transition text-[11px] flex items-center justify-center gap-1.5";
+                } else {
+                    monthBtn.className = "flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl font-bold bg-emerald-500 text-slate-950 transition text-[11px] flex items-center justify-center gap-1.5 shadow-sm";
+                    matchBtn.className = "flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl font-bold text-slate-400 hover:text-white transition text-[11px] flex items-center justify-center gap-1.5";
+                }
+            }
+
+            // Render Personal Hero Card
+            renderMyBillingHero(playersMap, selectedMatch, selectedBillingMatchIndex);
+
+            // Render Main Content
+            const mainContentEl = document.getElementById('billingMainContent');
+            if (mainContentEl) {
+                if (billingMode === 'match') {
+                    mainContentEl.innerHTML = renderMatchBillingContent(monthData, matches, selectedBillingMatchIndex, isAdmin);
+                } else {
+                    mainContentEl.innerHTML = renderMonthlyBillingContent(monthData, playersMap, isAdmin);
+                }
+            }
         }
 
         function calculatePlayerChemistry(playerName) {
