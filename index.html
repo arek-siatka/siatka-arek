@@ -223,7 +223,7 @@
                     <div class="flex items-center gap-2 flex-wrap">
                         <span class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Mecze:</span>
                         <div class="inline-flex bg-slate-950 p-0.5 rounded-lg border border-slate-800 text-[10px] font-bold">
-                            <button type="button" id="datesFilterBtn-upcoming" onclick="setMatchDatesFilter('upcoming')" class="px-2 py-0.5 rounded-md transition text-slate-400 hover:text-white">NajbliĹĽszy</button>
+                            <button type="button" id="datesFilterBtn-upcoming" onclick="setMatchDatesFilter('upcoming')" class="px-2 py-0.5 rounded-md transition text-slate-400 hover:text-white">Najbliższy</button>
                             <button type="button" id="datesFilterBtn-all" onclick="setMatchDatesFilter('all')" class="px-2 py-0.5 rounded-md transition bg-emerald-500 text-slate-950 font-bold">Wszystkie</button>
                         </div>
                         <button type="button" onclick="toggleShowPastMatches()" id="togglePastMatchesBtn" class="text-[10px] text-slate-400 hover:text-slate-200 underline ml-0.5">
@@ -231,11 +231,11 @@
                         </button>
                     </div>
                     <div class="flex items-center gap-1 shrink-0">
-                        <button type="button" onclick="scrollMatchDates(-1)" title="PrzewiĹ„ w lewo" class="w-7 h-7 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs font-bold transition active:scale-95 shadow-sm">
-                            â—€
+                        <button type="button" onclick="scrollMatchDates(-1)" title="Przewiń w lewo" class="w-7 h-7 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs font-bold transition active:scale-95 shadow-sm">
+                            &#9664;
                         </button>
-                        <button type="button" onclick="scrollMatchDates(1)" title="PrzewiĹ„ w prawo" class="w-7 h-7 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs font-bold transition active:scale-95 shadow-sm">
-                            â–¶
+                        <button type="button" onclick="scrollMatchDates(1)" title="Przewiń w prawo" class="w-7 h-7 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs font-bold transition active:scale-95 shadow-sm">
+                            &#9654;
                         </button>
                     </div>
                 </div>
@@ -264,20 +264,20 @@
                             2026-08-28
                         </span>
                         <span id="upcomingBadge" class="hidden text-[11px] font-extrabold text-sky-400 uppercase tracking-wider bg-sky-950/80 border border-sky-800/80 px-2.5 py-0.5 rounded-full">
-                            âŹł NAJBLIĹ»SZY
+                            &#9203; NAJBLIŻSZY
                         </span>
                         <span id="matchStatusBadge" class="hidden text-[11px] font-extrabold text-rose-400 uppercase tracking-wider bg-rose-950/80 border border-rose-800/80 px-2.5 py-0.5 rounded-full">
-                            đźš« ODWOĹANY
+                            &#128683; ODWOŁANY
                         </span>
                     </div>
                     <div class="flex items-center gap-1 shrink-0">
                         <button type="button" onclick="selectAdjacentMatch(-1)" title="Poprzedni mecz" class="px-2.5 py-1 bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold rounded-xl border border-slate-800 transition active:scale-95 flex items-center gap-1 shadow-sm">
-                            <span>â—€</span>
+                            <span>&#9664;</span>
                             <span class="hidden sm:inline">Poprzedni</span>
                         </button>
-                        <button type="button" onclick="selectAdjacentMatch(1)" title="NastÄ™pny mecz" class="px-2.5 py-1 bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold rounded-xl border border-slate-800 transition active:scale-95 flex items-center gap-1 shadow-sm">
-                            <span class="hidden sm:inline">NastÄ™pny</span>
-                            <span>â–¶</span>
+                        <button type="button" onclick="selectAdjacentMatch(1)" title="Następny mecz" class="px-2.5 py-1 bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold rounded-xl border border-slate-800 transition active:scale-95 flex items-center gap-1 shadow-sm">
+                            <span class="hidden sm:inline">Następny</span>
+                            <span>&#9654;</span>
                         </button>
                     </div>
                 </div>
@@ -2850,7 +2850,7 @@ function initFirebaseSync() {
             });
 
             if (visibleMatches.length === 0) {
-                datesContainer.innerHTML = `<span class="text-xs text-slate-500 py-2">Brak meczĂłw. Kliknij "Wszystkie" lub "Archiwum".</span>`;
+                datesContainer.innerHTML = `<span class="text-xs text-slate-500 py-2">Brak meczów. Kliknij "Wszystkie" lub "Archiwum".</span>`;
             } else {
                 datesContainer.innerHTML = visibleMatches.map(item => {
                     const m = item.match;
@@ -2870,7 +2870,7 @@ function initFirebaseSync() {
                                     ? 'bg-slate-950 text-slate-500 border-slate-800/80 hover:border-slate-700'
                                     : 'bg-slate-950 text-slate-200 border-slate-800 hover:border-slate-700'
                         }">
-                            <span>${isPast ? 'âŹł' : 'đź“…'} ${dayDisplay}</span>
+                            <span>${isPast ? '&#9203;' : '&#128197;'} ${dayDisplay}</span>
                             <span class="text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
                                 isSelected 
                                     ? 'bg-slate-950/20 text-slate-950 font-black' 
@@ -2898,14 +2898,14 @@ function initFirebaseSync() {
             }
             const headerHall = document.getElementById('headerHallAddress');
             if (headerHall && AppState.settings && AppState.settings.hallAddress) {
-                headerHall.innerText = 'đź“Ť ' + AppState.settings.hallAddress;
+                headerHall.innerHTML = '&#128205; ' + escapeHtml(AppState.settings.hallAddress);
             }
 
             const heroTitle = document.getElementById('heroMatchTitle');
             if (heroTitle) {
                 const dayName = currentMatch?.date ? getDayFullName(currentMatch.date) : '';
                 const dayCap = dayName ? (dayName.charAt(0).toUpperCase() + dayName.slice(1)) : 'Mecz';
-                heroTitle.innerText = dayCap + ' â€˘ ' + (AppState.settings?.groupName || 'SiatkĂłwka');
+                heroTitle.innerText = dayCap + ' \u2022 ' + (AppState.settings?.groupName || 'Siatkówka');
             }
 
             const heroDetails = document.getElementById('heroMatchDetails');
@@ -2914,7 +2914,7 @@ function initFirebaseSync() {
                 const start = (AppState.settings && AppState.settings.startTime) ? AppState.settings.startTime : '20:00';
                 const end = (AppState.settings && AppState.settings.gameEndTime) ? AppState.settings.gameEndTime : '21:45';
                 const hall = (AppState.settings && AppState.settings.hallAddress) ? AppState.settings.hallAddress : 'Hala';
-                heroDetails.innerHTML = 'đź•’ Rozgrzewka: <span class="text-emerald-400 font-bold">' + warmup + '</span> â€˘ Gra: <span class="text-emerald-400 font-bold">' + start + ' - ' + end + '</span> â€˘ đź“Ť <span class="text-slate-300 font-semibold">' + escapeHtml(hall) + '</span>';
+                heroDetails.innerHTML = '&#9200; Rozgrzewka: <span class="text-emerald-400 font-bold">' + warmup + '</span> \u2022 Gra: <span class="text-emerald-400 font-bold">' + start + ' - ' + end + '</span> \u2022 &#128205; <span class="text-slate-300 font-semibold">' + escapeHtml(hall) + '</span>';
             }
 
             const cancelBtn = document.getElementById('cancelMatchBtn');
@@ -2926,9 +2926,9 @@ function initFirebaseSync() {
             if (!currentMatch) {
                 document.getElementById('matchDateBadge').innerText = "Brak meczu";
                 const costEl = document.getElementById('matchCostPerPerson');
-                if (costEl) costEl.innerText = "0.00 zĹ‚";
+                if (costEl) costEl.innerText = "0.00 zł";
                 document.getElementById('matchPlayerCount').innerText = "0/12";
-                document.getElementById('mainSquadList').innerHTML = `<div class="p-4 text-center text-xs text-slate-600">Brak meczĂłw w tym miesiÄ…cu.</div>`;
+                document.getElementById('mainSquadList').innerHTML = `<div class="p-4 text-center text-xs text-slate-600">Brak meczów w tym miesiącu.</div>`;
                 document.getElementById('reserveCardContainer').classList.add('hidden');
                 if (upcomingBadge) upcomingBadge.classList.add('hidden');
                 if (scoreTextEl) scoreTextEl.innerText = "-";
@@ -6494,40 +6494,40 @@ function initFirebaseSync() {
             const end = AppState.settings?.gameEndTime || "21:45";
             const hall = AppState.settings?.hallAddress || "Hala Sportowa";
             const blikPhone = String(AppState.settings?.blikPhone || "").trim();
-            const groupName = AppState.settings?.groupName || "SiatkĂłwka";
+            const groupName = AppState.settings?.groupName || "AKS Laurowa";
             const url = window.location.href;
 
             if (type === 'monday' || type === 'signup') {
-                return `đź”” ${groupName.toUpperCase()} - ZAPISY NA ${dayCap.toUpperCase()} (${dateStr}) đź””\n\n` +
-                       `Siemanko! RuszyĹ‚y zapisy na ${dayFullName}.\n` +
-                       `âŹ° Rozgrzewka: ${warmup} â€˘ Gramy: ${start} - ${end}!\n` +
-                       `đź“Ť Miejsce: ${hall}\n\n` +
-                       `đź‘‰ Zapiszcie siÄ™ przez link:\n${url}\n\n` +
-                       `Limit skĹ‚adu to 12 osĂłb (6v6), decyduje kolejnoĹ›Ä‡ zgĹ‚oszeĹ„! đźŹđź”Ą`;
+                return `\uD83D\uDD14 ${groupName.toUpperCase()} - ZAPISY NA ${dayCap.toUpperCase()} (${dateStr}) \uD83D\uDD14\n\n` +
+                       `Siemanko! Ruszy\u0142y zapisy na ${dayFullName}.\n` +
+                       `\u23F0 Rozgrzewka: ${warmup} \u2022 Gramy: ${start} - ${end}!\n` +
+                       `\uD83D\uDCCD Miejsce: ${hall}\n\n` +
+                       `\uD83D\uDC49 Zapiszcie si\u0119 przez link:\n${url}\n\n` +
+                       `Limit sk\u0142adu to 12 os\u00f3b (6v6), decyduje kolejno\u015b\u0107 zg\u0142osze\u0144! \uD83C\uDFD0\uD83D\uDD25`;
             } else if (type === 'mvp') {
-                return `đźŹ† GĹOSOWANIE NA MVP MECZU (${dayCap} ${dateStr}) đźŹ†\n\n` +
-                       `DziÄ™ki wszystkim za Ĺ›wietnÄ… walkÄ™ na parkiecie! đź”ĄđźŹ\n\n` +
-                       `GĹ‚osowanie jest tajne đź”’ Kto Twoim zdaniem zasĹ‚uĹĽyĹ‚ na MVP? Oddaj gĹ‚os:\n${url}\n\n` +
-                       `Podium đźĄ‡đźĄđźĄ‰ i oficjalne wyniki pojawiÄ… siÄ™ na stronie po zebraniu gĹ‚osĂłw! đźŚź`;
+                return `\uD83C\uDFC6 G\u0141OSOWANIE NA MVP MECZU (${dayCap} ${dateStr}) \uD83C\uDFC6\n\n` +
+                       `Dzi\u0119ki wszystkim za \u015bwietn\u0105 walk\u0119 na parkiecie! \uD83D\uDD25\uD83C\uDFD0\n\n` +
+                       `G\u0142osowanie jest tajne \uD83D\uDD12 Kto Twoim zdaniem zas\u0142u\u017cy\u0142 na MVP? Oddaj g\u0142os:\n${url}\n\n` +
+                       `Podium \uD83E\uDD47\uD83E\uDD48\uD83E\uDD49 i oficjalne wyniki pojawi\u0105 si\u0119 na stronie po zebraniu g\u0142os\u00f3w! \uD83E\uDD85`;
             } else if (type === 'billing') {
-                return `đź’° ROZLICZENIE SKĹADEK ZA HALÄ (${AppState.currentMonth}) đź’°\n\n` +
-                       `Ekipa, podsumowanie skĹ‚adek za halÄ™ za miesiÄ…c ${AppState.currentMonth} jest juĹĽ gotowe!\n\n` +
-                       `đź‘‰ SprawdĹş swojÄ… kwotÄ™ do wpĹ‚aty na stronie:\n${url}\n` +
-                       (blikPhone ? `\nđź’¸ Przelew BLIK na numer: ${blikPhone} (w tytule wpisz swoje imiÄ™ i nazwisko)` : '');
+                return `\uD83D\uDCB0 ROZLICZENIE SK\u0141ADEK ZA HAL\u0118 (${AppState.currentMonth}) \uD83D\uDCB0\n\n` +
+                       `Ekipa, podsumowanie sk\u0142adek za hal\u0119 za miesi\u0105c ${AppState.currentMonth} jest ju\u017c gotowe!\n\n` +
+                       `\uD83D\uDC49 Sprawd\u017a swoj\u0105 kwot\u0119 do wp\u0142aty na stronie:\n${url}\n` +
+                       (blikPhone ? `\n\uD83D\uDCB8 Przelew BLIK na numer: ${blikPhone} (w tytule wpisz swoje imi\u0119 i nazwisko)` : '');
             }
 
-            return `đźŹ ${groupName.toUpperCase()} - DZISIAJ (${dayCap} ${dateStr}) đźŹ\n\n` +
-                   `âŹ° Rozgrzewka: ${warmup} â€˘ Gra: ${start} - ${end} (spotykamy i przebieramy siÄ™ na hali)!\n` +
-                   `đź“Ť Miejsce: ${hall}\n` +
-                   `đź‘Ą SkĹ‚ad: ${count}/12 (Wolne miejsca: ${freeSlots})\n` +
-                   `đź’° Koszt: ~${costPerPerson} zĹ‚ / os.\n\n` +
-                   `đź“˛ Zapisy / SkĹ‚ady / Wyniki:\n${url}\n` +
-                   (blikPhone ? `\nđź’¸ WpĹ‚aty BLIK: ${blikPhone}` : '');
+            return `\uD83C\uDFD0 ${groupName.toUpperCase()} - DZISIAJ (${dayCap} ${dateStr}) \uD83C\uDFD0\n\n` +
+                   `\u23F0 Rozgrzewka: ${warmup} \u2022 Gra: ${start} - ${end} (spotykamy i przebieramy si\u0119 na hali)!\n` +
+                   `\uD83D\uDCCD Miejsce: ${hall}\n` +
+                   `\uD83D\uDC65 Sk\u0142ad: ${count}/12 (Wolne miejsca: ${freeSlots})\n` +
+                   `\uD83D\uDCB0 Koszt: ~${costPerPerson} z\u0142 / os.\n\n` +
+                   `\uD83D\uDCF2 Zapisy / Sk\u0142ady / Wyniki:\n${url}\n` +
+                   (blikPhone ? `\n\uD83D\uDCB8 Wp\u0142aty BLIK: ${blikPhone}` : '');
         }
 
         function openShareModal() {
             if (!isAdmin) {
-                alert("OgĹ‚oszenia na grupÄ™ moĹĽe kopiowaÄ‡ wyĹ‚Ä…cznie Organizator.");
+                alert("Tylko Organizator mo\u017ce kopiowa\u0107 og\u0142oszenia na grup\u0119!");
                 return;
             }
             selectTemplate('match');
