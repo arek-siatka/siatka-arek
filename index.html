@@ -192,6 +192,9 @@
         <!-- ================= TAB 1: ZAPISY, MECZ & ZINTEGROWANE MVP ================= -->
         <section id="tab-matches" class="space-y-4 animate-fade-in">
             
+            <!-- Prominent MVP Banner (Dynamic Alert for Recent Match Voting) -->
+            <div id="recentMvpQuickBanner" class="hidden"></div>
+            
             <!-- Dates Carousel (Piątki) -->
             <!-- Match Selector & Dates Row -->
             <div class="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-3 shadow-md space-y-2">
@@ -348,24 +351,41 @@
 
             <!-- ================= ZINTEGROWANE GŁOSOWANIE MVP MECZU NA EKRANIE GŁÓWNYM ================= -->
             <div id="integratedMvpCard" class="bg-gradient-to-br from-slate-900 via-amber-950/20 to-slate-950 border border-amber-800/50 rounded-3xl p-4 sm:p-5 shadow-xl space-y-4">
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
                     <div class="flex items-center gap-2">
                         <span class="text-2xl">🏆</span>
                         <div>
-                            <h3 class="font-black text-sm sm:text-base text-white">MVP Spotkania</h3>
+                            <h3 class="font-black text-sm sm:text-base text-white">MVP Spotkania &amp; Kobiet</h3>
                             <p id="mvpMatchDateBadge" class="text-[11px] text-amber-400 font-semibold">Mecz: -</p>
                         </div>
                     </div>
-                    <span id="mvpVotesCountBadge" class="text-xs font-mono font-bold text-amber-300 bg-amber-950/80 px-2.5 py-1 rounded-xl border border-amber-900/60">
-                        Głosy: 0/0
-                    </span>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="copyMvpVoteDirectLink()" title="Skopiuj bezpośredni link do głosowania dla ekipy na Messengerze" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 hover:text-amber-200 text-xs font-bold transition active:scale-95 shadow-sm cursor-pointer">
+                            <span>🔗</span>
+                            <span>Kopiuj link do głosowania</span>
+                        </button>
+                        <span id="mvpVotesCountBadge" class="text-xs font-mono font-bold text-amber-300 bg-amber-950/80 px-2.5 py-1 rounded-xl border border-amber-900/60">
+                            Głosy: 0/0
+                        </span>
+                    </div>
                 </div>
 
                 <!-- MVP Winner Highlight Card (Secret during voting, Celebratory when finished) -->
-                <div id="mvpWinnerContainer" class="bg-slate-950/90 border border-amber-800/60 rounded-2xl p-3.5 text-center space-y-1 relative overflow-hidden">
+                <div id="mvpWinnerContainer" class="bg-slate-950/90 border border-amber-800/60 rounded-2xl p-3.5 text-center space-y-2 relative overflow-hidden">
                     <p id="mvpWinnerHeaderLabel" class="text-[10px] uppercase tracking-widest text-amber-400 font-bold">🔒 TAJNE GŁOSOWANIE W TOKU</p>
-                    <h3 id="mvpWinnerName" class="text-lg sm:text-xl font-black text-white">Czekamy na pierwsze głosy</h3>
-                    <p id="mvpWinnerVotes" class="text-xs text-slate-400">Wyniki zostaną ujawnione, gdy wszyscy zagłosują!</p>
+                    <div id="mvpWinnersFlex" class="space-y-3">
+                        <div id="mvpMainWinnerBox">
+                            <h3 id="mvpWinnerName" class="text-lg sm:text-xl font-black text-white">Czekamy na pierwsze głosy</h3>
+                            <p id="mvpWinnerVotes" class="text-xs text-slate-400">Wyniki zostaną ujawnione, gdy wszyscy zagłosują!</p>
+                        </div>
+                        <div id="mvpWomenWinnerBox" class="hidden pt-2.5 border-t border-slate-800/80 bg-pink-950/10 rounded-xl p-2 border border-pink-900/30">
+                            <p class="text-[10px] font-black uppercase tracking-wider text-pink-400 flex items-center justify-center gap-1">
+                                <span>🌸</span> OFICJALNE MVP KOBIET 👑
+                            </p>
+                            <h4 id="mvpWomenWinnerName" class="text-base sm:text-lg font-black text-pink-200 mt-0.5">-</h4>
+                            <p id="mvpWomenWinnerVotes" class="text-xs text-slate-400">-</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Voting Form (Dla obecnych) -->
@@ -374,22 +394,30 @@
                         <span>🗳️</span> Oddaj swój głos (Tylko obecni)
                     </h4>
                     
-                    <div class="space-y-2">
+                    <div class="space-y-2.5">
                         <div id="voterSelectContainer">
                             <label for="voterSelect" class="block text-[11px] text-slate-400 mb-1">1. Kim jesteś? (Wybierz siebie ze składu):</label>
-                            <select id="voterSelect" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-amber-500 cursor-pointer">
+                            <select id="voterSelect" onchange="handleMvpVoterChange()" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-amber-500 cursor-pointer">
                                 <!-- Populated dynamically -->
                             </select>
                         </div>
                         <div>
-                            <label for="nomineeSelect" class="block text-[11px] text-slate-400 mb-1">2. Twój głos na MVP meczu:</label>
+                            <label for="nomineeSelect" class="block text-[11px] text-slate-400 mb-1">2. Twój głos na MVP meczu (ogólne):</label>
                             <select id="nomineeSelect" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-amber-500 cursor-pointer">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div id="womenNomineeContainer" class="hidden">
+                            <label for="womenNomineeSelect" class="block text-[11px] text-pink-400 font-bold mb-1 flex items-center gap-1">
+                                <span>🌸</span> 3. Twój głos na MVP Kobiet:
+                            </label>
+                            <select id="womenNomineeSelect" class="w-full bg-slate-900 border border-pink-700/60 text-xs font-semibold text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-pink-500 cursor-pointer">
                                 <!-- Populated dynamically -->
                             </select>
                         </div>
                     </div>
 
-                    <button type="button" onclick="submitMvpVote()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-2.5 rounded-xl text-xs transition active:scale-95 shadow-lg shadow-amber-500/20">
+                    <button type="button" onclick="submitMvpVote()" class="w-full bg-gradient-to-r from-amber-500 via-pink-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-2.5 rounded-xl text-xs transition active:scale-95 shadow-lg shadow-amber-500/20">
                         Zatwierdź głos na MVP 🌟
                     </button>
                 </div>
@@ -1629,37 +1657,181 @@ const EMPTY_INITIAL_STATE = {
     adminPinHash: "7b201375e92ad744f9bc9f3efe07763ffc72126cfd33ae84f7c671165fdf65fa",
     all_players: [
         "Arcadio Morales",
-        "Michał Chaciński"
+        "Michał Chaciński",
+        "Maciek Niebylski",
+        "Michał Wisiński",
+        "Paulina Kulesza",
+        "Wiktoria Lewandowska",
+        "Mateusz Rabi",
+        "Sebastian Kuryło",
+        "Mati ADM",
+        "Ula Olszewska",
+        "Ania Gorczyca",
+        "Michał Wie",
+        "Domi",
+        "Andrii Kutsela",
+        "Mariusz Janiszewski",
+        "Paweł Strulak",
+        "Wiktor Strulak",
+        "Justyna (od Uli)",
+        "Antek Kwaczek",
+        "Paweł Kurdziałek",
+        "Marcin Kardach"
     ],
     player_pins: {
+        "Andrii Kutsela": "206633731f5682cee9270b44fe3f356b8b57e13ad9bf4874c8e13e7243b4ee1f",
+        "Ania Gorczyca": "a457541fc8814b4b53e4fc9302de8f743aa0beda84a66cd6ce52c00ee28e75f5",
+        "Antek Kwaczek": "58ee87f7e5cc9f6d83474455dbf63bbeeb784c3e8c433e03cb70b277d5f328be",
         "Arcadio Morales": "7b201375e92ad744f9bc9f3efe07763ffc72126cfd33ae84f7c671165fdf65fa",
         "Arkadiusz Kurdziałek": "7b201375e92ad744f9bc9f3efe07763ffc72126cfd33ae84f7c671165fdf65fa",
-        "Michał Chaciński": "82a1db87bf60b1db2c3442abc27b12931fa9fbfca2d2bbe9f0c9350a22b34e5b"
+        "Domi": "c374fa1df20f0ab5cfbf9f98a602aab47cfcfdb246f92d4695ec5a09dd497af0",
+        "Maciek Niebylski": "5c94666595a3947caf86ec8cfacc1dba82bce30265ea8f85bdb30fce9323c8ac",
+        "Marcin Kardach": "9c1726ed4c953282aeb0ea54b525ec258555eddd9ba8a57c3b2a8557201b176a",
+        "Mateusz Rabi": "de81edcaa6a2602c6a36affe7a7899bc0ce48ee99cf4414435cfb4f46d8371a1",
+        "Mati ADM": "867eefc01d7529440ef14342f133527d6c39614e01e466d339f5629c063054b4",
+        "Michał Chaciński": "82a1db87bf60b1db2c3442abc27b12931fa9fbfca2d2bbe9f0c9350a22b34e5b",
+        "Michał Wie": "876faa813f4f4d5f642d9d15342b972802aa2eec182767238dab80a9174fbffa",
+        "Michał Wisiński": "c2d25e06742afd87b0b65bde01e7536b6656b4f9033a6cf272aea11a4a8fab2f",
+        "Paulina Kulesza": "3580711e9fdc9acebbffbf969819004567dc76f9bdbfda9f1df36888f3acfb35",
+        "Paweł Kurdziałek": "2d1752b22dcf363102ecffd24e6dacd8542282fccd8d89dc905efe299e322d30",
+        "Paweł Strulak": "cd0fdd787de018d6ccfacf1c13622a6c4287cbd7643380f66b17d27b8adb1cc4",
+        "Sebastian Kuryło": "3056d371a2ccb841c4cd5068b06552b95f7be93db4f3fd4de6d018c0d660ab99",
+        "Ula Olszewska": "3056d371a2ccb841c4cd5068b06552b95f7be93db4f3fd4de6d018c0d660ab99",
+        "Wiktor Strulak": "5598ea701e8f191d1f5a94e1be2eeb3ea66ef28b07bec4fe56ebc48a8955934b",
+        "Wiktoria Lewandowska": "cd0fdd787de018d6ccfacf1c13622a6c4287cbd7643380f66b17d27b8adb1cc4"
     },
     player_avatars: {},
-    player_positions: {},
-    base_games: {
-        "Arcadio Morales": 0,
-        "Michał Chaciński": 0
+    player_positions: {
+        "Andrii Kutsela": ["UNI"],
+        "Ania Gorczyca": ["S", "L"],
+        "Arcadio Morales": ["OP", "OH"],
+        "Domi": ["L", "OH"],
+        "Maciek Niebylski": ["UNI"],
+        "Marcin Kardach": ["OH"],
+        "Mateusz Rabi": ["L", "OH"],
+        "Mati ADM": ["MB", "OH"],
+        "Michał Chaciński": ["OH", "OP", "MB"],
+        "Michał Wie": ["MB", "OP"],
+        "Michał Wisiński": ["UNI"],
+        "Paulina Kulesza": ["S", "L"],
+        "Paweł Strulak": ["OH"],
+        "Sebastian Kuryło": ["UNI"],
+        "Ula Olszewska": ["OH", "OP", "L"],
+        "Wiktor Strulak": ["OP", "OH"],
+        "Wiktoria Lewandowska": ["L"]
     },
+    base_games: {},
     player_skills: {
-        "Arcadio Morales": 3,
-        "Michał Chaciński": 3
+        "Andrii Kutsela": 3,
+        "Ania Gorczyca": 3,
+        "Antek Kwaczek": 4,
+        "Arcadio Morales": 5,
+        "Domi": 3,
+        "Justyna (od Uli)": 3,
+        "Maciek Niebylski": 4,
+        "Marcin Kardach": 3,
+        "Mariusz Janiszewski": 5,
+        "Mateusz Rabi": 4,
+        "Mati ADM": 4,
+        "Michał Chaciński": 5,
+        "Michał Wie": 3,
+        "Michał Wisiński": 5,
+        "Paulina Kulesza": 3,
+        "Paweł Kurdziałek": 3,
+        "Paweł Strulak": 4,
+        "Sebastian Kuryło": 4,
+        "Ula Olszewska": 4,
+        "Wiktor Strulak": 3,
+        "Wiktoria Lewandowska": 3
     },
     currentMonth: "Październik 2026",
     currentMatchIndex: 0,
     months: {
         "Październik 2026": {
             matches: [
-                { cost: 240, date: "2026-10-05", isCancelled: false, mvpClosed: false },
-                { cost: 240, date: "2026-10-08", isCancelled: false, mvpClosed: false },
+                {
+                    attendees: [
+                        "Arcadio Morales",
+                        "Wiktoria Lewandowska",
+                        "Mateusz Rabi",
+                        "Paulina Kulesza",
+                        "Michał Wie",
+                        "Mariusz Janiszewski",
+                        "Paweł Strulak",
+                        "Ula Olszewska",
+                        "Justyna (od Uli)",
+                        "Wiktor Strulak",
+                        "Ania Gorczyca",
+                        "Mati ADM"
+                    ],
+                    cost: 240,
+                    date: "2026-10-05",
+                    isCancelled: false,
+                    mvpClosed: false,
+                    paidPlayers: [
+                        "Paulina Kulesza",
+                        "Mariusz Janiszewski",
+                        "Ula Olszewska",
+                        "Justyna (od Uli)",
+                        "Michał Wie",
+                        "Mati ADM",
+                        "Paweł Strulak",
+                        "Wiktor Strulak",
+                        "Ania Gorczyca"
+                    ],
+                    score: "Drużyna Ciemna 3 : 1 Drużyna Jasna (25:19, 21:25, 25:20, 25:22)",
+                    teams: {
+                        dark: ["Mateusz Rabi", "Paulina Kulesza", "Mariusz Janiszewski", "Ania Gorczyca", "Michał Wie", "Arcadio Morales"],
+                        darkName: "Drużyna Ciemna",
+                        light: ["Wiktoria Lewandowska", "Paweł Strulak", "Ula Olszewska", "Justyna (od Uli)", "Wiktor Strulak", "Mati ADM"],
+                        lightName: "Drużyna Jasna"
+                    },
+                    votes: {
+                        "Ania Gorczyca": "Ula Olszewska",
+                        "Arcadio Morales": "Mariusz Janiszewski",
+                        "Mateusz Rabi": "Arcadio Morales",
+                        "Mati ADM": "Mariusz Janiszewski",
+                        "Paweł Strulak": "Wiktor Strulak"
+                    },
+                    votesWomen: {
+                        "Ania Gorczyca": "Ula Olszewska"
+                    }
+                },
+                {
+                    attendees: [
+                        "Arcadio Morales",
+                        "Michał Wisiński",
+                        "Michał Wie",
+                        "Paweł Kurdziałek",
+                        "Maciek Niebylski",
+                        "Paweł Strulak",
+                        "Paulina Kulesza",
+                        "Mariusz Janiszewski",
+                        "Marcin Kardach"
+                    ],
+                    cost: 240,
+                    date: "2026-10-08",
+                    isCancelled: false,
+                    mvpClosed: false
+                },
                 { cost: 240, date: "2026-10-12", isCancelled: false, mvpClosed: false },
                 { cost: 240, date: "2026-10-15", isCancelled: false, mvpClosed: false },
                 { cost: 240, date: "2026-10-19", isCancelled: false, mvpClosed: false },
                 { cost: 240, date: "2026-10-22", isCancelled: false, mvpClosed: false },
                 { cost: 240, date: "2026-10-26", isCancelled: false, mvpClosed: false },
                 { cost: 240, date: "2026-10-29", isCancelled: false, mvpClosed: false }
-            ]
+            ],
+            rozliczenia: {
+                "Ania Gorczyca": { paid: 20 },
+                "Justyna (od Uli)": { paid: 20 },
+                "Mariusz Janiszewski": { paid: 20 },
+                "Mati ADM": { paid: 20 },
+                "Michał Wie": { paid: 20 },
+                "Paulina Kulesza": { paid: 20 },
+                "Paweł Strulak": { paid: 20 },
+                "Ula Olszewska": { paid: 20 },
+                "Wiktor Strulak": { paid: 20 }
+            }
         }
     },
     settings: {
@@ -1669,7 +1841,7 @@ const EMPTY_INITIAL_STATE = {
         warmupTime: "19:45",
         startTime: "20:00",
         gameEndTime: "21:45",
-        hallCost: 240,
+        hallCost: 20,
         blikPhone: "697013447",
         playingDays: [1, 4],
         firebaseConfig: {
@@ -2492,8 +2664,287 @@ function initFirebaseSync() {
             return match.date > nearest.date;
         }
 
+        function isFemalePlayer(playerName) {
+            if (!playerName) return false;
+            if (AppState.player_genders && AppState.player_genders[playerName]) {
+                return AppState.player_genders[playerName] === 'F';
+            }
+            const clean = playerName.trim();
+            const firstName = clean.split(/[\s(]/)[0].toLowerCase();
+            if (['kuba', 'barnaba', 'kosma', 'jarema', 'bonawentura'].includes(firstName)) return false;
+            return firstName.endsWith('a');
+        }
+
+        function getDaysSinceDate(dateStr) {
+            if (!isValidDateKey(dateStr)) return 999;
+            const [y, m, d] = dateStr.split('-').map(Number);
+            const matchDate = new Date(y, m - 1, d);
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const diffTime = today.getTime() - matchDate.getTime();
+            return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+        function getLatestPlayedMatchInfo() {
+            let latest = null;
+            const todayStr = getLocalDateKey();
+            Object.keys(AppState.months || {}).forEach(mName => {
+                const matches = AppState.months[mName]?.matches || [];
+                matches.forEach((m, idx) => {
+                    if (!m.isCancelled && m.date <= todayStr && (m.attendees || []).length > 0) {
+                        if (!latest || m.date > latest.match.date) {
+                            latest = {
+                                monthName: mName,
+                                matchIndex: idx,
+                                match: m,
+                                daysAgo: getDaysSinceDate(m.date)
+                            };
+                        }
+                    }
+                });
+            });
+            return latest;
+        }
+
+        function dismissRecentMvpBanner(matchDate) {
+            try {
+                sessionStorage.setItem('dismiss_mvp_banner_' + matchDate, '1');
+            } catch (e) {}
+            const bannerEl = document.getElementById('recentMvpQuickBanner');
+            if (bannerEl) {
+                bannerEl.classList.add('hidden');
+                bannerEl.innerHTML = '';
+            }
+        }
+
+        function jumpToRecentMvp() {
+            const latest = getLatestPlayedMatchInfo();
+            if (!latest) return;
+            AppState.currentMonth = latest.monthName;
+            AppState.currentMatchIndex = latest.matchIndex;
+            switchTab('matches');
+            renderMatchesTab();
+            setTimeout(() => {
+                const target = document.getElementById('integratedMvpCard');
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        }
+
+        function renderRecentMvpQuickBanner() {
+            const bannerEl = document.getElementById('recentMvpQuickBanner');
+            if (!bannerEl) return;
+
+            const latest = getLatestPlayedMatchInfo();
+            if (!latest || latest.daysAgo < 0 || latest.daysAgo > 3) {
+                bannerEl.classList.add('hidden');
+                bannerEl.innerHTML = '';
+                return;
+            }
+
+            try {
+                if (sessionStorage.getItem('dismiss_mvp_banner_' + latest.match.date) === '1') {
+                    bannerEl.classList.add('hidden');
+                    bannerEl.innerHTML = '';
+                    return;
+                }
+            } catch (e) {}
+
+            const isFinished = isMvpVotingFinished(latest.match);
+            const attendees = (latest.match.attendees || []).slice(0, 14);
+            const votes = latest.match.votes || {};
+            const totalVotes = Object.keys(votes).length;
+            const isAttendee = Boolean(loggedPlayer && attendees.includes(loggedPlayer));
+            const hasVoted = Boolean(loggedPlayer && votes[loggedPlayer]);
+
+            if (isFinished && latest.daysAgo >= 3) {
+                bannerEl.classList.add('hidden');
+                bannerEl.innerHTML = '';
+                return;
+            }
+
+            if (latest.daysAgo >= 3 && (!isAttendee || hasVoted)) {
+                bannerEl.classList.add('hidden');
+                bannerEl.innerHTML = '';
+                return;
+            }
+
+            bannerEl.classList.remove('hidden');
+
+            if (!isFinished) {
+                if (isAttendee && !hasVoted) {
+                    bannerEl.innerHTML = `
+                        <div class="bg-gradient-to-r from-amber-500/20 via-pink-950/30 to-slate-900 border-2 border-amber-500/60 rounded-2xl p-3 sm:p-3.5 flex items-center justify-between gap-3 shadow-lg shadow-amber-500/10 animate-pulse relative">
+                            <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                                <span class="text-2xl shrink-0">🗳️</span>
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center gap-1.5 flex-wrap">
+                                        <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md">TWÓJ GŁOS!</span>
+                                        <span class="text-xs font-black text-amber-200 truncate">MVP z meczu (${latest.match.date})</span>
+                                    </div>
+                                    <p class="text-[11px] text-amber-300/90 mt-0.5 leading-snug">
+                                        Grałeś w meczu! Zagłosuj na MVP i MVP Kobiet (oddano: <strong class="font-mono text-white">${totalVotes}/${attendees.length}</strong>).
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <button type="button" onclick="jumpToRecentMvp()" class="bg-gradient-to-r from-amber-500 to-pink-500 hover:from-amber-400 hover:to-pink-400 active:scale-95 text-slate-950 font-black px-3.5 py-2 rounded-xl text-xs transition shadow-md shadow-amber-500/20 flex items-center gap-1 whitespace-nowrap cursor-pointer">
+                                    <span>Głosuj</span>
+                                    <span>➔</span>
+                                </button>
+                                <button type="button" onclick="dismissRecentMvpBanner('${latest.match.date}')" title="Zamknij" class="text-amber-400/70 hover:text-white p-1 rounded-lg text-xs leading-none transition cursor-pointer">✕</button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    bannerEl.innerHTML = `
+                        <div class="bg-gradient-to-r from-emerald-500/15 via-slate-900 to-slate-900 border border-emerald-500/40 rounded-2xl p-3 sm:p-3.5 flex items-center justify-between gap-3 shadow-md relative">
+                            <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                                <span class="text-2xl shrink-0">🏆</span>
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center gap-1.5 flex-wrap">
+                                        <span class="text-[10px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded-md">Głosowanie MVP</span>
+                                        <span class="text-xs font-bold text-white truncate">Mecz (${latest.match.date})</span>
+                                    </div>
+                                    <p class="text-[11px] text-slate-300 mt-0.5 leading-snug">
+                                        ${hasVoted ? '✅ Twój głos jest zapisany. ' : ''}Trwa zbieranie głosów (<strong class="font-mono text-emerald-400">${totalVotes}/${attendees.length}</strong>).
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <button type="button" onclick="jumpToRecentMvp()" class="bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 font-bold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1 whitespace-nowrap cursor-pointer">
+                                    <span>Zobacz stan</span>
+                                    <span>➔</span>
+                                </button>
+                                <button type="button" onclick="dismissRecentMvpBanner('${latest.match.date}')" title="Zamknij" class="text-slate-400 hover:text-white p-1 rounded-lg text-xs leading-none transition cursor-pointer">✕</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            } else {
+                const tally = {};
+                attendees.forEach(p => tally[p] = 0);
+                Object.values(votes).forEach(nom => { if (tally[nom] !== undefined) tally[nom]++; });
+                let maxV = 0, winners = [];
+                Object.entries(tally).forEach(([k, v]) => {
+                    if (v > maxV) { maxV = v; winners = [k]; }
+                    else if (v === maxV && maxV > 0) { winners.push(k); }
+                });
+
+                // Women's MVP
+                const femaleAttendees = attendees.filter(p => isFemalePlayer(p));
+                const votesWomen = latest.match.votesWomen || {};
+                const tallyW = {};
+                femaleAttendees.forEach(f => tallyW[f] = 0);
+                Object.values(votesWomen).forEach(c => { if (tallyW[c] !== undefined) tallyW[c]++; });
+                let maxVW = 0, winnersW = [];
+                Object.entries(tallyW).forEach(([k, v]) => {
+                    if (v > maxVW) { maxVW = v; winnersW = [k]; }
+                    else if (v === maxVW && maxVW > 0) { winnersW.push(k); }
+                });
+
+                const winnerLabel = winners.length > 0 ? winners.join(' & ') : 'Brak';
+                const womenLabel = winnersW.length > 0 ? ` • 🌸 ${winnersW.join(' & ')}` : '';
+
+                bannerEl.innerHTML = `
+                    <div class="bg-gradient-to-r from-amber-500/20 via-purple-950/30 to-slate-900 border border-amber-500/50 rounded-2xl p-3 sm:p-3.5 flex items-center justify-between gap-3 shadow-lg relative">
+                        <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                            <span class="text-2xl shrink-0">👑</span>
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-center gap-1.5 flex-wrap">
+                                    <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md">WYNIKI MVP</span>
+                                    <span class="text-xs font-bold text-white truncate">Mecz (${latest.match.date})</span>
+                                </div>
+                                <p class="text-[11px] text-amber-200 mt-0.5 leading-snug truncate">
+                                    🏆 <strong>${escapeHtml(winnerLabel)}</strong>${escapeHtml(womenLabel)}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <button type="button" onclick="jumpToRecentMvp()" class="bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-black px-3.5 py-2 rounded-xl text-xs transition shadow-md shadow-amber-500/20 flex items-center gap-1 whitespace-nowrap cursor-pointer">
+                                <span>Zobacz</span>
+                                <span>➔</span>
+                            </button>
+                            <button type="button" onclick="dismissRecentMvpBanner('${latest.match.date}')" title="Zamknij" class="text-slate-400 hover:text-white p-1 rounded-lg text-xs leading-none transition cursor-pointer">✕</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function handleUrlNavigationParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetTab = urlParams.get('tab');
+            const targetMatchDate = urlParams.get('match') || urlParams.get('mvp') || urlParams.get('vote') || urlParams.get('glosuj');
+            const isMvpLink = urlParams.has('mvp') || urlParams.has('vote') || urlParams.has('glosuj');
+
+            if (isMvpLink) {
+                sessionStorage.setItem('siatka_custom_group_guest_mode', 'true');
+            }
+
+            if (targetMatchDate) {
+                if (targetMatchDate === 'latest') {
+                    const latest = getLatestPlayedMatchInfo();
+                    if (latest) {
+                        AppState.currentMonth = latest.monthName;
+                        AppState.currentMatchIndex = latest.matchIndex;
+                        hasInitiallySelectedMonth = true;
+                    }
+                } else {
+                    for (const mName of Object.keys(AppState.months || {})) {
+                        const matches = AppState.months[mName]?.matches || [];
+                        const idx = matches.findIndex(m => m.date === targetMatchDate);
+                        if (idx !== -1) {
+                            AppState.currentMonth = mName;
+                            AppState.currentMatchIndex = idx;
+                            hasInitiallySelectedMonth = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (isMvpLink) {
+                switchTab('matches');
+                setTimeout(() => {
+                    const target = document.getElementById('integratedMvpCard');
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 120);
+            } else if (targetTab && ['matches', 'teams', 'billing', 'halloffame', 'profile'].includes(targetTab)) {
+                switchTab(targetTab);
+            }
+        }
+
         function autoSelectUpcomingMatchOnLoad() {
             if (hasInitiallySelectedMonth) return;
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetMatchDate = urlParams.get('match') || urlParams.get('mvp') || urlParams.get('vote') || urlParams.get('glosuj');
+            if (targetMatchDate) {
+                if (targetMatchDate === 'latest') {
+                    const latest = getLatestPlayedMatchInfo();
+                    if (latest) {
+                        AppState.currentMonth = latest.monthName;
+                        AppState.currentMatchIndex = latest.matchIndex;
+                        hasInitiallySelectedMonth = true;
+                        return;
+                    }
+                }
+                for (const mName of getSortedMonths()) {
+                    const matches = AppState.months[mName]?.matches || [];
+                    const idx = matches.findIndex(m => m.date === targetMatchDate);
+                    if (idx !== -1) {
+                        AppState.currentMonth = mName;
+                        AppState.currentMatchIndex = idx;
+                        hasInitiallySelectedMonth = true;
+                        return;
+                    }
+                }
+            }
+
             const nearest = getNearestUpcomingMatchInfo();
             if (nearest && nearest.monthName && nearest.matchIndex !== -1) {
                 AppState.currentMonth = nearest.monthName;
@@ -2547,6 +2998,7 @@ function initFirebaseSync() {
             autoSelectUpcomingMatchOnLoad();
             renderCurrentView(true);
             startCountdownTicker();
+            handleUrlNavigationParams();
         }
 
 
@@ -3043,6 +3495,7 @@ function initFirebaseSync() {
         // ================= TAB 1: MATCHES & ATTENDANCE =================
         function renderMatchesTab() {
             renderMonthSelector();
+            renderRecentMvpQuickBanner();
             if (!AppState.months || !AppState.currentMonth) return;
             const monthData = AppState.months[AppState.currentMonth];
             if (!monthData) return;
@@ -4622,6 +5075,49 @@ function initFirebaseSync() {
             showToast(`Zmieniono nazwę drużyny na: ${clean}`);
         }
 
+        function copyMvpVoteDirectLink() {
+            const monthData = AppState.months[AppState.currentMonth];
+            const currentMatch = monthData?.matches[AppState.currentMatchIndex];
+            const dateStr = currentMatch ? currentMatch.date : '';
+            const baseUrl = window.location.href.split('?')[0].split('#')[0];
+            const link = dateStr ? `${baseUrl}?mvp=${encodeURIComponent(dateStr)}` : `${baseUrl}?mvp=latest`;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(link).then(() => {
+                    showToast("Skopiowano link do głosowania do schowka! 📋");
+                }).catch(() => {
+                    prompt("Skopiuj link do głosowania na MVP:", link);
+                });
+            } else {
+                prompt("Skopiuj link do głosowania na MVP:", link);
+            }
+        }
+
+        function logoutCurrentPlayerForMvp() {
+            loggedPlayer = '';
+            localStorage.removeItem(ACTIVE_PLAYER_KEY);
+            sessionStorage.setItem('siatka_custom_group_guest_mode', 'true');
+            renderIntegratedMvpCard();
+            showToast("Wylogowano. Wybierz siebie z listy obecnych.");
+        }
+
+        function handleMvpVoterChange() {
+            const voterSelect = document.getElementById('voterSelect');
+            const pinContainer = document.getElementById('voterPinPromptContainer');
+            const pinInput = document.getElementById('mvpVoterPinInput');
+            if (!voterSelect) return;
+            const selectedPlayer = voterSelect.value.trim();
+            if (pinInput) pinInput.value = '';
+
+            if (pinContainer) {
+                if (selectedPlayer && AppState.player_pins && AppState.player_pins[selectedPlayer]) {
+                    pinContainer.classList.remove('hidden');
+                } else {
+                    pinContainer.classList.add('hidden');
+                }
+            }
+        }
+
         // ================= ZINTEGROWANA KARTA MVP (BEZPOŚREDNIO NA STRONIE GŁÓWNEJ) =================
         function renderIntegratedMvpCard() {
             const monthData = AppState.months[AppState.currentMonth];
@@ -4632,9 +5128,13 @@ function initFirebaseSync() {
             const winnerHeaderLabel = document.getElementById('mvpWinnerHeaderLabel');
             const winnerName = document.getElementById('mvpWinnerName');
             const winnerVotes = document.getElementById('mvpWinnerVotes');
-            const voterSelect = document.getElementById('voterSelect');
+            const womenWinnerBox = document.getElementById('mvpWomenWinnerBox');
+            const womenWinnerName = document.getElementById('mvpWomenWinnerName');
+            const womenWinnerVotes = document.getElementById('mvpWomenWinnerVotes');
             const voterSelectContainer = document.getElementById('voterSelectContainer');
             const nomineeSelect = document.getElementById('nomineeSelect');
+            const womenNomineeContainer = document.getElementById('womenNomineeContainer');
+            const womenNomineeSelect = document.getElementById('womenNomineeSelect');
             const resultsList = document.getElementById('mvpResultsList');
             const resultsSectionTitle = document.getElementById('mvpResultsSectionTitle');
             const whoVotedTitle = document.getElementById('whoVotedTitle');
@@ -4649,6 +5149,7 @@ function initFirebaseSync() {
                 if (votesBadge) votesBadge.innerText = "0/0";
                 if (winnerName) winnerName.innerText = "Brak wybranego meczu";
                 if (winnerVotes) winnerVotes.innerText = "";
+                if (womenWinnerBox) womenWinnerBox.classList.add('hidden');
                 if (resultsList) resultsList.innerHTML = `<div class="p-4 text-center text-xs text-slate-600">Dodaj mecz, aby móc głosować.</div>`;
                 if (adminBar) adminBar.classList.add('hidden');
                 return;
@@ -4656,7 +5157,9 @@ function initFirebaseSync() {
 
             if (dateBadge) dateBadge.innerText = `Mecz: ${currentMatch.date}`;
             const attendees = (currentMatch.attendees || []).slice(0, 14);
+            const femaleAttendees = attendees.filter(p => isFemalePlayer(p));
             const votes = currentMatch.votes || {};
+            const votesWomen = currentMatch.votesWomen || {};
             const totalVotesCast = Object.keys(votes).length;
             const isFinished = isMvpVotingFinished(currentMatch);
 
@@ -4668,8 +5171,8 @@ function initFirebaseSync() {
                 if (toggleFinalizeBtn) {
                     toggleFinalizeBtn.innerText = isFinished ? "🔓 Otwórz głosowanie" : `👑 Zakończ i odkryj (${totalVotesCast}/${attendees.length})`;
                     toggleFinalizeBtn.className = isFinished 
-                        ? "bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-3 py-1.5 rounded-xl text-[11px] transition shrink-0 active:scale-95"
-                        : "bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-3 py-1.5 rounded-xl text-[11px] transition shrink-0 active:scale-95 shadow-md shadow-amber-500/20";
+                        ? "bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-3 py-1.5 rounded-xl text-[11px] transition shrink-0 active:scale-95 cursor-pointer"
+                        : "bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-3 py-1.5 rounded-xl text-[11px] transition shrink-0 active:scale-95 shadow-md shadow-amber-500/20 cursor-pointer";
                 }
                 if (adminStatusLabel) {
                     adminStatusLabel.innerText = isFinished ? "Wyniki są ODKRYTE" : `Głosowanie tajne (${totalVotesCast}/${attendees.length})`;
@@ -4682,8 +5185,10 @@ function initFirebaseSync() {
                 if (winnerHeaderLabel) winnerHeaderLabel.innerText = "Status";
                 if (winnerName) winnerName.innerText = "Brak zapisanych graczy";
                 if (winnerVotes) winnerVotes.innerText = "Zapisz graczy w składzie głównym powyżej, aby odblokować głosowanie.";
-                if (voterSelect) voterSelect.innerHTML = `<option value="">Brak obecnych graczy</option>`;
+                if (womenWinnerBox) womenWinnerBox.classList.add('hidden');
+                if (voterSelectContainer) voterSelectContainer.innerHTML = `<label class="block text-[11px] text-slate-400 mb-1">1. Kim jesteś?</label><select id="voterSelect" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-3 py-2.5"><option value="">Brak obecnych graczy</option></select>`;
                 if (nomineeSelect) nomineeSelect.innerHTML = `<option value="">Brak obecnych graczy</option>`;
+                if (womenNomineeContainer) womenNomineeContainer.classList.add('hidden');
                 if (resultsList) resultsList.innerHTML = `<div class="p-4 text-center text-xs text-slate-600">Brak osób w składzie głównym.</div>`;
                 if (whoVotedList) whoVotedList.innerHTML = `<p class="text-slate-500 italic text-xs">Brak graczy.</p>`;
                 if (whoVotedProgressRatio) whoVotedProgressRatio.innerText = "0/0";
@@ -4696,38 +5201,58 @@ function initFirebaseSync() {
                     const hasVoted = Boolean(votes[loggedPlayer]);
                     voterSelectContainer.innerHTML = `
                         <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl flex items-center justify-between text-xs">
-                            <span class="text-slate-400">Głosujesz jako: <strong class="text-white">${escapeHtml(loggedPlayer)}</strong></span>
-                            <span class="text-[10px] font-bold ${hasVoted ? 'text-emerald-400' : 'text-amber-400'}">
+                            <div class="flex items-center gap-1.5 min-w-0">
+                                <span class="text-slate-400">Głosujesz jako: <strong class="text-white">${escapeHtml(loggedPlayer)}</strong></span>
+                                <button type="button" onclick="logoutCurrentPlayerForMvp()" class="text-[10px] text-amber-400 hover:text-amber-300 underline shrink-0 cursor-pointer">(zmień)</button>
+                            </div>
+                            <span class="text-[10px] font-bold ${hasVoted ? 'text-emerald-400' : 'text-amber-400'} shrink-0">
                                 ${hasVoted ? '✅ Głos oddany' : '⏳ Czekasz na głos'}
                             </span>
                         </div>
                         <input type="hidden" id="voterSelect" value="${escapeHtml(loggedPlayer)}">
                     `;
                 }
-            } else if (voterSelect) {
-                if (voterSelectContainer && !voterSelectContainer.querySelector('select')) {
-                    voterSelectContainer.innerHTML = `
-                        <label for="voterSelect" class="block text-[11px] text-slate-400 mb-1">1. Kim jesteś? (Wybierz siebie ze składu):</label>
-                        <select id="voterSelect" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-amber-500 cursor-pointer"></select>
-                    `;
-                }
-                const activeVoterSelect = document.getElementById('voterSelect');
-                if (activeVoterSelect) {
-                    activeVoterSelect.innerHTML = `<option value="">-- Wybierz siebie ze składu --</option>` + attendees.map(p => {
-                        const hasVoted = Boolean(votes[p]);
-                        return `<option value="${escapeHtml(p)}">${escapeHtml(p)}${hasVoted ? ' (Głos oddany ✅)' : ''}</option>`;
-                    }).join('');
-                }
+            } else if (voterSelectContainer) {
+                const currentSelectedVal = document.getElementById('voterSelect')?.value || '';
+                voterSelectContainer.innerHTML = `
+                    <label for="voterSelect" class="block text-[11px] text-slate-400 mb-1">1. Kim jesteś? (Wybierz siebie ze składu):</label>
+                    <select id="voterSelect" onchange="handleMvpVoterChange()" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-amber-500 cursor-pointer">
+                        <option value="">-- Wybierz siebie ze składu --</option>
+                        ${attendees.map(p => {
+                            const hasVoted = Boolean(votes[p]);
+                            const isSelected = (p === currentSelectedVal);
+                            return `<option value="${escapeHtml(p)}" ${isSelected ? 'selected' : ''}>${escapeHtml(p)}${hasVoted ? ' (Głos oddany ✅)' : ''}</option>`;
+                        }).join('')}
+                    </select>
+                    <div id="voterPinPromptContainer" class="${(currentSelectedVal && AppState.player_pins?.[currentSelectedVal]) ? '' : 'hidden'} mt-2 p-2.5 bg-slate-900/90 border border-amber-500/40 rounded-xl space-y-1.5">
+                        <label for="mvpVoterPinInput" class="block text-[11px] text-amber-300 font-semibold">🔐 Twój profil ma ustalony PIN. Podaj 4 cyfry, aby zagłosować:</label>
+                        <input type="password" id="mvpVoterPinInput" inputmode="numeric" maxlength="6" placeholder="Wpisz 4 cyfry PIN" class="w-full bg-slate-950 border border-amber-500/60 rounded-lg px-3 py-1.5 text-xs text-white text-center tracking-widest font-mono focus:outline-none focus:border-amber-400">
+                    </div>
+                `;
             }
 
-            // 2. Nominee Select
+            // 2. Nominee Select (Ogólne MVP)
             if (nomineeSelect) {
+                const curNom = nomineeSelect.value || '';
                 nomineeSelect.innerHTML = `<option value="">-- Wybierz kandydata na MVP --</option>` + attendees.map(p => {
-                    return `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`;
+                    return `<option value="${escapeHtml(p)}" ${p === curNom ? 'selected' : ''}>${escapeHtml(p)}</option>`;
                 }).join('');
             }
 
-            // Tally counts
+            // 3. Women Nominee Select (MVP Kobiet - tylko jeśli w meczu grają kobiety)
+            if (femaleAttendees.length > 0) {
+                if (womenNomineeContainer) womenNomineeContainer.classList.remove('hidden');
+                if (womenNomineeSelect) {
+                    const curWNom = womenNomineeSelect.value || '';
+                    womenNomineeSelect.innerHTML = `<option value="">-- Wybierz MVP Kobiet 🌸 --</option>` + femaleAttendees.map(p => {
+                        return `<option value="${escapeHtml(p)}" ${p === curWNom ? 'selected' : ''}>${escapeHtml(p)}</option>`;
+                    }).join('');
+                }
+            } else {
+                if (womenNomineeContainer) womenNomineeContainer.classList.add('hidden');
+            }
+
+            // Tally counts - General
             const tally = {};
             attendees.forEach(p => tally[p] = 0);
             Object.values(votes).forEach(candidate => {
@@ -4745,9 +5270,27 @@ function initFirebaseSync() {
                 }
             });
 
-            // 3. Render Hero & Results based on Secret vs Finished State
+            // Tally counts - Women's MVP
+            const tallyWomen = {};
+            femaleAttendees.forEach(f => tallyWomen[f] = 0);
+            Object.values(votesWomen).forEach(candidate => {
+                if (tallyWomen[candidate] !== undefined) tallyWomen[candidate]++;
+            });
+
+            let maxVotesWomen = 0;
+            let leadersWomen = [];
+            Object.entries(tallyWomen).forEach(([name, count]) => {
+                if (count > maxVotesWomen) {
+                    maxVotesWomen = count;
+                    leadersWomen = [name];
+                } else if (count === maxVotesWomen && maxVotesWomen > 0) {
+                    leadersWomen.push(name);
+                }
+            });
+
+            // 4. Render Hero & Results based on Secret vs Finished State
             if (isFinished) {
-                if (winnerHeaderLabel) winnerHeaderLabel.innerText = "OFICJALNY MVP SPOTKANIA 🏆";
+                if (winnerHeaderLabel) winnerHeaderLabel.innerText = "OFICJALNE WYNIKI GŁOSOWANIA 🏆🌸";
                 if (winnerName && winnerVotes) {
                     if (maxVotes === 0) {
                         winnerName.innerText = "Brak głosów";
@@ -4761,29 +5304,84 @@ function initFirebaseSync() {
                     }
                 }
 
+                // Render Women's Winner Card
+                if (femaleAttendees.length > 0 && womenWinnerBox && womenWinnerName && womenWinnerVotes) {
+                    womenWinnerBox.classList.remove('hidden');
+                    const totalWomenVotes = Object.keys(votesWomen).length;
+                    if (maxVotesWomen === 0) {
+                        womenWinnerName.innerText = "Brak głosów na MVP Kobiet";
+                        womenWinnerVotes.innerText = "";
+                    } else if (leadersWomen.length === 1) {
+                        womenWinnerName.innerHTML = `<span class="inline-flex items-center gap-2">${getPlayerAvatarHtml(leadersWomen[0], 'sm')} 🌸 👑 ${escapeHtml(leadersWomen[0])}</span>`;
+                        womenWinnerVotes.innerText = `${maxVotesWomen} ${maxVotesWomen === 1 ? 'głos' : (maxVotesWomen < 5 ? 'głosy' : 'głosów')} (${Math.round((maxVotesWomen / (totalWomenVotes || 1)) * 100)}% poparcia)`;
+                    } else {
+                        womenWinnerName.innerHTML = `<span class="inline-flex items-center gap-2 flex-wrap justify-center">🌸 Remis: ${leadersWomen.map(l => `<span class="inline-flex items-center gap-1">${getPlayerAvatarHtml(l, 'xs')} ${escapeHtml(l)}</span>`).join(' & ')}</span>`;
+                        womenWinnerVotes.innerText = `Po ${maxVotesWomen} ${maxVotesWomen === 1 ? 'głos' : (maxVotesWomen < 5 ? 'głosy' : 'głosów')}`;
+                    }
+                } else if (womenWinnerBox) {
+                    womenWinnerBox.classList.add('hidden');
+                }
+
                 if (resultsSectionTitle) resultsSectionTitle.innerText = "Oficjalne wyniki głosowania:";
                 const sortedResults = Object.entries(tally).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-                if (resultsList) {
-                    resultsList.innerHTML = sortedResults.map(([name, count]) => {
-                        const percent = totalVotesCast > 0 ? Math.round((count / totalVotesCast) * 100) : 0;
-                        const isLeader = maxVotes > 0 && count === maxVotes;
-                        return `
-                            <div class="bg-slate-950 border ${isLeader ? 'border-amber-500/60 bg-amber-950/20' : 'border-slate-800'} rounded-xl p-2.5 space-y-1.5">
-                                <div class="flex items-center justify-between text-xs">
-                                    <div class="flex items-center gap-1.5 font-bold ${isLeader ? 'text-amber-300' : 'text-slate-200'} truncate pr-2">
-                                        <span>${isLeader ? '🌟' : '🏐'}</span>
-                                        ${getPlayerAvatarHtml(name, 'xs')}
-                                        <span class="truncate">${escapeHtml(name)}</span>
+                let resultsHtml = `
+                    <div class="space-y-1.5">
+                        <p class="text-[10px] font-black uppercase tracking-wider text-amber-400 mb-1">🏆 Wyniki ogólne:</p>
+                        ${sortedResults.map(([name, count]) => {
+                            const percent = totalVotesCast > 0 ? Math.round((count / totalVotesCast) * 100) : 0;
+                            const isLeader = maxVotes > 0 && count === maxVotes;
+                            return `
+                                <div class="bg-slate-950 border ${isLeader ? 'border-amber-500/60 bg-amber-950/20' : 'border-slate-800'} rounded-xl p-2.5 space-y-1.5">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <div class="flex items-center gap-1.5 font-bold ${isLeader ? 'text-amber-300' : 'text-slate-200'} truncate pr-2">
+                                            <span>${isLeader ? '🌟' : '🏐'}</span>
+                                            ${getPlayerAvatarHtml(name, 'xs')}
+                                            <span class="truncate">${escapeHtml(name)}</span>
+                                        </div>
+                                        <span class="font-mono font-bold ${isLeader ? 'text-amber-400' : 'text-slate-400'} shrink-0">${count} ${count === 1 ? 'głos' : 'głosy'} (${percent}%)</span>
                                     </div>
-                                    <span class="font-mono font-bold ${isLeader ? 'text-amber-400' : 'text-slate-400'} shrink-0">${count} ${count === 1 ? 'głos' : 'głosy'} (${percent}%)</span>
+                                    <div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
+                                        <div class="bg-gradient-to-r from-amber-500 to-amber-300 h-1.5 rounded-full transition-all duration-500" style="width: ${percent}%"></div>
+                                    </div>
                                 </div>
-                                <div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
-                                    <div class="bg-gradient-to-r from-amber-500 to-amber-300 h-1.5 rounded-full transition-all duration-500" style="width: ${percent}%"></div>
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+
+                // Add Women's breakdown if applicable
+                if (femaleAttendees.length > 0) {
+                    const sortedWomen = Object.entries(tallyWomen).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+                    const totalWomenVotes = Object.keys(votesWomen).length;
+                    resultsHtml += `
+                        <div class="mt-4 pt-3 border-t border-pink-900/40 space-y-1.5">
+                            <p class="text-[10px] font-black uppercase tracking-wider text-pink-400 mb-1 flex items-center gap-1">
+                                <span>🌸</span> Klasyfikacja MVP Kobiet:
+                            </p>
+                            ${sortedWomen.map(([name, count]) => {
+                                const percent = totalWomenVotes > 0 ? Math.round((count / totalWomenVotes) * 100) : 0;
+                                const isLeader = maxVotesWomen > 0 && count === maxVotesWomen;
+                                return `
+                                    <div class="bg-slate-950 border ${isLeader ? 'border-pink-500/60 bg-pink-950/20' : 'border-slate-800'} rounded-xl p-2.5 space-y-1.5">
+                                        <div class="flex items-center justify-between text-xs">
+                                            <div class="flex items-center gap-1.5 font-bold ${isLeader ? 'text-pink-300' : 'text-slate-200'} truncate pr-2">
+                                                <span>${isLeader ? '🌸' : '🏐'}</span>
+                                                ${getPlayerAvatarHtml(name, 'xs')}
+                                                <span class="truncate">${escapeHtml(name)}</span>
+                                            </div>
+                                            <span class="font-mono font-bold ${isLeader ? 'text-pink-400' : 'text-slate-400'} shrink-0">${count} ${count === 1 ? 'głos' : 'głosy'} (${percent}%)</span>
+                                        </div>
+                                        <div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
+                                            <div class="bg-gradient-to-r from-pink-500 to-rose-400 h-1.5 rounded-full transition-all duration-500" style="width: ${percent}%"></div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    `;
                 }
+
+                if (resultsList) resultsList.innerHTML = resultsHtml;
 
                 // Breakdown: Kto na kogo głosował
                 if (whoVotedTitle) whoVotedTitle.innerText = "Kto na kogo głosował:";
@@ -4791,15 +5389,24 @@ function initFirebaseSync() {
                 if (whoVotedList) {
                     whoVotedList.innerHTML = attendees.map(p => {
                         const votedNominee = votes[p];
+                        const votedWomen = votesWomen[p];
                         return `
                             <div class="bg-slate-950/80 border border-slate-800/60 px-3 py-1.5 rounded-xl flex items-center justify-between text-xs">
                                 <div class="flex items-center gap-2 truncate">
                                     ${getPlayerAvatarHtml(p, 'xs')}
                                     <span class="font-semibold text-slate-300 truncate">${escapeHtml(p)}</span>
                                 </div>
-                                <span class="font-bold text-[11px] ${votedNominee ? 'text-amber-400' : 'text-slate-500'} shrink-0">
-                                    ${votedNominee ? `➔ 🌟 ${escapeHtml(votedNominee)}` : 'Nie głosował(a)'}
-                                </span>
+                                <div class="flex items-center gap-2 shrink-0 font-bold text-[11px]">
+                                    <span class="${votedNominee ? 'text-amber-400' : 'text-slate-500'}">
+                                        ${votedNominee ? `🏆 ${escapeHtml(votedNominee)}` : 'Nie głosował'}
+                                    </span>
+                                    ${femaleAttendees.length > 0 ? `
+                                        <span class="text-slate-600">|</span>
+                                        <span class="${votedWomen ? 'text-pink-400' : 'text-slate-500'}">
+                                            ${votedWomen ? `🌸 ${escapeHtml(votedWomen)}` : 'Brak'}
+                                        </span>
+                                    ` : ''}
+                                </div>
                             </div>
                         `;
                     }).join('');
@@ -4814,6 +5421,7 @@ function initFirebaseSync() {
                     const percentVoted = Math.round((totalVotesCast / attendees.length) * 100);
                     winnerVotes.innerText = `Wyniki cząstkowe i wybór MVP są ukryte do momentu, aż wszyscy oddadzą głos (${percentVoted}%).`;
                 }
+                if (womenWinnerBox) womenWinnerBox.classList.add('hidden');
 
                 if (resultsSectionTitle) resultsSectionTitle.innerText = "Postęp głosowania:";
                 const percentDone = Math.round((totalVotesCast / attendees.length) * 100);
@@ -4828,7 +5436,7 @@ function initFirebaseSync() {
                                 <span class="font-mono font-bold text-amber-400">${totalVotesCast} / ${attendees.length} (${percentDone}%)</span>
                             </div>
                             <div class="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden border border-slate-800">
-                                <div class="bg-gradient-to-r from-amber-500 via-emerald-500 to-sky-400 h-2.5 rounded-full transition-all duration-500" style="width: ${percentDone}%"></div>
+                                <div class="bg-gradient-to-r from-amber-500 via-pink-500 to-sky-400 h-2.5 rounded-full transition-all duration-500" style="width: ${percentDone}%"></div>
                             </div>
                             <p class="text-[10px] text-slate-400 text-center leading-relaxed">
                                 🕵️ Wyniki oraz to, kto na kogo głosował, zostaną ujawnione automatycznie po zebraniu wszystkich głosów.
@@ -4857,23 +5465,63 @@ function initFirebaseSync() {
 
         function submitMvpVote() {
             if (isMatchActionPending) return;
-            let voter = document.getElementById('voterSelect')?.value;
+            let voter = document.getElementById('voterSelect')?.value?.trim();
             if (!voter && loggedPlayer) voter = loggedPlayer;
-            const nominee = document.getElementById('nomineeSelect')?.value;
+            const nominee = document.getElementById('nomineeSelect')?.value?.trim();
+            
+            const monthData = AppState.months[AppState.currentMonth];
+            const currentMatch = monthData?.matches[AppState.currentMatchIndex];
+            if (!currentMatch) return;
+
+            const attendees = (currentMatch.attendees || []).slice(0, 14);
+            const femaleAttendees = attendees.filter(p => isFemalePlayer(p));
+            const womenNominee = document.getElementById('womenNomineeSelect')?.value?.trim();
 
             if (!voter) return alert("Wybierz siebie z listy obecnych graczy lub zaloguj się na swój profil!");
-            if (!nominee) return alert("Wybierz zawodnika, na którego oddajesz głos na MVP!");
+            if (!nominee) return alert("Wybierz zawodnika, na którego oddajesz ogólny głos na MVP!");
+            if (femaleAttendees.length > 0 && !womenNominee) {
+                return alert("Wybierz również zawodniczkę na MVP Kobiet 🌸!");
+            }
+
+            // PIN check
+            const playerPinHash = AppState.player_pins?.[voter];
+            if (playerPinHash && loggedPlayer !== voter) {
+                const pinInput = document.getElementById('mvpVoterPinInput')?.value?.trim();
+                if (!pinInput) {
+                    alert(`Profil gracza ${voter} jest zabezpieczony kodem PIN. Wpisz swój PIN w wyznaczonym polu!`);
+                    document.getElementById('mvpVoterPinInput')?.focus();
+                    return;
+                }
+                if (!verifyPin(pinInput, playerPinHash) && !verifyAdminPin(pinInput)) {
+                    alert(`Nieprawidłowy kod PIN dla gracza ${voter}! Jeśli zapomniałeś PIN-u, skontaktuj się z Arkadiuszem.`);
+                    return;
+                }
+                // PIN poprawny
+                loggedPlayer = voter;
+                localStorage.setItem(ACTIVE_PLAYER_KEY, voter);
+                if (voter === getOrganizerName() || verifyAdminPin(pinInput)) {
+                    isAdmin = true;
+                    localStorage.setItem(IS_ADMIN_KEY, 'true');
+                }
+                sessionStorage.removeItem('siatka_custom_group_guest_mode');
+                checkUserAuthSession();
+            } else if (!playerPinHash && loggedPlayer !== voter) {
+                loggedPlayer = voter;
+                localStorage.setItem(ACTIVE_PLAYER_KEY, voter);
+                sessionStorage.removeItem('siatka_custom_group_guest_mode');
+                checkUserAuthSession();
+            }
 
             isMatchActionPending = true;
             try {
-                const monthData = AppState.months[AppState.currentMonth];
-                const currentMatch = monthData?.matches[AppState.currentMatchIndex];
-                if (!currentMatch) return;
-
                 if (!currentMatch.votes) currentMatch.votes = {};
                 currentMatch.votes[voter] = nominee;
 
-                const attendees = (currentMatch.attendees || []).slice(0, 14);
+                if (femaleAttendees.length > 0 && womenNominee) {
+                    if (!currentMatch.votesWomen) currentMatch.votesWomen = {};
+                    currentMatch.votesWomen[voter] = womenNominee;
+                }
+
                 const totalVotes = Object.keys(currentMatch.votes).length;
                 const isNowCompleted = totalVotes >= attendees.length && attendees.length > 0;
 
@@ -4884,7 +5532,7 @@ function initFirebaseSync() {
                             particleCount: 120,
                             spread: 80,
                             origin: { y: 0.6 },
-                            colors: ['#f59e0b', '#10b981', '#fbbf24', '#38bdf8']
+                            colors: ['#f59e0b', '#ec4899', '#10b981', '#38bdf8']
                         });
                     }
                 } else {
@@ -4893,7 +5541,7 @@ function initFirebaseSync() {
                             particleCount: 40,
                             spread: 50,
                             origin: { y: 0.7 },
-                            colors: ['#10b981', '#ffffff']
+                            colors: ['#10b981', '#ec4899']
                         });
                     }
                 }
@@ -6050,6 +6698,7 @@ function initFirebaseSync() {
             let attendedMatches = 0;
             let totalAvailableSeasonMatches = 0;
             let mvpWins = 0;
+            let mvpWomenWins = 0;
             let hasUnanimousMvp = false;
             let wonAsDark = false;
             let wonAsLight = false;
@@ -6115,6 +6764,19 @@ function initFirebaseSync() {
                                         hasUnanimousMvp = true;
                                     }
                                 }
+
+                                if (isFemalePlayer(playerName)) {
+                                    const votesWMap = m.votesWomen || {};
+                                    const tallyW = {};
+                                    Object.values(votesWMap).forEach(nom => tallyW[nom] = (tallyW[nom] || 0) + 1);
+                                    let maxVW = 0, topNomW = "";
+                                    Object.entries(tallyW).forEach(([nom, count]) => {
+                                        if (count > maxVW) { maxVW = count; topNomW = nom; }
+                                    });
+                                    if (topNomW === playerName && maxVW > 0) {
+                                        mvpWomenWins++;
+                                    }
+                                }
                             }
                         }
                     }
@@ -6132,6 +6794,8 @@ function initFirebaseSync() {
             // 1. KATEGORIA MVP
             if (mvpWins === 1) badges.push({ icon: "👑", title: "MVP Star: 1x MVP meczu" });
             if (mvpWins >= 2) badges.push({ icon: "🌟", title: `Dominator MVP: ${mvpWins}x MVP meczu` });
+            if (mvpWomenWins === 1) badges.push({ icon: "🌸", title: "Królowa Parkietu: 1x MVP Kobiet" });
+            if (mvpWomenWins >= 2) badges.push({ icon: "👸", title: `Cesarzowa Siatki: ${mvpWomenWins}x MVP Kobiet` });
             if (hasUnanimousMvp) badges.push({ icon: "🎯", title: "Głos Ludu: >50% głosów na MVP w jednym meczu" });
 
             // 2. KATEGORIA FORMA & WYNIKI
@@ -7328,6 +7992,12 @@ function initFirebaseSync() {
                 closeWelcomeGateModal();
                 return;
             }
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('mvp') || urlParams.has('vote') || urlParams.has('glosuj')) {
+                sessionStorage.setItem('siatka_custom_group_guest_mode', 'true');
+                closeWelcomeGateModal();
+                return;
+            }
             const isGuest = sessionStorage.getItem('siatka_custom_group_guest_mode') === 'true';
             if (!loggedPlayer && !isGuest) {
                 openWelcomeGateModal();
@@ -8005,7 +8675,9 @@ function initFirebaseSync() {
             const hall = AppState.settings?.hallAddress || "Hala Sportowa";
             const blikPhone = String(AppState.settings?.blikPhone || "").trim();
             const groupName = AppState.settings?.groupName || "AKS Laurowa";
-            const url = window.location.href;
+            const baseUrl = window.location.href.split('?')[0].split('#')[0];
+            const url = baseUrl;
+            const mvpUrl = dateStr ? `${baseUrl}?mvp=${encodeURIComponent(dateStr)}` : `${baseUrl}?mvp=latest`;
 
             if (type === 'monday' || type === 'signup') {
                 return `🔔 ${groupName.toUpperCase()} - ZAPISY NA ${dayCap.toUpperCase()} (${dateStr}) 🔔\n\n` +
@@ -8015,10 +8687,10 @@ function initFirebaseSync() {
                        `👉 Zapiszcie się przez link:\n${url}\n\n` +
                        `Limit składu to 14 osób, decyduje kolejność zgłoszeń! 🏐🔥`;
             } else if (type === 'mvp') {
-                return `🏆 GŁOSOWANIE NA MVP MECZU (${dayCap} ${dateStr}) 🏆\n\n` +
+                return `🏆 GŁOSOWANIE NA MVP SPOTKANIA & MVP KOBIET (${dayCap} ${dateStr}) 🏆\n\n` +
                        `Dzięki wszystkim za świetną walkę na parkiecie! 🔥🏐\n\n` +
-                       `Głosowanie jest tajne 🔒 Kto Twoim zdaniem zasłużył na MVP? Oddaj głos:\n${url}\n\n` +
-                       `Podium 🥇🥈🥉 i oficjalne wyniki pojawią się na stronie po zebraniu głosów! 🦅`;
+                       `Głosowanie jest tajne 🔒 Kto Twoim zdaniem zasłużył na MVP Spotkania i MVP Kobiet? Oddaj swój głos:\n${mvpUrl}\n\n` +
+                       `Podium 🥇 i oficjalne wyniki pojawią się na stronie po zebraniu głosów! 🦅`;
             } else if (type === 'billing') {
                 return `💰 ROZLICZENIE SKŁADEK ZA HALĘ (${AppState.currentMonth}) 💰\n\n` +
                        `Ekipa, podsumowanie składek za halę za miesiąc ${AppState.currentMonth} jest już gotowe!\n\n` +
