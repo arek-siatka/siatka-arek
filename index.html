@@ -360,7 +360,7 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button type="button" onclick="copyMvpVoteDirectLink()" title="Skopiuj bezpośredni link do głosowania dla ekipy na Messengerze" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 hover:text-amber-200 text-xs font-bold transition active:scale-95 shadow-sm cursor-pointer">
+                        <button type="button" id="copyMvpVoteDirectLinkBtn" onclick="copyMvpVoteDirectLink()" title="Skopiuj bezpośredni link do głosowania dla ekipy na Messengerze" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 hover:text-amber-200 text-xs font-bold transition active:scale-95 shadow-sm cursor-pointer hidden">
                             <span>🔗</span>
                             <span>Kopiuj link do głosowania</span>
                         </button>
@@ -887,6 +887,28 @@
 
         </div>
     </nav>
+
+    <!-- Dedicated MVP Voting Modal / Isolated Terminal -->
+    <div id="dedicatedMvpModal" role="dialog" aria-modal="true" aria-labelledby="dedicatedMvpModalTitle" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-[100] flex items-center justify-center p-3 sm:p-4 hidden overflow-y-auto">
+        <div class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-amber-500/30 rounded-3xl p-5 sm:p-6 max-w-sm w-full space-y-4 shadow-2xl animate-fade-in relative my-auto">
+            <!-- Header -->
+            <div class="text-center space-y-1.5 pb-2 border-b border-slate-800/80">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-pink-500 to-amber-300 text-slate-950 text-2xl shadow-lg shadow-amber-500/20 mb-1">
+                    🏆
+                </div>
+                <h2 id="dedicatedMvpModalTitle" class="text-lg font-black text-white tracking-tight">Głosowanie na MVP Meczu</h2>
+                <div class="flex items-center justify-center gap-2">
+                    <span id="dedicatedMvpMatchDateBadge" class="text-[11px] font-bold text-amber-300 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">--</span>
+                    <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">🔒 Tajne</span>
+                </div>
+            </div>
+
+            <!-- Content Area (Active voting form OR completed results OR success state) -->
+            <div id="dedicatedMvpContentArea" class="space-y-4">
+                <!-- Dynamically rendered -->
+            </div>
+        </div>
+    </div>
 
     <!-- Welcome Gate / First-Time Login Modal -->
     <div id="welcomeGateModal" role="dialog" aria-modal="true" aria-labelledby="welcomeModalTitle" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
@@ -2845,7 +2867,7 @@ function initFirebaseSync() {
                 });
 
                 const winnerLabel = winners.length > 0 ? winners.join(' & ') : 'Brak';
-                const womenLabel = winnersW.length > 0 ? ` • 🌸 ${winnersW.join(' & ')}` : '';
+                const womenLabel = (femaleAttendees.length >= 2 && winnersW.length > 0) ? ` • 🌸 ${winnersW.join(' & ')}` : '';
 
                 bannerEl.innerHTML = `
                     <div class="bg-gradient-to-r from-amber-500/20 via-purple-950/30 to-slate-900 border border-amber-500/50 rounded-2xl p-3 sm:p-3.5 flex items-center justify-between gap-3 shadow-lg relative">
@@ -2879,8 +2901,11 @@ function initFirebaseSync() {
             const targetMatchDate = urlParams.get('match') || urlParams.get('mvp') || urlParams.get('vote') || urlParams.get('glosuj');
             const isMvpLink = urlParams.has('mvp') || urlParams.has('vote') || urlParams.has('glosuj');
 
+            // Jeśli użytkownik wszedł z bezpośredniego linku do głosowania na MVP:
+            // Otwieramy odizolowany, dedykowany panel głosowania bez nadawania uprawnień gościa aplikacji
             if (isMvpLink) {
-                sessionStorage.setItem('siatka_custom_group_guest_mode', 'true');
+                openDedicatedMvpModal(targetMatchDate);
+                return;
             }
 
             if (targetMatchDate) {
@@ -2905,15 +2930,7 @@ function initFirebaseSync() {
                 }
             }
 
-            if (isMvpLink) {
-                switchTab('matches');
-                setTimeout(() => {
-                    const target = document.getElementById('integratedMvpCard');
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }, 120);
-            } else if (targetTab && ['matches', 'teams', 'billing', 'halloffame', 'profile'].includes(targetTab)) {
+            if (targetTab && ['matches', 'teams', 'billing', 'halloffame', 'profile'].includes(targetTab)) {
                 switchTab(targetTab);
             }
         }
@@ -3156,6 +3173,10 @@ function initFirebaseSync() {
             }
             updateCountdownDisplay();
             updatePushStatusUI();
+            const dedModal = document.getElementById('dedicatedMvpModal');
+            if (dedModal && !dedModal.classList.contains('hidden')) {
+                renderDedicatedMvpModal();
+            }
         }
 
         // ================= COUNTDOWN TICKER =================
@@ -5076,6 +5097,10 @@ function initFirebaseSync() {
         }
 
         function copyMvpVoteDirectLink() {
+            if (!isAdmin) {
+                showToast("Tylko Arkadiusz (Organizator) może kopiować link do głosowania! 🔒");
+                return;
+            }
             const monthData = AppState.months[AppState.currentMonth];
             const currentMatch = monthData?.matches[AppState.currentMatchIndex];
             const dateStr = currentMatch ? currentMatch.date : '';
@@ -5090,6 +5115,461 @@ function initFirebaseSync() {
                 });
             } else {
                 prompt("Skopiuj link do głosowania na MVP:", link);
+            }
+        }
+
+        // ================= DEDYKOWANY ODKLEJONY PANEL DO GŁOSOWANIA NA MVP =================
+        let currentDedicatedMvpMatchDate = null;
+
+        function findMatchForDedicatedMvp(targetMatchDate) {
+            if (targetMatchDate && targetMatchDate !== 'latest') {
+                for (const mName of Object.keys(AppState.months || {})) {
+                    const matches = AppState.months[mName]?.matches || [];
+                    const idx = matches.findIndex(m => m.date === targetMatchDate);
+                    if (idx !== -1) {
+                        return { monthName: mName, matchIndex: idx, match: matches[idx] };
+                    }
+                }
+            }
+            const latest = getLatestPlayedMatchInfo();
+            if (latest) return { monthName: latest.monthName, matchIndex: latest.matchIndex, match: latest.match };
+
+            const curMonth = AppState.currentMonth;
+            const curIdx = AppState.currentMatchIndex;
+            if (AppState.months?.[curMonth]?.matches?.[curIdx]) {
+                return { monthName: curMonth, matchIndex: curIdx, match: AppState.months[curMonth].matches[curIdx] };
+            }
+            return null;
+        }
+
+        function openDedicatedMvpModal(targetMatchDate) {
+            currentDedicatedMvpMatchDate = targetMatchDate || 'latest';
+            const modal = document.getElementById('dedicatedMvpModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
+            renderDedicatedMvpModal();
+        }
+
+        function closeDedicatedMvpModal() {
+            const modal = document.getElementById('dedicatedMvpModal');
+            if (modal) modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function exitDedicatedMvpToApp() {
+            try {
+                const cleanUrl = window.location.origin + window.location.pathname;
+                window.history.replaceState({}, document.title, cleanUrl);
+            } catch(e) {}
+            closeDedicatedMvpModal();
+            if (typeof checkWelcomeGate === 'function') {
+                checkWelcomeGate();
+            }
+        }
+
+        function renderDedicatedMvpModal() {
+            const contentArea = document.getElementById('dedicatedMvpContentArea');
+            const dateBadge = document.getElementById('dedicatedMvpMatchDateBadge');
+            if (!contentArea) return;
+
+            const info = findMatchForDedicatedMvp(currentDedicatedMvpMatchDate);
+            window.dedicatedMvpMatchInfo = info;
+
+            if (!info || !info.match) {
+                if (dateBadge) dateBadge.innerText = "--";
+                contentArea.innerHTML = `
+                    <div class="text-center py-6 space-y-3">
+                        <div class="text-3xl">⚠️</div>
+                        <p class="text-xs text-slate-300">Nie znaleziono meczu powiązanego z tym linkiem.</p>
+                        <button type="button" onclick="window.close()" class="px-4 py-2 bg-slate-800 text-slate-300 font-bold rounded-xl text-xs">
+                            Zamknij okno 👋
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            const match = info.match;
+            if (dateBadge) dateBadge.innerText = `Mecz: ${match.date}`;
+            const attendees = (match.attendees || []).slice(0, 14);
+            const femaleAttendees = attendees.filter(p => isFemalePlayer(p));
+            const votes = match.votes || {};
+            const votesWomen = match.votesWomen || {};
+            const totalVotes = Object.keys(votes).length;
+            const isFinished = isMvpVotingFinished(match);
+
+            // Obliczenie wyników ogólnych (tally)
+            const tally = {};
+            attendees.forEach(p => tally[p] = 0);
+            Object.values(votes).forEach(candidate => {
+                if (tally[candidate] !== undefined) tally[candidate]++;
+            });
+            let maxVotes = 0;
+            let leaders = [];
+            Object.entries(tally).forEach(([name, count]) => {
+                if (count > maxVotes) {
+                    maxVotes = count;
+                    leaders = [name];
+                } else if (count === maxVotes && maxVotes > 0) {
+                    leaders.push(name);
+                }
+            });
+
+            // Obliczenie wyników kobiet (tally women)
+            const tallyWomen = {};
+            femaleAttendees.forEach(p => tallyWomen[p] = 0);
+            Object.values(votesWomen).forEach(candidate => {
+                if (tallyWomen[candidate] !== undefined) tallyWomen[candidate]++;
+            });
+            let maxVotesWomen = 0;
+            let leadersWomen = [];
+            Object.entries(tallyWomen).forEach(([name, count]) => {
+                if (count > maxVotesWomen) {
+                    maxVotesWomen = count;
+                    leadersWomen = [name];
+                } else if (count === maxVotesWomen && maxVotes > 0) {
+                    leadersWomen.push(name);
+                }
+            });
+
+            // SCENARIUSZ 1: Głosowanie już zakończone
+            if (isFinished) {
+                const winnerNameStr = leaders.length > 0 ? leaders.join(' & ') : "Brak głosów";
+                const winnerVotesStr = maxVotes > 0 ? `${maxVotes} gł. (${Math.round((maxVotes / (totalVotes || 1)) * 100)}%)` : "";
+                const winnerWomenStr = leadersWomen.length > 0 ? leadersWomen.join(' & ') : "";
+                const winnerWomenVotesStr = maxVotesWomen > 0 ? `${maxVotesWomen} gł. (${Math.round((maxVotesWomen / (totalVotes || 1)) * 100)}%)` : "";
+
+                contentArea.innerHTML = `
+                    <div class="space-y-3.5 py-2">
+                        <!-- Ogólny MVP -->
+                        <div class="bg-gradient-to-br from-amber-500/20 via-amber-950/30 to-slate-900 border border-amber-500/40 p-4 rounded-2xl text-center space-y-1.5 shadow-lg shadow-amber-500/10">
+                            <span class="text-3xl block animate-bounce">👑</span>
+                            <span class="text-[10px] uppercase tracking-wider font-extrabold text-amber-300">MVP Meczu (Ogólne)</span>
+                            <div class="text-lg font-black text-white">${escapeHtml(winnerNameStr)}</div>
+                            ${winnerVotesStr ? `<div class="text-xs font-bold text-amber-400 font-mono">${winnerVotesStr}</div>` : ''}
+                        </div>
+
+                        ${femaleAttendees.length >= 2 && winnerWomenStr ? `
+                        <!-- MVP Kobiet -->
+                        <div class="bg-gradient-to-br from-pink-500/20 via-rose-950/30 to-slate-900 border border-pink-500/40 p-3.5 rounded-2xl text-center space-y-1.5 shadow-lg shadow-pink-500/10">
+                            <span class="text-2xl block">🌸</span>
+                            <span class="text-[10px] uppercase tracking-wider font-extrabold text-pink-300">MVP Kobiet</span>
+                            <div class="text-base font-black text-white">${escapeHtml(winnerWomenStr)}</div>
+                            ${winnerWomenVotesStr ? `<div class="text-xs font-bold text-pink-400 font-mono">${winnerWomenVotesStr}</div>` : ''}
+                        </div>
+                        ` : ''}
+
+                        <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800 text-center">
+                            <p class="text-xs text-slate-300 font-medium">Głosowanie na ten mecz zostało oficjalnie zakończone. 🎉</p>
+                            <p class="text-[10px] text-slate-500 mt-1">Dziękujemy wszystkim zawodnikom za oddane głosy!</p>
+                        </div>
+                        <div class="pt-2">
+                            <button type="button" onclick="window.close()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-2xl text-xs transition border border-slate-700">
+                                Zamknij okno 👋
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // SCENARIUSZ 2: Głosowanie w toku
+            if (attendees.length === 0) {
+                contentArea.innerHTML = `
+                    <div class="text-center py-6 space-y-2">
+                        <p class="text-xs text-slate-400">Brak zapisanych graczy na ten mecz.</p>
+                        <button type="button" onclick="window.close()" class="px-4 py-2 bg-slate-800 text-slate-300 font-bold rounded-xl text-xs">
+                            Zamknij okno 👋
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            const pct = attendees.length ? Math.min(100, Math.round((totalVotes / attendees.length) * 100)) : 0;
+            const defaultVoter = (loggedPlayer && attendees.includes(loggedPlayer)) ? loggedPlayer : '';
+
+            contentArea.innerHTML = `
+                <div class="space-y-3.5">
+                    <!-- Progress Bar -->
+                    <div class="space-y-1.5 bg-slate-950/70 p-2.5 rounded-2xl border border-slate-800">
+                        <div class="flex items-center justify-between text-[11px]">
+                            <span class="text-slate-400 font-semibold">Postęp głosowania:</span>
+                            <span class="font-mono font-bold text-amber-300">${totalVotes} / ${attendees.length} (${pct}%)</span>
+                        </div>
+                        <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden border border-slate-800">
+                            <div class="bg-gradient-to-r from-amber-500 via-pink-500 to-sky-400 h-full transition-all duration-500" style="width: ${pct}%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Krok 1: Wybierz siebie -->
+                    <div>
+                        <label for="dedicatedMvpVoterSelect" class="block text-xs font-bold text-slate-300 mb-1">
+                            1. Kim jesteś? (Wybierz siebie ze składu):
+                        </label>
+                        <select id="dedicatedMvpVoterSelect" onchange="onDedicatedMvpVoterChange(this.value)" class="w-full bg-slate-950 border border-slate-700 text-xs font-semibold text-white rounded-xl px-3 py-3 focus:outline-none focus:border-amber-500 cursor-pointer">
+                            <option value="">-- Wybierz siebie z listy graczy --</option>
+                            ${attendees.map(p => {
+                                const hasVoted = Boolean(votes[p]);
+                                const isSel = (p === defaultVoter);
+                                return `<option value="${escapeHtml(p)}" ${isSel ? 'selected' : ''}>${escapeHtml(p)}${hasVoted ? ' (Głos oddany ✅)' : ''}</option>`;
+                            }).join('')}
+                        </select>
+                    </div>
+
+                    <!-- Dynamiczny kontener na ostrzeżenie o oddanym głosie lub pole na PIN -->
+                    <div id="dedicatedMvpVoterFeedback"></div>
+
+                    <!-- Krok 2: Twój głos na MVP Ogólne -->
+                    <div id="dedicatedNomineeSection">
+                        <label for="dedicatedMvpNomineeSelect" class="block text-xs font-bold text-slate-300 mb-1">
+                            2. Twój głos na MVP Meczu (Ogólne) 🌟:
+                        </label>
+                        <select id="dedicatedMvpNomineeSelect" class="w-full bg-slate-950 border border-slate-700 text-xs font-semibold text-white rounded-xl px-3 py-3 focus:outline-none focus:border-amber-500 cursor-pointer">
+                            <option value="">-- Kto Twoim zdaniem zagrał najlepiej? --</option>
+                            ${attendees.map(p => {
+                                return `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`;
+                            }).join('')}
+                        </select>
+                    </div>
+
+                    ${femaleAttendees.length >= 2 ? `
+                    <!-- Krok 3: Twój głos na MVP Kobiet 🌸 -->
+                    <div id="dedicatedWomenNomineeSection">
+                        <label for="dedicatedMvpWomenNomineeSelect" class="block text-xs font-bold text-pink-300 mb-1">
+                            3. Twój głos na MVP Kobiet 🌸:
+                        </label>
+                        <select id="dedicatedMvpWomenNomineeSelect" class="w-full bg-slate-950 border border-pink-500/40 text-xs font-semibold text-white rounded-xl px-3 py-3 focus:outline-none focus:border-pink-400 cursor-pointer">
+                            <option value="">-- Wybierz MVP Kobiet 🌸 --</option>
+                            ${femaleAttendees.map(p => {
+                                return `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`;
+                            }).join('')}
+                        </select>
+                    </div>
+                    ` : ''}
+
+                    <!-- Przycisk oddania głosu -->
+                    <div id="dedicatedSubmitSection" class="pt-1">
+                        <button type="button" onclick="submitDedicatedMvpVote()" class="w-full bg-gradient-to-r from-amber-500 via-pink-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-slate-950 font-black py-3.5 rounded-2xl text-xs sm:text-sm transition shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2">
+                            <span>Zatwierdź tajny głos na MVP</span>
+                            <span>🌟</span>
+                        </button>
+                    </div>
+
+                    <p class="text-[10px] text-slate-500 text-center leading-relaxed">
+                        🔒 Głosowanie jest tajne i anonimowe. Po oddaniu głosu wyniki pozostają ukryte do końca spotkania.
+                    </p>
+                </div>
+            `;
+
+            if (defaultVoter) {
+                onDedicatedMvpVoterChange(defaultVoter);
+            }
+        }
+
+        function onDedicatedMvpVoterChange(voterName) {
+            const feedbackEl = document.getElementById('dedicatedMvpVoterFeedback');
+            const nomineeSection = document.getElementById('dedicatedNomineeSection');
+            const womenNomineeSection = document.getElementById('dedicatedWomenNomineeSection');
+            const submitSection = document.getElementById('dedicatedSubmitSection');
+            const nomineeSelect = document.getElementById('dedicatedMvpNomineeSelect');
+            const womenNomineeSelect = document.getElementById('dedicatedMvpWomenNomineeSelect');
+            const info = window.dedicatedMvpMatchInfo;
+            if (!info || !info.match || !feedbackEl) return;
+
+            const match = info.match;
+            const attendees = (match.attendees || []).slice(0, 14);
+            const femaleAttendees = attendees.filter(p => isFemalePlayer(p));
+            const votes = match.votes || {};
+
+            if (!voterName) {
+                feedbackEl.innerHTML = '';
+                if (nomineeSection) nomineeSection.classList.remove('hidden');
+                if (womenNomineeSection) {
+                    if (femaleAttendees.length >= 2) womenNomineeSection.classList.remove('hidden');
+                    else womenNomineeSection.classList.add('hidden');
+                }
+                if (submitSection) submitSection.classList.remove('hidden');
+                if (nomineeSelect) {
+                    nomineeSelect.innerHTML = `<option value="">-- Kto Twoim zdaniem zagrał najlepiej? --</option>` +
+                        attendees.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
+                }
+                if (womenNomineeSelect) {
+                    womenNomineeSelect.innerHTML = `<option value="">-- Wybierz MVP Kobiet 🌸 --</option>` +
+                        femaleAttendees.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
+                }
+                return;
+            }
+
+            // 1. Sprawdź czy gracz już głosował
+            if (votes[voterName]) {
+                feedbackEl.innerHTML = `
+                    <div class="p-3 bg-amber-950/60 border border-amber-600/70 rounded-xl text-xs text-amber-200 text-center font-bold animate-fade-in space-y-1">
+                        <div>⚠️ Oddałeś/aś już swój głos na ten mecz!</div>
+                        <div class="text-[11px] text-slate-300 font-normal">Twój głos został bezpiecznie zarejestrowany. Dziękujemy! 🔒</div>
+                    </div>
+                `;
+                if (nomineeSection) nomineeSection.classList.add('hidden');
+                if (womenNomineeSection) womenNomineeSection.classList.add('hidden');
+                if (submitSection) {
+                    submitSection.innerHTML = `
+                        <button type="button" onclick="window.close()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-2xl text-xs transition">
+                            Możesz zamknąć tę kartę 👋
+                        </button>
+                    `;
+                }
+                return;
+            }
+
+            // 2. Gracz jeszcze nie głosował - przywróć sekcje
+            if (nomineeSection) nomineeSection.classList.remove('hidden');
+            if (womenNomineeSection) {
+                if (femaleAttendees.length >= 2) womenNomineeSection.classList.remove('hidden');
+                else womenNomineeSection.classList.add('hidden');
+            }
+            if (submitSection) {
+                submitSection.innerHTML = `
+                    <button type="button" onclick="submitDedicatedMvpVote()" class="w-full bg-gradient-to-r from-amber-500 via-pink-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-slate-950 font-black py-3.5 rounded-2xl text-xs sm:text-sm transition shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2">
+                        <span>Zatwierdź tajny głos na MVP</span>
+                        <span>🌟</span>
+                    </button>
+                `;
+            }
+
+            // Zaktualizuj listę kandydatów ogólnych (z wyłączeniem siebie)
+            if (nomineeSelect) {
+                const candidates = attendees.filter(p => p !== voterName);
+                nomineeSelect.innerHTML = `<option value="">-- Kto Twoim zdaniem zagrał najlepiej? --</option>` +
+                    candidates.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
+            }
+
+            // Zaktualizuj listę kandydatek MVP kobiet (z wyłączeniem siebie, jeśli głosująca to kobieta)
+            if (womenNomineeSelect) {
+                const femaleCandidates = femaleAttendees.filter(p => p !== voterName);
+                womenNomineeSelect.innerHTML = `<option value="">-- Wybierz MVP Kobiet 🌸 --</option>` +
+                    femaleCandidates.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
+            }
+
+            // 3. Sprawdź czy profil ma PIN
+            const hasPin = Boolean(AppState.player_pins?.[voterName]);
+            const isAlreadySelf = (loggedPlayer && loggedPlayer === voterName);
+
+            if (hasPin && !isAlreadySelf) {
+                feedbackEl.innerHTML = `
+                    <div class="p-3 bg-slate-900/90 border border-amber-500/40 rounded-xl space-y-1.5 animate-fade-in">
+                        <label for="dedicatedMvpPinInput" class="block text-[11px] text-amber-300 font-semibold">
+                            🔐 Profil gracza ${escapeHtml(voterName)} ma ustalony PIN. Podaj 4 cyfry, aby zagłosować:
+                        </label>
+                        <input type="password" id="dedicatedMvpPinInput" inputmode="numeric" maxlength="6" placeholder="••••" class="w-full bg-slate-950 border border-amber-500/60 rounded-xl px-3 py-2 text-sm text-white text-center tracking-widest font-mono focus:outline-none focus:border-amber-400">
+                    </div>
+                `;
+            } else {
+                feedbackEl.innerHTML = '';
+            }
+        }
+
+        function submitDedicatedMvpVote() {
+            if (isMatchActionPending) return;
+            const voterSelect = document.getElementById('dedicatedMvpVoterSelect');
+            const nomineeSelect = document.getElementById('dedicatedMvpNomineeSelect');
+            const womenNomineeSelect = document.getElementById('dedicatedMvpWomenNomineeSelect');
+            const voter = voterSelect?.value?.trim();
+            const nominee = nomineeSelect?.value?.trim();
+            const womenNominee = womenNomineeSelect?.value?.trim();
+
+            if (!voter) return alert("Wybierz siebie z listy obecnych graczy!");
+            if (!nominee) return alert("Wybierz zawodnika, na którego oddajesz głos na ogólne MVP!");
+            if (voter === nominee) return alert("Nie możesz głosować na siebie!");
+
+            const info = window.dedicatedMvpMatchInfo;
+            if (!info || !info.match) return alert("Brak danych meczu.");
+
+            const match = info.match;
+            const attendees = (match.attendees || []).slice(0, 14);
+            const femaleAttendees = attendees.filter(p => isFemalePlayer(p));
+
+            if (femaleAttendees.length >= 2 && !womenNominee) {
+                return alert("Wybierz również zawodniczkę na MVP Kobiet 🌸!");
+            }
+            if (femaleAttendees.length >= 2 && voter === womenNominee) {
+                return alert("Nie możesz głosować na siebie w kategorii MVP Kobiet!");
+            }
+
+            // PIN check
+            const playerPinHash = AppState.player_pins?.[voter];
+            if (playerPinHash && loggedPlayer !== voter) {
+                const pinInput = document.getElementById('dedicatedMvpPinInput')?.value?.trim();
+                if (!pinInput) {
+                    alert(`Profil gracza ${voter} jest zabezpieczony kodem PIN. Wpisz swój PIN!`);
+                    document.getElementById('dedicatedMvpPinInput')?.focus();
+                    return;
+                }
+                if (!verifyPin(pinInput, playerPinHash) && !verifyAdminPin(pinInput)) {
+                    alert(`Nieprawidłowy kod PIN dla gracza ${voter}! Jeśli go zapomniałeś, skontaktuj się z Arkadiuszem.`);
+                    return;
+                }
+            }
+
+            isMatchActionPending = true;
+            try {
+                if (!match.votes) match.votes = {};
+                match.votes[voter] = nominee;
+
+                if (femaleAttendees.length >= 2 && womenNominee) {
+                    if (!match.votesWomen) match.votesWomen = {};
+                    match.votesWomen[voter] = womenNominee;
+                }
+
+                const totalVotes = Object.keys(match.votes).length;
+                const isNowCompleted = totalVotes >= attendees.length && attendees.length > 0;
+                if (isNowCompleted) {
+                    match.mvpClosed = true;
+                }
+
+                syncState();
+
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 90,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#f59e0b', '#ec4899', '#10b981', '#38bdf8']
+                    });
+                }
+
+                // Ekran sukcesu ("i nara haha")
+                const contentArea = document.getElementById('dedicatedMvpContentArea');
+                if (contentArea) {
+                    contentArea.innerHTML = `
+                        <div class="text-center py-6 space-y-4 animate-fade-in">
+                            <div class="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center text-3xl shadow-lg shadow-emerald-500/20">
+                                🎉
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-black text-white">Dziękujemy za oddanie głosu!</h3>
+                                <p class="text-xs text-slate-300 mt-1">Twój tajny głos został bezpiecznie zapisany w systemie 🔒</p>
+                            </div>
+                            <div class="p-3 bg-slate-950/80 rounded-2xl border border-slate-800 text-xs text-amber-300 font-medium">
+                                Oddano dotychczas <strong class="text-white font-bold">${totalVotes} / ${attendees.length}</strong> głosów uczestników meczu.
+                            </div>
+                            <p class="text-xs text-slate-400">Możesz teraz bezpiecznie zamknąć tę kartę 👋</p>
+                            <div class="pt-2">
+                                <button type="button" onclick="window.close()" class="w-full bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black py-3.5 rounded-2xl text-xs transition shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2">
+                                    <span>Zamknij kartę</span>
+                                    <span>👋</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+                renderIntegratedMvpCard();
+            } catch(e) {
+                console.error("Błąd podczas zapisu głosu MVP:", e);
+                alert("Wystąpił problem podczas zapisu głosu. Spróbuj ponownie.");
+            } finally {
+                isMatchActionPending = false;
             }
         }
 
@@ -5152,6 +5632,8 @@ function initFirebaseSync() {
                 if (womenWinnerBox) womenWinnerBox.classList.add('hidden');
                 if (resultsList) resultsList.innerHTML = `<div class="p-4 text-center text-xs text-slate-600">Dodaj mecz, aby móc głosować.</div>`;
                 if (adminBar) adminBar.classList.add('hidden');
+                const copyBtn = document.getElementById('copyMvpVoteDirectLinkBtn');
+                if (copyBtn) copyBtn.classList.add('hidden');
                 return;
             }
 
@@ -5164,6 +5646,16 @@ function initFirebaseSync() {
             const isFinished = isMvpVotingFinished(currentMatch);
 
             if (votesBadge) votesBadge.innerText = `Głosy: ${totalVotesCast} / ${attendees.length}`;
+
+            // Przycisk kopiowania linku wyłącznie dla Arkadiusza (isAdmin)
+            const copyMvpBtn = document.getElementById('copyMvpVoteDirectLinkBtn');
+            if (copyMvpBtn) {
+                if (isAdmin) {
+                    copyMvpBtn.classList.remove('hidden');
+                } else {
+                    copyMvpBtn.classList.add('hidden');
+                }
+            }
 
             // Admin Bar Controls
             if (isAdmin && attendees.length > 0) {
@@ -5239,8 +5731,8 @@ function initFirebaseSync() {
                 }).join('');
             }
 
-            // 3. Women Nominee Select (MVP Kobiet - tylko jeśli w meczu grają kobiety)
-            if (femaleAttendees.length > 0) {
+            // 3. Women Nominee Select (MVP Kobiet - tylko jeśli w meczu grają minimum 2 kobiety)
+            if (femaleAttendees.length >= 2) {
                 if (womenNomineeContainer) womenNomineeContainer.classList.remove('hidden');
                 if (womenNomineeSelect) {
                     const curWNom = womenNomineeSelect.value || '';
@@ -5305,7 +5797,7 @@ function initFirebaseSync() {
                 }
 
                 // Render Women's Winner Card
-                if (femaleAttendees.length > 0 && womenWinnerBox && womenWinnerName && womenWinnerVotes) {
+                if (femaleAttendees.length >= 2 && womenWinnerBox && womenWinnerName && womenWinnerVotes) {
                     womenWinnerBox.classList.remove('hidden');
                     const totalWomenVotes = Object.keys(votesWomen).length;
                     if (maxVotesWomen === 0) {
@@ -5350,7 +5842,7 @@ function initFirebaseSync() {
                 `;
 
                 // Add Women's breakdown if applicable
-                if (femaleAttendees.length > 0) {
+                if (femaleAttendees.length >= 2) {
                     const sortedWomen = Object.entries(tallyWomen).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
                     const totalWomenVotes = Object.keys(votesWomen).length;
                     resultsHtml += `
@@ -5400,7 +5892,7 @@ function initFirebaseSync() {
                                     <span class="${votedNominee ? 'text-amber-400' : 'text-slate-500'}">
                                         ${votedNominee ? `🏆 ${escapeHtml(votedNominee)}` : 'Nie głosował'}
                                     </span>
-                                    ${femaleAttendees.length > 0 ? `
+                                    ${femaleAttendees.length >= 2 ? `
                                         <span class="text-slate-600">|</span>
                                         <span class="${votedWomen ? 'text-pink-400' : 'text-slate-500'}">
                                             ${votedWomen ? `🌸 ${escapeHtml(votedWomen)}` : 'Brak'}
@@ -5479,7 +5971,7 @@ function initFirebaseSync() {
 
             if (!voter) return alert("Wybierz siebie z listy obecnych graczy lub zaloguj się na swój profil!");
             if (!nominee) return alert("Wybierz zawodnika, na którego oddajesz ogólny głos na MVP!");
-            if (femaleAttendees.length > 0 && !womenNominee) {
+            if (femaleAttendees.length >= 2 && !womenNominee) {
                 return alert("Wybierz również zawodniczkę na MVP Kobiet 🌸!");
             }
 
@@ -5506,10 +5998,8 @@ function initFirebaseSync() {
                 sessionStorage.removeItem('siatka_custom_group_guest_mode');
                 checkUserAuthSession();
             } else if (!playerPinHash && loggedPlayer !== voter) {
-                loggedPlayer = voter;
-                localStorage.setItem(ACTIVE_PLAYER_KEY, voter);
-                sessionStorage.removeItem('siatka_custom_group_guest_mode');
-                checkUserAuthSession();
+                // Gracz nie ma PIN-u (np. gość) - oddaje głos, ale celowo NIE logujemy go w całej aplikacji!
+                // Zabezpieczenie przed przejmowaniem kont gości/testowych i nieautoryzowanym dostępem.
             }
 
             isMatchActionPending = true;
@@ -5517,7 +6007,7 @@ function initFirebaseSync() {
                 if (!currentMatch.votes) currentMatch.votes = {};
                 currentMatch.votes[voter] = nominee;
 
-                if (femaleAttendees.length > 0 && womenNominee) {
+                if (femaleAttendees.length >= 2 && womenNominee) {
                     if (!currentMatch.votesWomen) currentMatch.votesWomen = {};
                     currentMatch.votesWomen[voter] = womenNominee;
                 }
@@ -7993,8 +8483,10 @@ function initFirebaseSync() {
                 return;
             }
             const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('mvp') || urlParams.has('vote') || urlParams.has('glosuj')) {
-                sessionStorage.setItem('siatka_custom_group_guest_mode', 'true');
+            const isMvpLink = urlParams.has('mvp') || urlParams.has('vote') || urlParams.has('glosuj');
+            if (isMvpLink) {
+                // Link MVP otwiera dedykowany, odizolowany panel głosowania.
+                // Celowo NIE ustawiamy trybu gościa, aby nie otwierać aplikacji
                 closeWelcomeGateModal();
                 return;
             }
