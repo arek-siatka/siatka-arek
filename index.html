@@ -2376,6 +2376,8 @@ function initFirebaseSync() {
         db.ref(FIREBASE_DB_NODE).on('value', snapshot => {
             const val = snapshot.val();
             if (val && val.isConfigured) {
+                const activeMonth = AppState.currentMonth;
+                const activeMatchIdx = AppState.currentMatchIndex;
                 AppState = val;
                 ensureValidState();
                 if (typeof closeSetupWizardModal === "function") {
@@ -2385,9 +2387,19 @@ function initFirebaseSync() {
                 if (!hasLoadedRemoteState) {
                     hasInitiallySelectedMonth = false;
                     autoSelectUpcomingMatchOnLoad();
+                    if (typeof handleUrlNavigationParams === 'function') {
+                        handleUrlNavigationParams();
+                    }
                     hasLoadedRemoteState = true;
                     renderCurrentView(true);
                 } else {
+                    if (activeMonth && AppState.months && AppState.months[activeMonth]) {
+                        AppState.currentMonth = activeMonth;
+                        const matchCount = AppState.months[activeMonth].matches?.length || 0;
+                        if (typeof activeMatchIdx === 'number' && activeMatchIdx < matchCount) {
+                            AppState.currentMatchIndex = activeMatchIdx;
+                        }
+                    }
                     renderCurrentView();
                 }
             } else if (val) {
@@ -2973,6 +2985,26 @@ function initFirebaseSync() {
                 }
             }
 
+            // 2. Okres pomeczowy (0-2 dni po meczu):
+            // Sprawdź czy jest świeżo rozegrany mecz (0-2 dni temu), gdzie trwa głosowanie MVP
+            const latestPlayed = getLatestPlayedMatchInfo();
+            if (latestPlayed && latestPlayed.daysAgo >= 0 && latestPlayed.daysAgo <= 2) {
+                const isFinished = isMvpVotingFinished(latestPlayed.match);
+                const attendees = (latestPlayed.match.attendees || []).slice(0, 14);
+                const isAttendee = Boolean(loggedPlayer && attendees.includes(loggedPlayer));
+                const hasVoted = Boolean(loggedPlayer && latestPlayed.match.votes && latestPlayed.match.votes[loggedPlayer]);
+
+                // Do 1 dnia po meczu LUB dopóki głosowanie nie jest zakończone LUB gracz nie oddał głosu:
+                // Priorytet ma ten świeżo rozegrany mecz!
+                if (latestPlayed.daysAgo <= 1 || !isFinished || (isAttendee && !hasVoted)) {
+                    AppState.currentMonth = latestPlayed.monthName;
+                    AppState.currentMatchIndex = latestPlayed.matchIndex;
+                    hasInitiallySelectedMonth = true;
+                    return;
+                }
+            }
+
+            // 3. W pozostałych przypadkach wybierz najbliższy nadchodzący mecz
             const nearest = getNearestUpcomingMatchInfo();
             if (nearest && nearest.monthName && nearest.matchIndex !== -1) {
                 AppState.currentMonth = nearest.monthName;
@@ -3145,12 +3177,59 @@ function initFirebaseSync() {
                 console.warn('LocalStorage error:', e);
             }
             if (db) {
+                if (!hasLoadedRemoteState || !isOnlineSync) {
+                    console.warn('Sync pominięty: brak załadowanego stanu zdalnego lub brak aktywnego połączenia online. Pomijanie nadpisania chmury.');
+                    return;
+                }
                 db.ref(FIREBASE_DB_NODE).set(AppState).catch(error => {
                     console.warn('Firebase write fallback:', error);
                     isOnlineSync = false;
                     setSyncStatus('error');
-                    showToast('Zapisano lokalnie.');
+                    showToast('Zapisano lokalnie — błąd synchronizacji z chmurą.');
                 });
+            }
+        }
+
+        function atomicStateTransaction(mutatorFn, onDone) {
+            ensureValidState();
+            if (db && isOnlineSync && hasLoadedRemoteState) {
+                db.ref(FIREBASE_DB_NODE).transaction((remoteData) => {
+                    if (!remoteData) return remoteData;
+                    const res = mutatorFn(remoteData);
+                    if (res === false) return undefined; // Anuluj transakcję
+                    return remoteData;
+                }, (error, committed, snapshot) => {
+                    if (error) {
+                        console.warn('Firebase transaction error:', error);
+                        showToast('Błąd zapisu w chmurze: ' + (error.message || 'Spróbuj ponownie'));
+                        if (onDone) onDone(false, error);
+                    } else if (!committed) {
+                        if (onDone) onDone(false, null);
+                    } else {
+                        if (snapshot && snapshot.val()) {
+                            const activeMonth = AppState.currentMonth;
+                            const activeMatchIdx = AppState.currentMatchIndex;
+                            AppState = snapshot.val();
+                            if (activeMonth && AppState.months && AppState.months[activeMonth]) {
+                                AppState.currentMonth = activeMonth;
+                                const matchCount = AppState.months[activeMonth].matches?.length || 0;
+                                if (typeof activeMatchIdx === 'number' && activeMatchIdx < matchCount) {
+                                    AppState.currentMatchIndex = activeMatchIdx;
+                                }
+                            }
+                            ensureValidState();
+                        }
+                        try {
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(AppState));
+                        } catch(e) {}
+                        renderCurrentView();
+                        if (onDone) onDone(true, null);
+                    }
+                });
+            } else {
+                console.warn('atomicStateTransaction odrzucone: brak połączenia z bazą.');
+                showToast('Chwileczkę, trwa łączenie z chmurą... Spróbuj za sekundę.');
+                if (onDone) onDone(false, new Error('Brak połączenia z chmurą'));
             }
         }
 
@@ -3179,7 +3258,11 @@ function initFirebaseSync() {
                     renderHallOfFame();
                     renderArchiveTab();
                 } else if (currentActiveTab === 'profile') {
-                    renderProfileTab();
+                    if (Date.now() - lastSkillUpdateTime < 3000) {
+                        // Ochrona przed skakaniem: pomijamy przebudowę profilu z Firebase tuż po zmianie gwiazdki
+                    } else {
+                        renderProfileTab();
+                    }
                 }
             }
             updateCountdownDisplay();
@@ -3963,39 +4046,50 @@ function initFirebaseSync() {
             if (isMatchActionPending) return;
             isMatchActionPending = true;
 
-            try {
-                const monthData = AppState.months[AppState.currentMonth];
-                const currentMatch = monthData?.matches[AppState.currentMatchIndex];
-                if (!currentMatch) return;
-
-                if (!isAdmin && isMatchLockedAdvance(currentMatch)) {
-                    const nearest = getNearestUpcomingMatchInfo();
-                    const nearestDate = nearest ? `${getShortDayName(nearest.date)} ${nearest.date}` : 'najbliższej';
-                    alert(`Zapisy na ten mecz są zablokowane z wyprzedzeniem!\n\nZapisy odblokują się po zakończeniu najbliższego meczu (${nearestDate}). 🔒`);
-                    return;
-                }
-
-                if (!currentMatch.attendees) currentMatch.attendees = [];
-                if (currentMatch.attendees.includes(name)) {
-                    alert(`${name} jest już zapisany na ten mecz!`);
-                    return;
-                }
-
-                currentMatch.attendees.push(name);
-                if (!AppState.all_players.includes(name)) {
-                    AppState.all_players.push(name);
-                    if (!AppState.player_skills) AppState.player_skills = {};
-                    AppState.player_skills[name] = 3;
-                }
-
-                syncState();
-                renderCurrentView();
-                showToast(`Zapisano: ${name} ✅`);
-            } finally {
-                setTimeout(() => {
-                    isMatchActionPending = false;
-                }, 350);
+            const targetMonth = AppState.currentMonth;
+            const targetMatchIndex = AppState.currentMatchIndex;
+            const monthData = AppState.months[targetMonth];
+            const currentMatch = monthData?.matches[targetMatchIndex];
+            if (!currentMatch) {
+                isMatchActionPending = false;
+                return;
             }
+
+            if (!isAdmin && isMatchLockedAdvance(currentMatch)) {
+                const nearest = getNearestUpcomingMatchInfo();
+                const nearestDate = nearest ? `${getShortDayName(nearest.date)} ${nearest.date}` : 'najbliższej';
+                alert(`Zapisy na ten mecz są zablokowane z wyprzedzeniem!\n\nZapisy odblokują się po zakończeniu najbliższego meczu (${nearestDate}). 🔒`);
+                isMatchActionPending = false;
+                return;
+            }
+
+            atomicStateTransaction((state) => {
+                const m = state.months?.[targetMonth]?.matches?.[targetMatchIndex];
+                if (!m) return false;
+                if (!Array.isArray(m.attendees)) m.attendees = [];
+                if (m.attendees.includes(name)) {
+                    return false;
+                }
+
+                m.attendees.push(name);
+                if (!Array.isArray(state.all_players)) state.all_players = [];
+                if (!state.all_players.includes(name)) {
+                    state.all_players.push(name);
+                    if (!state.player_skills) state.player_skills = {};
+                    state.player_skills[name] = 3;
+                }
+                return state;
+            }, (success, err) => {
+                isMatchActionPending = false;
+                if (success) {
+                    renderCurrentView();
+                    showToast(`Zapisano: ${name} ✅`);
+                } else if (err) {
+                    showToast(`Błąd zapisu: ${err.message || 'spróbuj ponownie'}`);
+                } else {
+                    alert(`${name} jest już zapisany na ten mecz!`);
+                }
+            });
         }
 
         function addPlayerToCurrentMatchFromSelect() {
@@ -4065,42 +4159,46 @@ function initFirebaseSync() {
             if (!confirm(`Czy na pewno usunąć z listy gracza: ${name}?`)) return;
             isMatchActionPending = true;
 
-            try {
-                const monthData = AppState.months[AppState.currentMonth];
-                const currentMatch = monthData?.matches[AppState.currentMatchIndex];
-                if (!currentMatch) return;
+            const targetMonth = AppState.currentMonth;
+            const targetMatchIndex = AppState.currentMatchIndex;
+            let wasInMainSquad = false;
+            let firstReserve = null;
 
-                const oldAttendees = currentMatch.attendees || [];
-                const wasInMainSquad = oldAttendees.slice(0, 14).includes(name);
-                const firstReserve = oldAttendees.length > 14 ? oldAttendees[14] : null;
+            atomicStateTransaction((state) => {
+                const m = state.months?.[targetMonth]?.matches?.[targetMatchIndex];
+                if (!m || !Array.isArray(m.attendees)) return false;
 
-                currentMatch.attendees = oldAttendees.filter(p => p !== name);
-                if (currentMatch.votes && currentMatch.votes[name]) {
-                    delete currentMatch.votes[name];
+                const oldAttendees = m.attendees;
+                wasInMainSquad = oldAttendees.slice(0, 14).includes(name);
+                firstReserve = oldAttendees.length > 14 ? oldAttendees[14] : null;
+
+                m.attendees = oldAttendees.filter(p => p !== name);
+                if (m.votes && m.votes[name]) {
+                    delete m.votes[name];
                 }
-                
-                if (currentMatch.teams) {
-                    if (Array.isArray(currentMatch.teams.dark)) {
-                        currentMatch.teams.dark = currentMatch.teams.dark.filter(p => p !== name);
+                if (m.votesWomen && m.votesWomen[name]) {
+                    delete m.votesWomen[name];
+                }
+                if (m.teams) {
+                    if (Array.isArray(m.teams.dark)) {
+                        m.teams.dark = m.teams.dark.filter(p => p !== name);
                     }
-                    if (Array.isArray(currentMatch.teams.light)) {
-                        currentMatch.teams.light = currentMatch.teams.light.filter(p => p !== name);
+                    if (Array.isArray(m.teams.light)) {
+                        m.teams.light = m.teams.light.filter(p => p !== name);
                     }
                 }
-
-                syncState();
-                renderCurrentView();
-
-                if (wasInMainSquad && firstReserve && firstReserve !== name) {
-                    showToast(`Wypisano ${name}. ${firstReserve} awansował(a) do składu głównego! 🏐`);
-                } else {
-                    showToast(`Wypisano: ${name}`);
+                return state;
+            }, (success) => {
+                isMatchActionPending = false;
+                if (success) {
+                    renderCurrentView();
+                    if (wasInMainSquad && firstReserve && firstReserve !== name) {
+                        showToast(`Wypisano ${name}. ${firstReserve} awansował(a) do składu głównego! 🏐`);
+                    } else {
+                        showToast(`Wypisano: ${name}`);
+                    }
                 }
-            } finally {
-                setTimeout(() => {
-                    isMatchActionPending = false;
-                }, 350);
-            }
+            });
         }
 
         function clearCurrentMatchSquadWithAuth() {
@@ -5607,64 +5705,74 @@ function initFirebaseSync() {
             }
 
             isMatchActionPending = true;
-            try {
-                if (!match.votes) match.votes = {};
-                match.votes[voter] = nominee;
+            const targetMonth = info.monthName;
+            const targetMatchIndex = info.matchIndex;
+            let isNowCompleted = false;
+            let totalVotes = 0;
+            let attendeesCount = 0;
+
+            atomicStateTransaction((state) => {
+                const m = state.months?.[targetMonth]?.matches?.[targetMatchIndex];
+                if (!m) return false;
+                if (!m.votes || typeof m.votes !== 'object') m.votes = {};
+                m.votes[voter] = nominee;
 
                 if (femaleAttendees.length >= 2 && womenNominee) {
-                    if (!match.votesWomen) match.votesWomen = {};
-                    match.votesWomen[voter] = womenNominee;
+                    if (!m.votesWomen || typeof m.votesWomen !== 'object') m.votesWomen = {};
+                    m.votesWomen[voter] = womenNominee;
                 }
 
-                const totalVotes = Object.keys(match.votes).length;
-                const isNowCompleted = totalVotes >= attendees.length && attendees.length > 0;
+                const attendeesList = (m.attendees || []).slice(0, 14);
+                attendeesCount = attendeesList.length;
+                const validVotesCount = attendeesList.filter(p => Boolean(m.votes && m.votes[p])).length;
+                totalVotes = validVotesCount;
+                isNowCompleted = validVotesCount >= attendeesCount && attendeesCount > 0;
                 if (isNowCompleted) {
-                    match.mvpClosed = true;
+                    m.mvpClosed = true;
                 }
-
-                syncState();
-
-                if (typeof confetti === 'function') {
-                    confetti({
-                        particleCount: 90,
-                        spread: 70,
-                        origin: { y: 0.6 },
-                        colors: ['#f59e0b', '#ec4899', '#10b981', '#38bdf8']
-                    });
-                }
-
-                // Ekran sukcesu ("i nara haha")
-                const contentArea = document.getElementById('dedicatedMvpContentArea');
-                if (contentArea) {
-                    contentArea.innerHTML = `
-                        <div class="text-center py-6 space-y-4 animate-fade-in">
-                            <div class="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center text-3xl shadow-lg shadow-emerald-500/20">
-                                🎉
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-black text-white">Dziękujemy za oddanie głosu!</h3>
-                                <p class="text-xs text-slate-300 mt-1">Twój tajny głos został bezpiecznie zapisany w systemie 🔒</p>
-                            </div>
-                            <div class="p-3 bg-slate-950/80 rounded-2xl border border-slate-800 text-xs text-amber-300 font-medium">
-                                Oddano dotychczas <strong class="text-white font-bold">${totalVotes} / ${attendees.length}</strong> głosów uczestników meczu.
-                            </div>
-                            <p class="text-xs text-slate-400">Możesz teraz bezpiecznie zamknąć tę kartę 👋</p>
-                            <div class="pt-2">
-                                <button type="button" onclick="window.close()" class="w-full bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black py-3.5 rounded-2xl text-xs transition shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2">
-                                    <span>Zamknij kartę</span>
-                                    <span>👋</span>
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                }
-                renderIntegratedMvpCard();
-            } catch(e) {
-                console.error("Błąd podczas zapisu głosu MVP:", e);
-                alert("Wystąpił problem podczas zapisu głosu. Spróbuj ponownie.");
-            } finally {
+                return state;
+            }, (success) => {
                 isMatchActionPending = false;
-            }
+                if (success) {
+                    if (typeof confetti === 'function') {
+                        confetti({
+                            particleCount: 90,
+                            spread: 70,
+                            origin: { y: 0.6 },
+                            colors: ['#f59e0b', '#ec4899', '#10b981', '#38bdf8']
+                        });
+                    }
+
+                    // Ekran sukcesu ("i nara haha")
+                    const contentArea = document.getElementById('dedicatedMvpContentArea');
+                    if (contentArea) {
+                        contentArea.innerHTML = `
+                            <div class="text-center py-6 space-y-4 animate-fade-in">
+                                <div class="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center text-3xl shadow-lg shadow-emerald-500/20">
+                                    🎉
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-black text-white">Dziękujemy za oddanie głosu!</h3>
+                                    <p class="text-xs text-slate-300 mt-1">Twój tajny głos został bezpiecznie zapisany w systemie 🔒</p>
+                                </div>
+                                <div class="p-3 bg-slate-950/80 rounded-2xl border border-slate-800 text-xs text-amber-300 font-medium">
+                                    Oddano dotychczas <strong class="text-white font-bold">${totalVotes} / ${attendeesCount}</strong> głosów uczestników meczu.
+                                </div>
+                                <p class="text-xs text-slate-400">Możesz teraz bezpiecznie zamknąć tę kartę 👋</p>
+                                <div class="pt-2">
+                                    <button type="button" onclick="window.close()" class="w-full bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black py-3.5 rounded-2xl text-xs transition shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2">
+                                        <span>Zamknij kartę</span>
+                                        <span>👋</span>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    renderIntegratedMvpCard();
+                } else {
+                    alert("Wystąpił problem podczas zapisu głosu w chmurze. Spróbuj ponownie.");
+                }
+            });
         }
 
         function logoutCurrentPlayerForMvp() {
@@ -6247,54 +6355,61 @@ function initFirebaseSync() {
             }
 
             isMatchActionPending = true;
-            try {
-                if (!currentMatch.votes) currentMatch.votes = {};
-                currentMatch.votes[voter] = nominee;
+            const targetMonth = AppState.currentMonth;
+            const targetMatchIndex = AppState.currentMatchIndex;
+            let isNowCompleted = false;
+            let totalVotes = 0;
+            let attendeesCount = 0;
+
+            atomicStateTransaction((state) => {
+                const m = state.months?.[targetMonth]?.matches?.[targetMatchIndex];
+                if (!m) return false;
+                if (!m.votes || typeof m.votes !== 'object') m.votes = {};
+                m.votes[voter] = nominee;
 
                 if (femaleAttendees.length >= 2 && womenNominee) {
-                    if (!currentMatch.votesWomen) currentMatch.votesWomen = {};
-                    currentMatch.votesWomen[voter] = womenNominee;
+                    if (!m.votesWomen || typeof m.votesWomen !== 'object') m.votesWomen = {};
+                    m.votesWomen[voter] = womenNominee;
                 }
 
-                const validVotesCount = attendees.filter(p => Boolean(currentMatch.votes && currentMatch.votes[p])).length;
-                const isNowCompleted = validVotesCount >= attendees.length && attendees.length > 0;
-
+                const attendeesList = (m.attendees || []).slice(0, 14);
+                attendeesCount = attendeesList.length;
+                const validVotesCount = attendeesList.filter(p => Boolean(m.votes && m.votes[p])).length;
+                totalVotes = validVotesCount;
+                isNowCompleted = validVotesCount >= attendeesCount && attendeesCount > 0;
                 if (isNowCompleted) {
-                    currentMatch.mvpClosed = true;
-                    if (typeof confetti === 'function') {
-                        confetti({
-                            particleCount: 120,
-                            spread: 80,
-                            origin: { y: 0.6 },
-                            colors: ['#f59e0b', '#ec4899', '#10b981', '#38bdf8']
-                        });
-                    }
-                } else {
-                    if (typeof confetti === 'function') {
-                        confetti({
-                            particleCount: 40,
-                            spread: 50,
-                            origin: { y: 0.7 },
-                            colors: ['#10b981', '#ec4899']
-                        });
-                    }
+                    m.mvpClosed = true;
                 }
-
-                syncState();
-                renderIntegratedMvpCard();
-                renderMatchesTab();
-                renderProfileTab();
-
-                if (isNowCompleted) {
-                    showToast(`Wszyscy zagłosowali! Wyniki MVP zostały ujawnione! 🎉🏆`);
-                } else {
-                    showToast(`Głos zapisany tajnie! (${validVotesCount}/${attendees.length}) 🔒`);
+                return state;
+            }, (success) => {
+                isMatchActionPending = false;
+                if (success) {
+                    if (isNowCompleted) {
+                        if (typeof confetti === 'function') {
+                            confetti({
+                                particleCount: 120,
+                                spread: 80,
+                                origin: { y: 0.6 },
+                                colors: ['#f59e0b', '#ec4899', '#10b981', '#38bdf8']
+                            });
+                        }
+                        showToast(`Wszyscy zagłosowali! Wyniki MVP zostały ujawnione! 🎉🏆`);
+                    } else {
+                        if (typeof confetti === 'function') {
+                            confetti({
+                                particleCount: 40,
+                                spread: 50,
+                                origin: { y: 0.7 },
+                                colors: ['#10b981', '#ec4899']
+                            });
+                        }
+                        showToast(`Głos zapisany tajnie! (${totalVotes}/${attendeesCount}) 🔒`);
+                    }
+                    renderIntegratedMvpCard();
+                    renderMatchesTab();
+                    renderProfileTab();
                 }
-            } finally {
-                setTimeout(() => {
-                    isMatchActionPending = false;
-                }, 350);
-            }
+            });
         }
 
         function toggleMvpFinalizeWithAuth() {
@@ -8040,6 +8155,16 @@ function initFirebaseSync() {
             const container = document.getElementById('profileMainContainer');
             if (!container) return;
 
+            const existingGrid = document.getElementById('playerSkillsGrid');
+            if (existingGrid && existingGrid.scrollTop > 0) {
+                lastSkillsGridScrollTop = existingGrid.scrollTop;
+            }
+            const existingSearch = document.getElementById('playerSkillsSearch');
+            if (existingSearch && existingSearch.value) {
+                lastSkillsSearchQuery = existingSearch.value;
+            }
+            const savedWinY = window.scrollY || document.documentElement.scrollTop || 0;
+
             if (!loggedPlayer) {
                 // Widok logowania / rejestracji PIN-em
                 const sortedPlayers = [...AppState.all_players].sort((a, b) => a.localeCompare(b, 'pl'));
@@ -8401,7 +8526,7 @@ function initFirebaseSync() {
                             </div>
 
                             <div class="space-y-1.5">
-                                <input type="text" id="playerSkillsSearch" oninput="renderPlayerSkillsGrid()" placeholder="🔍 Szukaj gracza do oceny..." class="w-full bg-slate-900/90 border border-slate-800 focus:border-amber-400 text-xs text-slate-100 placeholder-slate-500 rounded-xl px-3 py-1.5 focus:outline-none transition">
+                                <input type="text" id="playerSkillsSearch" oninput="lastSkillsSearchQuery = this.value; renderPlayerSkillsGrid()" placeholder="🔍 Szukaj gracza do oceny..." class="w-full bg-slate-900/90 border border-slate-800 focus:border-amber-400 text-xs text-slate-100 placeholder-slate-500 rounded-xl px-3 py-1.5 focus:outline-none transition">
                                 <div class="flex items-center justify-between text-[9px] text-slate-400 px-2 py-1 bg-slate-900/40 rounded-lg border border-slate-800/50">
                                     <span class="text-slate-400 font-semibold">1★ Start</span>
                                     <span class="text-slate-600">•</span>
@@ -8415,7 +8540,7 @@ function initFirebaseSync() {
                                 </div>
                             </div>
 
-                            <div id="playerSkillsGrid" class="space-y-1.5 max-h-72 overflow-y-auto pr-1">
+                            <div id="playerSkillsGrid" onscroll="if (this.scrollTop > 0) lastSkillsGridScrollTop = this.scrollTop;" class="space-y-1.5 max-h-72 overflow-y-auto pr-1">
                                 <!-- Populated dynamically -->
                             </div>
                         </div>
@@ -8481,6 +8606,13 @@ function initFirebaseSync() {
             if (isOrganizer) {
                 renderPlayerSkillsGrid();
                 renderPlayerDirectoryTags();
+            }
+
+            if (savedWinY > 0) {
+                window.scrollTo({ top: savedWinY, behavior: 'instant' });
+                requestAnimationFrame(() => {
+                    window.scrollTo({ top: savedWinY, behavior: 'instant' });
+                });
             }
         }
 
@@ -8962,15 +9094,24 @@ function initFirebaseSync() {
         }
 
         // ================= DISCREET SKILL RATINGS (ADMIN ONLY) =================
+        let lastSkillsGridScrollTop = 0;
+        let lastSkillsSearchQuery = '';
+        let lastSkillUpdateTime = 0;
+
         function renderPlayerSkillsGrid() {
             const grid = document.getElementById('playerSkillsGrid');
             if (!grid) return;
 
             if (!AppState.player_skills) AppState.player_skills = {};
 
-            const prevScrollTop = grid.scrollTop;
+            if (grid.scrollTop > 0) {
+                lastSkillsGridScrollTop = grid.scrollTop;
+            }
             const searchInput = document.getElementById('playerSkillsSearch');
-            const query = (searchInput?.value || '').trim().toLowerCase();
+            if (searchInput && lastSkillsSearchQuery && !searchInput.value) {
+                searchInput.value = lastSkillsSearchQuery;
+            }
+            const query = (searchInput?.value || lastSkillsSearchQuery || '').trim().toLowerCase();
 
             let sortedPlayers = [...AppState.all_players].sort((a, b) => a.localeCompare(b, 'pl'));
             if (query) {
@@ -9004,7 +9145,7 @@ function initFirebaseSync() {
                         <button type="button" 
                                 onclick="updatePlayerSkill(${toInlineArgument(p)}, ${i})" 
                                 aria-label="Ustaw ocenę ${i} dla ${escapeHtml(p)}" 
-                                class="p-1 -m-0.5 active:scale-125 transition transform focus:outline-none">
+                                class="p-1 -m-0.5 active:scale-125 transition transform focus:outline-none cursor-pointer">
                             <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5 ${starColor}" viewBox="0 0 24 24">
                                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                             </svg>
@@ -9013,7 +9154,7 @@ function initFirebaseSync() {
                 }
 
                 return `
-                    <div class="bg-slate-900/60 hover:bg-slate-900/90 border border-slate-800/80 px-2.5 py-1.5 rounded-xl flex items-center justify-between gap-2 text-xs transition">
+                    <div data-skill-player="${escapeHtml(p)}" class="bg-slate-900/60 hover:bg-slate-900/90 border border-slate-800/80 px-2.5 py-1.5 rounded-xl flex items-center justify-between gap-2 text-xs transition">
                         <div class="flex items-center gap-2 min-w-0 flex-1">
                             ${getPlayerAvatarHtml(p, 'xs')}
                             <div class="min-w-0">
@@ -9028,7 +9169,7 @@ function initFirebaseSync() {
                             <div class="flex items-center gap-0.5 bg-slate-950/90 px-1.5 py-1 rounded-lg border border-slate-800/80">
                                 ${starsHtml}
                             </div>
-                            <span class="text-[9.5px] font-black px-1.5 py-0.5 rounded border min-w-[44px] text-center ${lvl.badgeClass}">
+                            <span class="skill-level-badge text-[9.5px] font-black px-1.5 py-0.5 rounded border min-w-[44px] text-center ${lvl.badgeClass}">
                                 ${lvl.label}
                             </span>
                         </div>
@@ -9036,17 +9177,66 @@ function initFirebaseSync() {
                 `;
             }).join('');
 
-            grid.scrollTop = prevScrollTop;
+            const scrollTarget = lastSkillsGridScrollTop;
+            grid.scrollTop = scrollTarget;
+            requestAnimationFrame(() => {
+                if (grid) grid.scrollTop = scrollTarget;
+            });
+            setTimeout(() => {
+                if (grid) grid.scrollTop = scrollTarget;
+            }, 20);
         }
 
         function updatePlayerSkill(playerName, ratingVal) {
             if (!AppState.player_skills) AppState.player_skills = {};
             const newRating = parseInt(ratingVal, 10) || 3;
             AppState.player_skills[playerName] = newRating;
+
+            const grid = document.getElementById('playerSkillsGrid');
+            if (grid && grid.scrollTop > 0) {
+                lastSkillsGridScrollTop = grid.scrollTop;
+            }
+            const savedWinY = window.scrollY || document.documentElement.scrollTop || 0;
+
+            lastSkillUpdateTime = Date.now();
+
+            // Direct in-place DOM update so scroll never moves
+            let row = null;
+            if (grid) {
+                row = Array.from(grid.querySelectorAll('[data-skill-player]')).find(el => el.getAttribute('data-skill-player') === playerName);
+            }
+            if (row) {
+                const levelConfig = {
+                    1: { label: 'Start', badgeClass: 'bg-slate-800 text-slate-400 border-slate-700' },
+                    2: { label: 'Solidny', badgeClass: 'bg-slate-800 text-slate-300 border-slate-700' },
+                    3: { label: 'Średni', badgeClass: 'bg-blue-500/15 text-blue-300 border-blue-500/30' },
+                    4: { label: 'Lider', badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
+                    5: { label: 'PRO', badgeClass: 'bg-amber-400 text-slate-950 font-black border-amber-400' }
+                };
+                const lvl = levelConfig[newRating] || levelConfig[3];
+                const badgeEl = row.querySelector('.skill-level-badge');
+                if (badgeEl) {
+                    badgeEl.className = `skill-level-badge text-[9.5px] font-black px-1.5 py-0.5 rounded border min-w-[44px] text-center ${lvl.badgeClass}`;
+                    badgeEl.innerText = lvl.label;
+                }
+                const starSvgs = row.querySelectorAll('button[onclick*="updatePlayerSkill"] svg');
+                starSvgs.forEach((svg, idx) => {
+                    const starNum = idx + 1;
+                    const isFilled = (starNum <= newRating);
+                    svg.setAttribute('class', `w-4 h-4 sm:w-4.5 sm:h-4.5 ${isFilled ? 'text-amber-400 fill-amber-400 drop-shadow-[0_0_4px_rgba(251,191,36,0.4)]' : 'text-slate-700 fill-slate-800/80 hover:text-slate-500'}`);
+                });
+            } else {
+                renderPlayerSkillsGrid();
+            }
+
             syncState();
-            renderPlayerSkillsGrid();
+
             const levelNames = { 1: 'Start', 2: 'Solidny', 3: 'Średni', 4: 'Lider', 5: 'PRO' };
             showToast(`${playerName}: ${newRating} ⭐ (${levelNames[newRating] || ''})`);
+
+            if (savedWinY > 0) {
+                window.scrollTo({ top: savedWinY, behavior: 'instant' });
+            }
         }
 
         // ================= DIRECTORY MANAGEMENT =================
