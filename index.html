@@ -57,6 +57,1105 @@
         }
     </script>
     <style>
+/* ==========================================================================
+           SYSTEM 4 MOTYWÓW + KLASYK (KOMPLEKSOWY SILNIK CSS Z PEŁNYM KONTRASTEM)
+           ========================================================================== */
+
+        /* --------------------------------------------------------------------------
+           1. HAALAND BŁĘKIT CIEMNY (Haaland Night)
+           -------------------------------------------------------------------------- */
+        [data-theme="haaland-dark"] body,
+        body[data-theme="haaland-dark"] {
+            background-color: #0c1322 !important;
+            color: #f8fafc !important;
+        }
+        [data-theme="haaland-dark"] header,
+        [data-theme="haaland-dark"] nav {
+            background-color: rgba(12, 19, 34, 0.95) !important;
+            border-color: rgba(56, 189, 248, 0.25) !important;
+        }
+        [data-theme="haaland-dark"] [class*="bg-slate-950"] {
+            background-color: #0c1322 !important;
+        }
+        [data-theme="haaland-dark"] [class*="bg-slate-900"] {
+            background-color: #151f33 !important;
+        }
+        [data-theme="haaland-dark"] [class*="bg-slate-850"] {
+            background-color: #1a2740 !important;
+        }
+        [data-theme="haaland-dark"] [class*="bg-slate-800"] {
+            background-color: #223354 !important;
+        }
+        [data-theme="haaland-dark"] [class*="border-slate-800"],
+        [data-theme="haaland-dark"] [class*="border-slate-850"] {
+            border-color: rgba(56, 189, 248, 0.22) !important;
+        }
+        [data-theme="haaland-dark"] [class*="border-slate-700"] {
+            border-color: rgba(56, 189, 248, 0.35) !important;
+        }
+        /* Akcenty i przyciski akcji Haaland Dark (Lodowy błękit & kobalt) */
+        [data-theme="haaland-dark"] .bg-emerald-500,
+        [data-theme="haaland-dark"] .bg-emerald-600,
+        [data-theme="haaland-dark"] [class*="from-emerald-"],
+        [data-theme="haaland-dark"] [class*="from-teal-"],
+        [data-theme="haaland-dark"] #matchSubtabSquadBtn.bg-gradient-to-r {
+            background: linear-gradient(135deg, #e0f2fe 0%, #38bdf8 50%, #0284c7 100%) !important;
+            background-image: linear-gradient(135deg, #e0f2fe 0%, #38bdf8 50%, #0284c7 100%) !important;
+            color: #0c1322 !important;
+            border-color: #38bdf8 !important;
+        }
+        [data-theme="haaland-dark"] .bg-indigo-500,
+        [data-theme="haaland-dark"] .bg-indigo-600 {
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%) !important;
+            color: #0c1322 !important;
+        }
+        [data-theme="haaland-dark"] [class*="to-teal-"],
+        [data-theme="haaland-dark"] [class*="to-emerald-"] {
+            --tw-gradient-to: #0284c7 !important;
+        }
+        [data-theme="haaland-dark"] .hover\:bg-emerald-400:hover,
+        [data-theme="haaland-dark"] .hover\:bg-emerald-500:hover {
+            filter: brightness(1.1) !important;
+        }
+        [data-theme="haaland-dark"] [class*="bg-emerald-400"] {
+            background-color: #38bdf8 !important;
+        }
+        [data-theme="haaland-dark"] [class*="text-emerald-"],
+        [data-theme="haaland-dark"] [class*="text-teal-"],
+        [data-theme="haaland-dark"] [class*="text-indigo-400"],
+        [data-theme="haaland-dark"] [class*="text-indigo-300"] {
+            color: #38bdf8 !important;
+        }
+        [data-theme="haaland-dark"] [class*="border-emerald-"],
+        [data-theme="haaland-dark"] [class*="border-teal-"],
+        [data-theme="haaland-dark"] [class*="border-indigo-"] {
+            border-color: rgba(56, 189, 248, 0.45) !important;
+        }
+        [data-theme="haaland-dark"] [class*="bg-emerald-500/"],
+        [data-theme="haaland-dark"] [class*="bg-emerald-950"],
+        [data-theme="haaland-dark"] [class*="bg-indigo-950"],
+        [data-theme="haaland-dark"] [class*="bg-indigo-500/"] {
+            background-color: rgba(56, 189, 248, 0.16) !important;
+            color: #38bdf8 !important;
+            border-color: rgba(56, 189, 248, 0.35) !important;
+        }
+        [data-theme="haaland-dark"] [class*="ring-emerald-"] {
+            --tw-ring-color: #38bdf8 !important;
+            box-shadow: 0 0 0 2px #38bdf8 !important;
+        }
+        [data-theme="haaland-dark"] [class*="shadow-emerald-"],
+        [data-theme="haaland-dark"] [class*="shadow-indigo-"] {
+            box-shadow: 0 0 22px rgba(56, 189, 248, 0.4) !important;
+        }
+        [data-theme="haaland-dark"] .focus\:border-emerald-500:focus {
+            border-color: #38bdf8 !important;
+        }
+        [data-theme="haaland-dark"] .tab-btn.tab-active {
+            background: rgba(56, 189, 248, 0.18) !important;
+            color: #38bdf8 !important;
+            box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.45) !important;
+        }
+
+        /* --------------------------------------------------------------------------
+           2. HAALAND BŁĘKIT JASNY (Haaland Day - Arktyczna Biel, Błękit & Pełny Kontrast)
+           -------------------------------------------------------------------------- */
+        [data-theme="haaland-light"] body,
+        body[data-theme="haaland-light"] {
+            background-color: #f0f9ff !important;
+            color: #0f172a !important;
+        }
+
+        /* Modal backdrops (muszą pozostać półprzezroczyste i przyciemniające) */
+        [data-theme="haaland-light"] .fixed.inset-0,
+        [data-theme="haaland-light"] [role="dialog"].fixed {
+            background-color: rgba(15, 23, 42, 0.65) !important;
+            box-shadow: none !important;
+        }
+
+        /* Wyłączenie ciemnych gradientów Tailwind na wszystkich kontenerach i kartach */
+        [data-theme="haaland-light"] div[class*="from-slate-"],
+        [data-theme="haaland-light"] section[class*="from-slate-"],
+        [data-theme="haaland-light"] [class*="bg-gradient-to"]:not(button):not(.tab-active):not([class*="from-amber"]):not([class*="from-emerald"]):not([class*="from-indigo"]) {
+            background-image: none !important;
+        }
+
+        /* Główne karty, nagłówek, dolna nawigacja i modale stają się czysto białe (#ffffff) */
+        [data-theme="haaland-light"] header,
+        [data-theme="haaland-light"] nav,
+        [data-theme="haaland-light"] [class*="bg-slate-900"],
+        [data-theme="haaland-light"] div[class*="from-slate-"]:not(button),
+        [data-theme="haaland-light"] section[class*="from-slate-"],
+        [data-theme="haaland-light"] [role="dialog"] > div,
+        [data-theme="haaland-light"] [class*="bg-slate-950"]:not(.tab-active):not([class*="bg-emerald"]):not(.fixed):not([role="dialog"]) {
+            background-color: #ffffff !important;
+            border-color: #bae6fd !important;
+            box-shadow: 0 4px 20px -2px rgba(14, 165, 233, 0.08) !important;
+        }
+
+        /* Wewnętrzne boksy, kafelki informacyjne i kapsułki (subtelne podbicie kontrastu #f8fafc) */
+        [data-theme="haaland-light"] [class*="bg-slate-900"] [class*="bg-slate-950"],
+        [data-theme="haaland-light"] div[class*="from-slate-"] [class*="bg-slate-950"],
+        [data-theme="haaland-light"] [class*="bg-slate-850"],
+        [data-theme="haaland-light"] [class*="bg-slate-800"] {
+            background-color: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+        }
+
+        /* Kontrolki formularzy (select, input, textarea) */
+        [data-theme="haaland-light"] input:not([type="checkbox"]):not([type="radio"]),
+        [data-theme="haaland-light"] select,
+        [data-theme="haaland-light"] textarea {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            border-color: #cbd5e1 !important;
+        }
+        [data-theme="haaland-light"] select option {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+        }
+
+        /* Przyciski pomocnicze (np. Poprzedni, Następny, Pokaż archiwalne, Gotowe) */
+        [data-theme="haaland-light"] button[class*="bg-slate-"]:not(.tab-active),
+        [data-theme="haaland-light"] button[class*="bg-slate-950"]:not(.tab-active) {
+            background-color: #f8fafc !important;
+            color: #0f172a !important;
+            border-color: #cbd5e1 !important;
+        }
+        [data-theme="haaland-light"] button[class*="bg-slate-"]:not(.tab-active):hover,
+        [data-theme="haaland-light"] button[class*="bg-slate-950"]:not(.tab-active):hover {
+            background-color: #f1f5f9 !important;
+            color: #0284c7 !important;
+        }
+
+        /* Wszystkie obramowania kart i linii podziału */
+        [data-theme="haaland-light"] [class*="border-slate-800"],
+        [data-theme="haaland-light"] [class*="border-slate-700"],
+        [data-theme="haaland-light"] [class*="border-slate-850"],
+        [data-theme="haaland-light"] [class*="divide-slate-800"] > * {
+            border-color: #e2e8f0 !important;
+        }
+
+        /* Wyrazisty, ciemny tekst o nienagannym kontraście */
+        [data-theme="haaland-light"] .text-white,
+        [data-theme="haaland-light"] [class*="text-slate-100"],
+        [data-theme="haaland-light"] [class*="text-slate-200"],
+        [data-theme="haaland-light"] h1,
+        [data-theme="haaland-light"] h2,
+        [data-theme="haaland-light"] h3,
+        [data-theme="haaland-light"] h4 {
+            color: #0f172a !important;
+        }
+        [data-theme="haaland-light"] [class*="text-slate-300"],
+        [data-theme="haaland-light"] [class*="text-slate-400"] {
+            color: #334155 !important;
+        }
+        [data-theme="haaland-light"] [class*="text-slate-500"] {
+            color: #64748b !important;
+        }
+        [data-theme="haaland-light"] [class*="text-slate-600"] {
+            color: #94a3b8 !important;
+        }
+
+        /* Kolory akcentów Haaland Light (Świeży błękit oceaniczny) */
+        [data-theme="haaland-light"] .bg-emerald-500,
+        [data-theme="haaland-light"] .bg-emerald-600,
+        [data-theme="haaland-light"] [class*="from-emerald-"],
+        [data-theme="haaland-light"] [class*="from-teal-"],
+        [data-theme="haaland-light"] #matchSubtabSquadBtn.bg-gradient-to-r {
+            background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%) !important;
+            background-image: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%) !important;
+            color: #ffffff !important;
+            border-color: #0284c7 !important;
+        }
+        [data-theme="haaland-light"] .bg-indigo-500,
+        [data-theme="haaland-light"] .bg-indigo-600 {
+            background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%) !important;
+            color: #ffffff !important;
+        }
+        [data-theme="haaland-light"] [class*="to-teal-"],
+        [data-theme="haaland-light"] [class*="to-emerald-"] {
+            --tw-gradient-to: #0ea5e9 !important;
+        }
+        [data-theme="haaland-light"] [class*="bg-emerald-400"] {
+            background-color: #0284c7 !important;
+        }
+        [data-theme="haaland-light"] [class*="text-emerald-"],
+        [data-theme="haaland-light"] [class*="text-teal-"],
+        [data-theme="haaland-light"] [class*="text-indigo-400"],
+        [data-theme="haaland-light"] [class*="text-indigo-300"] {
+            color: #0284c7 !important;
+        }
+        [data-theme="haaland-light"] [class*="border-emerald-"],
+        [data-theme="haaland-light"] [class*="border-teal-"],
+        [data-theme="haaland-light"] [class*="border-indigo-"] {
+            border-color: #bae6fd !important;
+        }
+        [data-theme="haaland-light"] [class*="bg-emerald-500/"],
+        [data-theme="haaland-light"] [class*="bg-emerald-950"],
+        [data-theme="haaland-light"] [class*="bg-indigo-950"],
+        [data-theme="haaland-light"] [class*="bg-indigo-500/"] {
+            background-color: #e0f2fe !important;
+            color: #0284c7 !important;
+            border-color: #bae6fd !important;
+        }
+        [data-theme="haaland-light"] [class*="ring-emerald-"] {
+            --tw-ring-color: #0284c7 !important;
+            box-shadow: 0 0 0 2px #0284c7 !important;
+        }
+        [data-theme="haaland-light"] [class*="shadow-emerald-"],
+        [data-theme="haaland-light"] [class*="shadow-indigo-"] {
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25) !important;
+        }
+        [data-theme="haaland-light"] .focus\:border-emerald-500:focus {
+            border-color: #0284c7 !important;
+        }
+
+        /* Pasek nawigacji dolnej */
+        [data-theme="haaland-light"] .tab-btn.tab-active {
+            background: rgba(2, 132, 199, 0.12) !important;
+            color: #0284c7 !important;
+            box-shadow: inset 0 0 0 1px rgba(2, 132, 199, 0.35) !important;
+        }
+        [data-theme="haaland-light"] .tab-btn.tab-active .tab-text {
+            color: #0f172a !important;
+        }
+        [data-theme="haaland-light"] .tab-btn:not(.tab-active) {
+            color: #64748b !important;
+        }
+
+        /* Kapsułki i badge stanów w Haaland Light */
+        [data-theme="haaland-light"] [class*="bg-sky-950"] {
+            background-color: #e0f2fe !important;
+            color: #0369a1 !important;
+            border-color: #bae6fd !important;
+        }
+        [data-theme="haaland-light"] [class*="bg-amber-950"],
+        [data-theme="haaland-light"] [class*="bg-amber-500/"] {
+            background-color: #fef3c7 !important;
+            color: #b45309 !important;
+            border-color: #fde68a !important;
+        }
+        [data-theme="haaland-light"] [class*="bg-rose-950"],
+        [data-theme="haaland-light"] [class*="bg-rose-500/"] {
+            background-color: #ffe4e6 !important;
+            color: #be123c !important;
+            border-color: #fecdd3 !important;
+        }
+        [data-theme="haaland-light"] [class*="bg-indigo-950"] {
+            background-color: #e0e7ff !important;
+            color: #4338ca !important;
+            border-color: #c7d2fe !important;
+        }
+        [data-theme="haaland-light"] .text-amber-300,
+        [data-theme="haaland-light"] .text-amber-400 {
+            color: #b45309 !important;
+        }
+        [data-theme="haaland-light"] .text-sky-400 {
+            color: #0284c7 !important;
+        }
+        [data-theme="haaland-light"] .text-rose-400 {
+            color: #be123c !important;
+        }
+        [data-theme="haaland-light"] .text-indigo-400 {
+            color: #4338ca !important;
+        }
+
+        /* Tabela Hall of Fame w Haaland Light */
+        [data-theme="haaland-light"] table thead {
+            background-color: #f1f5f9 !important;
+            color: #475569 !important;
+        }
+        [data-theme="haaland-light"] table tbody {
+            background-color: #ffffff !important;
+        }
+        [data-theme="haaland-light"] table tbody tr:hover {
+            background-color: #f8fafc !important;
+        }
+
+        /* --------------------------------------------------------------------------
+           3. MERCURIAL RÓŻ CIEMNY (Mercurial Night)
+           -------------------------------------------------------------------------- */
+        [data-theme="mercurial-dark"] body,
+        body[data-theme="mercurial-dark"] {
+            background-color: #08080c !important;
+            color: #f8fafc !important;
+        }
+        [data-theme="mercurial-dark"] header,
+        [data-theme="mercurial-dark"] nav {
+            background-color: rgba(12, 13, 18, 0.95) !important;
+            border-color: rgba(255, 23, 131, 0.25) !important;
+        }
+        [data-theme="mercurial-dark"] [class*="bg-slate-950"] {
+            background-color: #08080c !important;
+        }
+        [data-theme="mercurial-dark"] [class*="bg-slate-900"] {
+            background-color: #111218 !important;
+        }
+        [data-theme="mercurial-dark"] [class*="bg-slate-850"] {
+            background-color: #171821 !important;
+        }
+        [data-theme="mercurial-dark"] [class*="bg-slate-800"] {
+            background-color: #21222e !important;
+        }
+        [data-theme="mercurial-dark"] [class*="border-slate-800"],
+        [data-theme="mercurial-dark"] [class*="border-slate-850"] {
+            border-color: rgba(255, 23, 131, 0.22) !important;
+        }
+        [data-theme="mercurial-dark"] [class*="border-slate-700"] {
+            border-color: rgba(255, 23, 131, 0.35) !important;
+        }
+        /* Akcenty i przyciski akcji Mercurial Dark (Neonowy Pink Blast) */
+        [data-theme="mercurial-dark"] .bg-emerald-500,
+        [data-theme="mercurial-dark"] .bg-emerald-600,
+        [data-theme="mercurial-dark"] [class*="from-emerald-"],
+        [data-theme="mercurial-dark"] [class*="from-teal-"],
+        [data-theme="mercurial-dark"] #matchSubtabSquadBtn.bg-gradient-to-r {
+            background: linear-gradient(135deg, #ff1783 0%, #ff4b9b 55%, #ffffff 130%) !important;
+            background-image: linear-gradient(135deg, #ff1783 0%, #ff4b9b 55%, #ffffff 130%) !important;
+            color: #08080c !important;
+            border-color: #ff1783 !important;
+        }
+        [data-theme="mercurial-dark"] .bg-indigo-500,
+        [data-theme="mercurial-dark"] .bg-indigo-600 {
+            background: linear-gradient(135deg, #ff1783 0%, #ff4b9b 100%) !important;
+            color: #08080c !important;
+        }
+        [data-theme="mercurial-dark"] [class*="to-teal-"],
+        [data-theme="mercurial-dark"] [class*="to-emerald-"] {
+            --tw-gradient-to: #ff4b9b !important;
+        }
+        [data-theme="mercurial-dark"] .hover\:bg-emerald-400:hover,
+        [data-theme="mercurial-dark"] .hover\:bg-emerald-500:hover {
+            filter: brightness(1.1) !important;
+        }
+        [data-theme="mercurial-dark"] [class*="bg-emerald-400"] {
+            background-color: #ff1783 !important;
+        }
+        [data-theme="mercurial-dark"] [class*="text-emerald-"],
+        [data-theme="mercurial-dark"] [class*="text-teal-"],
+        [data-theme="mercurial-dark"] [class*="text-indigo-400"],
+        [data-theme="mercurial-dark"] [class*="text-indigo-300"] {
+            color: #ff4b9b !important;
+        }
+        [data-theme="mercurial-dark"] [class*="border-emerald-"],
+        [data-theme="mercurial-dark"] [class*="border-teal-"],
+        [data-theme="mercurial-dark"] [class*="border-indigo-"] {
+            border-color: rgba(255, 23, 131, 0.45) !important;
+        }
+        [data-theme="mercurial-dark"] [class*="bg-emerald-500/"],
+        [data-theme="mercurial-dark"] [class*="bg-emerald-950"],
+        [data-theme="mercurial-dark"] [class*="bg-indigo-950"],
+        [data-theme="mercurial-dark"] [class*="bg-indigo-500/"] {
+            background-color: rgba(255, 23, 131, 0.16) !important;
+            color: #ff4b9b !important;
+            border-color: rgba(255, 23, 131, 0.35) !important;
+        }
+        [data-theme="mercurial-dark"] [class*="ring-emerald-"] {
+            --tw-ring-color: #ff1783 !important;
+            box-shadow: 0 0 0 2px #ff1783 !important;
+        }
+        [data-theme="mercurial-dark"] [class*="shadow-emerald-"],
+        [data-theme="mercurial-dark"] [class*="shadow-indigo-"] {
+            box-shadow: 0 0 25px rgba(255, 23, 131, 0.45) !important;
+        }
+        [data-theme="mercurial-dark"] .focus\:border-emerald-500:focus {
+            border-color: #ff1783 !important;
+        }
+        [data-theme="mercurial-dark"] .tab-btn.tab-active {
+            background: rgba(255, 23, 131, 0.18) !important;
+            color: #ff1783 !important;
+            box-shadow: inset 0 0 0 1px rgba(255, 23, 131, 0.45) !important;
+        }
+
+        /* --------------------------------------------------------------------------
+           4. MERCURIAL RÓŻ JASNY (Mercurial Day - Perłowa Biel, Róż & Pełny Kontrast)
+           -------------------------------------------------------------------------- */
+        [data-theme="mercurial-light"] body,
+        body[data-theme="mercurial-light"] {
+            background-color: #fff5f8 !important;
+            color: #18181b !important;
+        }
+
+        /* Modal backdrops (muszą pozostać półprzezroczyste i przyciemniające) */
+        [data-theme="mercurial-light"] .fixed.inset-0,
+        [data-theme="mercurial-light"] [role="dialog"].fixed {
+            background-color: rgba(15, 23, 42, 0.65) !important;
+            box-shadow: none !important;
+        }
+
+        /* Wyłączenie ciemnych gradientów Tailwind na wszystkich kontenerach i kartach */
+        [data-theme="mercurial-light"] div[class*="from-slate-"],
+        [data-theme="mercurial-light"] section[class*="from-slate-"],
+        [data-theme="mercurial-light"] [class*="bg-gradient-to"]:not(button):not(.tab-active):not([class*="from-amber"]):not([class*="from-emerald"]):not([class*="from-indigo"]) {
+            background-image: none !important;
+        }
+
+        /* Główne karty, nagłówek, dolna nawigacja i modale stają się czysto białe (#ffffff) */
+        [data-theme="mercurial-light"] header,
+        [data-theme="mercurial-light"] nav,
+        [data-theme="mercurial-light"] [class*="bg-slate-900"],
+        [data-theme="mercurial-light"] div[class*="from-slate-"]:not(button),
+        [data-theme="mercurial-light"] section[class*="from-slate-"],
+        [data-theme="mercurial-light"] [role="dialog"] > div,
+        [data-theme="mercurial-light"] [class*="bg-slate-950"]:not(.tab-active):not([class*="bg-emerald"]):not(.fixed):not([role="dialog"]) {
+            background-color: #ffffff !important;
+            border-color: #fbcfe8 !important;
+            box-shadow: 0 4px 20px -2px rgba(225, 29, 72, 0.08) !important;
+        }
+
+        /* Wewnętrzne boksy, kafelki informacyjne i kapsułki (#fff1f5 z pudrową ramką) */
+        [data-theme="mercurial-light"] [class*="bg-slate-900"] [class*="bg-slate-950"],
+        [data-theme="mercurial-light"] div[class*="from-slate-"] [class*="bg-slate-950"],
+        [data-theme="mercurial-light"] [class*="bg-slate-850"],
+        [data-theme="mercurial-light"] [class*="bg-slate-800"] {
+            background-color: #fff1f5 !important;
+            border-color: #fce7f3 !important;
+        }
+
+        /* Kontrolki formularzy (select, input, textarea) */
+        [data-theme="mercurial-light"] input:not([type="checkbox"]):not([type="radio"]),
+        [data-theme="mercurial-light"] select,
+        [data-theme="mercurial-light"] textarea {
+            background-color: #ffffff !important;
+            color: #18181b !important;
+            border-color: #fbcfe8 !important;
+        }
+        [data-theme="mercurial-light"] select option {
+            background-color: #ffffff !important;
+            color: #18181b !important;
+        }
+
+        /* Przyciski pomocnicze */
+        [data-theme="mercurial-light"] button[class*="bg-slate-"]:not(.tab-active),
+        [data-theme="mercurial-light"] button[class*="bg-slate-950"]:not(.tab-active) {
+            background-color: #ffffff !important;
+            color: #18181b !important;
+            border-color: #fbcfe8 !important;
+        }
+        [data-theme="mercurial-light"] button[class*="bg-slate-"]:not(.tab-active):hover,
+        [data-theme="mercurial-light"] button[class*="bg-slate-950"]:not(.tab-active):hover {
+            background-color: #fff1f5 !important;
+            color: #e11d48 !important;
+        }
+
+        /* Obramowania */
+        [data-theme="mercurial-light"] [class*="border-slate-800"],
+        [data-theme="mercurial-light"] [class*="border-slate-700"],
+        [data-theme="mercurial-light"] [class*="border-slate-850"],
+        [data-theme="mercurial-light"] [class*="divide-slate-800"] > * {
+            border-color: #fce7f3 !important;
+        }
+
+        /* Ciemny, czytelny tekst */
+        [data-theme="mercurial-light"] .text-white,
+        [data-theme="mercurial-light"] [class*="text-slate-100"],
+        [data-theme="mercurial-light"] [class*="text-slate-200"],
+        [data-theme="mercurial-light"] h1,
+        [data-theme="mercurial-light"] h2,
+        [data-theme="mercurial-light"] h3,
+        [data-theme="mercurial-light"] h4 {
+            color: #18181b !important;
+        }
+        [data-theme="mercurial-light"] [class*="text-slate-300"],
+        [data-theme="mercurial-light"] [class*="text-slate-400"] {
+            color: #3f3f46 !important;
+        }
+        [data-theme="mercurial-light"] [class*="text-slate-500"] {
+            color: #71717a !important;
+        }
+        [data-theme="mercurial-light"] [class*="text-slate-600"] {
+            color: #a1a1aa !important;
+        }
+
+        /* Kolory akcentów Mercurial Light (Neonowy róż & malina) */
+        [data-theme="mercurial-light"] .bg-emerald-500,
+        [data-theme="mercurial-light"] .bg-emerald-600,
+        [data-theme="mercurial-light"] [class*="from-emerald-"],
+        [data-theme="mercurial-light"] [class*="from-teal-"],
+        [data-theme="mercurial-light"] #matchSubtabSquadBtn.bg-gradient-to-r {
+            background: linear-gradient(135deg, #e11d48 0%, #ff1783 100%) !important;
+            background-image: linear-gradient(135deg, #e11d48 0%, #ff1783 100%) !important;
+            color: #ffffff !important;
+            border-color: #e11d48 !important;
+        }
+        [data-theme="mercurial-light"] .bg-indigo-500,
+        [data-theme="mercurial-light"] .bg-indigo-600 {
+            background: linear-gradient(135deg, #e11d48 0%, #ff1783 100%) !important;
+            color: #ffffff !important;
+        }
+        [data-theme="mercurial-light"] [class*="to-teal-"],
+        [data-theme="mercurial-light"] [class*="to-emerald-"] {
+            --tw-gradient-to: #ff1783 !important;
+        }
+        [data-theme="mercurial-light"] [class*="bg-emerald-400"] {
+            background-color: #e11d48 !important;
+        }
+        [data-theme="mercurial-light"] [class*="text-emerald-"],
+        [data-theme="mercurial-light"] [class*="text-teal-"],
+        [data-theme="mercurial-light"] [class*="text-indigo-400"],
+        [data-theme="mercurial-light"] [class*="text-indigo-300"] {
+            color: #e11d48 !important;
+        }
+        [data-theme="mercurial-light"] [class*="border-emerald-"],
+        [data-theme="mercurial-light"] [class*="border-teal-"],
+        [data-theme="mercurial-light"] [class*="border-indigo-"] {
+            border-color: #fbcfe8 !important;
+        }
+        [data-theme="mercurial-light"] [class*="bg-emerald-500/"],
+        [data-theme="mercurial-light"] [class*="bg-emerald-950"],
+        [data-theme="mercurial-light"] [class*="bg-indigo-950"],
+        [data-theme="mercurial-light"] [class*="bg-indigo-500/"] {
+            background-color: #fce7f3 !important;
+            color: #e11d48 !important;
+            border-color: #fbcfe8 !important;
+        }
+        [data-theme="mercurial-light"] [class*="ring-emerald-"] {
+            --tw-ring-color: #e11d48 !important;
+            box-shadow: 0 0 0 2px #e11d48 !important;
+        }
+        [data-theme="mercurial-light"] [class*="shadow-emerald-"],
+        [data-theme="mercurial-light"] [class*="shadow-indigo-"] {
+            box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25) !important;
+        }
+        [data-theme="mercurial-light"] .focus\:border-emerald-500:focus {
+            border-color: #e11d48 !important;
+        }
+
+        /* Pasek nawigacji dolnej */
+        [data-theme="mercurial-light"] .tab-btn.tab-active {
+            background: rgba(225, 29, 72, 0.12) !important;
+            color: #e11d48 !important;
+            box-shadow: inset 0 0 0 1px rgba(225, 29, 72, 0.35) !important;
+        }
+        [data-theme="mercurial-light"] .tab-btn.tab-active .tab-text {
+            color: #18181b !important;
+        }
+        [data-theme="mercurial-light"] .tab-btn:not(.tab-active) {
+            color: #71717a !important;
+        }
+
+        /* Kapsułki i badge w Mercurial Light */
+        [data-theme="mercurial-light"] [class*="bg-sky-950"] {
+            background-color: #fce7f3 !important;
+            color: #be123c !important;
+            border-color: #fbcfe8 !important;
+        }
+        [data-theme="mercurial-light"] [class*="bg-amber-950"],
+        [data-theme="mercurial-light"] [class*="bg-amber-500/"] {
+            background-color: #fef3c7 !important;
+            color: #b45309 !important;
+            border-color: #fde68a !important;
+        }
+        [data-theme="mercurial-light"] [class*="bg-rose-950"],
+        [data-theme="mercurial-light"] [class*="bg-rose-500/"] {
+            background-color: #ffe4e6 !important;
+            color: #be123c !important;
+            border-color: #fecdd3 !important;
+        }
+        [data-theme="mercurial-light"] [class*="bg-indigo-950"] {
+            background-color: #fdf2f8 !important;
+            color: #be123c !important;
+            border-color: #fbcfe8 !important;
+        }
+        [data-theme="mercurial-light"] .text-amber-300,
+        [data-theme="mercurial-light"] .text-amber-400 {
+            color: #b45309 !important;
+        }
+        [data-theme="mercurial-light"] .text-sky-400 {
+            color: #e11d48 !important;
+        }
+        [data-theme="mercurial-light"] .text-rose-400 {
+            color: #be123c !important;
+        }
+        [data-theme="mercurial-light"] .text-indigo-400 {
+            color: #be123c !important;
+        }
+
+        /* Tabela Hall of Fame w Mercurial Light */
+        [data-theme="mercurial-light"] table thead {
+            background-color: #fff1f5 !important;
+            color: #71717a !important;
+        }
+        [data-theme="mercurial-light"] table tbody {
+            background-color: #ffffff !important;
+        }
+        [data-theme="mercurial-light"] table tbody tr:hover {
+            background-color: #fff1f5 !important;
+        }
+
+        /* --------------------------------------------------------------------------
+           5. KLASYCZNY ORYGINAŁ (Classic Dark)
+           -------------------------------------------------------------------------- */
+        [data-theme="classic"] body,
+        body[data-theme="classic"] {
+            background-color: #070a12 !important;
+            color: #f1f5f9 !important;
+        }
+        [data-theme="classic"] .tab-btn.tab-active {
+            background: rgba(16, 185, 129, 0.15) !important;
+            color: #10b981 !important;
+            box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.45) !important;
+        }
+
+        /* Zabezpieczenie czytelności licznika / plakietki aktywnego meczu na pasku dat */
+        #matchDatesContainer button[class*="from-emerald-"] span.font-mono,
+        #matchDatesContainer button.shadow-md span.font-mono {
+            background-color: rgba(0, 0, 0, 0.28) !important;
+            color: #ffffff !important;
+            border: none !important;
+        }
+
+        /* ================= KARTA MOJA SKŁADKA W KAŻDYM MOTYWIE ================= */
+        .billing-badge-paid {
+            background-color: #10b981 !important;
+            color: #022c22 !important;
+            border: none !important;
+        }
+        .billing-badge-unpaid {
+            background-color: #ef4444 !important;
+            color: #ffffff !important;
+            border: none !important;
+        }
+        .billing-blik-btn {
+            background: #020617 !important;
+            border: 1px solid rgba(16, 185, 129, 0.4) !important;
+            color: #e2e8f0 !important;
+        }
+        .billing-blik-btn:hover {
+            border-color: #10b981 !important;
+            background: #0b1329 !important;
+        }
+        .billing-blik-label,
+        .billing-blik-num {
+            color: #34d399 !important;
+        }
+        .billing-blik-badge {
+            background: #022c22 !important;
+            color: #6ee7b7 !important;
+            border: 1px solid rgba(6, 95, 70, 0.8) !important;
+        }
+        .billing-blik-btn:hover .billing-blik-badge {
+            background: #10b981 !important;
+            color: #022c22 !important;
+        }
+
+        /* 1. Haaland Dark */
+        [data-theme="haaland-dark"] .my-billing-hero-card,
+        [data-theme="haaland-dark"] .my-billing-profile-box {
+            background: linear-gradient(135deg, #0c1322 0%, #151f33 100%) !important;
+            border-color: rgba(56, 189, 248, 0.4) !important;
+            color: #f8fafc !important;
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.15) !important;
+        }
+        [data-theme="haaland-dark"] .billing-hero-title,
+        [data-theme="haaland-dark"] .billing-strong-text {
+            color: #ffffff !important;
+        }
+        [data-theme="haaland-dark"] .billing-hero-desc,
+        [data-theme="haaland-dark"] .billing-sub-label {
+            color: #94a3b8 !important;
+        }
+        [data-theme="haaland-dark"] .billing-accent-text {
+            color: #38bdf8 !important;
+        }
+        [data-theme="haaland-dark"] .billing-due-text {
+            color: #f43f5e !important;
+        }
+        [data-theme="haaland-dark"] .billing-transfer-box {
+            background-color: #080d18 !important;
+            color: #e0f2fe !important;
+            border-color: rgba(56, 189, 248, 0.3) !important;
+        }
+        [data-theme="haaland-dark"] .billing-link-copy {
+            color: #38bdf8 !important;
+        }
+        [data-theme="haaland-dark"] .billing-blik-btn {
+            background: #080d18 !important;
+            border: 1px solid rgba(56, 189, 248, 0.4) !important;
+            color: #f8fafc !important;
+        }
+        [data-theme="haaland-dark"] .billing-blik-btn:hover {
+            border-color: #38bdf8 !important;
+            background: #0f172a !important;
+        }
+        [data-theme="haaland-dark"] .billing-blik-label,
+        [data-theme="haaland-dark"] .billing-blik-num {
+            color: #38bdf8 !important;
+        }
+        [data-theme="haaland-dark"] .billing-blik-badge {
+            background: #082f49 !important;
+            color: #7dd3fc !important;
+            border: 1px solid rgba(14, 116, 144, 0.6) !important;
+        }
+        [data-theme="haaland-dark"] .billing-blik-btn:hover .billing-blik-badge {
+            background: #38bdf8 !important;
+            color: #080d18 !important;
+        }
+        [data-theme="haaland-dark"] .billing-copy-title-btn {
+            background: #1e293b !important;
+            color: #38bdf8 !important;
+            border-color: rgba(56, 189, 248, 0.3) !important;
+        }
+        [data-theme="haaland-dark"] .billing-details-box {
+            background-color: #080d18 !important;
+            border-color: rgba(56, 189, 248, 0.25) !important;
+        }
+
+        /* 2. Haaland Light */
+        [data-theme="haaland-light"] .my-billing-hero-card,
+        [data-theme="haaland-light"] .my-billing-profile-box {
+            background: #ffffff !important;
+            background-image: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%) !important;
+            border-color: #bae6fd !important;
+            color: #0f172a !important;
+            box-shadow: 0 4px 18px rgba(2, 132, 199, 0.08) !important;
+        }
+        [data-theme="haaland-light"] .billing-hero-title,
+        [data-theme="haaland-light"] .billing-strong-text {
+            color: #0f172a !important;
+            font-weight: 800 !important;
+        }
+        [data-theme="haaland-light"] .billing-hero-desc,
+        [data-theme="haaland-light"] .billing-sub-label {
+            color: #475569 !important;
+        }
+        [data-theme="haaland-light"] .billing-accent-text {
+            color: #0284c7 !important;
+        }
+        [data-theme="haaland-light"] .billing-due-text {
+            color: #e11d48 !important;
+        }
+        [data-theme="haaland-light"] .billing-transfer-box {
+            background-color: #f8fafc !important;
+            color: #0369a1 !important;
+            border-color: #cbd5e1 !important;
+        }
+        [data-theme="haaland-light"] .billing-link-copy {
+            color: #0284c7 !important;
+        }
+        [data-theme="haaland-light"] .billing-blik-btn {
+            background: #ffffff !important;
+            border: 1px solid rgba(2, 132, 199, 0.4) !important;
+            color: #0f172a !important;
+        }
+        [data-theme="haaland-light"] .billing-blik-btn:hover {
+            border-color: #0284c7 !important;
+            background: #f0f9ff !important;
+        }
+        [data-theme="haaland-light"] .billing-blik-label,
+        [data-theme="haaland-light"] .billing-blik-num {
+            color: #0284c7 !important;
+        }
+        [data-theme="haaland-light"] .billing-blik-badge {
+            background: #e0f2fe !important;
+            color: #0369a1 !important;
+            border: 1px solid #bae6fd !important;
+        }
+        [data-theme="haaland-light"] .billing-blik-btn:hover .billing-blik-badge {
+            background: #0284c7 !important;
+            color: #ffffff !important;
+        }
+        [data-theme="haaland-light"] .billing-copy-title-btn {
+            background: #e0f2fe !important;
+            color: #0369a1 !important;
+            border-color: #bae6fd !important;
+        }
+        [data-theme="haaland-light"] .billing-details-box {
+            background-color: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+        }
+
+        /* 3. Mercurial Dark */
+        [data-theme="mercurial-dark"] .my-billing-hero-card,
+        [data-theme="mercurial-dark"] .my-billing-profile-box {
+            background: linear-gradient(135deg, #08080c 0%, #161722 100%) !important;
+            border-color: rgba(255, 23, 131, 0.45) !important;
+            color: #f8fafc !important;
+            box-shadow: 0 4px 20px rgba(255, 23, 131, 0.15) !important;
+        }
+        [data-theme="mercurial-dark"] .billing-hero-title,
+        [data-theme="mercurial-dark"] .billing-strong-text {
+            color: #ffffff !important;
+        }
+        [data-theme="mercurial-dark"] .billing-hero-desc,
+        [data-theme="mercurial-dark"] .billing-sub-label {
+            color: #a1a1aa !important;
+        }
+        [data-theme="mercurial-dark"] .billing-accent-text {
+            color: #ff1783 !important;
+        }
+        [data-theme="mercurial-dark"] .billing-due-text {
+            color: #ff4b9b !important;
+        }
+        [data-theme="mercurial-dark"] .billing-transfer-box {
+            background-color: #050508 !important;
+            color: #ffe4e6 !important;
+            border-color: rgba(255, 23, 131, 0.3) !important;
+        }
+        [data-theme="mercurial-dark"] .billing-link-copy {
+            color: #ff1783 !important;
+        }
+        [data-theme="mercurial-dark"] .billing-blik-btn {
+            background: #0a0a0f !important;
+            border: 1px solid rgba(255, 23, 131, 0.45) !important;
+            color: #f8fafc !important;
+        }
+        [data-theme="mercurial-dark"] .billing-blik-btn:hover {
+            border-color: #ff1783 !important;
+            background: #14121d !important;
+        }
+        [data-theme="mercurial-dark"] .billing-blik-label,
+        [data-theme="mercurial-dark"] .billing-blik-num {
+            color: #ff1783 !important;
+        }
+        [data-theme="mercurial-dark"] .billing-blik-badge {
+            background: #500724 !important;
+            color: #fbcfe8 !important;
+            border: 1px solid rgba(157, 23, 77, 0.6) !important;
+        }
+        [data-theme="mercurial-dark"] .billing-blik-btn:hover .billing-blik-badge {
+            background: #ff1783 !important;
+            color: #0a0a0f !important;
+        }
+        [data-theme="mercurial-dark"] .billing-copy-title-btn {
+            background: #21222e !important;
+            color: #ff4b9b !important;
+            border-color: rgba(255, 23, 131, 0.3) !important;
+        }
+        [data-theme="mercurial-dark"] .billing-details-box {
+            background-color: #050508 !important;
+            border-color: rgba(255, 23, 131, 0.25) !important;
+        }
+
+        /* 4. Mercurial Light */
+        [data-theme="mercurial-light"] .my-billing-hero-card,
+        [data-theme="mercurial-light"] .my-billing-profile-box {
+            background: #ffffff !important;
+            background-image: linear-gradient(135deg, #fff5f8 0%, #ffffff 100%) !important;
+            border-color: #fbcfe8 !important;
+            color: #18181b !important;
+            box-shadow: 0 4px 18px rgba(225, 29, 72, 0.08) !important;
+        }
+        [data-theme="mercurial-light"] .billing-hero-title,
+        [data-theme="mercurial-light"] .billing-strong-text {
+            color: #18181b !important;
+            font-weight: 800 !important;
+        }
+        [data-theme="mercurial-light"] .billing-hero-desc,
+        [data-theme="mercurial-light"] .billing-sub-label {
+            color: #52525b !important;
+        }
+        [data-theme="mercurial-light"] .billing-accent-text {
+            color: #e11d48 !important;
+        }
+        [data-theme="mercurial-light"] .billing-due-text {
+            color: #be123c !important;
+        }
+        [data-theme="mercurial-light"] .billing-transfer-box {
+            background-color: #fff1f5 !important;
+            color: #be123c !important;
+            border-color: #fbcfe8 !important;
+        }
+        [data-theme="mercurial-light"] .billing-link-copy {
+            color: #e11d48 !important;
+        }
+        [data-theme="mercurial-light"] .billing-blik-btn {
+            background: #ffffff !important;
+            border: 1px solid rgba(225, 29, 72, 0.45) !important;
+            color: #18181b !important;
+        }
+        [data-theme="mercurial-light"] .billing-blik-btn:hover {
+            border-color: #e11d48 !important;
+            background: #fff5f8 !important;
+        }
+        [data-theme="mercurial-light"] .billing-blik-label,
+        [data-theme="mercurial-light"] .billing-blik-num {
+            color: #e11d48 !important;
+        }
+        [data-theme="mercurial-light"] .billing-blik-badge {
+            background: #ffe4e6 !important;
+            color: #9f1239 !important;
+            border: 1px solid #fecdd3 !important;
+        }
+        [data-theme="mercurial-light"] .billing-blik-btn:hover .billing-blik-badge {
+            background: #e11d48 !important;
+            color: #ffffff !important;
+        }
+        [data-theme="mercurial-light"] .billing-copy-title-btn {
+            background: #ffe4e6 !important;
+            color: #be123c !important;
+            border-color: #fecdd3 !important;
+        }
+        [data-theme="mercurial-light"] .billing-details-box {
+            background-color: #fff1f5 !important;
+            border-color: #fce7f3 !important;
+        }
+
+        /* 5. Classic Dark */
+        [data-theme="classic"] .my-billing-hero-card,
+        [data-theme="classic"] .my-billing-profile-box {
+            background: linear-gradient(135deg, #070a12 0%, #11192c 100%) !important;
+            border-color: rgba(16, 185, 129, 0.4) !important;
+            color: #f1f5f9 !important;
+        }
+        [data-theme="classic"] .billing-hero-title,
+        [data-theme="classic"] .billing-strong-text {
+            color: #ffffff !important;
+        }
+        [data-theme="classic"] .billing-hero-desc,
+        [data-theme="classic"] .billing-sub-label {
+            color: #94a3b8 !important;
+        }
+        [data-theme="classic"] .billing-accent-text {
+            color: #10b981 !important;
+        }
+        [data-theme="classic"] .billing-due-text {
+            color: #f43f5e !important;
+        }
+        [data-theme="classic"] .billing-transfer-box {
+            background-color: #05080f !important;
+            color: #6ee7b7 !important;
+            border-color: rgba(16, 185, 129, 0.3) !important;
+        }
+        [data-theme="classic"] .billing-link-copy {
+            color: #10b981 !important;
+        }
+        [data-theme="classic"] .billing-blik-btn {
+            background: #020617 !important;
+            border: 1px solid rgba(16, 185, 129, 0.4) !important;
+            color: #f1f5f9 !important;
+        }
+        [data-theme="classic"] .billing-blik-btn:hover {
+            border-color: #10b981 !important;
+            background: #0b1329 !important;
+        }
+        [data-theme="classic"] .billing-blik-label,
+        [data-theme="classic"] .billing-blik-num {
+            color: #34d399 !important;
+        }
+        [data-theme="classic"] .billing-blik-badge {
+            background: #022c22 !important;
+            color: #6ee7b7 !important;
+            border: 1px solid rgba(6, 95, 70, 0.8) !important;
+        }
+        [data-theme="classic"] .billing-blik-btn:hover .billing-blik-badge {
+            background: #10b981 !important;
+            color: #022c22 !important;
+        }
+        [data-theme="classic"] .billing-copy-title-btn {
+            background: #1e293b !important;
+            color: #6ee7b7 !important;
+            border-color: rgba(16, 185, 129, 0.3) !important;
+        }
+        [data-theme="classic"] .billing-details-box {
+            background-color: #05080f !important;
+            border-color: rgba(16, 185, 129, 0.25) !important;
+        }
+
+        html, body {
+            overscroll-behavior-y: contain;
+        }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            -webkit-tap-highlight-color: transparent; 
+            background-color: #070a12;
+            transition: background-color 0.25s ease-in-out;
+        }
+        
+        .ios-safe-header {
+            padding-top: max(14px, env(safe-area-inset-top, 14px));
+            padding-left: max(16px, env(safe-area-inset-left, 16px));
+            padding-right: max(16px, env(safe-area-inset-right, 16px));
+        }
+
+        .ios-safe-bottom {
+            padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));
+            padding-left: max(12px, env(safe-area-inset-left, 12px));
+            padding-right: max(12px, env(safe-area-inset-right, 12px));
+        }
+
+        .ios-safe-modal-overlay {
+            padding-top: max(24px, calc(env(safe-area-inset-top, 24px) + 16px));
+            padding-bottom: max(20px, calc(env(safe-area-inset-bottom, 20px) + 16px));
+            padding-left: max(14px, env(safe-area-inset-left, 14px));
+            padding-right: max(14px, env(safe-area-inset-right, 14px));
+        }
+
+        /* Eliminacja 300ms opóźnienia dotyku (tap delay) i zoomu dwuklikiem */
+        button, a, input, select, textarea, [role="button"], .cursor-pointer, .tab-btn {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Płynne przewijanie z zachowaniem granic i brakiem rubber-bandingu */
+        .overflow-y-auto, .overflow-x-auto {
+            overscroll-behavior-y: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Blokada wymuszonego zoomu w Safari (iOS) przy focusie na polach */
+        @media screen and (max-width: 768px) {
+            input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+            select,
+            textarea {
+                font-size: 16px !important;
+            }
+        }
+
+        /* Natychmiastowy dotykowy feedback (Zero Latency Feel) */
+        button:active:not(:disabled),
+        .tab-btn:active,
+        [role="button"]:active:not(:disabled) {
+            transform: scale(0.96);
+            opacity: 0.9;
+            transition: transform 0.05s ease, opacity 0.05s ease;
+        }
+
+        /* Ergonomiczne podświetlenie aktywnej zakładki (iOS / Material 3) */
+        .tab-btn {
+            border-radius: 14px;
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .tab-btn.tab-active {
+            background: rgba(16, 185, 129, 0.15) !important;
+            color: #34d399 !important;
+            box-shadow: inset 0 0 0 1px rgba(52, 211, 153, 0.35);
+        }
+        .tab-btn.tab-active .tab-icon {
+            transform: scale(1.15);
+        }
+        .tab-btn.tab-active .tab-text {
+            font-weight: 800;
+            color: #ffffff;
+        }
+        .tab-icon {
+            transition: transform 0.18s ease;
+        }
+
+        /* Dynamiczne jednostki viewportu dla okien modalnych */
+        .max-h-modal {
+            max-height: 90vh;
+            max-height: 90dvh;
+        }
+
+        ::-webkit-scrollbar { width: 3px; height: 3px; }
+        ::-webkit-scrollbar-track { background: #070a12; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type="number"] { -moz-appearance: textfield; }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.98) translateY(6px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeInScale 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Stylizowane Boisko Siatkarskie */
+        
         html, body {
             overscroll-behavior-y: contain;
         }
@@ -177,7 +1276,7 @@
             <!-- Row 2: User Greeting, Role Badge & Sync Status -->
             <div class="flex items-center justify-between gap-2 text-xs pt-1 border-t border-slate-800/50">
                 <div class="flex items-center gap-1.5 min-w-0">
-                    <div id="headerUserGreeting" class="text-[11px] text-emerald-400 font-medium truncate flex items-center gap-1"><span id="headerGreetingText">Witaj w Siatka-App! 🏐</span></div>
+                    <div id="headerUserGreeting" class="text-[11px] text-emerald-400 font-medium whitespace-normal break-words flex items-center gap-1"><span id="headerGreetingText">Witaj w Siatka-App! 🏐</span></div>
 
                     <span id="adminModeBadge" class="hidden text-[9px] font-bold px-2 py-0.5 rounded-full bg-amber-950/90 text-amber-300 border border-amber-800/80 items-center gap-1 shrink-0 shadow-sm shadow-amber-950/50">
                         👑 Organizator
@@ -436,7 +1535,7 @@
                 <div id="mvpAdminControlBar" class="hidden flex items-center justify-between bg-slate-950 p-2.5 rounded-2xl border border-amber-900/60 text-xs">
                     <div class="flex items-center gap-1.5 min-w-0">
                         <span class="text-sm">👑</span>
-                        <span id="mvpAdminStatusLabel" class="text-[11px] font-bold text-amber-300 truncate">Zarządzanie</span>
+                        <span id="mvpAdminStatusLabel" class="text-[11px] font-bold text-amber-300 whitespace-normal break-words">Zarządzanie</span>
                     </div>
                     <button type="button" id="mvpToggleFinalizeBtn" onclick="toggleMvpFinalizeWithAuth()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-3 py-1.5 rounded-xl text-[11px] transition shrink-0 active:scale-95">
                         Zakończ i odkryj wyniki
@@ -526,7 +1625,7 @@
                             <div class="flex items-center justify-between border-b border-slate-800 pb-2 gap-2">
                                 <div class="flex items-center gap-2 flex-1 min-w-0">
                                     <span class="w-3 h-3 rounded-full bg-slate-700 border border-slate-500 shrink-0"></span>
-                                    <span id="teamDarkNameDisplay" class="font-extrabold text-xs uppercase tracking-wider text-slate-200 truncate">Drużyna Ciemna</span>
+                                    <span id="teamDarkNameDisplay" class="font-extrabold text-xs uppercase tracking-wider text-slate-200 whitespace-normal break-words">Drużyna Ciemna</span>
                                     <button type="button" onclick="editTeamNamePrompt('dark')" title="Zmień nazwę drużyny" class="team-edit-name-btn text-slate-400 hover:text-indigo-400 text-xs shrink-0 hidden">✏️</button>
                                 </div>
                                 <span id="teamDarkCount" class="text-xs font-mono font-bold text-slate-400 shrink-0">0/6</span>
@@ -548,7 +1647,7 @@
                             <div class="flex items-center justify-between border-b border-slate-800 pb-2 gap-2">
                                 <div class="flex items-center gap-2 flex-1 min-w-0">
                                     <span class="w-3 h-3 rounded-full bg-white border border-slate-300 shrink-0"></span>
-                                    <span id="teamLightNameDisplay" class="font-extrabold text-xs uppercase tracking-wider text-slate-200 truncate">Drużyna Jasna</span>
+                                    <span id="teamLightNameDisplay" class="font-extrabold text-xs uppercase tracking-wider text-slate-200 whitespace-normal break-words">Drużyna Jasna</span>
                                     <button type="button" onclick="editTeamNamePrompt('light')" title="Zmień nazwę drużyny" class="team-edit-name-btn text-slate-400 hover:text-indigo-400 text-xs shrink-0 hidden">✏️</button>
                                 </div>
                                 <span id="teamLightCount" class="text-xs font-mono font-bold text-slate-400 shrink-0">0/6</span>
@@ -727,28 +1826,28 @@
                         <span class="text-2xl">👑</span>
                         <div>
                             <span class="text-[10px] text-slate-400 font-bold uppercase">Król MVP</span>
-                            <p id="recordKingMvp" class="font-extrabold text-white text-xs sm:text-sm truncate mt-0.5">-</p>
+                            <p id="recordKingMvp" class="font-extrabold text-white text-xs sm:text-sm whitespace-normal break-words mt-0.5">-</p>
                         </div>
                     </div>
                     <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-2xl flex flex-col justify-between space-y-1">
                         <span class="text-2xl">⚡</span>
                         <div>
                             <span class="text-[10px] text-slate-400 font-bold uppercase">Lider Frekwencji</span>
-                            <p id="recordIronAttendance" class="font-extrabold text-emerald-400 text-xs sm:text-sm truncate mt-0.5">-</p>
+                            <p id="recordIronAttendance" class="font-extrabold text-emerald-400 text-xs sm:text-sm whitespace-normal break-words mt-0.5">-</p>
                         </div>
                     </div>
                     <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-2xl flex flex-col justify-between space-y-1">
                         <span class="text-2xl">⚔️</span>
                         <div>
                             <span class="text-[10px] text-slate-400 font-bold uppercase">Zacięty Mecz</span>
-                            <p id="recordMostClashMatch" class="font-extrabold text-amber-200 text-xs sm:text-sm truncate mt-0.5">-</p>
+                            <p id="recordMostClashMatch" class="font-extrabold text-amber-200 text-xs sm:text-sm whitespace-normal break-words mt-0.5">-</p>
                         </div>
                     </div>
                     <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-2xl flex flex-col justify-between space-y-1">
                         <span class="text-2xl">💰</span>
                         <div>
                             <span class="text-[10px] text-slate-400 font-bold uppercase">Czyste Składki</span>
-                            <p id="recordCleanPayers" class="font-extrabold text-sky-400 text-xs sm:text-sm truncate mt-0.5">-</p>
+                            <p id="recordCleanPayers" class="font-extrabold text-sky-400 text-xs sm:text-sm whitespace-normal break-words mt-0.5">-</p>
                         </div>
                     </div>
                 </div>
@@ -761,30 +1860,44 @@
                         <span>🏅</span> Księga Osiągnięć & Trofeów
                     </span>
                     <span class="flex items-center gap-2 text-[10px] text-slate-400 font-bold">
-                        <span>10 odznak do zdobycia</span>
+                        <span>12 odznak do zdobycia</span>
                         <span class="transform group-open:rotate-180 transition-transform duration-200 text-amber-400 text-xs">▼</span>
                     </span>
                 </summary>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-xs pt-3 mt-3 border-t border-slate-800/80">
                     <div class="bg-slate-950 border border-slate-800/80 rounded-2xl p-2.5 flex items-start gap-2.5">
-                        <span class="text-xl shrink-0 mt-0.5">👑</span>
+                        <span class="text-xl shrink-0 mt-0.5">⭐</span>
                         <div class="min-w-0 flex-1">
                             <strong class="block text-white text-xs font-bold">MVP Star</strong>
                             <p class="text-[11px] text-slate-400 leading-tight mt-0.5">Min. 1x MVP meczu</p>
                         </div>
                     </div>
                     <div class="bg-slate-950 border border-slate-800/80 rounded-2xl p-2.5 flex items-start gap-2.5">
-                        <span class="text-xl shrink-0 mt-0.5">🌟</span>
+                        <span class="text-xl shrink-0 mt-0.5">👑</span>
                         <div class="min-w-0 flex-1">
                             <strong class="block text-amber-300 text-xs font-bold">Dominator MVP</strong>
                             <p class="text-[11px] text-slate-400 leading-tight mt-0.5">2+ wygrane MVP w sezonie</p>
                         </div>
                     </div>
-                    <div class="bg-slate-950 border border-slate-800/80 rounded-2xl p-2.5 flex items-start gap-2.5">
-                        <span class="text-xl shrink-0 mt-0.5">🎯</span>
+                    <div class="bg-slate-950 border border-pink-900/40 bg-pink-950/10 rounded-2xl p-2.5 flex items-start gap-2.5">
+                        <span class="text-xl shrink-0 mt-0.5">👸</span>
                         <div class="min-w-0 flex-1">
-                            <strong class="block text-sky-300 text-xs font-bold">Głos Ludu</strong>
+                            <strong class="block text-pink-300 text-xs font-bold">Królowa Parkietu</strong>
+                            <p class="text-[11px] text-pink-300/70 leading-tight mt-0.5">1x MVP Kobiet spotkania</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-950 border border-pink-800/50 bg-pink-950/20 rounded-2xl p-2.5 flex items-start gap-2.5">
+                        <span class="text-xl shrink-0 mt-0.5">💎</span>
+                        <div class="min-w-0 flex-1">
+                            <strong class="block text-pink-200 text-xs font-bold">Cesarzowa Siatki</strong>
+                            <p class="text-[11px] text-pink-300/70 leading-tight mt-0.5">2+ wygrane MVP Kobiet w sezonie</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-950 border border-slate-800/80 rounded-2xl p-2.5 flex items-start gap-2.5">
+                        <span class="text-xl shrink-0 mt-0.5">🔥</span>
+                        <div class="min-w-0 flex-1">
+                            <strong class="block text-amber-400 text-xs font-bold">Głos Ludu</strong>
                             <p class="text-[11px] text-slate-400 leading-tight mt-0.5">>50% głosów na MVP w meczu</p>
                         </div>
                     </div>
@@ -817,7 +1930,7 @@
                         </div>
                     </div>
                     <div class="bg-slate-950 border border-slate-800/80 rounded-2xl p-2.5 flex items-start gap-2.5">
-                        <span class="text-xl shrink-0 mt-0.5">💎</span>
+                        <span class="text-xl shrink-0 mt-0.5">🏅</span>
                         <div class="min-w-0 flex-1">
                             <strong class="block text-cyan-300 text-xs font-bold">Weteran Parkietu</strong>
                             <p class="text-[11px] text-slate-400 leading-tight mt-0.5">12+ rozegranych gier w sezonie</p>
@@ -899,8 +2012,10 @@
     </nav>
 
     <!-- Dedicated MVP Voting Modal / Isolated Terminal -->
-    <div id="dedicatedMvpModal" role="dialog" aria-modal="true" aria-labelledby="dedicatedMvpModalTitle" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-[100] flex items-center justify-center p-3 sm:p-4 hidden overflow-y-auto">
+    <div id="dedicatedMvpModal" role="dialog" aria-modal="true" aria-labelledby="dedicatedMvpModalTitle" onclick="if(event.target === this) exitDedicatedMvpToApp()" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-[100] flex items-center justify-center p-3 sm:p-4 hidden overflow-y-auto">
         <div class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-amber-500/30 rounded-3xl p-5 sm:p-6 max-w-sm w-full space-y-4 shadow-2xl animate-fade-in relative my-auto">
+            <!-- Close button for direct exit to main app -->
+            <button type="button" onclick="exitDedicatedMvpToApp(); window.close();" aria-label="Zamknij" class="absolute top-4 right-4 text-white hover:text-rose-400 font-black text-sm w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 active:scale-90 border border-slate-700 flex items-center justify-center transition cursor-pointer shadow-md z-10">✕</button>
             <!-- Header -->
             <div class="text-center space-y-1.5 pb-2 border-b border-slate-800/80">
                 <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-pink-500 to-amber-300 text-slate-950 text-2xl shadow-lg shadow-amber-500/20 mb-1">
@@ -1265,6 +2380,38 @@
         </div>
     </div>
 
+        <!-- Archived Match Detail Modal (Historia & SkĹ‚ady) -->
+    <div id="archivedMatchModal" role="dialog" aria-modal="true" aria-labelledby="archivedMatchModalTitle" onclick="if(event.target === this) closeArchivedMatchModal()" class="fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 hidden overflow-y-auto">
+        <div class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-4 sm:p-5 max-w-md w-full space-y-3.5 shadow-2xl max-h-[86dvh] overflow-y-auto animate-fade-in relative my-auto">
+            <!-- Header -->
+            <div class="sticky -top-4 -mx-4 px-4 sm:-top-5 sm:-mx-5 sm:px-5 pt-3 pb-3 bg-slate-900/98 backdrop-blur-md border-b border-slate-800/90 z-20 flex items-start justify-between gap-2 rounded-t-3xl shadow-sm">
+                <div class="min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                        <span class="text-[10px] font-black uppercase tracking-wider text-emerald-300 bg-emerald-950 border border-emerald-700/80 px-2.5 py-0.5 rounded-full shadow-sm">
+                            Raport z meczu
+                        </span>
+                        <span id="archivedMatchModalDateBadge" class="text-[11px] font-mono font-black text-slate-200 bg-slate-800 border border-slate-700 px-2.5 py-0.5 rounded-full shadow-sm">--</span>
+                    </div>
+                    <h3 id="archivedMatchModalTitle" class="text-base sm:text-lg font-black text-white mt-1 leading-snug whitespace-normal break-words">Podsumowanie spotkania</h3>
+                    <p id="archivedMatchModalSubtext" class="text-[11px] text-slate-400 mt-0.5 whitespace-normal break-words">SkĹ‚ady druĹĽyn, oficjalny wynik i nagrody MVP</p>
+                </div>
+                <button type="button" onclick="closeArchivedMatchModal()" aria-label="Zamknij" class="text-white hover:text-rose-400 font-black text-base w-9 h-9 rounded-2xl bg-slate-800 hover:bg-slate-700 active:scale-90 border border-slate-600/80 flex items-center justify-center transition shrink-0 shadow-lg cursor-pointer">âś•</button>
+            </div>
+
+            <!-- Dynamic Content Body -->
+            <div id="archivedMatchModalContent" class="space-y-3 text-xs">
+                <!-- Injected dynamically by openArchivedMatchModal() -->
+            </div>
+
+            <!-- Footer -->
+            <div class="pt-1 border-t border-slate-800/80">
+                <button type="button" onclick="closeArchivedMatchModal()" class="w-full bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-bold py-2.5 rounded-2xl text-xs transition shadow-sm">
+                    Zamknij raport âś•
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- ================= MODAL: USTAWIENIA GRUPY & FIREBASE ================= -->
     <div id="groupSettingsModal" role="dialog" aria-modal="true" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto hidden">
         <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 max-w-md w-full space-y-4 shadow-2xl animate-fade-in my-auto text-xs">
@@ -1334,16 +2481,16 @@
             </div>
             
             <div class="grid grid-cols-4 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-[10px]">
-                <button type="button" id="tplBtn-match" onclick="selectTemplate('match')" class="py-1.5 rounded-lg font-bold bg-emerald-500 text-slate-950 transition text-center truncate">
+                <button type="button" id="tplBtn-match" onclick="selectTemplate('match')" class="py-1.5 rounded-lg font-bold bg-emerald-500 text-slate-950 transition text-center whitespace-normal break-words">
                     Mecz (Pt)
                 </button>
-                <button type="button" id="tplBtn-monday" onclick="selectTemplate('monday')" class="py-1.5 rounded-lg font-bold text-slate-400 hover:text-white transition text-center truncate">
+                <button type="button" id="tplBtn-monday" onclick="selectTemplate('monday')" class="py-1.5 rounded-lg font-bold text-slate-400 hover:text-white transition text-center whitespace-normal break-words">
                     Zapisy (Pn)
                 </button>
-                <button type="button" id="tplBtn-mvp" onclick="selectTemplate('mvp')" class="py-1.5 rounded-lg font-bold text-slate-400 hover:text-white transition text-center truncate">
+                <button type="button" id="tplBtn-mvp" onclick="selectTemplate('mvp')" class="py-1.5 rounded-lg font-bold text-slate-400 hover:text-white transition text-center whitespace-normal break-words">
                     MVP 🏆
                 </button>
-                <button type="button" id="tplBtn-billing" onclick="selectTemplate('billing')" class="py-1.5 rounded-lg font-bold text-slate-400 hover:text-white transition text-center truncate">
+                <button type="button" id="tplBtn-billing" onclick="selectTemplate('billing')" class="py-1.5 rounded-lg font-bold text-slate-400 hover:text-white transition text-center whitespace-normal break-words">
                     Składki 💰
                 </button>
             </div>
@@ -1380,11 +2527,11 @@
             <div class="grid grid-cols-2 gap-2 bg-slate-950 p-2.5 rounded-2xl border border-slate-800 text-center text-xs">
                 <div>
                     <span class="text-[10px] text-slate-500 uppercase font-bold">Gospodarze (Team 1)</span>
-                    <p id="scoreModalTeamDarkName" class="font-extrabold text-slate-200 truncate">Drużyna Ciemna</p>
+                    <p id="scoreModalTeamDarkName" class="font-extrabold text-slate-200 whitespace-normal break-words">Drużyna Ciemna</p>
                 </div>
                 <div>
                     <span class="text-[10px] text-slate-500 uppercase font-bold">Goście (Team 2)</span>
-                    <p id="scoreModalTeamLightName" class="font-extrabold text-slate-200 truncate">Drużyna Jasna</p>
+                    <p id="scoreModalTeamLightName" class="font-extrabold text-slate-200 whitespace-normal break-words">Drużyna Jasna</p>
                 </div>
             </div>
 
@@ -1479,7 +2626,7 @@
                     </div>
                     <div class="min-w-0">
                         <div class="flex items-center gap-1.5 flex-wrap">
-                            <h3 id="playerCardName" class="font-black text-white text-base truncate">Zawodnik</h3>
+                            <h3 id="playerCardName" class="font-black text-white text-base whitespace-normal break-words">Zawodnik</h3>
                             <span id="playerCardRoleBadge" class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">
                                 🏐 Zawodnik
                             </span>
@@ -2274,6 +3421,145 @@ function submitGenerateMonth() {
     showToast(`Wygenerowano mecze dla miesiąca: ${monthLabel} 📅`);
 }
 
+function setAppTheme(themeKey) {
+            localStorage.setItem('siatka_app_theme', themeKey);
+            applyAppTheme(themeKey);
+            const names = {
+                'haaland-dark': '❄️🌙 Błękit Ciemny (Haaland)',
+                'haaland-light': '❄️☀️ Błękit Jasny (Haaland)',
+                'mercurial-dark': '👟🌙 Róż Ciemny (Mercurial)',
+                'mercurial-light': '👟☀️ Róż Jasny (Mercurial)',
+                'classic': '🏐 Klasyczny (Oryginał)'
+            };
+            if (typeof showToast === 'function') {
+                showToast(`Zastosowano motyw: ${names[themeKey] || themeKey}`);
+            }
+            renderThemePickerOptions();
+        }
+
+        function applyAppTheme(themeKey) {
+            const valid = ['haaland-dark', 'haaland-light', 'mercurial-dark', 'mercurial-light', 'classic'];
+            const selected = valid.includes(themeKey) ? themeKey : 'haaland-dark';
+            document.documentElement.setAttribute('data-theme', selected);
+            document.body.setAttribute('data-theme', selected);
+            
+            if (selected === 'haaland-light' || selected === 'mercurial-light') {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            }
+            
+            const themeColors = {
+                'haaland-dark': '#0c1322',
+                'haaland-light': '#f0f9ff',
+                'mercurial-dark': '#08080c',
+                'mercurial-light': '#fff5f8',
+                'classic': '#070a12'
+            };
+            const meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', themeColors[selected]);
+        }
+
+        function getThemePickerHtml() {
+            const currentTheme = localStorage.getItem('siatka_app_theme') || 'haaland-dark';
+            const themes = [
+                {
+                    key: 'haaland-dark',
+                    name: 'Błękit Ciemny',
+                    tag: 'Haaland',
+                    icon: '❄️🌙',
+                    typeBadge: 'Ciemny',
+                    accentColor: '#38bdf8',
+                    accentTextColor: '#0c1322',
+                    bgPreview: 'background: linear-gradient(135deg, #0c1322 0%, #151f33 100%);'
+                },
+                {
+                    key: 'haaland-light',
+                    name: 'Błękit Jasny',
+                    tag: 'Haaland',
+                    icon: '❄️☀️',
+                    typeBadge: 'Jasny',
+                    accentColor: '#0284c7',
+                    accentTextColor: '#ffffff',
+                    bgPreview: 'background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 100%);'
+                },
+                {
+                    key: 'mercurial-dark',
+                    name: 'Róż Ciemny',
+                    tag: 'Mercurial',
+                    icon: '👟🌙',
+                    typeBadge: 'Ciemny',
+                    accentColor: '#ff1783',
+                    accentTextColor: '#08080c',
+                    bgPreview: 'background: linear-gradient(135deg, #08080c 0%, #171821 100%);'
+                },
+                {
+                    key: 'mercurial-light',
+                    name: 'Róż Jasny',
+                    tag: 'Mercurial',
+                    icon: '👟☀️',
+                    typeBadge: 'Jasny',
+                    accentColor: '#e11d48',
+                    accentTextColor: '#ffffff',
+                    bgPreview: 'background: linear-gradient(135deg, #fff5f8 0%, #fbcfe8 100%);'
+                },
+                {
+                    key: 'classic',
+                    name: 'Klasyczny (Oryginał)',
+                    tag: 'Granat & Szmaragd',
+                    icon: '🏐',
+                    typeBadge: 'Klasyk',
+                    accentColor: '#10b981',
+                    accentTextColor: '#022c22',
+                    bgPreview: 'background: linear-gradient(135deg, #070a12 0%, #11192c 100%);',
+                    colSpan: 'col-span-2'
+                }
+            ];
+
+            const cards = themes.map(t => {
+                const isCurrent = (t.key === currentTheme);
+                return `
+                    <div onclick="setAppTheme('${t.key}')" class="p-2.5 rounded-2xl border transition cursor-pointer flex flex-col justify-between gap-2 active:scale-[0.98] ${t.colSpan || ''} ${isCurrent ? 'ring-2 ring-emerald-400 bg-slate-800/80 border-emerald-400 shadow-md' : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'}">
+                        <!-- Mini wzór wyglądu -->
+                        <div class="h-7 rounded-xl px-2 flex items-center justify-between border border-white/10 shadow-inner" style="${t.bgPreview}">
+                            <span class="text-xs leading-none">${t.icon}</span>
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full" style="background-color: ${t.accentColor}; box-shadow: 0 0 5px ${t.accentColor};"></span>
+                                <span class="text-[8px] font-black px-1.5 py-0.5 rounded-full" style="background-color: ${t.accentColor}; color: ${t.accentTextColor};">${t.typeBadge}</span>
+                            </div>
+                        </div>
+                        <!-- Tytuł i przycisk stanu -->
+                        <div class="flex items-center justify-between gap-1 pt-0.5 min-w-0 flex-wrap">
+                            <div class="min-w-0 flex-1">
+                                <span class="block font-black text-xs text-white leading-tight whitespace-normal break-words">${t.name}</span>
+                                <span class="block text-[9.5px] text-slate-400 leading-tight whitespace-normal break-words mt-0.5">${t.tag}</span>
+                            </div>
+                            <div class="shrink-0">
+                                ${isCurrent 
+                                    ? '<span class="text-[9px] bg-emerald-500 text-slate-950 font-black px-1.5 py-0.5 rounded-md shadow-sm whitespace-nowrap">✓ Aktywny</span>' 
+                                    : '<span class="text-[9px] text-slate-500 font-bold px-1.5 py-0.5 rounded-md border border-slate-800 hover:border-slate-700 whitespace-nowrap">Wybierz</span>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            return `<div class="grid grid-cols-2 gap-2.5">${cards}</div>`;
+        }
+
+        function renderThemePickerOptions() {
+            const cModal = document.getElementById('themePickerOptionsContainer');
+            if (cModal) cModal.innerHTML = getThemePickerHtml();
+            const cProfile = document.getElementById('profileThemePickerContainer');
+            if (cProfile) cProfile.innerHTML = getThemePickerHtml();
+            const cUnlogged = document.getElementById('unloggedThemePickerContainer');
+            if (cUnlogged) cUnlogged.innerHTML = getThemePickerHtml();
+        }
+
+        
+
 // ================= GROUP SETTINGS MODAL =================
 function openGroupSettingsModal(focusFirebase = false) {
     requireAdminAuth(() => {
@@ -2825,7 +4111,7 @@ function initFirebaseSync() {
                                 <div class="min-w-0 flex-1">
                                     <div class="flex items-center gap-1.5 flex-wrap">
                                         <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md">TWÓJ GŁOS!</span>
-                                        <span class="text-xs font-black text-amber-200 truncate">MVP z meczu (${latest.match.date})</span>
+                                        <span class="text-xs font-black text-amber-200 whitespace-normal break-words">MVP z meczu (${latest.match.date})</span>
                                     </div>
                                     <p class="text-[11px] text-amber-300/90 mt-0.5 leading-snug">
                                         Grałeś w meczu! Zagłosuj na MVP i MVP Kobiet (oddano: <strong class="font-mono text-white">${totalVotes}/${attendees.length}</strong>).
@@ -2849,7 +4135,7 @@ function initFirebaseSync() {
                                 <div class="min-w-0 flex-1">
                                     <div class="flex items-center gap-1.5 flex-wrap">
                                         <span class="text-[10px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded-md">Głosowanie MVP</span>
-                                        <span class="text-xs font-bold text-white truncate">Mecz (${latest.match.date})</span>
+                                        <span class="text-xs font-bold text-white whitespace-normal break-words">Mecz (${latest.match.date})</span>
                                     </div>
                                     <p class="text-[11px] text-slate-300 mt-0.5 leading-snug">
                                         ${hasVoted ? '✅ Twój głos jest zapisany. ' : ''}Trwa zbieranie głosów (<strong class="font-mono text-emerald-400">${totalVotes}/${attendees.length}</strong>).
@@ -2898,9 +4184,9 @@ function initFirebaseSync() {
                             <div class="min-w-0 flex-1">
                                 <div class="flex items-center gap-1.5 flex-wrap">
                                     <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md">WYNIKI MVP</span>
-                                    <span class="text-xs font-bold text-white truncate">Mecz (${latest.match.date})</span>
+                                    <span class="text-xs font-bold text-white whitespace-normal break-words">Mecz (${latest.match.date})</span>
                                 </div>
-                                <p class="text-[11px] text-amber-200 mt-0.5 leading-snug truncate">
+                                <p class="text-[11px] text-amber-200 mt-0.5 leading-snug whitespace-normal break-words">
                                     🏆 <strong>${escapeHtml(winnerLabel)}</strong>${escapeHtml(womenLabel)}
                                 </p>
                             </div>
@@ -3040,6 +4326,7 @@ function initFirebaseSync() {
 
         // ================= INITIALIZATION & REALTIME SYNC =================
         function initApp() {
+            applyAppTheme(localStorage.getItem('siatka_app_theme') || 'classic');
             loadLocalState();
             checkUserAuthSession();
 
@@ -3618,6 +4905,7 @@ function initFirebaseSync() {
             const todayStr = getLocalDateKey();
             const globalUpcomingDate = getGlobalUpcomingMatchDate();
             const datesContainer = document.getElementById('matchDatesContainer');
+            if (!datesContainer) return;
             const allMatches = monthData.matches || [];
             const upcomingIdx = allMatches.findIndex(m => m.date >= todayStr && !m.isCancelled);
 
@@ -3793,7 +5081,7 @@ function initFirebaseSync() {
                                     <div class="flex items-center gap-2.5 min-w-0">
                                         ${getPlayerAvatarHtml(loggedPlayer, 'sm')}
                                         <div class="min-w-0">
-                                            <p class="text-xs font-extrabold text-white truncate">Jesteś na liście tego meczu</p>
+                                            <p class="text-xs font-extrabold text-white whitespace-normal break-words">Jesteś na liście tego meczu</p>
                                             <p class="text-[11px] ${isInMain ? 'text-emerald-400' : 'text-amber-400'} font-semibold">
                                                 ${isInMain ? '🟢 Skład Główny (14)' : '⏳ Lista Rezerwowa'}
                                             </p>
@@ -3850,7 +5138,7 @@ function initFirebaseSync() {
                                         <div class="flex items-center gap-2.5 min-w-0">
                                             ${getPlayerAvatarHtml(loggedPlayer, 'sm')}
                                             <div class="min-w-0">
-                                                <p class="text-xs font-extrabold text-white truncate">Jesteś zapisany(a) na ten mecz!</p>
+                                                <p class="text-xs font-extrabold text-white whitespace-normal break-words">Jesteś zapisany(a) na ten mecz!</p>
                                                 <p class="text-[11px] ${isInMain ? 'text-emerald-400' : 'text-amber-400'} font-semibold">
                                                     ${isInMain ? '🟢 Skład Główny (14)' : '⏳ Lista Rezerwowa'}
                                                 </p>
@@ -3933,7 +5221,7 @@ function initFirebaseSync() {
                             <div class="flex items-center gap-2 min-w-0 flex-1 cursor-pointer group" onclick="openPlayerCardModal(${toInlineArgument(p)})">
                                 <span class="font-mono font-bold text-slate-500 w-4 shrink-0">${i + 1}.</span>
                                 ${getPlayerAvatarHtml(p, 'xs')}
-                                <span class="font-semibold ${isMe ? 'text-emerald-300 font-bold' : 'text-slate-200'} group-hover:text-amber-300 transition truncate" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐ (Ty)' : ''}</span>
+                                <span class="font-semibold ${isMe ? 'text-emerald-300 font-bold' : 'text-slate-200'} group-hover:text-amber-300 transition whitespace-normal break-words" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐ (Ty)' : ''}</span>
                                 ${streakBadge}
                                 ${getPlayerPositionsBadgesHtml(p)}
                             </div>
@@ -3978,7 +5266,7 @@ function initFirebaseSync() {
                             <div class="flex items-center gap-2 min-w-0 flex-1 cursor-pointer group" onclick="openPlayerCardModal(${toInlineArgument(p)})">
                                 <span class="font-mono font-bold text-amber-500/80 w-5 shrink-0">R${idx + 1}.</span>
                                 ${getPlayerAvatarHtml(p, 'xs')}
-                                <span class="font-medium ${isMe ? 'text-amber-300 font-bold' : 'text-slate-300'} group-hover:text-amber-300 transition truncate" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐ (Ty)' : ''}</span>
+                                <span class="font-medium ${isMe ? 'text-amber-300 font-bold' : 'text-slate-300'} group-hover:text-amber-300 transition whitespace-normal break-words" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐ (Ty)' : ''}</span>
                                 ${streakBadge}
                                 ${getPlayerPositionsBadgesHtml(p)}
                             </div>
@@ -4753,13 +6041,13 @@ function initFirebaseSync() {
                     <div class="border border-dashed border-slate-800/80 bg-slate-950/40 rounded-2xl p-2 flex flex-col items-center justify-between text-center min-h-[92px] shadow-inner">
                         <div class="flex items-center justify-between w-full px-1">
                             <span class="text-[8px] font-black font-mono text-slate-500 uppercase">${zoneDef.code}</span>
-                            <span class="text-[8px] font-bold text-slate-500 truncate max-w-[65px]">${zoneDef.shortName}</span>
+                            <span class="text-[8px] font-bold text-slate-500 whitespace-normal break-words max-w-[65px]">${zoneDef.shortName}</span>
                         </div>
                         <div class="my-auto flex flex-col items-center gap-0.5 text-slate-600">
                             <span class="text-xs">➕</span>
                             <span class="text-[9px] italic font-medium">Wolne</span>
                         </div>
-                        <span class="text-[7.5px] font-semibold text-slate-600/90 truncate max-w-[85px]">(${defRoleInfo.name})</span>
+                        <span class="text-[7.5px] font-semibold text-slate-600/90 whitespace-normal break-words max-w-[85px]">(${defRoleInfo.name})</span>
                     </div>
                 `;
             }
@@ -4783,8 +6071,8 @@ function initFirebaseSync() {
                 <div onclick="openPlayerCardModal(${toInlineArgument(pName)})" title="${escapeHtml(pName)} • ${roleDef.name} (${zoneDef.fullName}) - Dotknij profil" class="cursor-pointer transition transform active:scale-95 rounded-2xl p-2 flex flex-col items-center justify-between text-center min-h-[92px] shadow-lg border ${cardBg}">
                     <!-- Header: Zone Code + Name -->
                     <div class="flex items-center justify-between w-full px-0.5">
-                        <span class="text-[8px] font-black font-mono px-1 py-0.2 rounded border ${zoneBadgeColor}">${zoneDef.code}</span>
-                        <span class="text-[8px] font-bold text-slate-400 truncate max-w-[65px]">${zoneDef.shortName}</span>
+                        <span class="text-[8px] font-black font-mono px-1 py-0.5 rounded border ${zoneBadgeColor}">${zoneDef.code}</span>
+                        <span class="text-[8px] font-bold text-slate-400 whitespace-normal break-words max-w-[65px]">${zoneDef.shortName}</span>
                     </div>
 
                     <!-- Avatar -->
@@ -4794,14 +6082,14 @@ function initFirebaseSync() {
                     </div>
 
                     <!-- Name -->
-                    <div class="w-full px-0.5 truncate">
-                        <span class="font-extrabold text-[11px] leading-tight ${textColor} truncate block">${escapeHtml(displayName)}</span>
+                    <div class="w-full px-0.5 whitespace-normal break-words">
+                        <span class="font-extrabold text-[11px] leading-tight ${textColor} whitespace-normal break-words block">${escapeHtml(displayName)}</span>
                     </div>
 
                     <!-- Role Badge -->
                     <div class="mt-0.5 w-full flex justify-center">
-                        <span class="text-[8px] font-black px-1.5 py-0.5 rounded ${roleDef.color} border shadow-sm text-center truncate max-w-[95px] flex items-center justify-center gap-1">
-                            <span>${roleDef.icon}</span><span class="truncate">${roleDef.name}</span>
+                        <span class="text-[8px] font-black px-1.5 py-0.5 rounded ${roleDef.color} border shadow-sm text-center whitespace-normal break-words max-w-[95px] flex items-center justify-center gap-1">
+                            <span>${roleDef.icon}</span><span class="whitespace-normal break-words">${roleDef.name}</span>
                         </span>
                     </div>
                 </div>
@@ -4814,10 +6102,10 @@ function initFirebaseSync() {
                 if (teamSize === 6) {
                     return `
                         <div class="mx-1 my-1 px-3 py-1.5 rounded-xl bg-slate-950/60 border border-slate-800/80 text-[10px] text-slate-400 flex items-center justify-between shadow-sm">
-                            <span class="flex items-center gap-1.5 truncate">
+                            <span class="flex items-center gap-1.5 whitespace-normal break-words">
                                 <span>🔄</span>
                                 <span class="font-semibold text-slate-300">Skład 6-osobowy</span>
-                                <span class="text-slate-500 truncate">(Pełna rotacja w kółko bez libero)</span>
+                                <span class="text-slate-500 whitespace-normal break-words">(Pełna rotacja w kółko bez libero)</span>
                             </span>
                             <span class="text-[9px] font-mono text-slate-500 font-bold shrink-0 ml-1">6 graczy</span>
                         </div>
@@ -4841,10 +6129,10 @@ function initFirebaseSync() {
                         </div>
                         <div class="min-w-0 text-left">
                             <div class="flex items-center gap-1.5 flex-wrap">
-                                <span class="font-extrabold text-xs text-amber-200 truncate">${escapeHtml(pName)}${isMe ? ' ⭐ (Ty)' : ''}</span>
-                                <span class="text-[8.5px] font-black px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">⚡ Libero</span>
+                                <span class="font-extrabold text-xs text-amber-200 whitespace-normal break-words">${escapeHtml(pName)}${isMe ? ' ⭐ (Ty)' : ''}</span>
+                                <span class="text-[8.5px] font-black px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">⚡ Libero</span>
                             </div>
-                            <div class="text-[9.5px] text-amber-300/80 font-medium truncate">
+                            <div class="text-[9.5px] text-amber-300/80 font-medium whitespace-normal break-words">
                                 7. Zawodnik • Obrona & Przyjęcie (wchodzi za środkowego w II linii)
                             </div>
                         </div>
@@ -4931,7 +6219,7 @@ function initFirebaseSync() {
                         const isMe = (p === loggedPlayer);
                         return `
                             <div class="bg-slate-900 border ${isMe ? 'border-emerald-500/70' : 'border-slate-800'} px-2.5 py-1.5 rounded-xl text-xs flex items-center justify-between gap-2 shadow-sm">
-                                <span class="font-semibold ${isMe ? 'text-emerald-300' : 'text-slate-200'} truncate">${escapeHtml(p)}</span>
+                                <span class="font-semibold ${isMe ? 'text-emerald-300' : 'text-slate-200'} whitespace-normal break-words">${escapeHtml(p)}</span>
                                 ${isAdmin ? `
                                 <div class="flex items-center gap-1 shrink-0">
                                     <button type="button" onclick="assignPlayerToTeam(${toInlineArgument(p)}, 'dark')" title="Przypisz do Drużyny Ciemnej" class="px-2 py-1 bg-slate-950 hover:bg-slate-800 text-slate-200 border border-slate-700 rounded-lg text-[10px] font-extrabold active:scale-95 transition">
@@ -4966,7 +6254,7 @@ function initFirebaseSync() {
                             <div class="flex items-center gap-1.5 min-w-0 flex-1">
                                 <span class="w-2 h-2 rounded-full bg-slate-400 border border-slate-300 shadow-sm shrink-0" title="Drużyna Ciemna"></span>
                                 <span class="font-mono text-slate-500 font-bold w-4 shrink-0 text-right">${i+1}.</span>
-                                <span class="font-semibold ${isMe ? 'text-emerald-300 font-bold' : 'text-slate-200'} truncate" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐' : ''}</span>
+                                <span class="font-semibold ${isMe ? 'text-emerald-300 font-bold' : 'text-slate-200'} whitespace-normal break-words" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐' : ''}</span>
                                 ${roleBadge}
                             </div>
                             ${isAdmin ? `
@@ -5012,7 +6300,7 @@ function initFirebaseSync() {
                             <div class="flex items-center gap-1.5 min-w-0 flex-1">
                                 <span class="w-2 h-2 rounded-full bg-amber-400 border border-amber-300 shadow-sm shadow-amber-400/50 shrink-0" title="Drużyna Jasna"></span>
                                 <span class="font-mono text-slate-500 font-bold w-4 shrink-0 text-right">${i+1}.</span>
-                                <span class="font-semibold ${isMe ? 'text-emerald-300 font-bold' : 'text-slate-200'} truncate" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐' : ''}</span>
+                                <span class="font-semibold ${isMe ? 'text-emerald-300 font-bold' : 'text-slate-200'} whitespace-normal break-words" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐' : ''}</span>
                                 ${roleBadge}
                             </div>
                             ${isAdmin ? `
@@ -5308,7 +6596,7 @@ function initFirebaseSync() {
                     <div class="text-center py-6 space-y-3">
                         <div class="text-3xl">⚠️</div>
                         <p class="text-xs text-slate-300">Nie znaleziono meczu powiązanego z tym linkiem.</p>
-                        <button type="button" onclick="window.close()" class="px-4 py-2 bg-slate-800 text-slate-300 font-bold rounded-xl text-xs">
+                        <button type="button" onclick="exitDedicatedMvpToApp(); window.close();" class="px-4 py-2 bg-slate-800 text-slate-300 font-bold rounded-xl text-xs">
                             Zamknij okno 👋
                         </button>
                     </div>
@@ -5334,7 +6622,7 @@ function initFirebaseSync() {
                             Spotkanie zaplanowane na <strong class="text-amber-400 font-bold">${match.date}</strong> jeszcze się nie odbyło. Głosowanie na MVP zostanie odblokowane w dniu meczu po rozegraniu gry! 🏐
                         </p>
                         <div class="pt-2">
-                            <button type="button" onclick="window.close()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-2xl text-xs transition border border-slate-700">
+                            <button type="button" onclick="exitDedicatedMvpToApp(); window.close();" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-2xl text-xs transition border border-slate-700">
                                 Zamknij okno 👋
                             </button>
                         </div>
@@ -5353,7 +6641,7 @@ function initFirebaseSync() {
                             Jesteś zalogowany/a w aplikacji jako <strong class="text-amber-400 font-bold">${escapeHtml(loggedPlayer)}</strong>, ale nie ma Cię w składzie meczu z dnia <strong>${match.date}</strong>. Prawo głosu mają wyłącznie gracze obecni w składzie spotkania.
                         </p>
                         <div class="pt-2">
-                            <button type="button" onclick="window.close()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-2xl text-xs transition border border-slate-700">
+                            <button type="button" onclick="exitDedicatedMvpToApp(); window.close();" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-2xl text-xs transition border border-slate-700">
                                 Zamknij okno 👋
                             </button>
                         </div>
@@ -5433,7 +6721,7 @@ function initFirebaseSync() {
                             <p class="text-[10px] text-slate-500 mt-1">Dziękujemy wszystkim zawodnikom za oddane głosy!</p>
                         </div>
                         <div class="pt-2">
-                            <button type="button" onclick="window.close()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-2xl text-xs transition border border-slate-700">
+                            <button type="button" onclick="exitDedicatedMvpToApp(); window.close();" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-2xl text-xs transition border border-slate-700">
                                 Zamknij okno 👋
                             </button>
                         </div>
@@ -5447,7 +6735,7 @@ function initFirebaseSync() {
                 contentArea.innerHTML = `
                     <div class="text-center py-6 space-y-2">
                         <p class="text-xs text-slate-400">Brak zapisanych graczy na ten mecz.</p>
-                        <button type="button" onclick="window.close()" class="px-4 py-2 bg-slate-800 text-slate-300 font-bold rounded-xl text-xs">
+                        <button type="button" onclick="exitDedicatedMvpToApp(); window.close();" class="px-4 py-2 bg-slate-800 text-slate-300 font-bold rounded-xl text-xs">
                             Zamknij okno 👋
                         </button>
                     </div>
@@ -5591,7 +6879,7 @@ function initFirebaseSync() {
                 if (womenNomineeSection) womenNomineeSection.classList.add('hidden');
                 if (submitSection) {
                     submitSection.innerHTML = `
-                        <button type="button" onclick="window.close()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-2xl text-xs transition">
+                        <button type="button" onclick="exitDedicatedMvpToApp(); window.close();" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-2xl text-xs transition">
                             Możesz zamknąć tę kartę 👋
                         </button>
                     `;
@@ -5760,7 +7048,7 @@ function initFirebaseSync() {
                                 </div>
                                 <p class="text-xs text-slate-400">Możesz teraz bezpiecznie zamknąć tę kartę 👋</p>
                                 <div class="pt-2">
-                                    <button type="button" onclick="window.close()" class="w-full bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black py-3.5 rounded-2xl text-xs transition shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2">
+                                    <button type="button" onclick="exitDedicatedMvpToApp(); window.close();" class="w-full bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black py-3.5 rounded-2xl text-xs transition shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2">
                                         <span>Zamknij kartę</span>
                                         <span>👋</span>
                                     </button>
@@ -5972,7 +7260,7 @@ function initFirebaseSync() {
                 if (resultsList) resultsList.innerHTML = `<div class="p-3 text-center text-xs text-slate-500">Głosy będą zbierane po meczu.</div>`;
                 if (whoVotedList) whoVotedList.innerHTML = attendees.map(p => `
                     <div class="bg-slate-950/60 border border-slate-800/60 px-3 py-1.5 rounded-xl flex items-center justify-between text-xs">
-                        <span class="font-semibold text-slate-300 truncate">${escapeHtml(p)}</span>
+                        <span class="font-semibold text-slate-300 whitespace-normal break-words">${escapeHtml(p)}</span>
                         <span class="text-[10px] text-slate-500 font-mono">Zapisany na mecz</span>
                     </div>
                 `).join('');
@@ -6150,10 +7438,10 @@ function initFirebaseSync() {
                             return `
                                 <div class="bg-slate-950 border ${isLeader ? 'border-amber-500/60 bg-amber-950/20' : 'border-slate-800'} rounded-xl p-2.5 space-y-1.5">
                                     <div class="flex items-center justify-between text-xs">
-                                        <div class="flex items-center gap-1.5 font-bold ${isLeader ? 'text-amber-300' : 'text-slate-200'} truncate pr-2">
+                                        <div class="flex items-center gap-1.5 font-bold ${isLeader ? 'text-amber-300' : 'text-slate-200'} whitespace-normal break-words pr-2">
                                             <span>${isLeader ? '🌟' : '🏐'}</span>
                                             ${getPlayerAvatarHtml(name, 'xs')}
-                                            <span class="truncate">${escapeHtml(name)}</span>
+                                            <span class="whitespace-normal break-words">${escapeHtml(name)}</span>
                                         </div>
                                         <span class="font-mono font-bold ${isLeader ? 'text-amber-400' : 'text-slate-400'} shrink-0">${count} ${count === 1 ? 'głos' : 'głosy'} (${percent}%)</span>
                                     </div>
@@ -6181,10 +7469,10 @@ function initFirebaseSync() {
                                 return `
                                     <div class="bg-slate-950 border ${isLeader ? 'border-pink-500/60 bg-pink-950/20' : 'border-slate-800'} rounded-xl p-2.5 space-y-1.5">
                                         <div class="flex items-center justify-between text-xs">
-                                            <div class="flex items-center gap-1.5 font-bold ${isLeader ? 'text-pink-300' : 'text-slate-200'} truncate pr-2">
+                                            <div class="flex items-center gap-1.5 font-bold ${isLeader ? 'text-pink-300' : 'text-slate-200'} whitespace-normal break-words pr-2">
                                                 <span>${isLeader ? '🌸' : '🏐'}</span>
                                                 ${getPlayerAvatarHtml(name, 'xs')}
-                                                <span class="truncate">${escapeHtml(name)}</span>
+                                                <span class="whitespace-normal break-words">${escapeHtml(name)}</span>
                                             </div>
                                             <span class="font-mono font-bold ${isLeader ? 'text-pink-400' : 'text-slate-400'} shrink-0">${count} ${count === 1 ? 'głos' : 'głosy'} (${percent}%)</span>
                                         </div>
@@ -6209,9 +7497,9 @@ function initFirebaseSync() {
                         const votedWomen = votesWomen[p];
                         return `
                             <div class="bg-slate-950/80 border border-slate-800/60 px-3 py-1.5 rounded-xl flex items-center justify-between text-xs">
-                                <div class="flex items-center gap-2 truncate">
+                                <div class="flex items-center gap-2 whitespace-normal break-words">
                                     ${getPlayerAvatarHtml(p, 'xs')}
-                                    <span class="font-semibold text-slate-300 truncate">${escapeHtml(p)}</span>
+                                    <span class="font-semibold text-slate-300 whitespace-normal break-words">${escapeHtml(p)}</span>
                                 </div>
                                 <div class="flex items-center gap-2 shrink-0 font-bold text-[11px]">
                                     <span class="${votedNominee ? 'text-amber-400' : 'text-slate-500'}">
@@ -6269,7 +7557,7 @@ function initFirebaseSync() {
                         const hasVoted = Boolean(votes[p]);
                         return `
                             <div class="bg-slate-950/60 border ${hasVoted ? 'border-emerald-900/40 bg-emerald-950/10' : 'border-slate-800/60'} px-3 py-1.5 rounded-xl flex items-center justify-between text-xs">
-                                <span class="font-semibold text-slate-300 truncate">${escapeHtml(p)}</span>
+                                <span class="font-semibold text-slate-300 whitespace-normal break-words">${escapeHtml(p)}</span>
                                 <span class="font-bold text-[10px] ${hasVoted ? 'text-emerald-400' : 'text-slate-500'} shrink-0 flex items-center gap-1">
                                     ${hasVoted ? '<span>✅</span> Oddał głos' : '<span>⏳</span> Czeka na głos'}
                                 </span>
@@ -6438,6 +7726,291 @@ function initFirebaseSync() {
         }
 
         // ================= TAB 4: ARCHIVE & RECORDS =================
+        
+        // ================= ARCHIVED MATCH REPORT MODAL =================
+        function closeArchivedMatchModal() {
+            const modal = document.getElementById('archivedMatchModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function openArchivedMatchModal(dateStr, monthName = null) {
+            if (!dateStr) return;
+            const modal = document.getElementById('archivedMatchModal');
+            const content = document.getElementById('archivedMatchModalContent');
+            if (!modal || !content) return;
+
+            let targetMatch = null;
+            let targetMonth = monthName;
+
+            if (targetMonth && AppState.months?.[targetMonth]) {
+                targetMatch = (AppState.months[targetMonth].matches || []).find(m => m.date === dateStr);
+            }
+            if (!targetMatch) {
+                for (const mName of Object.keys(AppState.months || {})) {
+                    const m = (AppState.months[mName]?.matches || []).find(m => m.date === dateStr);
+                    if (m) {
+                        targetMatch = m;
+                        targetMonth = mName;
+                        break;
+                    }
+                }
+            }
+
+            if (!targetMatch) {
+                showToast("Nie znaleziono szczegĂłĹ‚Ăłw meczu z dnia " + dateStr);
+                return;
+            }
+
+            const dateBadge = document.getElementById('archivedMatchModalDateBadge');
+            const titleEl = document.getElementById('archivedMatchModalTitle');
+            const subtextEl = document.getElementById('archivedMatchModalSubtext');
+
+            if (dateBadge) dateBadge.innerText = targetMatch.date;
+            if (titleEl) titleEl.innerText = `Spotkanie: ${targetMatch.date}`;
+            const attendees = (targetMatch.attendees || []);
+            const mainSquad = attendees.slice(0, 14);
+            if (subtextEl) subtextEl.innerText = `${targetMonth || ''} â€˘ SkĹ‚ad: ${mainSquad.length}/14 graczy`;
+
+            const isFinished = isMvpVotingFinished(targetMatch);
+            
+            // General MVP
+            const votes = targetMatch.votes || {};
+            const tally = {};
+            Object.values(votes).forEach(nom => tally[nom] = (tally[nom] || 0) + 1);
+            const sortedNominees = Object.entries(tally).sort((a, b) => b[1] - a[1]);
+            let topNom = sortedNominees.length > 0 ? sortedNominees[0][0] : "";
+            let maxV = sortedNominees.length > 0 ? sortedNominees[0][1] : 0;
+            const mvpWinner = (isFinished && topNom && maxV > 0) ? topNom : null;
+
+            // Women MVP
+            const votesWomen = targetMatch.votesWomen || {};
+            const tallyWomen = {};
+            Object.values(votesWomen).forEach(nom => tallyWomen[nom] = (tallyWomen[nom] || 0) + 1);
+            const sortedWomenNominees = Object.entries(tallyWomen).sort((a, b) => b[1] - a[1]);
+            let topWomenNom = sortedWomenNominees.length > 0 ? sortedWomenNominees[0][0] : "";
+            let maxWomenV = sortedWomenNominees.length > 0 ? sortedWomenNominees[0][1] : 0;
+            const mvpWomenWinner = (isFinished && topWomenNom && maxWomenV > 0) ? topWomenNom : null;
+
+            const teams = targetMatch.teams || null;
+            const darkName = teams?.darkName || "DruĹĽyna Ciemna";
+            const lightName = teams?.lightName || "DruĹĽyna Jasna";
+            const darkRoster = teams?.dark || [];
+            const lightRoster = teams?.light || [];
+
+            let darkWon = false;
+            let lightWon = false;
+            if (targetMatch.score) {
+                const scoreMatch = targetMatch.score.match(/\s(\d+)\s*:\s*(\d+)\s/);
+                if (scoreMatch) {
+                    const sD = parseInt(scoreMatch[1], 10);
+                    const sL = parseInt(scoreMatch[2], 10);
+                    if (sD > sL) darkWon = true;
+                    else if (sL > sD) lightWon = true;
+                }
+            }
+
+            // 1. MVP Section
+            let mvpHtml = '';
+            if (mvpWinner) {
+                mvpHtml += `
+                    <div class="bg-gradient-to-r from-amber-500/20 via-amber-950/40 to-slate-900 border-2 border-amber-500/60 rounded-2xl p-3 sm:p-3.5 shadow-lg shadow-amber-500/10 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md inline-flex items-center gap-1 shadow-sm">
+                                <span>đź‘‘</span> MVP SPOTKANIA
+                            </span>
+                            <span class="text-[11px] font-mono font-bold text-amber-300">${maxV} gĹ‚.</span>
+                        </div>
+                        <div class="flex items-center justify-between gap-3 pt-0.5">
+                            <div class="flex items-center gap-2.5 min-w-0 cursor-pointer" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWinner)});" title="Zobacz profil zawodnika">
+                                ${getPlayerAvatarHtml(mvpWinner, 'md')}
+                                <div class="min-w-0">
+                                    <span class="text-sm sm:text-base font-black text-white hover:text-amber-300 transition block whitespace-normal break-words">${escapeHtml(mvpWinner)}</span>
+                                    <span class="text-[10px] text-slate-400">Wybrany gĹ‚osami zawodnikĂłw tego meczu</span>
+                                </div>
+                            </div>
+                            <button type="button" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWinner)});" class="shrink-0 text-[11px] font-bold text-amber-300 hover:text-white bg-slate-950/80 border border-amber-500/40 px-2.5 py-1.5 rounded-xl transition active:scale-95 shadow-sm">
+                                Profil âž”
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (mvpWomenWinner) {
+                mvpHtml += `
+                    <div class="bg-gradient-to-r from-pink-500/20 via-pink-950/40 to-slate-900 border-2 border-pink-500/60 rounded-2xl p-3 sm:p-3.5 shadow-lg shadow-pink-500/10 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-black uppercase tracking-wider bg-pink-500 text-slate-950 px-2 py-0.5 rounded-md inline-flex items-center gap-1 shadow-sm">
+                                <span>đź‘¸</span> MVP KOBIET SPOTKANIA
+                            </span>
+                            <span class="text-[11px] font-mono font-bold text-pink-300">${maxWomenV} gĹ‚.</span>
+                        </div>
+                        <div class="flex items-center justify-between gap-3 pt-0.5">
+                            <div class="flex items-center gap-2.5 min-w-0 cursor-pointer" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWomenWinner)});" title="Zobacz profil zawodniczki">
+                                ${getPlayerAvatarHtml(mvpWomenWinner, 'md')}
+                                <div class="min-w-0">
+                                    <span class="text-sm sm:text-base font-black text-white hover:text-pink-300 transition block whitespace-normal break-words">${escapeHtml(mvpWomenWinner)}</span>
+                                    <span class="text-[10px] text-pink-300/70">Najlepsza zawodniczka tego spotkania</span>
+                                </div>
+                            </div>
+                            <button type="button" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWomenWinner)});" class="shrink-0 text-[11px] font-bold text-pink-300 hover:text-white bg-slate-950/80 border border-pink-500/40 px-2.5 py-1.5 rounded-xl transition active:scale-95 shadow-sm">
+                                Profil âž”
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (!mvpWinner && !mvpWomenWinner) {
+                if (Object.keys(votes).length > 0) {
+                    mvpHtml = `
+                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3 flex items-center gap-2.5 text-xs">
+                            <span class="text-xl shrink-0">đź”’</span>
+                            <div>
+                                <strong class="text-amber-300 text-xs block">GĹ‚osowanie tajne w toku</strong>
+                                <span class="text-[11px] text-slate-400">Oddano gĹ‚osy. Wyniki zostanÄ… ujawnione po oficjalnym zakoĹ„czeniu gĹ‚osowania.</span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    mvpHtml = `
+                        <div class="bg-slate-950/60 border border-slate-800/80 rounded-2xl p-2.5 flex items-center justify-between text-xs text-slate-400">
+                            <span class="flex items-center gap-1.5">
+                                <span>đź‘‘</span>
+                                <span>MVP spotkania:</span>
+                            </span>
+                            <span class="text-slate-500 italic">Brak zarejestrowanego gĹ‚osowania</span>
+                        </div>
+                    `;
+                }
+            }
+
+            // 2. Teams Section (Dwie druĹĽyny z pozycjami)
+            let teamsHtml = '';
+            if (teams && (darkRoster.length > 0 || lightRoster.length > 0)) {
+                const renderTeamRoster = (roster, isDarkTeam, won) => {
+                    if (!roster.length) {
+                        return `<div class="p-3 text-center text-xs text-slate-500 italic">Brak przypisanych graczy</div>`;
+                    }
+                    return roster.map(p => {
+                        const isMe = (p === loggedPlayer);
+                        const isPlayerMvp = (mvpWinner && p === mvpWinner);
+                        const isPlayerWomenMvp = (mvpWomenWinner && p === mvpWomenWinner);
+                        const isGuest = !AppState.all_players.includes(p);
+                        const posBadges = (typeof getPlayerPositionsBadgesHtml === 'function') ? getPlayerPositionsBadgesHtml(p) : '';
+                        return `
+                            <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" title="Kliknij, aby otworzyÄ‡ profil gracza" class="flex items-center justify-between gap-2 p-1.5 rounded-xl hover:bg-slate-800/70 cursor-pointer transition active:scale-[0.98] ${isPlayerMvp ? 'bg-amber-950/30 border border-amber-500/30' : (isPlayerWomenMvp ? 'bg-pink-950/30 border border-pink-500/30' : (isMe ? 'bg-emerald-950/20 border border-emerald-800/40' : ''))}">
+                                <div class="flex items-center gap-2 min-w-0 flex-1 flex-wrap">
+                                    ${getPlayerAvatarHtml(p, 'xs')}
+                                    <span class="font-extrabold text-xs text-slate-100 hover:text-white transition whitespace-normal break-words leading-tight ${isMe ? 'text-emerald-300' : ''}">${escapeHtml(p)}</span>
+                                    ${posBadges ? `<span class="inline-flex items-center gap-0.5">${posBadges}</span>` : ''}
+                                </div>
+                                <div class="flex items-center gap-1 shrink-0">
+                                    ${isPlayerMvp ? `<span class="text-[9px] font-black bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded shadow-sm inline-flex items-center gap-0.5">đź‘‘ MVP</span>` : ''}
+                                    ${isPlayerWomenMvp ? `<span class="text-[9px] font-black bg-pink-500 text-slate-950 px-1.5 py-0.5 rounded shadow-sm inline-flex items-center gap-0.5">đź‘¸ MVP K</span>` : ''}
+                                    ${isMe ? `<span class="text-[8.5px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800 px-1 py-0.5 rounded">TY</span>` : ''}
+                                    ${isGuest ? `<span class="text-[8px] text-slate-500 font-semibold">(goĹ›Ä‡)</span>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                };
+
+                teamsHtml = `
+                    <div class="space-y-2 pt-1">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-xs uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                                <span>âš”ď¸Ź</span> Dwie druĹĽyny po stronach boiska
+                            </h4>
+                            <span class="text-[10px] text-slate-400 font-mono">${darkRoster.length + lightRoster.length} graczy</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <!-- DruĹĽyna Ciemna -->
+                            <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-3 space-y-2 ${darkWon ? 'ring-1 ring-emerald-500/40' : ''}">
+                                <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                                    <div class="flex items-center gap-1.5 min-w-0">
+                                        <span class="w-3 h-3 rounded-full bg-slate-700 border border-slate-500 shrink-0"></span>
+                                        <strong class="text-xs font-black text-slate-200 whitespace-normal break-words leading-tight">${escapeHtml(darkName)}</strong>
+                                    </div>
+                                    ${darkWon ? `<span class="text-[9px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full shrink-0">đźŹ† ZwyciÄ™zcy</span>` : (lightWon ? `<span class="text-[9px] font-bold text-slate-500 px-1.5 py-0.5 shrink-0">PoraĹĽka</span>` : '')}
+                                </div>
+                                <div class="space-y-1">
+                                    ${renderTeamRoster(darkRoster, true, darkWon)}
+                                </div>
+                            </div>
+
+                            <!-- DruĹĽyna Jasna -->
+                            <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-3 space-y-2 ${lightWon ? 'ring-1 ring-emerald-500/40' : ''}">
+                                <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                                    <div class="flex items-center gap-1.5 min-w-0">
+                                        <span class="w-3 h-3 rounded-full bg-white border border-slate-300 shrink-0"></span>
+                                        <strong class="text-xs font-black text-slate-200 whitespace-normal break-words leading-tight">${escapeHtml(lightName)}</strong>
+                                    </div>
+                                    ${lightWon ? `<span class="text-[9px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full shrink-0">đźŹ† ZwyciÄ™zcy</span>` : (darkWon ? `<span class="text-[9px] font-bold text-slate-500 px-1.5 py-0.5 shrink-0">PoraĹĽka</span>` : '')}
+                                </div>
+                                <div class="space-y-1">
+                                    ${renderTeamRoster(lightRoster, false, lightWon)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                teamsHtml = `
+                    <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-3 space-y-2 pt-1">
+                        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                            <h4 class="font-bold text-xs uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                                <span>đźŹ</span> SkĹ‚ad meczu (${mainSquad.length}/14 graczy)
+                            </h4>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                            ${mainSquad.map(p => {
+                                const isMe = (p === loggedPlayer);
+                                const isPlayerMvp = (mvpWinner && p === mvpWinner);
+                                const isPlayerWomenMvp = (mvpWomenWinner && p === mvpWomenWinner);
+                                const isGuest = !AppState.all_players.includes(p);
+                                const posBadges = (typeof getPlayerPositionsBadgesHtml === 'function') ? getPlayerPositionsBadgesHtml(p) : '';
+                                return `
+                                    <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" class="flex items-center justify-between gap-2 p-1.5 rounded-xl hover:bg-slate-800/70 cursor-pointer transition ${isPlayerMvp ? 'bg-amber-950/30 border border-amber-500/30' : (isPlayerWomenMvp ? 'bg-pink-950/30 border border-pink-500/30' : '')}">
+                                        <div class="flex items-center gap-2 min-w-0">
+                                            ${getPlayerAvatarHtml(p, 'xs')}
+                                            <span class="font-extrabold text-xs text-slate-100 whitespace-normal break-words leading-tight ${isMe ? 'text-emerald-300' : ''}">${escapeHtml(p)}</span>
+                                            ${posBadges ? `<span class="inline-flex items-center gap-0.5">${posBadges}</span>` : ''}
+                                        </div>
+                                        <div class="flex items-center gap-1 shrink-0">
+                                            ${isPlayerMvp ? `<span class="text-[9px] font-black bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">đź‘‘ MVP</span>` : ''}
+                                            ${isPlayerWomenMvp ? `<span class="text-[9px] font-black bg-pink-500 text-slate-950 px-1.5 py-0.5 rounded">đź‘¸ MVP K</span>` : ''}
+                                            ${isMe ? `<span class="text-[8.5px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800 px-1 py-0.5 rounded">TY</span>` : ''}
+                                            ${isGuest ? `<span class="text-[8px] text-slate-500 font-semibold">(goĹ›Ä‡)</span>` : ''}
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            content.innerHTML = `
+                <!-- Wynik Meczu -->
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-2 shadow-inner">
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">Oficjalny wynik meczu:</span>
+                    <div class="min-w-0">
+                        ${targetMatch.score ? formatScoreHtml(targetMatch.score) : '<span class="text-slate-500 italic">Brak wpisanego wyniku</span>'}
+                    </div>
+                </div>
+
+                <!-- MVP Spotkania (OgĂłlny i Kobiet) -->
+                ${mvpHtml}
+
+                <!-- Dwie druĹĽyny lub skĹ‚ad -->
+                ${teamsHtml}
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+
         function renderArchiveTab() {
             const container = document.getElementById('archiveMatchesList');
             if (!container) return;
@@ -6476,7 +8049,7 @@ function initFirebaseSync() {
                 });
 
                 return `
-                    <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-2.5 shadow-md">
+                    <div onclick="openArchivedMatchModal(`${m.date}`, `${escapeHtml(m.monthName)}`)" title="Dotknij, aby zobaczyÄ‡ peĹ‚ny raport, wynik i MVP" class="bg-slate-950 hover:bg-slate-900/90 border border-slate-800 hover:border-slate-700 rounded-2xl p-3.5 space-y-2.5 shadow-md cursor-pointer transition active:scale-[0.99]">
                         <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
                             <div class="flex items-center gap-2">
                                 <span class="text-xs font-black font-mono text-emerald-400 bg-emerald-950 px-2.5 py-0.5 rounded-full border border-emerald-800/80">
@@ -6503,19 +8076,19 @@ function initFirebaseSync() {
                         ${teams && (teams.dark?.length || teams.light?.length) ? `
                             <div class="grid grid-cols-2 gap-2 text-[11px] pt-1">
                                 <div class="bg-slate-900/50 p-2 rounded-xl border border-slate-800">
-                                    <span class="font-bold text-slate-300 flex items-center gap-1 mb-1 truncate text-[10px]">
+                                    <span class="font-bold text-slate-300 flex items-center gap-1 mb-1 whitespace-normal break-words text-[10px]">
                                         <span class="w-2 h-2 rounded-full bg-slate-600 shrink-0"></span> ${escapeHtml(darkName)}
                                     </span>
                                     <ul class="text-slate-400 space-y-0.5 text-[10px]">
-                                        ${(teams.dark || []).map(p => `<li class="truncate">• ${escapeHtml(p)}</li>`).join('')}
+                                        ${(teams.dark || []).map(p => `<li class="whitespace-normal break-words">• ${escapeHtml(p)}</li>`).join('')}
                                     </ul>
                                 </div>
                                 <div class="bg-slate-900/50 p-2 rounded-xl border border-slate-800">
-                                    <span class="font-bold text-slate-300 flex items-center gap-1 mb-1 truncate text-[10px]">
+                                    <span class="font-bold text-slate-300 flex items-center gap-1 mb-1 whitespace-normal break-words text-[10px]">
                                         <span class="w-2 h-2 rounded-full bg-white shrink-0"></span> ${escapeHtml(lightName)}
                                     </span>
                                     <ul class="text-slate-400 space-y-0.5 text-[10px]">
-                                        ${(teams.light || []).map(p => `<li class="truncate">• ${escapeHtml(p)}</li>`).join('')}
+                                        ${(teams.light || []).map(p => `<li class="whitespace-normal break-words">• ${escapeHtml(p)}</li>`).join('')}
                                     </ul>
                                 </div>
                             </div>
@@ -6871,7 +8444,7 @@ function initFirebaseSync() {
                         <div class="flex items-center justify-between gap-2 flex-wrap">
                             <div class="flex items-center gap-2 min-w-0">
                                 <span class="text-base shrink-0">👑</span>
-                                <span class="text-xs font-black text-white uppercase tracking-wider truncate">Konto Organizatora (${escapeHtml(loggedPlayer)})</span>
+                                <span class="text-xs font-black text-white uppercase tracking-wider whitespace-normal break-words">Konto Organizatora (${escapeHtml(loggedPlayer)})</span>
                             </div>
                             <span class="bg-amber-950 text-amber-300 border border-amber-800 font-black text-[10px] px-2.5 py-1 rounded-full font-mono">
                                 📲 Zbierasz BLIK: ${escapeHtml(phone)}
@@ -6938,7 +8511,7 @@ function initFirebaseSync() {
                     <div class="flex items-center justify-between gap-2 flex-wrap">
                         <div class="flex items-center gap-2 min-w-0">
                             <span class="text-base shrink-0">${!hasAnyDebt ? '🎉' : '💳'}</span>
-                            <span class="text-xs font-black text-white uppercase tracking-wider truncate">Twoje składki (${escapeHtml(loggedPlayer)})</span>
+                            <span class="text-xs font-black text-white uppercase tracking-wider whitespace-normal break-words">Twoje składki (${escapeHtml(loggedPlayer)})</span>
                         </div>
                         ${matchStatusHtml}
                     </div>
@@ -7025,8 +8598,8 @@ function initFirebaseSync() {
                                 ${getPlayerAvatarHtml(p, 'sm')}
                                 <div class="min-w-0 flex-1">
                                     <div class="flex items-center gap-1.5 flex-wrap">
-                                        <span class="font-extrabold text-xs sm:text-sm ${isMe ? 'text-emerald-300' : 'text-white'} truncate" title="${escapeHtml(p)}">${escapeHtml(p)}</span>
-                                        ${isMe ? `<span class="text-[9px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800 px-1.5 py-0.2 rounded-md">TY</span>` : ''}
+                                        <span class="font-extrabold text-xs sm:text-sm ${isMe ? 'text-emerald-300' : 'text-white'} whitespace-normal break-words" title="${escapeHtml(p)}">${escapeHtml(p)}</span>
+                                        ${isMe ? `<span class="text-[9px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800 px-1.5 py-0.5 rounded-md">TY</span>` : ''}
                                         ${posBadges}
                                     </div>
                                     ${isOrg 
@@ -7196,8 +8769,8 @@ function initFirebaseSync() {
                                     ${getPlayerAvatarHtml(p, 'sm')}
                                     <div class="min-w-0">
                                         <div class="flex items-center gap-1.5 flex-wrap">
-                                            <span class="font-extrabold text-xs sm:text-sm ${isMe ? 'text-emerald-300' : 'text-white'} truncate">${escapeHtml(p)}</span>
-                                            ${isMe ? `<span class="text-[9px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800 px-1.5 py-0.2 rounded-md">TY</span>` : ''}
+                                            <span class="font-extrabold text-xs sm:text-sm ${isMe ? 'text-emerald-300' : 'text-white'} whitespace-normal break-words">${escapeHtml(p)}</span>
+                                            ${isMe ? `<span class="text-[9px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800 px-1.5 py-0.5 rounded-md">TY</span>` : ''}
                                             <span class="text-[10px] text-slate-400 font-mono">(${pluralizeGames(info.games)})</span>
                                         </div>
                                         <div class="text-[11px] text-slate-400 mt-0.5">
@@ -7641,11 +9214,11 @@ function initFirebaseSync() {
             const isWinningStreak = recentForm.length >= 3 && recentForm.slice(-3).every(r => r === 'W');
 
             // 1. KATEGORIA MVP
-            if (mvpWins === 1) badges.push({ icon: "👑", title: "MVP Star: 1x MVP meczu" });
-            if (mvpWins >= 2) badges.push({ icon: "🌟", title: `Dominator MVP: ${mvpWins}x MVP meczu` });
-            if (mvpWomenWins === 1) badges.push({ icon: "🌸", title: "Królowa Parkietu: 1x MVP Kobiet" });
-            if (mvpWomenWins >= 2) badges.push({ icon: "👸", title: `Cesarzowa Siatki: ${mvpWomenWins}x MVP Kobiet` });
-            if (hasUnanimousMvp) badges.push({ icon: "🎯", title: "Głos Ludu: >50% głosów na MVP w jednym meczu" });
+            if (mvpWins === 1) badges.push({ icon: "⭐", title: "MVP Star: 1x MVP meczu" });
+            if (mvpWins >= 2) badges.push({ icon: "👑", title: `Dominator MVP: ${mvpWins}x MVP meczu` });
+            if (mvpWomenWins === 1) badges.push({ icon: "👸", title: "Królowa Parkietu: 1x MVP Kobiet" });
+            if (mvpWomenWins >= 2) badges.push({ icon: "💎", title: `Cesarzowa Siatki: ${mvpWomenWins}x MVP Kobiet` });
+            if (hasUnanimousMvp) badges.push({ icon: "🔥", title: "Głos Ludu: >50% głosów na MVP w jednym meczu" });
 
             // 2. KATEGORIA FORMA & WYNIKI
             if (isWinningStreak) badges.push({ icon: "⚡", title: "W Zwycięskim Cugu: 3 wygrane mecze z rzędu" });
@@ -7654,7 +9227,7 @@ function initFirebaseSync() {
 
             // 3. KATEGORIA FREKWENCJA
             if (hasIronMonth) badges.push({ icon: "🦾", title: "Żelazne Płuca: 100% obecności w miesiącu" });
-            if (totalGames >= 12) badges.push({ icon: "💎", title: `Weteran: ${totalGames} rozegranych gier` });
+            if (totalGames >= 12) badges.push({ icon: "🏅", title: `Weteran: ${totalGames} rozegranych gier` });
             if (baseGames === 0 && attendedMatches >= 3) badges.push({ icon: "🚀", title: "Świeża Krew: Nowy gracz z min. 3 grami" });
 
             // 4. KATEGORIA ZAANGAŻOWANIE
@@ -7974,9 +9547,9 @@ function initFirebaseSync() {
                 const isSelected = editingPositionsSelected.includes(code);
                 return `
                     <button type="button" onclick="toggleEditPosition('${code}')" class="px-2 py-2 rounded-xl text-xs font-bold border transition flex items-center justify-between gap-1 active:scale-95 ${isSelected ? 'bg-indigo-600/90 border-indigo-400 text-white shadow-sm' : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'}">
-                        <span class="flex items-center gap-1.5 truncate">
+                        <span class="flex items-center gap-1.5 whitespace-normal break-words">
                             <span>${def.icon}</span>
-                            <span class="truncate">${def.name}</span>
+                            <span class="whitespace-normal break-words">${def.name}</span>
                         </span>
                         <span class="text-[10px] font-mono shrink-0">${isSelected ? '✓' : ''}</span>
                     </button>
@@ -8131,7 +9704,7 @@ function initFirebaseSync() {
                             <div class="flex items-center gap-2">
                                 ${getPlayerAvatarHtml(s.name, 'xs')}
                                 <div class="flex items-center gap-1.5 flex-wrap min-w-0">
-                                    <span class="${isMe ? 'text-emerald-300 font-bold' : ''} truncate">${escapeHtml(s.name)}${isMe ? ' ⭐ (Ty)' : ''}</span>
+                                    <span class="${isMe ? 'text-emerald-300 font-bold' : ''} whitespace-normal break-words">${escapeHtml(s.name)}${isMe ? ' ⭐ (Ty)' : ''}</span>
                                     ${streakBadge}
                                     <span class="flex items-center gap-0.5">${getPlayerBadgesHtml(s.name)}</span>
                                 </div>
@@ -8198,6 +9771,18 @@ function initFirebaseSync() {
                             </button>
                         </form>
                     </div>
+
+                    <!-- Wybór motywu dla niezalogowanych -->
+                    <div class="bg-slate-900/60 border border-slate-800 rounded-3xl p-4 space-y-2.5 max-w-md mx-auto">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                                <span>🎨</span> Motyw aplikacji:
+                            </span>
+                        </div>
+                        <div id="unloggedThemePickerContainer">
+                            ${getThemePickerHtml()}
+                        </div>
+                    </div>
                 `;
                 return;
             }
@@ -8238,7 +9823,7 @@ function initFirebaseSync() {
                             </div>
                             <div class="min-w-0">
                                 <div class="flex items-center gap-1.5 flex-wrap">
-                                    <h2 class="text-base sm:text-lg font-black text-white truncate">${escapeHtml(loggedPlayer)}</h2>
+                                    <h2 class="text-base sm:text-lg font-black text-white whitespace-normal break-words">${escapeHtml(loggedPlayer)}</h2>
                                     <button type="button" onclick="changeMyPlayerNamePrompt()" title="Zmień swoje imię i nazwisko" class="text-slate-400 hover:text-indigo-300 text-xs transition">✏️</button>
                                     <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full ${isOrganizer ? 'bg-amber-950 text-amber-300 border border-amber-800' : 'bg-emerald-950 text-emerald-400 border border-emerald-800'}">
                                         ${isOrganizer ? '👑 Organizator' : '🏐 Zawodnik'}
@@ -8269,9 +9854,9 @@ function initFirebaseSync() {
                                 const isSelected = myPositions.includes(code);
                                 return `
                                     <button type="button" onclick="toggleMyPosition('${code}')" class="px-2.5 py-2 rounded-xl text-xs font-bold border transition flex items-center justify-between gap-1.5 active:scale-95 ${isSelected ? 'bg-indigo-600/90 border-indigo-400 text-white shadow-md shadow-indigo-600/20' : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'}">
-                                        <span class="flex items-center gap-1.5 truncate">
+                                        <span class="flex items-center gap-1.5 whitespace-normal break-words">
                                             <span>${def.icon}</span>
-                                            <span class="truncate">${def.name}</span>
+                                            <span class="whitespace-normal break-words">${def.name}</span>
                                         </span>
                                         <span class="text-[11px] font-mono shrink-0">${isSelected ? '✓' : ''}</span>
                                     </button>
@@ -8316,14 +9901,14 @@ function initFirebaseSync() {
                             <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2.5 flex items-center justify-between gap-2">
                                 <div class="min-w-0">
                                     <span class="text-[10px] text-slate-400 block font-semibold">🌟 Najlepszy partner:</span>
-                                    <strong class="text-white text-xs block truncate">${bestPartner ? escapeHtml(bestPartner.name) : 'Brak danych'}</strong>
+                                    <strong class="text-white text-xs block whitespace-normal break-words">${bestPartner ? escapeHtml(bestPartner.name) : 'Brak danych'}</strong>
                                 </div>
                                 ${bestPartner ? `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-emerald-950 text-emerald-400 border border-emerald-800 shrink-0 font-mono">${bestPartner.winPct}% W (${bestPartner.wins}/${bestPartner.together})</span>` : `<span class="text-slate-500 text-[10px]">-</span>`}
                             </div>
                             <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2.5 flex items-center justify-between gap-2">
                                 <div class="min-w-0">
                                     <span class="text-[10px] text-slate-400 block font-semibold">⚔️ Główny rywal:</span>
-                                    <strong class="text-white text-xs block truncate">${topRival ? escapeHtml(topRival.name) : 'Brak danych'}</strong>
+                                    <strong class="text-white text-xs block whitespace-normal break-words">${topRival ? escapeHtml(topRival.name) : 'Brak danych'}</strong>
                                 </div>
                                 ${topRival ? `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-amber-950 text-amber-300 border border-amber-800 shrink-0 font-mono">${pluralizeMatches(topRival.against)}</span>` : `<span class="text-slate-500 text-[10px]">-</span>`}
                             </div>
@@ -8371,7 +9956,7 @@ function initFirebaseSync() {
                                                 <span class="text-[10px] text-slate-400">(${escapeHtml(h.monthName)})</span>
                                                 ${h.isMvpWinner ? `<span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800">👑 MVP</span>` : ''}
                                             </div>
-                                            <p class="text-[11px] text-slate-400 mt-0.5 flex items-center gap-1 truncate">
+                                            <p class="text-[11px] text-slate-400 mt-0.5 flex items-center gap-1 whitespace-normal break-words">
                                                 <span>${h.hasTeams ? (h.isDark ? '⬛' : '⬜') : '🏐'} ${escapeHtml(h.teamName)}</span>
                                                 <span class="text-slate-600">•</span>
                                                 <span class="font-mono text-slate-300">${escapeHtml(h.score)}</span>
@@ -8435,7 +10020,7 @@ function initFirebaseSync() {
                                 </div>
                                 <div class="flex items-center justify-between text-[11px] pt-1.5 border-t border-slate-800/60">
                                     <span class="text-slate-400">Tytuł przelewu:</span>
-                                    <span class="font-mono text-slate-200 font-medium truncate max-w-[190px]">Siatka ${escapeHtml(loggedPlayer)} ${escapeHtml(AppState.currentMonth)}</span>
+                                    <span class="font-mono text-slate-200 font-medium whitespace-normal break-words max-w-[190px]">Siatka ${escapeHtml(loggedPlayer)} ${escapeHtml(AppState.currentMonth)}</span>
                                 </div>
                             </div>
 
@@ -8464,7 +10049,23 @@ function initFirebaseSync() {
 
                 </div>
 
-                <!-- 2. STREFA ORGANIZATORA (WIDOCZNA TYLKO DLA MICHAŁA CHACIŃSKIEGO) -->
+                                <!-- WYBĂ“R MOTYWU APLIKACJI -->
+                <div class="bg-slate-900/90 border border-slate-800/80 rounded-3xl p-4 sm:p-5 shadow-xl space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl">đźŽ¨</span>
+                            <h3 class="font-bold text-xs uppercase tracking-wider text-white">Motyw Aplikacji</h3>
+                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                            4 Opcje + Klasyk
+                        </span>
+                    </div>
+                    <div id="profileThemePickerContainer" class="space-y-2">
+                        ${getThemePickerHtml()}
+                    </div>
+                </div>
+
+                <!-- 2. STREFA ORGANIZATORA -->
                 ${isOrganizer ? `
                     <div class="bg-gradient-to-br from-slate-900 via-amber-950/20 to-slate-950 border border-amber-800/60 rounded-3xl p-4 sm:p-5 shadow-xl space-y-4">
                         <div class="flex items-center justify-between border-b border-amber-800/60 pb-2.5">
@@ -8676,9 +10277,9 @@ function initFirebaseSync() {
                 const isSelected = regSelectedPositions.includes(code);
                 return `
                     <button type="button" onclick="toggleRegPosition('${code}')" class="px-2 py-1.5 rounded-xl text-[11px] font-bold border transition flex items-center justify-between gap-1 active:scale-95 ${isSelected ? 'bg-indigo-600/90 border-indigo-400 text-white shadow-sm' : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'}">
-                        <span class="flex items-center gap-1 truncate">
+                        <span class="flex items-center gap-1 whitespace-normal break-words">
                             <span>${def.icon}</span>
-                            <span class="truncate">${def.name}</span>
+                            <span class="whitespace-normal break-words">${def.name}</span>
                         </span>
                         <span class="text-[10px] font-mono shrink-0">${isSelected ? '✓' : ''}</span>
                     </button>
@@ -9154,22 +10755,22 @@ function initFirebaseSync() {
                 }
 
                 return `
-                    <div data-skill-player="${escapeHtml(p)}" class="bg-slate-900/60 hover:bg-slate-900/90 border border-slate-800/80 px-2.5 py-1.5 rounded-xl flex items-center justify-between gap-2 text-xs transition">
-                        <div class="flex items-center gap-2 min-w-0 flex-1">
-                            ${getPlayerAvatarHtml(p, 'xs')}
-                            <div class="min-w-0">
-                                <span class="font-bold text-slate-200 truncate block" title="${escapeHtml(p)}">${escapeHtml(p)}</span>
-                                <div class="flex items-center gap-1 mt-0.5 cursor-pointer group" onclick="openPlayerPositionEditModal(${toInlineArgument(p)})" title="Kliknij, aby zmienić pozycje gracza">
+                    <div data-skill-player="${escapeHtml(p)}" class="bg-slate-900/60 hover:bg-slate-900/90 border border-slate-800/80 p-2.5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            ${getPlayerAvatarHtml(p, 'sm')}
+                            <div class="min-w-0 leading-tight">
+                                <span class="font-extrabold text-slate-100 text-xs sm:text-sm whitespace-normal break-words">${escapeHtml(p)}</span>
+                                <div class="flex items-center gap-1 mt-1 flex-wrap cursor-pointer group" onclick="openPlayerPositionEditModal(${toInlineArgument(p)})" title="Kliknij, aby zmienić pozycje gracza">
                                     ${getPlayerPositionsBadgesHtml(p)}
                                     <span class="text-[9px] text-indigo-400 group-hover:text-indigo-300 font-bold ml-0.5">✏️</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-1.5 shrink-0">
-                            <div class="flex items-center gap-0.5 bg-slate-950/90 px-1.5 py-1 rounded-lg border border-slate-800/80">
+                        <div class="flex items-center justify-between sm:justify-end gap-2 shrink-0 pt-1.5 sm:pt-0 border-t sm:border-t-0 border-slate-800/60">
+                            <div class="flex items-center gap-1 bg-slate-950/90 px-2.5 py-1 rounded-xl border border-slate-800/80 shadow-inner">
                                 ${starsHtml}
                             </div>
-                            <span class="skill-level-badge text-[9.5px] font-black px-1.5 py-0.5 rounded border min-w-[44px] text-center ${lvl.badgeClass}">
+                            <span class="skill-level-badge text-[10px] font-black px-2.5 py-1 rounded-xl border min-w-[52px] text-center shadow-sm ${lvl.badgeClass}">
                                 ${lvl.label}
                             </span>
                         </div>
@@ -9216,7 +10817,7 @@ function initFirebaseSync() {
                 const lvl = levelConfig[newRating] || levelConfig[3];
                 const badgeEl = row.querySelector('.skill-level-badge');
                 if (badgeEl) {
-                    badgeEl.className = `skill-level-badge text-[9.5px] font-black px-1.5 py-0.5 rounded border min-w-[44px] text-center ${lvl.badgeClass}`;
+                    badgeEl.className = `skill-level-badge text-[10px] font-black px-2.5 py-1 rounded-xl border min-w-[52px] text-center shadow-sm ${lvl.badgeClass}`;
                     badgeEl.innerText = lvl.label;
                 }
                 const starSvgs = row.querySelectorAll('button[onclick*="updatePlayerSkill"] svg');
@@ -9245,7 +10846,7 @@ function initFirebaseSync() {
             if (!container) return;
             container.innerHTML = AppState.all_players.map(p => `
                 <span class="inline-flex items-center gap-1 bg-slate-900 border border-slate-800 pl-2 pr-1 py-1 rounded-xl text-xs text-slate-300 mb-1">
-                    <span class="truncate max-w-[130px]">${escapeHtml(p)}</span>
+                    <span class="whitespace-normal break-words max-w-[130px]">${escapeHtml(p)}</span>
                     <button type="button" onclick="editPlayerInDirectory(${toInlineArgument(p)})" class="text-indigo-400 hover:text-indigo-300 font-bold p-0.5 ml-1" title="Edytuj">✏️</button>
                     <button type="button" onclick="removePlayerFromDirectory(${toInlineArgument(p)})" class="text-rose-500 hover:text-rose-400 font-bold p-0.5" title="Usuń">✕</button>
                 </span>
@@ -9573,10 +11174,10 @@ function initFirebaseSync() {
         function selectTemplate(type) {
             currentTemplateType = type;
             document.querySelectorAll('#shareModal button[id^="tplBtn-"]').forEach(btn => {
-                btn.className = "py-1.5 rounded-lg font-bold text-slate-400 hover:text-white transition text-center truncate";
+                btn.className = "py-1.5 px-0.5 rounded-lg font-bold text-slate-400 hover:text-white transition text-center leading-tight whitespace-normal break-words";
             });
             const activeBtn = document.getElementById(`tplBtn-${type}`);
-            if (activeBtn) activeBtn.className = "py-1.5 rounded-lg font-bold bg-emerald-500 text-slate-950 transition text-center truncate";
+            if (activeBtn) activeBtn.className = "py-1.5 px-0.5 rounded-lg font-bold bg-emerald-500 text-slate-950 transition text-center leading-tight whitespace-normal break-words";
             
             const preview = document.getElementById('shareMessagePreview');
             if (preview) preview.value = generateShareMessage(type);
