@@ -12,9 +12,9 @@
     <!-- Meta Tagi Open Graph (Facebook, Messenger, WhatsApp) -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Siatka-App - Panel Meczu &amp; Frekwencja 🏐">
-    <meta property="og:description" content="Składy, frekwencja, podział na drużyny i głosowanie na MVP spotkania.">
+    <meta property="og:description" content="Składy, frekwencja, podział na drużyny i głosowanie na MTV spotkania.">
     <meta property="og:site_name" content="Siatka-App">
-    <meta name="description" content="Składy, frekwencja, podział na drużyny i głosowanie na MVP spotkania.">
+    <meta name="description" content="Składy, frekwencja, podział na drużyny i głosowanie na MTV spotkania.">
     
     <!-- Favicon & App Icons -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%8F%90</text></svg>">
@@ -705,6 +705,98 @@
             border: none !important;
         }
 
+        /* ================= CZYTELNOŚĆ LICZNIKA GŁOSÓW MVP I BANERA WE WSZYSTKICH MOTYWACH ================= */
+        #recentMvpQuickBanner .mvp-quick-banner-card,
+        #recentMvpQuickBanner > div {
+            background: #0f172a !important;
+            background-image: none !important;
+            border-color: rgba(56, 189, 248, 0.4) !important;
+        }
+        [data-theme="haaland-dark"] #recentMvpQuickBanner .mvp-quick-banner-card,
+        [data-theme="haaland-dark"] #recentMvpQuickBanner > div {
+            background: #0f172a !important;
+            background-image: none !important;
+            border-color: rgba(56, 189, 248, 0.4) !important;
+        }
+        [data-theme="haaland-light"] #recentMvpQuickBanner .mvp-quick-banner-card,
+        [data-theme="haaland-light"] #recentMvpQuickBanner > div {
+            background: #ffffff !important;
+            background-image: none !important;
+            border-color: #bae6fd !important;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.12) !important;
+        }
+        [data-theme="haaland-light"] #recentMvpQuickBanner h2,
+        [data-theme="haaland-light"] #recentMvpQuickBanner span.text-white,
+        [data-theme="haaland-light"] #recentMvpQuickBanner span.text-xs {
+            color: #0c1322 !important;
+        }
+        [data-theme="haaland-light"] #recentMvpQuickBanner p {
+            color: #334155 !important;
+        }
+        [data-theme="mercurial-dark"] #recentMvpQuickBanner .mvp-quick-banner-card,
+        [data-theme="mercurial-dark"] #recentMvpQuickBanner > div {
+            background: #180915 !important;
+            background-image: none !important;
+            border-color: rgba(244, 63, 94, 0.4) !important;
+        }
+        [data-theme="mercurial-light"] #recentMvpQuickBanner .mvp-quick-banner-card,
+        [data-theme="mercurial-light"] #recentMvpQuickBanner > div {
+            background: #ffffff !important;
+            background-image: none !important;
+            border-color: #fecdd3 !important;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.12) !important;
+        }
+        [data-theme="mercurial-light"] #recentMvpQuickBanner h2,
+        [data-theme="mercurial-light"] #recentMvpQuickBanner span.text-white,
+        [data-theme="mercurial-light"] #recentMvpQuickBanner span.text-xs {
+            color: #120912 !important;
+        }
+        [data-theme="mercurial-light"] #recentMvpQuickBanner p {
+            color: #475569 !important;
+        }
+
+        /* Wyrazista plakietka liczby oddanych głosów MVP (Super czytelna w każdym motywie) */
+        .mvp-votes-pill {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+            font-weight: 900 !important;
+            font-size: 11px !important;
+            padding: 2px 8px !important;
+            border-radius: 8px !important;
+            background-color: #020617 !important;
+            color: #34d399 !important;
+            border: 1px solid rgba(52, 211, 153, 0.5) !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+            line-height: 1.2 !important;
+            white-space: nowrap !important;
+        }
+        [data-theme="haaland-dark"] .mvp-votes-pill {
+            background-color: #030c1a !important;
+            color: #38bdf8 !important;
+            border-color: #0284c7 !important;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.25) !important;
+        }
+        [data-theme="haaland-light"] .mvp-votes-pill {
+            background-color: #0284c7 !important;
+            color: #ffffff !important;
+            border-color: #0369a1 !important;
+            box-shadow: 0 1px 3px rgba(2, 132, 199, 0.35) !important;
+        }
+        [data-theme="mercurial-dark"] .mvp-votes-pill {
+            background-color: #1c0514 !important;
+            color: #fb7185 !important;
+            border-color: #e11d48 !important;
+            box-shadow: 0 0 10px rgba(244, 63, 94, 0.25) !important;
+        }
+        [data-theme="mercurial-light"] .mvp-votes-pill {
+            background-color: #e11d48 !important;
+            color: #ffffff !important;
+            border-color: #be123c !important;
+            box-shadow: 0 1px 3px rgba(225, 29, 72, 0.35) !important;
+        }
+
         /* ================= KARTA MOJA SKŁADKA W KAŻDYM MOTYWIE ================= */
         .billing-badge-paid {
             background-color: #10b981 !important;
@@ -1301,7 +1393,7 @@
             <!-- Prominent MVP Banner (Dynamic Alert for Recent Match Voting) -->
             <div id="recentMvpQuickBanner" class="hidden"></div>
             
-            <!-- Dates Carousel (Piątki) -->
+            <!-- Dates Carousel (Mecze) -->
             <!-- Match Selector & Dates Row -->
             <div class="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-3 shadow-md space-y-2">
                 <div class="flex items-center justify-between gap-2 px-1">
@@ -1455,13 +1547,13 @@
 
             </div>
 
-            <!-- ================= ZINTEGROWANE GŁOSOWANIE MVP MECZU NA EKRANIE GŁÓWNYM ================= -->
+            <!-- ================= ZINTEGROWANE GŁOSOWANIE MTV MECZU NA EKRANIE GŁÓWNYM ================= -->
             <div id="integratedMvpCard" class="bg-gradient-to-br from-slate-900 via-amber-950/20 to-slate-950 border border-amber-800/50 rounded-3xl p-4 sm:p-5 shadow-xl space-y-4">
                 <div class="flex items-center justify-between gap-2 flex-wrap">
                     <div class="flex items-center gap-2">
                         <span class="text-2xl">🏆</span>
                         <div>
-                            <h3 class="font-black text-sm sm:text-base text-white">MVP Spotkania &amp; Kobiet</h3>
+                            <h3 class="font-black text-sm sm:text-base text-white">MTV Spotkania &amp; Kobiet</h3>
                             <p id="mvpMatchDateBadge" class="text-[11px] text-amber-400 font-semibold">Mecz: -</p>
                         </div>
                     </div>
@@ -1476,7 +1568,7 @@
                     </div>
                 </div>
 
-                <!-- MVP Winner Highlight Card (Secret during voting, Celebratory when finished) -->
+                <!-- MTV Winner Highlight Card (Secret during voting, Celebratory when finished) -->
                 <div id="mvpWinnerContainer" class="bg-slate-950/90 border border-amber-800/60 rounded-2xl p-3.5 text-center space-y-2 relative overflow-hidden">
                     <p id="mvpWinnerHeaderLabel" class="text-[10px] uppercase tracking-widest text-amber-400 font-bold">🔒 TAJNE GŁOSOWANIE W TOKU</p>
                     <div id="mvpWinnersFlex" class="space-y-3">
@@ -1486,7 +1578,7 @@
                         </div>
                         <div id="mvpWomenWinnerBox" class="hidden pt-2.5 border-t border-slate-800/80 bg-pink-950/10 rounded-xl p-2 border border-pink-900/30">
                             <p class="text-[10px] font-black uppercase tracking-wider text-pink-400 flex items-center justify-center gap-1">
-                                <span>🌸</span> OFICJALNE MVP KOBIET 👑
+                                <span>🌸</span> OFICJALNE MTV KOBIET 👑
                             </p>
                             <h4 id="mvpWomenWinnerName" class="text-base sm:text-lg font-black text-pink-200 mt-0.5">-</h4>
                             <p id="mvpWomenWinnerVotes" class="text-xs text-slate-400">-</p>
@@ -1510,14 +1602,14 @@
                                 </select>
                             </div>
                             <div>
-                                <label for="nomineeSelect" class="block text-[11px] text-slate-400 mb-1">2. Twój głos na MVP meczu (ogólne):</label>
+                                <label for="nomineeSelect" class="block text-[11px] text-slate-400 mb-1">2. Twój głos na MTV meczu (ogólne):</label>
                                 <select id="nomineeSelect" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-amber-500 cursor-pointer">
                                     <!-- Populated dynamically -->
                                 </select>
                             </div>
                             <div id="womenNomineeContainer" class="hidden">
                                 <label for="womenNomineeSelect" class="block text-[11px] text-pink-400 font-bold mb-1 flex items-center gap-1">
-                                    <span>🌸</span> 3. Twój głos na MVP Kobiet:
+                                    <span>🌸</span> 3. Twój głos na MTV Kobiet:
                                 </label>
                                 <select id="womenNomineeSelect" class="w-full bg-slate-900 border border-pink-700/60 text-xs font-semibold text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-pink-500 cursor-pointer">
                                     <!-- Populated dynamically -->
@@ -1526,7 +1618,7 @@
                         </div>
 
                         <button type="button" onclick="submitMvpVote()" class="w-full bg-gradient-to-r from-amber-500 via-pink-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-2.5 rounded-xl text-xs transition active:scale-95 shadow-lg shadow-amber-500/20">
-                            Zatwierdź głos na MVP 🌟
+                            Zatwierdź głos na MTV 🌟
                         </button>
                     </div>
                 </div>
@@ -1554,7 +1646,7 @@
                 <div class="pt-3 border-t border-slate-800 text-[11px] text-slate-400 space-y-1.5">
                     <div class="flex items-center justify-between">
                         <span id="whoVotedTitle" class="font-bold text-slate-300 uppercase tracking-wider text-[10px]">Status obecnych:</span>
-                        <span id="whoVotedProgressRatio" class="font-mono text-emerald-400 font-bold text-[10px]">0 / 0</span>
+                        <span id="whoVotedProgressRatio" class="mvp-votes-pill text-[10px]">0 / 0</span>
                     </div>
                     <div id="whoVotedList" class="space-y-1 max-h-48 overflow-y-auto pr-1">
                         <!-- Rendered dynamically -->
@@ -1825,7 +1917,7 @@
                     <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-2xl flex flex-col justify-between space-y-1">
                         <span class="text-2xl">👑</span>
                         <div>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">Król MVP</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">Król MTV</span>
                             <p id="recordKingMvp" class="font-extrabold text-white text-xs sm:text-sm whitespace-normal break-words mt-0.5">-</p>
                         </div>
                     </div>
@@ -1869,36 +1961,36 @@
                     <div class="bg-slate-950 border border-slate-800/80 rounded-2xl p-2.5 flex items-start gap-2.5">
                         <span class="text-xl shrink-0 mt-0.5">⭐</span>
                         <div class="min-w-0 flex-1">
-                            <strong class="block text-white text-xs font-bold">MVP Star</strong>
-                            <p class="text-[11px] text-slate-400 leading-tight mt-0.5">Min. 1x MVP meczu</p>
+                            <strong class="block text-white text-xs font-bold">MTV Star</strong>
+                            <p class="text-[11px] text-slate-400 leading-tight mt-0.5">Min. 1x MTV meczu</p>
                         </div>
                     </div>
                     <div class="bg-slate-950 border border-slate-800/80 rounded-2xl p-2.5 flex items-start gap-2.5">
                         <span class="text-xl shrink-0 mt-0.5">👑</span>
                         <div class="min-w-0 flex-1">
-                            <strong class="block text-amber-300 text-xs font-bold">Dominator MVP</strong>
-                            <p class="text-[11px] text-slate-400 leading-tight mt-0.5">2+ wygrane MVP w sezonie</p>
+                            <strong class="block text-amber-300 text-xs font-bold">Dominator MTV</strong>
+                            <p class="text-[11px] text-slate-400 leading-tight mt-0.5">2+ wygrane MTV w sezonie</p>
                         </div>
                     </div>
                     <div class="bg-slate-950 border border-pink-900/40 bg-pink-950/10 rounded-2xl p-2.5 flex items-start gap-2.5">
                         <span class="text-xl shrink-0 mt-0.5">👸</span>
                         <div class="min-w-0 flex-1">
                             <strong class="block text-pink-300 text-xs font-bold">Królowa Parkietu</strong>
-                            <p class="text-[11px] text-pink-300/70 leading-tight mt-0.5">1x MVP Kobiet spotkania</p>
+                            <p class="text-[11px] text-pink-300/70 leading-tight mt-0.5">1x MTV Kobiet spotkania</p>
                         </div>
                     </div>
                     <div class="bg-slate-950 border border-pink-800/50 bg-pink-950/20 rounded-2xl p-2.5 flex items-start gap-2.5">
                         <span class="text-xl shrink-0 mt-0.5">💎</span>
                         <div class="min-w-0 flex-1">
                             <strong class="block text-pink-200 text-xs font-bold">Cesarzowa Siatki</strong>
-                            <p class="text-[11px] text-pink-300/70 leading-tight mt-0.5">2+ wygrane MVP Kobiet w sezonie</p>
+                            <p class="text-[11px] text-pink-300/70 leading-tight mt-0.5">2+ wygrane MTV Kobiet w sezonie</p>
                         </div>
                     </div>
                     <div class="bg-slate-950 border border-slate-800/80 rounded-2xl p-2.5 flex items-start gap-2.5">
                         <span class="text-xl shrink-0 mt-0.5">🔥</span>
                         <div class="min-w-0 flex-1">
                             <strong class="block text-amber-400 text-xs font-bold">Głos Ludu</strong>
-                            <p class="text-[11px] text-slate-400 leading-tight mt-0.5">>50% głosów na MVP w meczu</p>
+                            <p class="text-[11px] text-slate-400 leading-tight mt-0.5">>50% głosów na MTV w meczu</p>
                         </div>
                     </div>
                     <div class="bg-slate-950 border border-slate-800/80 rounded-2xl p-2.5 flex items-start gap-2.5">
@@ -2021,7 +2113,7 @@
                 <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-pink-500 to-amber-300 text-slate-950 text-2xl shadow-lg shadow-amber-500/20 mb-1">
                     🏆
                 </div>
-                <h2 id="dedicatedMvpModalTitle" class="text-lg font-black text-white tracking-tight">Głosowanie na MVP Meczu</h2>
+                <h2 id="dedicatedMvpModalTitle" class="text-lg font-black text-white tracking-tight">Głosowanie na MTV Meczu</h2>
                 <div class="flex items-center justify-center gap-2">
                     <span id="dedicatedMvpMatchDateBadge" class="text-[11px] font-bold text-amber-300 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">--</span>
                     <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">🔒 Tajne</span>
@@ -2380,7 +2472,7 @@
         </div>
     </div>
 
-        <!-- Archived Match Detail Modal (Historia & SkĹ‚ady) -->
+        <!-- Archived Match Detail Modal (Historia & Składy) -->
     <div id="archivedMatchModal" role="dialog" aria-modal="true" aria-labelledby="archivedMatchModalTitle" onclick="if(event.target === this) closeArchivedMatchModal()" class="fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 hidden overflow-y-auto">
         <div class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-4 sm:p-5 max-w-md w-full space-y-3.5 shadow-2xl max-h-[86dvh] overflow-y-auto animate-fade-in relative my-auto">
             <!-- Header -->
@@ -2393,9 +2485,9 @@
                         <span id="archivedMatchModalDateBadge" class="text-[11px] font-mono font-black text-slate-200 bg-slate-800 border border-slate-700 px-2.5 py-0.5 rounded-full shadow-sm">--</span>
                     </div>
                     <h3 id="archivedMatchModalTitle" class="text-base sm:text-lg font-black text-white mt-1 leading-snug whitespace-normal break-words">Podsumowanie spotkania</h3>
-                    <p id="archivedMatchModalSubtext" class="text-[11px] text-slate-400 mt-0.5 whitespace-normal break-words">SkĹ‚ady druĹĽyn, oficjalny wynik i nagrody MVP</p>
+                    <p id="archivedMatchModalSubtext" class="text-[11px] text-slate-400 mt-0.5 whitespace-normal break-words">Składy drużyn, oficjalny wynik i nagrody MTV</p>
                 </div>
-                <button type="button" onclick="closeArchivedMatchModal()" aria-label="Zamknij" class="text-white hover:text-rose-400 font-black text-base w-9 h-9 rounded-2xl bg-slate-800 hover:bg-slate-700 active:scale-90 border border-slate-600/80 flex items-center justify-center transition shrink-0 shadow-lg cursor-pointer">âś•</button>
+                <button type="button" onclick="closeArchivedMatchModal()" aria-label="Zamknij" class="text-white hover:text-rose-400 font-black text-base w-9 h-9 rounded-2xl bg-slate-800 hover:bg-slate-700 active:scale-90 border border-slate-600/80 flex items-center justify-center transition shrink-0 shadow-lg cursor-pointer">✕</button>
             </div>
 
             <!-- Dynamic Content Body -->
@@ -2406,7 +2498,7 @@
             <!-- Footer -->
             <div class="pt-1 border-t border-slate-800/80">
                 <button type="button" onclick="closeArchivedMatchModal()" class="w-full bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-bold py-2.5 rounded-2xl text-xs transition shadow-sm">
-                    Zamknij raport âś•
+                    Zamknij raport ✕
                 </button>
             </div>
         </div>
@@ -2482,13 +2574,13 @@
             
             <div class="grid grid-cols-4 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-[10px]">
                 <button type="button" id="tplBtn-match" onclick="selectTemplate('match')" class="py-1.5 rounded-lg font-bold bg-emerald-500 text-slate-950 transition text-center whitespace-normal break-words">
-                    Mecz (Pt)
+                    Mecz 🏐
                 </button>
                 <button type="button" id="tplBtn-monday" onclick="selectTemplate('monday')" class="py-1.5 rounded-lg font-bold text-slate-400 hover:text-white transition text-center whitespace-normal break-words">
                     Zapisy (Pn)
                 </button>
                 <button type="button" id="tplBtn-mvp" onclick="selectTemplate('mvp')" class="py-1.5 rounded-lg font-bold text-slate-400 hover:text-white transition text-center whitespace-normal break-words">
-                    MVP 🏆
+                    MTV 🏆
                 </button>
                 <button type="button" id="tplBtn-billing" onclick="selectTemplate('billing')" class="py-1.5 rounded-lg font-bold text-slate-400 hover:text-white transition text-center whitespace-normal break-words">
                     Składki 💰
@@ -2645,7 +2737,7 @@
                     <strong id="playerCardGames" class="text-base font-black text-emerald-400 font-mono">0</strong>
                 </div>
                 <div class="bg-slate-950 border border-slate-800/90 rounded-2xl p-2.5">
-                    <span class="text-[10px] uppercase font-bold text-slate-400 block">MVP</span>
+                    <span class="text-[10px] uppercase font-bold text-slate-400 block">MTV</span>
                     <strong id="playerCardMvp" class="text-base font-black text-amber-300 font-mono">0 👑</strong>
                 </div>
                 <div class="bg-slate-950 border border-slate-800/90 rounded-2xl p-2.5">
@@ -4111,10 +4203,11 @@ function initFirebaseSync() {
                                 <div class="min-w-0 flex-1">
                                     <div class="flex items-center gap-1.5 flex-wrap">
                                         <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md">TWÓJ GŁOS!</span>
-                                        <span class="text-xs font-black text-amber-200 whitespace-normal break-words">MVP z meczu (${latest.match.date})</span>
+                                        <span class="text-xs font-black text-amber-200 whitespace-normal break-words leading-tight">MTV z meczu (${latest.match.date})</span>
                                     </div>
-                                    <p class="text-[11px] text-amber-300/90 mt-0.5 leading-snug">
-                                        Grałeś w meczu! Zagłosuj na MVP i MVP Kobiet (oddano: <strong class="font-mono text-white">${totalVotes}/${attendees.length}</strong>).
+                                    <p class="text-[11px] text-amber-300/90 mt-1 leading-snug flex items-center gap-1.5 flex-wrap">
+                                        <span>Grałeś w meczu! Zagłosuj na MTV i MTV Kobiet:</span>
+                                        <span class="mvp-votes-pill">${totalVotes} / ${attendees.length}</span>
                                     </p>
                                 </div>
                             </div>
@@ -4129,16 +4222,17 @@ function initFirebaseSync() {
                     `;
                 } else {
                     bannerEl.innerHTML = `
-                        <div class="bg-gradient-to-r from-emerald-500/15 via-slate-900 to-slate-900 border border-emerald-500/40 rounded-2xl p-3 sm:p-3.5 flex items-center justify-between gap-3 shadow-md relative">
+                        <div class="mvp-quick-banner-card bg-slate-900 border border-sky-500/40 rounded-2xl p-3 sm:p-3.5 flex items-center justify-between gap-3 shadow-md relative">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
                                 <span class="text-2xl shrink-0">🏆</span>
                                 <div class="min-w-0 flex-1">
                                     <div class="flex items-center gap-1.5 flex-wrap">
-                                        <span class="text-[10px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded-md">Głosowanie MVP</span>
-                                        <span class="text-xs font-bold text-white whitespace-normal break-words">Mecz (${latest.match.date})</span>
+                                        <span class="text-[10px] font-black uppercase tracking-wider bg-slate-900 text-sky-300 border border-sky-500/40 px-2 py-0.5 rounded-md">Głosowanie MTV</span>
+                                        <span class="text-xs font-bold text-white whitespace-normal break-words leading-tight">Mecz (${latest.match.date})</span>
                                     </div>
-                                    <p class="text-[11px] text-slate-300 mt-0.5 leading-snug">
-                                        ${hasVoted ? '✅ Twój głos jest zapisany. ' : ''}Trwa zbieranie głosów (<strong class="font-mono text-emerald-400">${totalVotes}/${attendees.length}</strong>).
+                                    <p class="text-[11px] text-slate-300 mt-1 leading-snug flex items-center gap-1.5 flex-wrap">
+                                        <span>${hasVoted ? '✅ Twój głos jest zapisany.' : ''} Trwa zbieranie głosów:</span>
+                                        <span class="mvp-votes-pill">${totalVotes} / ${attendees.length}</span>
                                     </p>
                                 </div>
                             </div>
@@ -4183,7 +4277,7 @@ function initFirebaseSync() {
                             <span class="text-2xl shrink-0">👑</span>
                             <div class="min-w-0 flex-1">
                                 <div class="flex items-center gap-1.5 flex-wrap">
-                                    <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md">WYNIKI MVP</span>
+                                    <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md">WYNIKI MTV</span>
                                     <span class="text-xs font-bold text-white whitespace-normal break-words">Mecz (${latest.match.date})</span>
                                 </div>
                                 <p class="text-[11px] text-amber-200 mt-0.5 leading-snug whitespace-normal break-words">
@@ -4206,13 +4300,13 @@ function initFirebaseSync() {
         function handleUrlNavigationParams() {
             const urlParams = new URLSearchParams(window.location.search);
             const targetTab = urlParams.get('tab');
-            const targetMatchDate = urlParams.get('match') || urlParams.get('mvp') || urlParams.get('vote') || urlParams.get('glosuj');
-            const isMvpLink = urlParams.has('mvp') || urlParams.has('vote') || urlParams.has('glosuj');
+            const targetMatchDate = urlParams.get('match') || urlParams.get('mtv') || urlParams.get('mvp') || urlParams.get('vote') || urlParams.get('glosuj');
+            const isMvpLink = urlParams.has('mtv') || urlParams.has('mvp') || urlParams.has('vote') || urlParams.has('glosuj');
 
-            // Jeśli użytkownik wszedł z bezpośredniego linku do głosowania na MVP:
+            // Jeśli użytkownik wszedł z bezpośredniego linku do głosowania na MTV:
             // Otwieramy odizolowany, dedykowany panel głosowania bez nadawania uprawnień gościa aplikacji
             if (isMvpLink) {
-                document.title = "🏆 Głosowanie na MVP Meczu";
+                document.title = "🏆 Głosowanie na MTV Meczu";
                 openDedicatedMvpModal(targetMatchDate);
                 return;
             }
@@ -4248,7 +4342,7 @@ function initFirebaseSync() {
             if (hasInitiallySelectedMonth) return;
 
             const urlParams = new URLSearchParams(window.location.search);
-            const targetMatchDate = urlParams.get('match') || urlParams.get('mvp') || urlParams.get('vote') || urlParams.get('glosuj');
+            const targetMatchDate = urlParams.get('match') || urlParams.get('mtv') || urlParams.get('mvp') || urlParams.get('vote') || urlParams.get('glosuj');
             if (targetMatchDate) {
                 if (targetMatchDate === 'latest') {
                     const latest = getLatestPlayedMatchInfo();
@@ -6508,20 +6602,20 @@ function initFirebaseSync() {
             const monthData = AppState.months[AppState.currentMonth];
             const currentMatch = monthData?.matches[AppState.currentMatchIndex];
             const dateStr = currentMatch ? currentMatch.date : '';
-            // Generujemy link do mvp.html dla dedykowanego podglądu "🏆 Głosowanie na MVP Meczu" w Messengerze
-            let mvpUrl = 'mvp.html';
+            // Generujemy link do mtv.html dla dedykowanego podglądu "🏆 Głosowanie na MTV Meczu" w Messengerze
+            let mvpUrl = 'mtv.html';
             try {
                 const loc = window.location;
                 if (loc.origin && loc.origin !== 'null' && loc.origin.startsWith('http')) {
                     const dir = loc.pathname.substring(0, loc.pathname.lastIndexOf('/') + 1);
-                    mvpUrl = `${loc.origin}${dir}mvp.html`;
+                    mvpUrl = `${loc.origin}${dir}mtv.html`;
                 } else {
                     const raw = loc.href.split('?')[0].split('#')[0];
                     const dir = raw.substring(0, raw.lastIndexOf('/') + 1);
-                    mvpUrl = `${dir}mvp.html`;
+                    mvpUrl = `${dir}mtv.html`;
                 }
             } catch(e) {
-                mvpUrl = 'mvp.html';
+                mvpUrl = 'mtv.html';
             }
             const link = dateStr ? `${mvpUrl}?date=${encodeURIComponent(dateStr)}` : mvpUrl;
 
@@ -6529,10 +6623,10 @@ function initFirebaseSync() {
                 navigator.clipboard.writeText(link).then(() => {
                     showToast("Skopiowano link do głosowania do schowka! 📋");
                 }).catch(() => {
-                    prompt("Skopiuj link do głosowania na MVP:", link);
+                    prompt("Skopiuj link do głosowania na MTV:", link);
                 });
             } else {
-                prompt("Skopiuj link do głosowania na MVP:", link);
+                prompt("Skopiuj link do głosowania na MTV:", link);
             }
         }
 
@@ -6626,7 +6720,7 @@ function initFirebaseSync() {
                         <div class="text-4xl animate-bounce">⏳</div>
                         <h3 class="text-base font-black text-white">Mecz jeszcze się nie odbył</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            Spotkanie zaplanowane na <strong class="text-amber-400 font-bold">${match.date}</strong> jeszcze się nie odbyło. Głosowanie na MVP zostanie odblokowane w dniu meczu po rozegraniu gry! 🏐
+                            Spotkanie zaplanowane na <strong class="text-amber-400 font-bold">${match.date}</strong> jeszcze się nie odbyło. Głosowanie na MTV zostanie odblokowane w dniu meczu po rozegraniu gry! 🏐
                         </p>
                         <div class="pt-2">
                             <button type="button" onclick="exitDedicatedMvpToApp(); window.close();" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-2xl text-xs transition border border-slate-700">
@@ -6705,19 +6799,19 @@ function initFirebaseSync() {
 
                 contentArea.innerHTML = `
                     <div class="space-y-3.5 py-2">
-                        <!-- Ogólny MVP -->
+                        <!-- Ogólny MTV -->
                         <div class="bg-gradient-to-br from-amber-500/20 via-amber-950/30 to-slate-900 border border-amber-500/40 p-4 rounded-2xl text-center space-y-1.5 shadow-lg shadow-amber-500/10">
                             <span class="text-3xl block animate-bounce">👑</span>
-                            <span class="text-[10px] uppercase tracking-wider font-extrabold text-amber-300">MVP Meczu (Ogólne)</span>
+                            <span class="text-[10px] uppercase tracking-wider font-extrabold text-amber-300">MTV Meczu (Ogólne)</span>
                             <div class="text-lg font-black text-white">${escapeHtml(winnerNameStr)}</div>
                             ${winnerVotesStr ? `<div class="text-xs font-bold text-amber-400 font-mono">${winnerVotesStr}</div>` : ''}
                         </div>
 
                         ${femaleAttendees.length >= 2 && winnerWomenStr ? `
-                        <!-- MVP Kobiet -->
+                        <!-- MTV Kobiet -->
                         <div class="bg-gradient-to-br from-pink-500/20 via-rose-950/30 to-slate-900 border border-pink-500/40 p-3.5 rounded-2xl text-center space-y-1.5 shadow-lg shadow-pink-500/10">
                             <span class="text-2xl block">🌸</span>
-                            <span class="text-[10px] uppercase tracking-wider font-extrabold text-pink-300">MVP Kobiet</span>
+                            <span class="text-[10px] uppercase tracking-wider font-extrabold text-pink-300">MTV Kobiet</span>
                             <div class="text-base font-black text-white">${escapeHtml(winnerWomenStr)}</div>
                             ${winnerWomenVotesStr ? `<div class="text-xs font-bold text-pink-400 font-mono">${winnerWomenVotesStr}</div>` : ''}
                         </div>
@@ -6759,7 +6853,7 @@ function initFirebaseSync() {
                     <div class="space-y-1.5 bg-slate-950/70 p-2.5 rounded-2xl border border-slate-800">
                         <div class="flex items-center justify-between text-[11px]">
                             <span class="text-slate-400 font-semibold">Postęp głosowania:</span>
-                            <span class="font-mono font-bold text-amber-300">${totalVotes} / ${attendees.length} (${pct}%)</span>
+                            <span class="mvp-votes-pill">${totalVotes} / ${attendees.length} (${pct}%)</span>
                         </div>
                         <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden border border-slate-800">
                             <div class="bg-gradient-to-r from-amber-500 via-pink-500 to-sky-400 h-full transition-all duration-500" style="width: ${pct}%"></div>
@@ -6793,10 +6887,10 @@ function initFirebaseSync() {
                     <!-- Dynamiczny kontener na ostrzeżenie o oddanym głosie lub pole na PIN -->
                     <div id="dedicatedMvpVoterFeedback"></div>
 
-                    <!-- Krok 2: Twój głos na MVP Ogólne -->
+                    <!-- Krok 2: Twój głos na MTV Ogólne -->
                     <div id="dedicatedNomineeSection">
                         <label for="dedicatedMvpNomineeSelect" class="block text-xs font-bold text-slate-300 mb-1">
-                            2. Twój głos na MVP Meczu (Ogólne) 🌟:
+                            2. Twój głos na MTV Meczu (Ogólne) 🌟:
                         </label>
                         <select id="dedicatedMvpNomineeSelect" class="w-full bg-slate-950 border border-slate-700 text-xs font-semibold text-white rounded-xl px-3 py-3 focus:outline-none focus:border-amber-500 cursor-pointer">
                             <option value="">-- Kto Twoim zdaniem zagrał najlepiej? --</option>
@@ -6807,13 +6901,13 @@ function initFirebaseSync() {
                     </div>
 
                     ${femaleAttendees.length >= 2 ? `
-                    <!-- Krok 3: Twój głos na MVP Kobiet 🌸 -->
+                    <!-- Krok 3: Twój głos na MTV Kobiet 🌸 -->
                     <div id="dedicatedWomenNomineeSection">
                         <label for="dedicatedMvpWomenNomineeSelect" class="block text-xs font-bold text-pink-300 mb-1">
-                            3. Twój głos na MVP Kobiet 🌸:
+                            3. Twój głos na MTV Kobiet 🌸:
                         </label>
                         <select id="dedicatedMvpWomenNomineeSelect" class="w-full bg-slate-950 border border-pink-500/40 text-xs font-semibold text-white rounded-xl px-3 py-3 focus:outline-none focus:border-pink-400 cursor-pointer">
-                            <option value="">-- Wybierz MVP Kobiet 🌸 --</option>
+                            <option value="">-- Wybierz MTV Kobiet 🌸 --</option>
                             ${femaleAttendees.map(p => {
                                 return `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`;
                             }).join('')}
@@ -6824,7 +6918,7 @@ function initFirebaseSync() {
                     <!-- Przycisk oddania głosu -->
                     <div id="dedicatedSubmitSection" class="pt-1">
                         <button type="button" onclick="submitDedicatedMvpVote()" class="w-full bg-gradient-to-r from-amber-500 via-pink-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-slate-950 font-black py-3.5 rounded-2xl text-xs sm:text-sm transition shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2">
-                            <span>Zatwierdź tajny głos na MVP</span>
+                            <span>Zatwierdź tajny głos na MTV</span>
                             <span>🌟</span>
                         </button>
                     </div>
@@ -6868,7 +6962,7 @@ function initFirebaseSync() {
                         attendees.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
                 }
                 if (womenNomineeSelect) {
-                    womenNomineeSelect.innerHTML = `<option value="">-- Wybierz MVP Kobiet 🌸 --</option>` +
+                    womenNomineeSelect.innerHTML = `<option value="">-- Wybierz MTV Kobiet 🌸 --</option>` +
                         femaleAttendees.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
                 }
                 return;
@@ -6903,7 +6997,7 @@ function initFirebaseSync() {
             if (submitSection) {
                 submitSection.innerHTML = `
                     <button type="button" onclick="submitDedicatedMvpVote()" class="w-full bg-gradient-to-r from-amber-500 via-pink-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-slate-950 font-black py-3.5 rounded-2xl text-xs sm:text-sm transition shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2">
-                        <span>Zatwierdź tajny głos na MVP</span>
+                        <span>Zatwierdź tajny głos na MTV</span>
                         <span>🌟</span>
                     </button>
                 `;
@@ -6916,10 +7010,10 @@ function initFirebaseSync() {
                     candidates.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
             }
 
-            // Zaktualizuj listę kandydatek MVP kobiet (z wyłączeniem siebie, jeśli głosująca to kobieta)
+            // Zaktualizuj listę kandydatek MTV kobiet (z wyłączeniem siebie, jeśli głosująca to kobieta)
             if (womenNomineeSelect) {
                 const femaleCandidates = femaleAttendees.filter(p => p !== voterName);
-                womenNomineeSelect.innerHTML = `<option value="">-- Wybierz MVP Kobiet 🌸 --</option>` +
+                womenNomineeSelect.innerHTML = `<option value="">-- Wybierz MTV Kobiet 🌸 --</option>` +
                     femaleCandidates.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
             }
 
@@ -6951,7 +7045,7 @@ function initFirebaseSync() {
             const womenNominee = womenNomineeSelect?.value?.trim();
 
             if (!voter) return alert("Wybierz siebie z listy obecnych graczy!");
-            if (!nominee) return alert("Wybierz zawodnika, na którego oddajesz głos na ogólne MVP!");
+            if (!nominee) return alert("Wybierz zawodnika, na którego oddajesz głos na ogólne MTV!");
             if (voter === nominee) return alert("Nie możesz głosować na siebie!");
 
             const info = window.dedicatedMvpMatchInfo;
@@ -6960,7 +7054,7 @@ function initFirebaseSync() {
             const match = info.match;
             const todayStr = getLocalDateKey();
             if ((match.date || '') > todayStr && !match.score) {
-                return alert("Głosowanie na MVP tego meczu nie jest jeszcze otwarte. Zostanie odblokowane w dniu meczu po rozegraniu gry! 🏐");
+                return alert("Głosowanie na MTV tego meczu nie jest jeszcze otwarte. Zostanie odblokowane w dniu meczu po rozegraniu gry! 🏐");
             }
 
             const attendees = (match.attendees || []).slice(0, 14);
@@ -6978,10 +7072,10 @@ function initFirebaseSync() {
             const femaleAttendees = attendees.filter(p => isFemalePlayer(p));
 
             if (femaleAttendees.length >= 2 && !womenNominee) {
-                return alert("Wybierz również zawodniczkę na MVP Kobiet 🌸!");
+                return alert("Wybierz również zawodniczkę na MTV Kobiet 🌸!");
             }
             if (femaleAttendees.length >= 2 && voter === womenNominee) {
-                return alert("Nie możesz głosować na siebie w kategorii MVP Kobiet!");
+                return alert("Nie możesz głosować na siebie w kategorii MTV Kobiet!");
             }
 
             // PIN check
@@ -7104,7 +7198,7 @@ function initFirebaseSync() {
             if (nomineeSelect) {
                 const curNom = nomineeSelect.value || '';
                 const availableCandidates = attendees.filter(p => !selectedPlayer || p !== selectedPlayer);
-                nomineeSelect.innerHTML = `<option value="">-- Wybierz kandydata na MVP --</option>` + availableCandidates.map(p => {
+                nomineeSelect.innerHTML = `<option value="">-- Wybierz kandydata na MTV --</option>` + availableCandidates.map(p => {
                     return `<option value="${escapeHtml(p)}" ${p === curNom && p !== selectedPlayer ? 'selected' : ''}>${escapeHtml(p)}</option>`;
                 }).join('');
             }
@@ -7113,7 +7207,7 @@ function initFirebaseSync() {
             if (womenNomineeSelect && femaleAttendees.length >= 2) {
                 const curWNom = womenNomineeSelect.value || '';
                 const availableFemale = femaleAttendees.filter(p => !selectedPlayer || p !== selectedPlayer);
-                womenNomineeSelect.innerHTML = `<option value="">-- Wybierz MVP Kobiet 🌸 --</option>` + availableFemale.map(p => {
+                womenNomineeSelect.innerHTML = `<option value="">-- Wybierz MTV Kobiet 🌸 --</option>` + availableFemale.map(p => {
                     return `<option value="${escapeHtml(p)}" ${p === curWNom && p !== selectedPlayer ? 'selected' : ''}>${escapeHtml(p)}</option>`;
                 }).join('');
             }
@@ -7249,13 +7343,13 @@ function initFirebaseSync() {
             if (isFutureMatch) {
                 if (winnerHeaderLabel) winnerHeaderLabel.innerText = "STATUS MECZU";
                 if (winnerName) winnerName.innerText = "Mecz jeszcze się nie odbył";
-                if (winnerVotes) winnerVotes.innerText = `Głosowanie na MVP zostanie otwarte w dniu meczu (${currentMatch.date}) po zakończeniu gry. 🏐`;
+                if (winnerVotes) winnerVotes.innerText = `Głosowanie na MTV zostanie otwarte w dniu meczu (${currentMatch.date}) po zakończeniu gry. 🏐`;
                 if (womenWinnerBox) womenWinnerBox.classList.add('hidden');
                 if (votingFormNotice && votingFormFields) {
                     votingFormNotice.innerHTML = `
                         <div class="py-2 space-y-2 text-center">
                             <span class="text-3xl block">⏳</span>
-                            <h4 class="font-bold text-xs text-amber-300">Głosowanie MVP oczekuje na mecz</h4>
+                            <h4 class="font-bold text-xs text-amber-300">Głosowanie MTV oczekuje na mecz</h4>
                             <p class="text-[11px] text-slate-400 max-w-xs mx-auto leading-relaxed">
                                 Spotkanie zaplanowane na <strong class="text-white">${currentMatch.date}</strong> jeszcze się nie odbyło. Głosowanie na najlepszego gracza zostanie odblokowane po rozegraniu meczu! 🏐
                             </p>
@@ -7340,23 +7434,23 @@ function initFirebaseSync() {
                 `;
             }
 
-            // 4. Nominee Select (Ogólne MVP - bez możliwości głosu na siebie)
+            // 4. Nominee Select (Ogólne MTV - bez możliwości głosu na siebie)
             const currentVoter = (loggedPlayer && attendees.includes(loggedPlayer)) ? loggedPlayer : (document.getElementById('voterSelect')?.value || '');
             if (nomineeSelect) {
                 const curNom = nomineeSelect.value || '';
                 const availableCandidates = attendees.filter(p => !currentVoter || p !== currentVoter);
-                nomineeSelect.innerHTML = `<option value="">-- Wybierz kandydata na MVP --</option>` + availableCandidates.map(p => {
+                nomineeSelect.innerHTML = `<option value="">-- Wybierz kandydata na MTV --</option>` + availableCandidates.map(p => {
                     return `<option value="${escapeHtml(p)}" ${p === curNom ? 'selected' : ''}>${escapeHtml(p)}</option>`;
                 }).join('');
             }
 
-            // 5. Women Nominee Select (MVP Kobiet - tylko jeśli w meczu grają minimum 2 kobiety, bez głosu na siebie)
+            // 5. Women Nominee Select (MTV Kobiet - tylko jeśli w meczu grają minimum 2 kobiety, bez głosu na siebie)
             if (femaleAttendees.length >= 2) {
                 if (womenNomineeContainer) womenNomineeContainer.classList.remove('hidden');
                 if (womenNomineeSelect) {
                     const curWNom = womenNomineeSelect.value || '';
                     const availableFemale = femaleAttendees.filter(p => !currentVoter || p !== currentVoter);
-                    womenNomineeSelect.innerHTML = `<option value="">-- Wybierz MVP Kobiet 🌸 --</option>` + availableFemale.map(p => {
+                    womenNomineeSelect.innerHTML = `<option value="">-- Wybierz MTV Kobiet 🌸 --</option>` + availableFemale.map(p => {
                         return `<option value="${escapeHtml(p)}" ${p === curWNom ? 'selected' : ''}>${escapeHtml(p)}</option>`;
                     }).join('');
                 }
@@ -7421,7 +7515,7 @@ function initFirebaseSync() {
                     womenWinnerBox.classList.remove('hidden');
                     const totalWomenVotes = Object.keys(votesWomen).length;
                     if (maxVotesWomen === 0) {
-                        womenWinnerName.innerText = "Brak głosów na MVP Kobiet";
+                        womenWinnerName.innerText = "Brak głosów na MTV Kobiet";
                         womenWinnerVotes.innerText = "";
                     } else if (leadersWomen.length === 1) {
                         womenWinnerName.innerHTML = `<span class="inline-flex items-center gap-2">${getPlayerAvatarHtml(leadersWomen[0], 'sm')} 🌸 👑 ${escapeHtml(leadersWomen[0])}</span>`;
@@ -7468,7 +7562,7 @@ function initFirebaseSync() {
                     resultsHtml += `
                         <div class="mt-4 pt-3 border-t border-pink-900/40 space-y-1.5">
                             <p class="text-[10px] font-black uppercase tracking-wider text-pink-400 mb-1 flex items-center gap-1">
-                                <span>🌸</span> Klasyfikacja MVP Kobiet:
+                                <span>🌸</span> Klasyfikacja MTV Kobiet:
                             </p>
                             ${sortedWomen.map(([name, count]) => {
                                 const percent = totalWomenVotes > 0 ? Math.round((count / totalWomenVotes) * 100) : 0;
@@ -7531,7 +7625,7 @@ function initFirebaseSync() {
                 }
                 if (winnerVotes) {
                     const percentVoted = Math.round((totalVotesCast / attendees.length) * 100);
-                    winnerVotes.innerText = `Wyniki cząstkowe i wybór MVP są ukryte do momentu, aż wszyscy oddadzą głos (${percentVoted}%).`;
+                    winnerVotes.innerText = `Wyniki cząstkowe i wybór MTV są ukryte do momentu, aż wszyscy oddadzą głos (${percentVoted}%).`;
                 }
                 if (womenWinnerBox) womenWinnerBox.classList.add('hidden');
 
@@ -7545,7 +7639,7 @@ function initFirebaseSync() {
                                     <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                                     <span>Trwa zbieranie głosów</span>
                                 </span>
-                                <span class="font-mono font-bold text-amber-400">${totalVotesCast} / ${attendees.length} (${percentDone}%)</span>
+                                <span class="mvp-votes-pill">${totalVotesCast} / ${attendees.length} (${percentDone}%)</span>
                             </div>
                             <div class="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden border border-slate-800">
                                 <div class="bg-gradient-to-r from-amber-500 via-pink-500 to-sky-400 h-2.5 rounded-full transition-all duration-500" style="width: ${percentDone}%"></div>
@@ -7592,11 +7686,11 @@ function initFirebaseSync() {
             const todayStr = getLocalDateKey();
             const isFutureMatch = Boolean(currentMatch.date && currentMatch.date > todayStr && !currentMatch.score);
             if (isFutureMatch) {
-                return alert("Głosowanie na MVP dla tego meczu jeszcze się nie rozpoczęło (mecz w przyszłości)!");
+                return alert("Głosowanie na MTV dla tego meczu jeszcze się nie rozpoczęło (mecz w przyszłości)!");
             }
 
             if (loggedPlayer && !attendees.includes(loggedPlayer)) {
-                return alert("Tylko zawodnicy biorący udział w tym meczu mogą oddawać głosy na MVP!");
+                return alert("Tylko zawodnicy biorący udział w tym meczu mogą oddawać głosy na MTV!");
             }
 
             if (loggedPlayer && voter !== loggedPlayer) {
@@ -7605,20 +7699,20 @@ function initFirebaseSync() {
 
             if (!voter) return alert("Wybierz siebie z listy obecnych graczy lub zaloguj się na swój profil!");
             if (!attendees.includes(voter)) {
-                return alert("Tylko zawodnicy biorący udział w tym spotkaniu mogą oddać głos na MVP!");
+                return alert("Tylko zawodnicy biorący udział w tym spotkaniu mogą oddać głos na MTV!");
             }
 
-            if (!nominee) return alert("Wybierz zawodnika, na którego oddajesz ogólny głos na MVP!");
+            if (!nominee) return alert("Wybierz zawodnika, na którego oddajesz ogólny głos na MTV!");
             if (voter === nominee) {
                 return alert("Nie możesz zagłosować na samego siebie!");
             }
 
             if (femaleAttendees.length >= 2) {
                 if (!womenNominee) {
-                    return alert("Wybierz również zawodniczkę na MVP Kobiet 🌸!");
+                    return alert("Wybierz również zawodniczkę na MTV Kobiet 🌸!");
                 }
                 if (voter === womenNominee) {
-                    return alert("Nie możesz zagłosować na samą siebie w kategorii MVP Kobiet!");
+                    return alert("Nie możesz zagłosować na samą siebie w kategorii MTV Kobiet!");
                 }
             }
 
@@ -7688,7 +7782,7 @@ function initFirebaseSync() {
                                 colors: ['#f59e0b', '#ec4899', '#10b981', '#38bdf8']
                             });
                         }
-                        showToast(`Wszyscy zagłosowali! Wyniki MVP zostały ujawnione! 🎉🏆`);
+                        showToast(`Wszyscy zagłosowali! Wyniki MTV zostały ujawnione! 🎉🏆`);
                     } else {
                         if (typeof confetti === 'function') {
                             confetti({
@@ -7728,7 +7822,7 @@ function initFirebaseSync() {
                 syncState();
                 renderIntegratedMvpCard();
                 renderMatchesTab();
-                showToast(currentMatch.mvpClosed ? "Odkryto wyniki MVP dla wszystkich! 👑" : "Głosowanie zostało otwarte ponownie. 🔓");
+                showToast(currentMatch.mvpClosed ? "Odkryto wyniki MTV dla wszystkich! 👑" : "Głosowanie zostało otwarte ponownie. 🔓");
             });
         }
 
@@ -7764,7 +7858,7 @@ function initFirebaseSync() {
             }
 
             if (!targetMatch) {
-                showToast("Nie znaleziono szczegĂłĹ‚Ăłw meczu z dnia " + dateStr);
+                showToast("Nie znaleziono szczegółów meczu z dnia " + dateStr);
                 return;
             }
 
@@ -7776,7 +7870,7 @@ function initFirebaseSync() {
             if (titleEl) titleEl.innerText = `Spotkanie: ${targetMatch.date}`;
             const attendees = (targetMatch.attendees || []);
             const mainSquad = attendees.slice(0, 14);
-            if (subtextEl) subtextEl.innerText = `${targetMonth || ''} â€˘ SkĹ‚ad: ${mainSquad.length}/14 graczy`;
+            if (subtextEl) subtextEl.innerText = `${targetMonth || ''} • Skład: ${mainSquad.length}/14 graczy`;
 
             const isFinished = isMvpVotingFinished(targetMatch);
             
@@ -7799,8 +7893,8 @@ function initFirebaseSync() {
             const mvpWomenWinner = (isFinished && topWomenNom && maxWomenV > 0) ? topWomenNom : null;
 
             const teams = targetMatch.teams || null;
-            const darkName = teams?.darkName || "DruĹĽyna Ciemna";
-            const lightName = teams?.lightName || "DruĹĽyna Jasna";
+            const darkName = teams?.darkName || "Drużyna Ciemna";
+            const lightName = teams?.lightName || "Drużyna Jasna";
             const darkRoster = teams?.dark || [];
             const lightRoster = teams?.light || [];
 
@@ -7816,27 +7910,27 @@ function initFirebaseSync() {
                 }
             }
 
-            // 1. MVP Section
+            // 1. MTV Section
             let mvpHtml = '';
             if (mvpWinner) {
                 mvpHtml += `
                     <div class="bg-gradient-to-r from-amber-500/20 via-amber-950/40 to-slate-900 border-2 border-amber-500/60 rounded-2xl p-3 sm:p-3.5 shadow-lg shadow-amber-500/10 space-y-2.5">
                         <div class="flex items-center justify-between">
                             <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md inline-flex items-center gap-1 shadow-sm">
-                                <span>đź‘‘</span> MVP SPOTKANIA
+                                <span>👑</span> MTV SPOTKANIA
                             </span>
-                            <span class="text-[11px] font-mono font-bold text-amber-300">${maxV} gĹ‚.</span>
+                            <span class="text-[11px] font-mono font-bold text-amber-300">${maxV} gł.</span>
                         </div>
                         <div class="flex items-center justify-between gap-3 pt-0.5">
                             <div class="flex items-center gap-2.5 min-w-0 cursor-pointer" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWinner)});" title="Zobacz profil zawodnika">
                                 ${getPlayerAvatarHtml(mvpWinner, 'md')}
                                 <div class="min-w-0">
                                     <span class="text-sm sm:text-base font-black text-white hover:text-amber-300 transition block whitespace-normal break-words">${escapeHtml(mvpWinner)}</span>
-                                    <span class="text-[10px] text-slate-400">Wybrany gĹ‚osami zawodnikĂłw tego meczu</span>
+                                    <span class="text-[10px] text-slate-400">Wybrany głosami zawodników tego meczu</span>
                                 </div>
                             </div>
                             <button type="button" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWinner)});" class="shrink-0 text-[11px] font-bold text-amber-300 hover:text-white bg-slate-950/80 border border-amber-500/40 px-2.5 py-1.5 rounded-xl transition active:scale-95 shadow-sm">
-                                Profil âž”
+                                Profil ➔
                             </button>
                         </div>
                     </div>
@@ -7848,9 +7942,9 @@ function initFirebaseSync() {
                     <div class="bg-gradient-to-r from-pink-500/20 via-pink-950/40 to-slate-900 border-2 border-pink-500/60 rounded-2xl p-3 sm:p-3.5 shadow-lg shadow-pink-500/10 space-y-2.5">
                         <div class="flex items-center justify-between">
                             <span class="text-[10px] font-black uppercase tracking-wider bg-pink-500 text-slate-950 px-2 py-0.5 rounded-md inline-flex items-center gap-1 shadow-sm">
-                                <span>đź‘¸</span> MVP KOBIET SPOTKANIA
+                                <span>👸</span> MTV KOBIET SPOTKANIA
                             </span>
-                            <span class="text-[11px] font-mono font-bold text-pink-300">${maxWomenV} gĹ‚.</span>
+                            <span class="text-[11px] font-mono font-bold text-pink-300">${maxWomenV} gł.</span>
                         </div>
                         <div class="flex items-center justify-between gap-3 pt-0.5">
                             <div class="flex items-center gap-2.5 min-w-0 cursor-pointer" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWomenWinner)});" title="Zobacz profil zawodniczki">
@@ -7861,7 +7955,7 @@ function initFirebaseSync() {
                                 </div>
                             </div>
                             <button type="button" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWomenWinner)});" class="shrink-0 text-[11px] font-bold text-pink-300 hover:text-white bg-slate-950/80 border border-pink-500/40 px-2.5 py-1.5 rounded-xl transition active:scale-95 shadow-sm">
-                                Profil âž”
+                                Profil ➔
                             </button>
                         </div>
                     </div>
@@ -7872,10 +7966,10 @@ function initFirebaseSync() {
                 if (Object.keys(votes).length > 0) {
                     mvpHtml = `
                         <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3 flex items-center gap-2.5 text-xs">
-                            <span class="text-xl shrink-0">đź”’</span>
+                            <span class="text-xl shrink-0">🔒</span>
                             <div>
-                                <strong class="text-amber-300 text-xs block">GĹ‚osowanie tajne w toku</strong>
-                                <span class="text-[11px] text-slate-400">Oddano gĹ‚osy. Wyniki zostanÄ… ujawnione po oficjalnym zakoĹ„czeniu gĹ‚osowania.</span>
+                                <strong class="text-amber-300 text-xs block">Głosowanie tajne w toku</strong>
+                                <span class="text-[11px] text-slate-400">Oddano głosy. Wyniki zostaną ujawnione po oficjalnym zakończeniu głosowania.</span>
                             </div>
                         </div>
                     `;
@@ -7883,16 +7977,16 @@ function initFirebaseSync() {
                     mvpHtml = `
                         <div class="bg-slate-950/60 border border-slate-800/80 rounded-2xl p-2.5 flex items-center justify-between text-xs text-slate-400">
                             <span class="flex items-center gap-1.5">
-                                <span>đź‘‘</span>
-                                <span>MVP spotkania:</span>
+                                <span>👑</span>
+                                <span>MTV spotkania:</span>
                             </span>
-                            <span class="text-slate-500 italic">Brak zarejestrowanego gĹ‚osowania</span>
+                            <span class="text-slate-500 italic">Brak zarejestrowanego głosowania</span>
                         </div>
                     `;
                 }
             }
 
-            // 2. Teams Section (Dwie druĹĽyny z pozycjami)
+            // 2. Teams Section (Dwie drużyny z pozycjami)
             let teamsHtml = '';
             if (teams && (darkRoster.length > 0 || lightRoster.length > 0)) {
                 const renderTeamRoster = (roster, isDarkTeam, won) => {
@@ -7906,17 +8000,17 @@ function initFirebaseSync() {
                         const isGuest = !AppState.all_players.includes(p);
                         const posBadges = (typeof getPlayerPositionsBadgesHtml === 'function') ? getPlayerPositionsBadgesHtml(p) : '';
                         return `
-                            <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" title="Kliknij, aby otworzyÄ‡ profil gracza" class="flex items-center justify-between gap-2 p-1.5 rounded-xl hover:bg-slate-800/70 cursor-pointer transition active:scale-[0.98] ${isPlayerMvp ? 'bg-amber-950/30 border border-amber-500/30' : (isPlayerWomenMvp ? 'bg-pink-950/30 border border-pink-500/30' : (isMe ? 'bg-emerald-950/20 border border-emerald-800/40' : ''))}">
+                            <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" title="Kliknij, aby otworzyć profil gracza" class="flex items-center justify-between gap-2 p-1.5 rounded-xl hover:bg-slate-800/70 cursor-pointer transition active:scale-[0.98] ${isPlayerMvp ? 'bg-amber-950/30 border border-amber-500/30' : (isPlayerWomenMvp ? 'bg-pink-950/30 border border-pink-500/30' : (isMe ? 'bg-emerald-950/20 border border-emerald-800/40' : ''))}">
                                 <div class="flex items-center gap-2 min-w-0 flex-1 flex-wrap">
                                     ${getPlayerAvatarHtml(p, 'xs')}
                                     <span class="font-extrabold text-xs text-slate-100 hover:text-white transition whitespace-normal break-words leading-tight ${isMe ? 'text-emerald-300' : ''}">${escapeHtml(p)}</span>
                                     ${posBadges ? `<span class="inline-flex items-center gap-0.5">${posBadges}</span>` : ''}
                                 </div>
                                 <div class="flex items-center gap-1 shrink-0">
-                                    ${isPlayerMvp ? `<span class="text-[9px] font-black bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded shadow-sm inline-flex items-center gap-0.5">đź‘‘ MVP</span>` : ''}
-                                    ${isPlayerWomenMvp ? `<span class="text-[9px] font-black bg-pink-500 text-slate-950 px-1.5 py-0.5 rounded shadow-sm inline-flex items-center gap-0.5">đź‘¸ MVP K</span>` : ''}
+                                    ${isPlayerMvp ? `<span class="text-[9px] font-black bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded shadow-sm inline-flex items-center gap-0.5">👑 MTV</span>` : ''}
+                                    ${isPlayerWomenMvp ? `<span class="text-[9px] font-black bg-pink-500 text-slate-950 px-1.5 py-0.5 rounded shadow-sm inline-flex items-center gap-0.5">👸 MTV K</span>` : ''}
                                     ${isMe ? `<span class="text-[8.5px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800 px-1 py-0.5 rounded">TY</span>` : ''}
-                                    ${isGuest ? `<span class="text-[8px] text-slate-500 font-semibold">(goĹ›Ä‡)</span>` : ''}
+                                    ${isGuest ? `<span class="text-[8px] text-slate-500 font-semibold">(gość)</span>` : ''}
                                 </div>
                             </div>
                         `;
@@ -7927,33 +8021,33 @@ function initFirebaseSync() {
                     <div class="space-y-2 pt-1">
                         <div class="flex items-center justify-between">
                             <h4 class="font-bold text-xs uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                                <span>âš”ď¸Ź</span> Dwie druĹĽyny po stronach boiska
+                                <span>⚔️</span> Dwie drużyny po stronach boiska
                             </h4>
                             <span class="text-[10px] text-slate-400 font-mono">${darkRoster.length + lightRoster.length} graczy</span>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                            <!-- DruĹĽyna Ciemna -->
+                            <!-- Drużyna Ciemna -->
                             <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-3 space-y-2 ${darkWon ? 'ring-1 ring-emerald-500/40' : ''}">
                                 <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
                                     <div class="flex items-center gap-1.5 min-w-0">
                                         <span class="w-3 h-3 rounded-full bg-slate-700 border border-slate-500 shrink-0"></span>
                                         <strong class="text-xs font-black text-slate-200 whitespace-normal break-words leading-tight">${escapeHtml(darkName)}</strong>
                                     </div>
-                                    ${darkWon ? `<span class="text-[9px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full shrink-0">đźŹ† ZwyciÄ™zcy</span>` : (lightWon ? `<span class="text-[9px] font-bold text-slate-500 px-1.5 py-0.5 shrink-0">PoraĹĽka</span>` : '')}
+                                    ${darkWon ? `<span class="text-[9px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full shrink-0">🏆 Zwycięzcy</span>` : (lightWon ? `<span class="text-[9px] font-bold text-slate-500 px-1.5 py-0.5 shrink-0">Porażka</span>` : '')}
                                 </div>
                                 <div class="space-y-1">
                                     ${renderTeamRoster(darkRoster, true, darkWon)}
                                 </div>
                             </div>
 
-                            <!-- DruĹĽyna Jasna -->
+                            <!-- Drużyna Jasna -->
                             <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-3 space-y-2 ${lightWon ? 'ring-1 ring-emerald-500/40' : ''}">
                                 <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
                                     <div class="flex items-center gap-1.5 min-w-0">
                                         <span class="w-3 h-3 rounded-full bg-white border border-slate-300 shrink-0"></span>
                                         <strong class="text-xs font-black text-slate-200 whitespace-normal break-words leading-tight">${escapeHtml(lightName)}</strong>
                                     </div>
-                                    ${lightWon ? `<span class="text-[9px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full shrink-0">đźŹ† ZwyciÄ™zcy</span>` : (darkWon ? `<span class="text-[9px] font-bold text-slate-500 px-1.5 py-0.5 shrink-0">PoraĹĽka</span>` : '')}
+                                    ${lightWon ? `<span class="text-[9px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full shrink-0">🏆 Zwycięzcy</span>` : (darkWon ? `<span class="text-[9px] font-bold text-slate-500 px-1.5 py-0.5 shrink-0">Porażka</span>` : '')}
                                 </div>
                                 <div class="space-y-1">
                                     ${renderTeamRoster(lightRoster, false, lightWon)}
@@ -7967,7 +8061,7 @@ function initFirebaseSync() {
                     <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-3 space-y-2 pt-1">
                         <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
                             <h4 class="font-bold text-xs uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                                <span>đźŹ</span> SkĹ‚ad meczu (${mainSquad.length}/14 graczy)
+                                <span>📋</span> Skład meczu (${mainSquad.length}/14 graczy)
                             </h4>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
@@ -7985,10 +8079,10 @@ function initFirebaseSync() {
                                             ${posBadges ? `<span class="inline-flex items-center gap-0.5">${posBadges}</span>` : ''}
                                         </div>
                                         <div class="flex items-center gap-1 shrink-0">
-                                            ${isPlayerMvp ? `<span class="text-[9px] font-black bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">đź‘‘ MVP</span>` : ''}
-                                            ${isPlayerWomenMvp ? `<span class="text-[9px] font-black bg-pink-500 text-slate-950 px-1.5 py-0.5 rounded">đź‘¸ MVP K</span>` : ''}
+                                            ${isPlayerMvp ? `<span class="text-[9px] font-black bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">👑 MTV</span>` : ''}
+                                            ${isPlayerWomenMvp ? `<span class="text-[9px] font-black bg-pink-500 text-slate-950 px-1.5 py-0.5 rounded">👸 MTV K</span>` : ''}
                                             ${isMe ? `<span class="text-[8.5px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800 px-1 py-0.5 rounded">TY</span>` : ''}
-                                            ${isGuest ? `<span class="text-[8px] text-slate-500 font-semibold">(goĹ›Ä‡)</span>` : ''}
+                                            ${isGuest ? `<span class="text-[8px] text-slate-500 font-semibold">(gość)</span>` : ''}
                                         </div>
                                     </div>
                                 `;
@@ -8007,10 +8101,10 @@ function initFirebaseSync() {
                     </div>
                 </div>
 
-                <!-- MVP Spotkania (OgĂłlny i Kobiet) -->
+                <!-- MTV Spotkania (Ogólny i Kobiet) -->
                 ${mvpHtml}
 
-                <!-- Dwie druĹĽyny lub skĹ‚ad -->
+                <!-- Dwie drużyny lub skład -->
                 ${teamsHtml}
             `;
 
@@ -8035,7 +8129,7 @@ function initFirebaseSync() {
             historyMatches.sort((a, b) => b.date.localeCompare(a.date));
 
             if (!historyMatches.length) {
-                container.innerHTML = `<div class="p-6 text-center text-xs text-slate-500">Brak archiwalnych spotkań. Wyniki pojawią się tutaj po rozegraniu piątkowych meczów!</div>`;
+                container.innerHTML = `<div class="p-6 text-center text-xs text-slate-500">Brak archiwalnych spotkań. Wyniki pojawią się tutaj po rozegraniu pierwszych meczów!</div>`;
                 return;
             }
 
@@ -8056,7 +8150,7 @@ function initFirebaseSync() {
                 });
 
                 return `
-                    <div onclick="openArchivedMatchModal(${toInlineArgument(m.date)}, ${toInlineArgument(m.monthName)})" title="Dotknij, aby zobaczyć pełny raport, wynik i MVP" class="bg-slate-950 hover:bg-slate-900/90 border border-slate-800 hover:border-slate-700 rounded-2xl p-3.5 space-y-2.5 shadow-md cursor-pointer transition active:scale-[0.99]">
+                    <div onclick="openArchivedMatchModal(${toInlineArgument(m.date)}, ${toInlineArgument(m.monthName)})" title="Dotknij, aby zobaczyć pełny raport, wynik i MTV" class="bg-slate-950 hover:bg-slate-900/90 border border-slate-800 hover:border-slate-700 rounded-2xl p-3.5 space-y-2.5 shadow-md cursor-pointer transition active:scale-[0.99]">
                         <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
                             <div class="flex items-center gap-2">
                                 <span class="text-xs font-black font-mono text-emerald-400 bg-emerald-950 px-2.5 py-0.5 rounded-full border border-emerald-800/80">
@@ -8071,7 +8165,7 @@ function initFirebaseSync() {
                             <div class="flex items-center justify-between gap-2 border-b border-slate-800/60 pb-1.5 text-xs">
                                 <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Wynik meczu</span>
                                 <div class="text-right">
-                                    <span class="text-[10px] text-slate-400 font-semibold">MVP meczu: </span>
+                                    <span class="text-[10px] text-slate-400 font-semibold">MTV meczu: </span>
                                     <span class="text-xs font-extrabold text-white">${isFinished && topNom ? `👑 ${escapeHtml(topNom)} (${maxV} gł.)` : (Object.keys(votes).length > 0 ? '🔒 Głosowanie tajne' : 'Brak')}</span>
                                 </div>
                             </div>
@@ -9220,12 +9314,12 @@ function initFirebaseSync() {
             const recentForm = calculatePlayerForm(playerName);
             const isWinningStreak = recentForm.length >= 3 && recentForm.slice(-3).every(r => r === 'W');
 
-            // 1. KATEGORIA MVP
-            if (mvpWins === 1) badges.push({ icon: "⭐", title: "MVP Star: 1x MVP meczu" });
-            if (mvpWins >= 2) badges.push({ icon: "👑", title: `Dominator MVP: ${mvpWins}x MVP meczu` });
-            if (mvpWomenWins === 1) badges.push({ icon: "👸", title: "Królowa Parkietu: 1x MVP Kobiet" });
-            if (mvpWomenWins >= 2) badges.push({ icon: "💎", title: `Cesarzowa Siatki: ${mvpWomenWins}x MVP Kobiet` });
-            if (hasUnanimousMvp) badges.push({ icon: "🔥", title: "Głos Ludu: >50% głosów na MVP w jednym meczu" });
+            // 1. KATEGORIA MTV
+            if (mvpWins === 1) badges.push({ icon: "⭐", title: "MTV Star: 1x MTV meczu" });
+            if (mvpWins >= 2) badges.push({ icon: "👑", title: `Dominator MTV: ${mvpWins}x MTV meczu` });
+            if (mvpWomenWins === 1) badges.push({ icon: "👸", title: "Królowa Parkietu: 1x MTV Kobiet" });
+            if (mvpWomenWins >= 2) badges.push({ icon: "💎", title: `Cesarzowa Siatki: ${mvpWomenWins}x MTV Kobiet` });
+            if (hasUnanimousMvp) badges.push({ icon: "🔥", title: "Głos Ludu: >50% głosów na MTV w jednym meczu" });
 
             // 2. KATEGORIA FORMA & WYNIKI
             if (isWinningStreak) badges.push({ icon: "⚡", title: "W Zwycięskim Cugu: 3 wygrane mecze z rzędu" });
@@ -9880,7 +9974,7 @@ function initFirebaseSync() {
                             <span class="text-base sm:text-lg font-black text-emerald-400 font-mono">${totalGames}</span>
                         </div>
                         <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-2.5">
-                            <span class="text-[10px] text-slate-400 font-semibold block">MVP</span>
+                            <span class="text-[10px] text-slate-400 font-semibold block">MTV</span>
                             <span class="text-base sm:text-lg font-black text-amber-300 font-mono">${mvpWins} 👑</span>
                         </div>
                         <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-2.5">
@@ -9935,7 +10029,7 @@ function initFirebaseSync() {
                                     <span class="text-[11px] font-semibold">${escapeHtml(b.title.split(':')[0])}</span>
                                 </span>
                             `).join('') : `
-                                <span class="text-xs text-slate-500 italic">Graj w piątki, aby zdobywać trofea i odznaki!</span>
+                                <span class="text-xs text-slate-500 italic">Graj w meczach, aby zdobywać trofea i odznaki!</span>
                             `}
                         </div>
                     </div>
@@ -9961,7 +10055,7 @@ function initFirebaseSync() {
                                             <div class="flex items-center gap-1.5 flex-wrap">
                                                 <span class="font-bold font-mono text-white">${escapeHtml(h.date)}</span>
                                                 <span class="text-[10px] text-slate-400">(${escapeHtml(h.monthName)})</span>
-                                                ${h.isMvpWinner ? `<span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800">👑 MVP</span>` : ''}
+                                                ${h.isMvpWinner ? `<span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800">👑 MTV</span>` : ''}
                                             </div>
                                             <p class="text-[11px] text-slate-400 mt-0.5 flex items-center gap-1 whitespace-normal break-words">
                                                 <span>${h.hasTeams ? (h.isDark ? '⬛' : '⬜') : '🏐'} ${escapeHtml(h.teamName)}</span>
@@ -9976,7 +10070,7 @@ function initFirebaseSync() {
                                 `;
                             }).join('') : `
                                 <div class="p-3.5 text-center text-xs text-slate-500 italic bg-slate-950/60 rounded-xl border border-slate-800/60">
-                                    Brak rozegranych meczów w tym sezonie. Zapisz się na ten piątek! 🏐
+                                    Brak rozegranych meczów w tym sezonie. Zapisz się na najbliższy mecz! 🏐
                                 </div>
                             `}
                         </div>
@@ -10056,11 +10150,11 @@ function initFirebaseSync() {
 
                 </div>
 
-                                <!-- WYBĂ“R MOTYWU APLIKACJI -->
+                <!-- WYBÓR MOTYWU APLIKACJI -->
                 <div class="bg-slate-900/90 border border-slate-800/80 rounded-3xl p-4 sm:p-5 shadow-xl space-y-3">
                     <div class="flex items-center justify-between border-b border-slate-800 pb-2">
                         <div class="flex items-center gap-2">
-                            <span class="text-xl">đźŽ¨</span>
+                            <span class="text-xl">🎨</span>
                             <h3 class="font-bold text-xs uppercase tracking-wider text-white">Motyw Aplikacji</h3>
                         </div>
                         <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
@@ -10467,7 +10561,7 @@ function initFirebaseSync() {
                 return;
             }
             const urlParams = new URLSearchParams(window.location.search);
-            const isMvpLink = urlParams.has('mvp') || urlParams.has('vote') || urlParams.has('glosuj');
+            const isMvpLink = urlParams.has('mtv') || urlParams.has('mvp') || urlParams.has('vote') || urlParams.has('glosuj');
             if (isMvpLink) {
                 // Link MVP otwiera dedykowany, odizolowany panel głosowania.
                 // Celowo NIE ustawiamy trybu gościa, aby nie otwierać aplikacji
@@ -11211,7 +11305,7 @@ function initFirebaseSync() {
             const groupName = AppState.settings?.groupName || "AKS Laurowa";
             const baseUrl = window.location.href.split('?')[0].split('#')[0];
             const url = baseUrl;
-            const mvpUrl = dateStr ? `${baseUrl}?mvp=${encodeURIComponent(dateStr)}` : `${baseUrl}?mvp=latest`;
+            const mvpUrl = dateStr ? `${baseUrl}?mtv=${encodeURIComponent(dateStr)}` : `${baseUrl}?mtv=latest`;
 
             if (type === 'monday' || type === 'signup') {
                 return `🔔 ${groupName.toUpperCase()} - ZAPISY NA ${dayCap.toUpperCase()} (${dateStr}) 🔔\n\n` +
@@ -11220,10 +11314,10 @@ function initFirebaseSync() {
                        `📍 Miejsce: ${hall}\n\n` +
                        `👉 Zapiszcie się przez link:\n${url}\n\n` +
                        `Limit składu to 14 osób, decyduje kolejność zgłoszeń! 🏐🔥`;
-            } else if (type === 'mvp') {
-                return `🏆 GŁOSOWANIE NA MVP SPOTKANIA & MVP KOBIET (${dayCap} ${dateStr}) 🏆\n\n` +
+            } else if (type === 'mvp' || type === 'mtv') {
+                return `🏆 GŁOSOWANIE NA MTV SPOTKANIA & MTV KOBIET (${dayCap} ${dateStr}) 🏆\n\n` +
                        `Dzięki wszystkim za świetną walkę na parkiecie! 🔥🏐\n\n` +
-                       `Głosowanie jest tajne 🔒 Kto Twoim zdaniem zasłużył na MVP Spotkania i MVP Kobiet? Oddaj swój głos:\n${mvpUrl}\n\n` +
+                       `Głosowanie jest tajne 🔒 Kto Twoim zdaniem zasłużył na MTV Spotkania i MTV Kobiet? Oddaj swój głos:\n${mvpUrl}\n\n` +
                        `Podium 🥇 i oficjalne wyniki pojawią się na stronie po zebraniu głosów! 🦅`;
             } else if (type === 'billing') {
                 return `💰 ROZLICZENIE SKŁADEK ZA HALĘ (${AppState.currentMonth}) 💰\n\n` +
@@ -11280,7 +11374,7 @@ function initFirebaseSync() {
             Notification.requestPermission().then(permission => {
                 if (permission === "granted") {
                     showToast("Powiadomienia zostały włączone! 🔔");
-                    sendLocalNotification("Siatkówka Piątek 🏐", "Powiadomienia aktywne! Będziesz otrzymywać przypomnienia o meczach.");
+                    sendLocalNotification("Siatkówka 🏐", "Powiadomienia aktywne! Będziesz otrzymywać przypomnienia o meczach.");
                 } else {
                     showToast("Powiadomienia zablokowane w przeglądarce.");
                 }
@@ -11316,7 +11410,7 @@ function initFirebaseSync() {
             if (Notification.permission !== "granted") {
                 requestPushNotificationPermission();
             } else {
-                sendLocalNotification("🏐 Siatkówka Piątek", "Działa! Przypomnienie o meczu: Piątek - rozgrzewka 18:45, gra 19:00 - 21:00 (przebieramy się na hali)!");
+                sendLocalNotification("🏐 Siatkówka", "Działa! Przypomnienie o meczu: rozgrzewka i gra zgodnie z grafikiem na hali!");
                 showToast("Wysłano testowe powiadomienie! 📲");
             }
         }
