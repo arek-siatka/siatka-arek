@@ -3636,7 +3636,7 @@ function submitGroupSettings() {
 
 // ================= DYNAMIC FIREBASE REALTIME SYNC =================
 function initFirebaseSync() {
-    const config = AppState.settings?.firebaseConfig;
+    const config = AppState.settings?.firebaseConfig || EMPTY_INITIAL_STATE.settings?.firebaseConfig;
     if (!config) {
         isOnlineSync = false;
         setSyncStatus('local');
@@ -4330,13 +4330,16 @@ function initFirebaseSync() {
             loadLocalState();
             checkUserAuthSession();
 
-            if (AppState.settings?.firebaseConfig) {
+            const activeFbConfig = AppState.settings?.firebaseConfig || EMPTY_INITIAL_STATE.settings?.firebaseConfig;
+            if (activeFbConfig) {
+                if (!AppState.settings) AppState.settings = {};
+                if (!AppState.settings.firebaseConfig) AppState.settings.firebaseConfig = activeFbConfig;
                 setSyncStatus('connecting');
                 initFirebaseSync();
             }
 
             if (!AppState.isConfigured || !AppState.organizerName || !AppState.all_players || AppState.all_players.length === 0) {
-                if (!AppState.settings?.firebaseConfig) {
+                if (!activeFbConfig) {
                     openSetupWizardModal();
                     return;
                 }
@@ -4426,6 +4429,10 @@ function initFirebaseSync() {
                     blikPhone: "697013447",
                     playingDays: [1, 4]
                 };
+            }
+
+            if (!AppState.settings.firebaseConfig && EMPTY_INITIAL_STATE.settings?.firebaseConfig) {
+                AppState.settings.firebaseConfig = EMPTY_INITIAL_STATE.settings.firebaseConfig;
             }
 
             if (!AppState.player_avatars || typeof AppState.player_avatars !== 'object') {
@@ -8049,7 +8056,7 @@ function initFirebaseSync() {
                 });
 
                 return `
-                    <div onclick="openArchivedMatchModal(`${m.date}`, `${escapeHtml(m.monthName)}`)" title="Dotknij, aby zobaczyÄ‡ peĹ‚ny raport, wynik i MVP" class="bg-slate-950 hover:bg-slate-900/90 border border-slate-800 hover:border-slate-700 rounded-2xl p-3.5 space-y-2.5 shadow-md cursor-pointer transition active:scale-[0.99]">
+                    <div onclick="openArchivedMatchModal(${toInlineArgument(m.date)}, ${toInlineArgument(m.monthName)})" title="Dotknij, aby zobaczyć pełny raport, wynik i MVP" class="bg-slate-950 hover:bg-slate-900/90 border border-slate-800 hover:border-slate-700 rounded-2xl p-3.5 space-y-2.5 shadow-md cursor-pointer transition active:scale-[0.99]">
                         <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
                             <div class="flex items-center gap-2">
                                 <span class="text-xs font-black font-mono text-emerald-400 bg-emerald-950 px-2.5 py-0.5 rounded-full border border-emerald-800/80">
