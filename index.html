@@ -1921,6 +1921,7 @@
                                     <th class="hidden sm:table-cell py-2.5 px-1.5 text-center">Lip</th>
                                     <th class="hidden sm:table-cell py-2.5 px-1.5 text-center">Sie</th>
                                     <th class="hidden sm:table-cell py-2.5 px-1.5 text-center">Wrz</th>
+                                    <th class="hidden sm:table-cell py-2.5 px-1.5 text-center text-cyan-300 font-black" title="Październik 2026">Paź</th>
                                     <th class="py-2.5 px-2 text-right font-extrabold text-emerald-400 shrink-0 w-12 sm:w-16">Suma</th>
                                 </tr>
                             </thead>
@@ -2552,34 +2553,11 @@
         </div>
     </div>
 
-        <!-- Archived Match Detail Modal (Historia & Składy) -->
-    <div id="archivedMatchModal" role="dialog" aria-modal="true" aria-labelledby="archivedMatchModalTitle" onclick="if(event.target === this) closeArchivedMatchModal()" class="fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 hidden overflow-y-auto">
-        <div class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-4 sm:p-5 max-w-md w-full space-y-3.5 shadow-2xl max-h-[86dvh] overflow-y-auto animate-fade-in relative my-auto">
-            <!-- Header -->
-            <div class="sticky -top-4 -mx-4 px-4 sm:-top-5 sm:-mx-5 sm:px-5 pt-3 pb-3 bg-slate-900/98 backdrop-blur-md border-b border-slate-800/90 z-20 flex items-start justify-between gap-2 rounded-t-3xl shadow-sm">
-                <div class="min-w-0">
-                    <div class="flex items-center gap-1.5 flex-wrap">
-                        <span class="text-[10px] font-black uppercase tracking-wider text-emerald-300 bg-emerald-950 border border-emerald-700/80 px-2.5 py-0.5 rounded-full shadow-sm">
-                            Raport z meczu
-                        </span>
-                        <span id="archivedMatchModalDateBadge" class="text-[11px] font-mono font-black text-slate-200 bg-slate-800 border border-slate-700 px-2.5 py-0.5 rounded-full shadow-sm">--</span>
-                    </div>
-                    <h3 id="archivedMatchModalTitle" class="text-base sm:text-lg font-black text-white mt-1 leading-snug whitespace-normal break-words">Podsumowanie spotkania</h3>
-                    <p id="archivedMatchModalSubtext" class="text-[11px] text-slate-400 mt-0.5 whitespace-normal break-words">Składy drużyn, oficjalny wynik i nagrody MTV</p>
-                </div>
-                <button type="button" onclick="closeArchivedMatchModal()" aria-label="Zamknij" class="text-white hover:text-rose-400 font-black text-base w-9 h-9 rounded-2xl bg-slate-800 hover:bg-slate-700 active:scale-90 border border-slate-600/80 flex items-center justify-center transition shrink-0 shadow-lg cursor-pointer">✕</button>
-            </div>
-
-            <!-- Dynamic Content Body -->
-            <div id="archivedMatchModalContent" class="space-y-3 text-xs">
+    <!-- ================= MODAL: SZCZEGÓŁY ARCHIWALNEGO MECZU ================= -->
+    <div id="archivedMatchModal" role="dialog" aria-modal="true" aria-labelledby="archivedMatchModalTitle" onclick="if(event.target === this) closeArchivedMatchModal()" class="fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-50 flex items-center justify-center p-2.5 sm:p-4 ios-safe-modal-overlay hidden overflow-y-auto">
+        <div id="archivedMatchModalCard" class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-slate-700/80 rounded-3xl p-3 sm:p-4 max-w-lg w-full shadow-2xl animate-fade-in relative my-auto">
+            <div id="archivedMatchModalContent" class="space-y-2 text-xs">
                 <!-- Injected dynamically by openArchivedMatchModal() -->
-            </div>
-
-            <!-- Footer -->
-            <div class="pt-1 border-t border-slate-800/80">
-                <button type="button" onclick="closeArchivedMatchModal()" class="w-full bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-bold py-2.5 rounded-2xl text-xs transition shadow-sm">
-                    Zamknij raport ✕
-                </button>
             </div>
         </div>
     </div>
@@ -2643,6 +2621,32 @@
         </div>
     </div>
 
+    <!-- Theme Picker Modal (Pomysł Mikołaja - 4 motywy + Klasyk) -->
+    <div id="themePickerModal" role="dialog" aria-modal="true" aria-labelledby="themePickerModalTitle" onclick="if(event.target === this) closeThemePickerModal()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center ios-safe-modal-overlay hidden overflow-y-auto">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 max-w-sm w-full space-y-4 shadow-2xl animate-fade-in max-h-[82dvh] sm:max-h-[86dvh] overflow-y-auto my-auto">
+            <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+                <div class="flex items-center gap-2.5">
+                    <span class="text-2xl">🎨</span>
+                    <div>
+                        <h3 id="themePickerModalTitle" class="font-black text-white text-base">Wybierz Motyw</h3>
+                        <p class="text-[10px] text-slate-400">Zapisze się tylko na Twoim telefonie</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeThemePickerModal()" aria-label="Zamknij" class="text-white hover:text-rose-400 font-black text-base w-9 h-9 rounded-2xl bg-slate-800 hover:bg-slate-700 active:scale-90 border border-slate-600/80 flex items-center justify-center transition shrink-0 shadow-lg cursor-pointer -mr-1">✕</button>
+            </div>
+
+            <!-- Kontener na opcje motywów -->
+            <div id="themePickerOptionsContainer" class="space-y-2">
+                <!-- Wypełniane dynamicznie -->
+            </div>
+
+            <div class="pt-1">
+                <button type="button" onclick="closeThemePickerModal()" class="w-full bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 font-bold py-2.5 rounded-2xl text-xs transition">
+                    Gotowe
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Scoreboard Builder Modal -->
     <div id="scoreModal" role="dialog" aria-modal="true" aria-labelledby="scoreModalTitle" onclick="if(event.target === this) closeScoreModal()" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden">
@@ -3593,7 +3597,20 @@ function submitGenerateMonth() {
     showToast(`Wygenerowano mecze dla miesiąca: ${monthLabel} 📅`);
 }
 
-function setAppTheme(themeKey) {
+        // ================= SYSTEM 4 MOTYWÓW + KLASYK =================
+        function openThemePickerModal() {
+            const modal = document.getElementById('themePickerModal');
+            if (modal) {
+                renderThemePickerOptions();
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeThemePickerModal() {
+            document.getElementById('themePickerModal')?.classList.add('hidden');
+        }
+
+        function setAppTheme(themeKey) {
             localStorage.setItem('siatka_app_theme', themeKey);
             applyAppTheme(themeKey);
             const names = {
@@ -3607,6 +3624,10 @@ function setAppTheme(themeKey) {
                 showToast(`Zastosowano motyw: ${names[themeKey] || themeKey}`);
             }
             renderThemePickerOptions();
+            const badge = document.getElementById('profileCurrentThemeDisplay');
+            if (badge) badge.innerText = names[themeKey] || themeKey;
+            const badgeAdmin = document.getElementById('profileCurrentThemeDisplayAdmin');
+            if (badgeAdmin) badgeAdmin.innerText = names[themeKey] || themeKey;
         }
 
         function applyAppTheme(themeKey) {
@@ -3958,6 +3979,27 @@ function initFirebaseSync() {
 
         function normalizePlayerName(value) {
             return String(value ?? '').replace(/\s+/g, ' ').trim().slice(0, 80);
+        }
+
+        function formatPlayerNameHtml(name) {
+            if (!name) return '';
+            const raw = String(name).trim();
+            const match = raw.match(/^(.*?)\s*(\(.*?\))$/);
+            if (match) {
+                const mainName = escapeHtml(match[1].trim());
+                const note = escapeHtml(match[2].trim());
+                return `<span class="player-name-main">${mainName}</span> <span class="player-name-note text-[10px] opacity-75 font-medium whitespace-nowrap">${note}</span>`;
+            }
+            return escapeHtml(raw);
+        }
+
+        function formatPolishDateWithDay(dateStr) {
+            if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr || '';
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const d = new Date(year, month - 1, day);
+            const days = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
+            const months = ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sierpnia', 'września', 'października', 'listopada', 'grudnia'];
+            return `${days[d.getDay()]}, ${day} ${months[month - 1]} ${year}`;
         }
 
         function getLocalDateKey(date = new Date()) {
@@ -8167,155 +8209,249 @@ function initFirebaseSync() {
                 return;
             }
 
-            const dateBadge = document.getElementById('archivedMatchModalDateBadge');
-            const titleEl = document.getElementById('archivedMatchModalTitle');
-            const subtextEl = document.getElementById('archivedMatchModalSubtext');
-
-            if (dateBadge) dateBadge.innerText = targetMatch.date;
-            if (titleEl) titleEl.innerText = `Spotkanie: ${targetMatch.date}`;
             const attendees = (targetMatch.attendees || []);
-            const mainSquad = attendees.slice(0, 14);
-            if (subtextEl) subtextEl.innerText = `${targetMonth || ''} • Skład: ${mainSquad.length}/14 graczy`;
+            const mainSquad = getMatchPlayingSquad(targetMatch);
+            const reserves = getMatchPlayingReserves(targetMatch);
+            const playingLimit = getMatchPlayingLimit(targetMatch);
 
             const isFinished = isMvpVotingFinished(targetMatch);
             
-            // General MVP
+            // General MTV
             const votes = targetMatch.votes || {};
             const tally = {};
             Object.values(votes).forEach(nom => tally[nom] = (tally[nom] || 0) + 1);
             const sortedNominees = Object.entries(tally).sort((a, b) => b[1] - a[1]);
-            let topNom = sortedNominees.length > 0 ? sortedNominees[0][0] : "";
-            let maxV = sortedNominees.length > 0 ? sortedNominees[0][1] : 0;
+            const topNom = sortedNominees.length > 0 ? sortedNominees[0][0] : "";
+            const maxV = sortedNominees.length > 0 ? sortedNominees[0][1] : 0;
+            const totalVotes = Object.keys(votes).length;
             const mvpWinner = (isFinished && topNom && maxV > 0) ? topNom : null;
 
-            // Women MVP
+            // Women MTV (MTV Kobiet)
             const votesWomen = targetMatch.votesWomen || {};
             const tallyWomen = {};
             Object.values(votesWomen).forEach(nom => tallyWomen[nom] = (tallyWomen[nom] || 0) + 1);
             const sortedWomenNominees = Object.entries(tallyWomen).sort((a, b) => b[1] - a[1]);
-            let topWomenNom = sortedWomenNominees.length > 0 ? sortedWomenNominees[0][0] : "";
-            let maxWomenV = sortedWomenNominees.length > 0 ? sortedWomenNominees[0][1] : 0;
+            const topWomenNom = sortedWomenNominees.length > 0 ? sortedWomenNominees[0][0] : "";
+            const maxWomenV = sortedWomenNominees.length > 0 ? sortedWomenNominees[0][1] : 0;
+            const totalWomenVotes = Object.keys(votesWomen).length;
             const mvpWomenWinner = (isFinished && topWomenNom && maxWomenV > 0) ? topWomenNom : null;
 
             const teams = targetMatch.teams || null;
             const darkName = teams?.darkName || "Drużyna Ciemna";
             const lightName = teams?.lightName || "Drużyna Jasna";
-            const darkRoster = teams?.dark || [];
-            const lightRoster = teams?.light || [];
+            
+            // Auto-infer missing team rosters from attendees:
+            let darkRoster = Array.isArray(teams?.dark) ? teams.dark.filter(Boolean) : [];
+            let lightRoster = Array.isArray(teams?.light) ? teams.light.filter(Boolean) : [];
+            if (!darkRoster.length && lightRoster.length) {
+                darkRoster = mainSquad.filter(p => !lightRoster.includes(p));
+            } else if (!lightRoster.length && darkRoster.length) {
+                lightRoster = mainSquad.filter(p => !darkRoster.includes(p));
+            }
 
             let darkWon = false;
             let lightWon = false;
+            let isDraw = false;
+            let scoreA = null;
+            let scoreB = null;
+            let setsPillsHtml = '';
+
             if (targetMatch.score) {
-                const scoreMatch = targetMatch.score.match(/\s(\d+)\s*:\s*(\d+)\s/);
-                if (scoreMatch) {
-                    const sD = parseInt(scoreMatch[1], 10);
-                    const sL = parseInt(scoreMatch[2], 10);
-                    if (sD > sL) darkWon = true;
-                    else if (sL > sD) lightWon = true;
+                const matchWithSets = targetMatch.score.match(/^(.*?)\s+(\d+)\s*:\s*(\d+)\s+(.*?)\s*\((.*?)\)$/);
+                if (matchWithSets) {
+                    scoreA = parseInt(matchWithSets[2].trim(), 10);
+                    scoreB = parseInt(matchWithSets[3].trim(), 10);
+                    if (scoreA > scoreB) darkWon = true;
+                    else if (scoreB > scoreA) lightWon = true;
+                    else isDraw = true;
+
+                    const setsDetails = matchWithSets[5].trim();
+                    if (setsDetails) {
+                        const pills = setsDetails.split(',').map((s, idx) => {
+                            const pts = s.trim().split(':');
+                            if (pts.length === 2) {
+                                const pA = parseInt(pts[0], 10);
+                                const pB = parseInt(pts[1], 10);
+                                const aWonSet = pA > pB;
+                                const bWonSet = pB > pA;
+                                return `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono shadow-sm">
+                                    <span class="text-slate-500 mr-1 text-[8.5px] font-bold">S${idx + 1}</span>
+                                    <span class="${aWonSet ? 'text-emerald-400 font-black' : 'text-slate-300'}">${escapeHtml(pts[0].trim())}</span>
+                                    <span class="text-slate-600 mx-0.5">:</span>
+                                    <span class="${bWonSet ? 'text-emerald-400 font-black' : 'text-slate-300'}">${escapeHtml(pts[1].trim())}</span>
+                                </span>`;
+                            }
+                            return `<span class="inline-block px-1.5 py-0.5 rounded bg-slate-900 text-[10px] font-mono text-slate-300">${escapeHtml(s.trim())}</span>`;
+                        }).join('');
+                        setsPillsHtml = `<div class="flex flex-wrap items-center justify-center gap-1.5 pt-1.5 border-t border-slate-800/60 mt-1">${pills}</div>`;
+                    }
+                } else {
+                    const matchSimple = targetMatch.score.match(/\s(\d+)\s*:\s*(\d+)\s/);
+                    if (matchSimple) {
+                        scoreA = parseInt(matchSimple[1], 10);
+                        scoreB = parseInt(matchSimple[2], 10);
+                        if (scoreA > scoreB) darkWon = true;
+                        else if (scoreB > scoreA) lightWon = true;
+                        else isDraw = true;
+                    }
                 }
             }
 
-            // 1. MTV Section
+            let scoreboardHtml = '';
+            if (targetMatch.score && scoreA !== null && scoreB !== null) {
+                scoreboardHtml = `
+                    <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-2.5 shadow-md">
+                        <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
+                            <div class="text-right min-w-0">
+                                <div class="flex items-center justify-end gap-1.5 min-w-0">
+                                    ${darkWon ? '<span class="text-xs shrink-0">🏆</span>' : (isDraw ? '<span class="text-xs shrink-0">⚖️</span>' : '')}
+                                    <span class="text-xs sm:text-sm font-black ${darkWon ? 'text-emerald-400' : (isDraw ? 'text-amber-300' : 'text-slate-200')} whitespace-normal break-words leading-tight">${escapeHtml(darkName)}</span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-slate-700 border border-slate-500 shrink-0"></span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-950 border border-slate-700/80 px-3 py-1 rounded-xl font-mono text-base font-black tracking-widest text-amber-300 shadow-inner shrink-0 text-center min-w-[56px]">
+                                <span class="${darkWon ? 'text-emerald-400' : (isDraw ? 'text-amber-300' : 'text-slate-300')}">${scoreA}</span>
+                                <span class="text-slate-500 mx-1">:</span>
+                                <span class="${lightWon ? 'text-emerald-400' : (isDraw ? 'text-amber-300' : 'text-slate-300')}">${scoreB}</span>
+                            </div>
+                            <div class="text-left min-w-0">
+                                <div class="flex items-center justify-start gap-1.5 min-w-0">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-white border border-slate-300 shrink-0"></span>
+                                    <span class="text-xs sm:text-sm font-black ${lightWon ? 'text-emerald-400' : (isDraw ? 'text-amber-300' : 'text-slate-200')} whitespace-normal break-words leading-tight">${escapeHtml(lightName)}</span>
+                                    ${lightWon ? '<span class="text-xs shrink-0">🏆</span>' : (isDraw ? '<span class="text-xs shrink-0">⚖️</span>' : '')}
+                                </div>
+                            </div>
+                        </div>
+                        ${setsPillsHtml}
+                    </div>
+                `;
+            } else if (targetMatch.score) {
+                scoreboardHtml = `
+                    <div class="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 text-center">
+                        <span class="text-xs font-mono font-bold text-amber-300">${escapeHtml(targetMatch.score)}</span>
+                    </div>
+                `;
+            } else {
+                scoreboardHtml = `
+                    <div class="bg-slate-950/60 border border-slate-800/80 rounded-2xl p-2 text-center text-[11px] text-slate-500 italic">
+                        Brak wpisanego oficjalnego wyniku spotkania
+                    </div>
+                `;
+            }
+
+            // General MTV card
             let mvpHtml = '';
             if (mvpWinner) {
-                mvpHtml += `
-                    <div class="bg-gradient-to-r from-amber-500/20 via-amber-950/40 to-slate-900 border-2 border-amber-500/60 rounded-2xl p-3 sm:p-3.5 shadow-lg shadow-amber-500/10 space-y-2.5">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md inline-flex items-center gap-1 shadow-sm">
-                                <span>👑</span> MTV SPOTKANIA
-                            </span>
-                            <span class="text-[11px] font-mono font-bold text-amber-300">${maxV} gł.</span>
-                        </div>
-                        <div class="flex items-center justify-between gap-3 pt-0.5">
-                            <div class="flex items-center gap-2.5 min-w-0 cursor-pointer" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWinner)});" title="Zobacz profil zawodnika">
-                                ${getPlayerAvatarHtml(mvpWinner, 'md')}
-                                <div class="min-w-0">
-                                    <span class="text-sm sm:text-base font-black text-white hover:text-amber-300 transition block whitespace-normal break-words">${escapeHtml(mvpWinner)}</span>
-                                    <span class="text-[10px] text-slate-400">Wybrany głosami zawodników tego meczu</span>
+                const pct = totalVotes > 0 ? Math.round((maxV / totalVotes) * 100) : 0;
+                const runnersUpList = sortedNominees.slice(1);
+                mvpHtml = `
+                    <div class="bg-gradient-to-r from-amber-500/15 via-amber-950/30 to-slate-900 border border-amber-500/50 rounded-2xl p-2.5 shadow-md space-y-1.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2 min-w-0 cursor-pointer" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWinner)});" title="Dotknij, aby zobaczyć profil gracza">
+                                ${getPlayerAvatarHtml(mvpWinner, 'sm')}
+                                <div class="flex items-center gap-1.5 min-w-0 flex-wrap">
+                                    <span class="text-[9px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded shadow-sm shrink-0">👑 MTV</span>
+                                    <span class="text-xs sm:text-sm font-black text-white hover:text-amber-300 transition whitespace-normal break-words leading-tight">${formatPlayerNameHtml(mvpWinner)}</span>
                                 </div>
                             </div>
-                            <button type="button" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWinner)});" class="shrink-0 text-[11px] font-bold text-amber-300 hover:text-white bg-slate-950/80 border border-amber-500/40 px-2.5 py-1.5 rounded-xl transition active:scale-95 shadow-sm">
-                                Profil ➔
-                            </button>
+                            <div class="text-right shrink-0">
+                                <span class="text-xs font-mono font-black text-amber-300 bg-amber-950/80 border border-amber-600/50 px-2 py-0.5 rounded-lg whitespace-nowrap shadow-sm">
+                                    ${pluralizeVotes(maxV)} <span class="text-[9.5px] text-amber-400 font-bold">(${pct}%)</span>
+                                </span>
+                            </div>
                         </div>
+                        ${runnersUpList.length > 0 ? `
+                            <div class="pt-1.5 border-t border-amber-500/20 flex flex-wrap items-center gap-1.5 text-[10px] text-slate-300 leading-tight">
+                                <span class="text-slate-400 font-semibold mr-0.5 shrink-0">Głosy:</span>
+                                ${runnersUpList.map(([nom, cnt]) => `
+                                    <span class="bg-slate-950/80 border border-slate-800 px-1.5 py-0.5 rounded text-slate-300 inline-flex items-center gap-1 whitespace-nowrap shrink-0">
+                                        <span>${formatPlayerNameHtml(nom)}</span>
+                                        <strong class="text-amber-400 font-mono font-bold">(${cnt})</strong>
+                                    </span>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            } else if (totalVotes > 0) {
+                mvpHtml = `
+                    <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-2 sm:p-2.5 flex items-center gap-2 text-xs">
+                        <span class="text-base shrink-0">🔒</span>
+                        <div class="min-w-0">
+                            <strong class="text-amber-300 text-[11px] block">Głosowanie tajne MTV w toku</strong>
+                            <span class="text-[10px] text-slate-400">Oddano ${pluralizeVotes(totalVotes)}. Wyniki zostaną ujawnione po zakończeniu.</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                mvpHtml = `
+                    <div class="bg-slate-950/60 border border-slate-800/80 rounded-2xl px-2.5 py-1.5 flex items-center justify-between text-[11px] text-slate-400">
+                        <span class="flex items-center gap-1 font-semibold text-slate-300">
+                            <span>👑</span> MTV spotkania:
+                        </span>
+                        <span class="text-slate-500 italic text-[10px]">Brak zarejestrowanego głosowania</span>
                     </div>
                 `;
             }
 
+            // Women MTV card (MTV Kobiet)
+            let mvpWomenHtml = '';
             if (mvpWomenWinner) {
-                mvpHtml += `
-                    <div class="bg-gradient-to-r from-pink-500/20 via-pink-950/40 to-slate-900 border-2 border-pink-500/60 rounded-2xl p-3 sm:p-3.5 shadow-lg shadow-pink-500/10 space-y-2.5">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[10px] font-black uppercase tracking-wider bg-pink-500 text-slate-950 px-2 py-0.5 rounded-md inline-flex items-center gap-1 shadow-sm">
-                                <span>👸</span> MTV KOBIET SPOTKANIA
-                            </span>
-                            <span class="text-[11px] font-mono font-bold text-pink-300">${maxWomenV} gł.</span>
-                        </div>
-                        <div class="flex items-center justify-between gap-3 pt-0.5">
-                            <div class="flex items-center gap-2.5 min-w-0 cursor-pointer" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWomenWinner)});" title="Zobacz profil zawodniczki">
-                                ${getPlayerAvatarHtml(mvpWomenWinner, 'md')}
-                                <div class="min-w-0">
-                                    <span class="text-sm sm:text-base font-black text-white hover:text-pink-300 transition block whitespace-normal break-words">${escapeHtml(mvpWomenWinner)}</span>
-                                    <span class="text-[10px] text-pink-300/70">Najlepsza zawodniczka tego spotkania</span>
+                const pctW = totalWomenVotes > 0 ? Math.round((maxWomenV / totalWomenVotes) * 100) : 0;
+                const runnersUpWomen = sortedWomenNominees.slice(1);
+                mvpWomenHtml = `
+                    <div class="bg-gradient-to-r from-pink-500/15 via-pink-950/30 to-slate-900 border border-pink-500/50 rounded-2xl p-2.5 shadow-md space-y-1.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2 min-w-0 cursor-pointer" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWomenWinner)});" title="Dotknij, aby zobaczyć profil zawodniczki">
+                                ${getPlayerAvatarHtml(mvpWomenWinner, 'sm')}
+                                <div class="flex items-center gap-1.5 min-w-0 flex-wrap">
+                                    <span class="text-[9px] font-black uppercase tracking-wider bg-pink-500 text-slate-950 px-1.5 py-0.5 rounded shadow-sm shrink-0">👸 MTV Kobiet</span>
+                                    <span class="text-xs sm:text-sm font-black text-white hover:text-pink-300 transition whitespace-normal break-words leading-tight">${formatPlayerNameHtml(mvpWomenWinner)}</span>
                                 </div>
                             </div>
-                            <button type="button" onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWomenWinner)});" class="shrink-0 text-[11px] font-bold text-pink-300 hover:text-white bg-slate-950/80 border border-pink-500/40 px-2.5 py-1.5 rounded-xl transition active:scale-95 shadow-sm">
-                                Profil ➔
-                            </button>
+                            <div class="text-right shrink-0">
+                                <span class="text-xs font-mono font-black text-pink-300 bg-pink-950/80 border border-pink-600/50 px-2 py-0.5 rounded-lg whitespace-nowrap shadow-sm">
+                                    ${pluralizeVotes(maxWomenV)} <span class="text-[9.5px] text-pink-400 font-bold">(${pctW}%)</span>
+                                </span>
+                            </div>
                         </div>
+                        ${runnersUpWomen.length > 0 ? `
+                            <div class="pt-1.5 border-t border-pink-500/20 flex flex-wrap items-center gap-1.5 text-[10px] text-slate-300 leading-tight">
+                                <span class="text-slate-400 font-semibold mr-0.5 shrink-0">Głosy:</span>
+                                ${runnersUpWomen.map(([nom, cnt]) => `
+                                    <span class="bg-slate-950/80 border border-slate-800 px-1.5 py-0.5 rounded text-slate-300 inline-flex items-center gap-1 whitespace-nowrap shrink-0">
+                                        <span>${formatPlayerNameHtml(nom)}</span>
+                                        <strong class="text-pink-400 font-mono font-bold">(${cnt})</strong>
+                                    </span>
+                                `).join('')}
+                            </div>
+                        ` : ''}
                     </div>
                 `;
             }
 
-            if (!mvpWinner && !mvpWomenWinner) {
-                if (Object.keys(votes).length > 0) {
-                    mvpHtml = `
-                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3 flex items-center gap-2.5 text-xs">
-                            <span class="text-xl shrink-0">🔒</span>
-                            <div>
-                                <strong class="text-amber-300 text-xs block">Głosowanie tajne w toku</strong>
-                                <span class="text-[11px] text-slate-400">Oddano głosy. Wyniki zostaną ujawnione po oficjalnym zakończeniu głosowania.</span>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    mvpHtml = `
-                        <div class="bg-slate-950/60 border border-slate-800/80 rounded-2xl p-2.5 flex items-center justify-between text-xs text-slate-400">
-                            <span class="flex items-center gap-1.5">
-                                <span>👑</span>
-                                <span>MTV spotkania:</span>
-                            </span>
-                            <span class="text-slate-500 italic">Brak zarejestrowanego głosowania</span>
-                        </div>
-                    `;
-                }
-            }
+            const specialAwardsHtml = isFinished ? renderMatchSpecialAwardsSectionHtml(targetMatch, true) : '';
 
-            // 2. Teams Section (Dwie drużyny z pozycjami)
             let teamsHtml = '';
-            if (teams && (darkRoster.length > 0 || lightRoster.length > 0)) {
-                const renderTeamRoster = (roster, isDarkTeam, won) => {
-                    if (!roster.length) {
-                        return `<div class="p-3 text-center text-xs text-slate-500 italic">Brak przypisanych graczy</div>`;
-                    }
+            if (darkRoster.length > 0 || lightRoster.length > 0) {
+                const renderTeamRosterCompact = (roster) => {
+                    if (!roster.length) return `<div class="text-[10px] text-slate-500 italic py-1 text-center">Brak graczy</div>`;
                     return roster.map(p => {
-                        const isMe = (p === loggedPlayer);
                         const isPlayerMvp = (mvpWinner && p === mvpWinner);
                         const isPlayerWomenMvp = (mvpWomenWinner && p === mvpWomenWinner);
                         const isGuest = !AppState.all_players.includes(p);
                         const posBadges = (typeof getPlayerPositionsBadgesHtml === 'function') ? getPlayerPositionsBadgesHtml(p) : '';
                         return `
-                            <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" title="Kliknij, aby otworzyć profil gracza" class="flex items-center justify-between gap-2 p-1.5 rounded-xl hover:bg-slate-800/70 cursor-pointer transition active:scale-[0.98] ${isPlayerMvp ? 'bg-amber-950/30 border border-amber-500/30' : (isPlayerWomenMvp ? 'bg-pink-950/30 border border-pink-500/30' : (isMe ? 'bg-emerald-950/20 border border-emerald-800/40' : ''))}">
-                                <div class="flex items-center gap-2 min-w-0 flex-1 flex-wrap">
+                            <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" title="Dotknij, aby zobaczyć profil gracza" class="flex items-center justify-between gap-1 py-1 px-1 rounded-lg hover:bg-slate-800/60 cursor-pointer transition ${isPlayerMvp ? 'bg-amber-950/40 border border-amber-500/40 text-amber-200' : (isPlayerWomenMvp ? 'bg-pink-950/40 border border-pink-500/40 text-pink-200' : 'text-slate-200')}">
+                                <div class="flex items-center gap-1.5 min-w-0 flex-1 flex-wrap">
                                     ${getPlayerAvatarHtml(p, 'xs')}
-                                    <span class="font-extrabold text-xs text-slate-100 hover:text-white transition whitespace-normal break-words leading-tight ${isMe ? 'text-emerald-300' : ''}">${escapeHtml(p)}</span>
+                                    <span class="font-bold text-[10.5px] sm:text-[11px] leading-tight whitespace-normal break-words ${isPlayerMvp ? 'text-amber-300 font-black' : (isPlayerWomenMvp ? 'text-pink-300 font-black' : '')}">
+                                        ${isPlayerMvp ? '👑 ' : (isPlayerWomenMvp ? '👸 ' : '')}${formatPlayerNameHtml(p)}
+                                    </span>
                                     ${posBadges ? `<span class="inline-flex items-center gap-0.5">${posBadges}</span>` : ''}
                                 </div>
                                 <div class="flex items-center gap-1 shrink-0">
-                                    ${isPlayerMvp ? `<span class="text-[9px] font-black bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded shadow-sm inline-flex items-center gap-0.5">👑 MTV</span>` : ''}
-                                    ${isPlayerWomenMvp ? `<span class="text-[9px] font-black bg-pink-500 text-slate-950 px-1.5 py-0.5 rounded shadow-sm inline-flex items-center gap-0.5">👸 MTV K</span>` : ''}
-                                    ${isMe ? `<span class="text-[8.5px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800 px-1 py-0.5 rounded">TY</span>` : ''}
-                                    ${isGuest ? `<span class="text-[8px] text-slate-500 font-semibold">(gość)</span>` : ''}
+                                    ${isGuest ? `<span class="text-[8px] text-slate-500 font-medium shrink-0">(gość)</span>` : ''}
                                 </div>
                             </div>
                         `;
@@ -8323,72 +8459,58 @@ function initFirebaseSync() {
                 };
 
                 teamsHtml = `
-                    <div class="space-y-2 pt-1">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-bold text-xs uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                                <span>⚔️</span> Dwie drużyny po stronach boiska
-                            </h4>
-                            <span class="text-[10px] text-slate-400 font-mono">${darkRoster.length + lightRoster.length} graczy</span>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                            <!-- Drużyna Ciemna -->
-                            <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-3 space-y-2 ${darkWon ? 'ring-1 ring-emerald-500/40' : ''}">
-                                <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
-                                    <div class="flex items-center gap-1.5 min-w-0">
-                                        <span class="w-3 h-3 rounded-full bg-slate-700 border border-slate-500 shrink-0"></span>
-                                        <strong class="text-xs font-black text-slate-200 whitespace-normal break-words leading-tight">${escapeHtml(darkName)}</strong>
-                                    </div>
-                                    ${darkWon ? `<span class="text-[9px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full shrink-0">🏆 Zwycięzcy</span>` : (lightWon ? `<span class="text-[9px] font-bold text-slate-500 px-1.5 py-0.5 shrink-0">Porażka</span>` : '')}
+                    <div class="grid grid-cols-2 gap-2 pt-0.5">
+                        <!-- Drużyna Ciemna -->
+                        <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-2 space-y-1 ${darkWon ? 'ring-1 ring-emerald-500/40' : ''}">
+                            <div class="flex items-center justify-between border-b border-slate-800/80 pb-1 text-[11px]">
+                                <div class="flex items-center gap-1 min-w-0">
+                                    <span class="w-2 h-2 rounded-full bg-slate-700 border border-slate-500 shrink-0"></span>
+                                    <strong class="font-black text-slate-300 whitespace-normal break-words leading-tight">${escapeHtml(darkName)}</strong>
                                 </div>
-                                <div class="space-y-1">
-                                    ${renderTeamRoster(darkRoster, true, darkWon)}
-                                </div>
+                                ${darkWon ? `<span class="text-[8.5px] font-black uppercase text-emerald-400 shrink-0">🏆 WIN</span>` : (isDraw ? `<span class="text-[8.5px] font-black uppercase text-amber-300 shrink-0">⚖️ REMIS</span>` : '')}
                             </div>
+                            <div class="space-y-0.5">
+                                ${renderTeamRosterCompact(darkRoster)}
+                            </div>
+                        </div>
 
-                            <!-- Drużyna Jasna -->
-                            <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-3 space-y-2 ${lightWon ? 'ring-1 ring-emerald-500/40' : ''}">
-                                <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
-                                    <div class="flex items-center gap-1.5 min-w-0">
-                                        <span class="w-3 h-3 rounded-full bg-white border border-slate-300 shrink-0"></span>
-                                        <strong class="text-xs font-black text-slate-200 whitespace-normal break-words leading-tight">${escapeHtml(lightName)}</strong>
-                                    </div>
-                                    ${lightWon ? `<span class="text-[9px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full shrink-0">🏆 Zwycięzcy</span>` : (darkWon ? `<span class="text-[9px] font-bold text-slate-500 px-1.5 py-0.5 shrink-0">Porażka</span>` : '')}
+                        <!-- Drużyna Jasna -->
+                        <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-2 space-y-1 ${lightWon ? 'ring-1 ring-emerald-500/40' : ''}">
+                            <div class="flex items-center justify-between border-b border-slate-800/80 pb-1 text-[11px]">
+                                <div class="flex items-center gap-1 min-w-0">
+                                    <span class="w-2 h-2 rounded-full bg-white border border-slate-300 shrink-0"></span>
+                                    <strong class="font-black text-slate-300 whitespace-normal break-words leading-tight">${escapeHtml(lightName)}</strong>
                                 </div>
-                                <div class="space-y-1">
-                                    ${renderTeamRoster(lightRoster, false, lightWon)}
-                                </div>
+                                ${lightWon ? `<span class="text-[8.5px] font-black uppercase text-emerald-400 shrink-0">🏆 WIN</span>` : (isDraw ? `<span class="text-[8.5px] font-black uppercase text-amber-300 shrink-0">⚖️ REMIS</span>` : '')}
+                            </div>
+                            <div class="space-y-0.5">
+                                ${renderTeamRosterCompact(lightRoster)}
                             </div>
                         </div>
                     </div>
                 `;
             } else {
                 teamsHtml = `
-                    <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-3 space-y-2 pt-1">
-                        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
-                            <h4 class="font-bold text-xs uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                                <span>📋</span> Skład meczu (${mainSquad.length}/14 graczy)
-                            </h4>
+                    <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-2 space-y-1 pt-0.5">
+                        <div class="border-b border-slate-800/80 pb-1 text-[11px]">
+                            <strong class="font-black text-slate-300">Skład meczu (${pluralizePlayers(mainSquad.length)})</strong>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                        <div class="grid grid-cols-2 gap-1">
                             ${mainSquad.map(p => {
-                                const isMe = (p === loggedPlayer);
                                 const isPlayerMvp = (mvpWinner && p === mvpWinner);
                                 const isPlayerWomenMvp = (mvpWomenWinner && p === mvpWomenWinner);
                                 const isGuest = !AppState.all_players.includes(p);
                                 const posBadges = (typeof getPlayerPositionsBadgesHtml === 'function') ? getPlayerPositionsBadgesHtml(p) : '';
                                 return `
-                                    <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" class="flex items-center justify-between gap-2 p-1.5 rounded-xl hover:bg-slate-800/70 cursor-pointer transition ${isPlayerMvp ? 'bg-amber-950/30 border border-amber-500/30' : (isPlayerWomenMvp ? 'bg-pink-950/30 border border-pink-500/30' : '')}">
-                                        <div class="flex items-center gap-2 min-w-0">
+                                    <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" class="flex items-center justify-between gap-1 py-1 px-1 rounded-lg hover:bg-slate-800/60 cursor-pointer transition ${isPlayerMvp ? 'bg-amber-950/40 border border-amber-500/40 text-amber-200' : (isPlayerWomenMvp ? 'bg-pink-950/40 border border-pink-500/40 text-pink-200' : 'text-slate-200')}">
+                                        <div class="flex items-center gap-1.5 min-w-0 flex-1 flex-wrap">
                                             ${getPlayerAvatarHtml(p, 'xs')}
-                                            <span class="font-extrabold text-xs text-slate-100 whitespace-normal break-words leading-tight ${isMe ? 'text-emerald-300' : ''}">${escapeHtml(p)}</span>
+                                            <span class="font-bold text-[10.5px] sm:text-[11px] leading-tight whitespace-normal break-words ${isPlayerMvp ? 'text-amber-300 font-black' : (isPlayerWomenMvp ? 'text-pink-300 font-black' : '')}">
+                                                ${isPlayerMvp ? '👑 ' : (isPlayerWomenMvp ? '👸 ' : '')}${formatPlayerNameHtml(p)}
+                                            </span>
                                             ${posBadges ? `<span class="inline-flex items-center gap-0.5">${posBadges}</span>` : ''}
                                         </div>
-                                        <div class="flex items-center gap-1 shrink-0">
-                                            ${isPlayerMvp ? `<span class="text-[9px] font-black bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">👑 MTV</span>` : ''}
-                                            ${isPlayerWomenMvp ? `<span class="text-[9px] font-black bg-pink-500 text-slate-950 px-1.5 py-0.5 rounded">👸 MTV K</span>` : ''}
-                                            ${isMe ? `<span class="text-[8.5px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800 px-1 py-0.5 rounded">TY</span>` : ''}
-                                            ${isGuest ? `<span class="text-[8px] text-slate-500 font-semibold">(gość)</span>` : ''}
-                                        </div>
+                                        ${isGuest ? `<span class="text-[8px] text-slate-500 font-medium shrink-0">(gość)</span>` : ''}
                                     </div>
                                 `;
                             }).join('')}
@@ -8397,20 +8519,58 @@ function initFirebaseSync() {
                 `;
             }
 
+            let reservesHtml = '';
+            if (reserves.length > 0) {
+                reservesHtml = `
+                    <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl px-2.5 py-1 flex items-center gap-1.5 text-[10px] text-slate-400">
+                        <span class="font-bold text-slate-500 shrink-0">⏳ Rezerwa:</span>
+                        <span class="text-slate-300 whitespace-normal break-words">${reserves.map(escapeHtml).join(', ')}</span>
+                    </div>
+                `;
+            }
+
             content.innerHTML = `
-                <!-- Wynik Meczu -->
-                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-2 shadow-inner">
-                    <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">Oficjalny wynik meczu:</span>
-                    <div class="min-w-0">
-                        ${targetMatch.score ? formatScoreHtml(targetMatch.score) : '<span class="text-slate-500 italic">Brak wpisanego wyniku</span>'}
+                <!-- Nagłówek Raportu -->
+                <div class="flex items-center justify-between pb-2 border-b border-slate-800/80">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="w-7 h-7 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 flex items-center justify-center font-black text-sm shadow-md shrink-0">🏐</span>
+                        <div class="min-w-0">
+                            <h3 id="archivedMatchModalTitle" class="text-xs sm:text-sm font-black text-white uppercase tracking-wider leading-none">RAPORT MECZOWY</h3>
+                            <p class="text-[11px] font-bold text-amber-300 mt-0.5 leading-none">${formatPolishDateWithDay(targetMatch.date)}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <span class="text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700 px-2 py-0.5 rounded-full shadow-sm">
+                            ${mainSquad.length}/${playingLimit} na parkiecie${reserves.length > 0 ? ` +${reserves.length} rez.` : ''}
+                        </span>
+                        <button type="button" onclick="closeArchivedMatchModal()" aria-label="Zamknij" class="text-slate-400 hover:text-white font-black text-xs w-6 h-6 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition border border-slate-700 cursor-pointer">✕</button>
                     </div>
                 </div>
 
-                <!-- MTV Spotkania (Ogólny i Kobiet) -->
+                <!-- Tablica Wyników -->
+                ${scoreboardHtml}
+
+                <!-- MTV Spotkania -->
                 ${mvpHtml}
 
-                <!-- Dwie drużyny lub skład -->
+                <!-- MTV Kobiet (jeśli dotyczy) -->
+                ${mvpWomenHtml}
+
+                <!-- Wyróżnienia Meczowe -->
+                ${specialAwardsHtml}
+
+                <!-- Składy Drużyn -->
                 ${teamsHtml}
+
+                <!-- Rezerwa (jeśli obecna) -->
+                ${reservesHtml}
+
+                <!-- Przycisk Zamknij -->
+                <div class="pt-1.5 border-t border-slate-800/80 flex justify-end">
+                    <button type="button" onclick="closeArchivedMatchModal()" class="w-full bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-bold py-2 rounded-xl text-xs transition shadow-sm">
+                        Zamknij raport ✕
+                    </button>
+                </div>
             `;
 
             modal.classList.remove('hidden');
@@ -9334,8 +9494,14 @@ function initFirebaseSync() {
             Object.keys(AppState.months || {}).forEach(mName => {
                 (AppState.months[mName]?.matches || []).forEach(m => {
                     if (m.isCancelled || !m.score || !m.teams) return;
-                    const dark = m.teams.dark || [];
-                    const light = m.teams.light || [];
+                    const attendees = (m.attendees || []).slice(0, 14);
+                    let dark = Array.isArray(m.teams.dark) ? m.teams.dark.filter(Boolean) : [];
+                    let light = Array.isArray(m.teams.light) ? m.teams.light.filter(Boolean) : [];
+                    if (!dark.length && light.length) {
+                        dark = attendees.filter(p => !light.includes(p));
+                    } else if (!light.length && dark.length) {
+                        light = attendees.filter(p => !dark.includes(p));
+                    }
                     if (!dark.includes(playerName) && !light.includes(playerName)) return;
 
                     const isDark = dark.includes(playerName);
@@ -9407,8 +9573,13 @@ function initFirebaseSync() {
                     if (!attendees.includes(playerName)) return;
 
                     const teams = m.teams || null;
-                    const dark = teams?.dark || [];
-                    const light = teams?.light || [];
+                    let dark = Array.isArray(teams?.dark) ? teams.dark.filter(Boolean) : [];
+                    let light = Array.isArray(teams?.light) ? teams.light.filter(Boolean) : [];
+                    if (!dark.length && light.length) {
+                        dark = attendees.filter(p => !light.includes(p));
+                    } else if (!light.length && dark.length) {
+                        light = attendees.filter(p => !dark.includes(p));
+                    }
                     let teamName = "";
                     let isDark = false;
                     let isLight = false;
@@ -9430,8 +9601,13 @@ function initFirebaseSync() {
                         if (matchRes) {
                             const sA = parseInt(matchRes[1], 10);
                             const sB = parseInt(matchRes[2], 10);
-                            if (isDark) outcome = (sA > sB) ? "win" : ((sB > sA) ? "loss" : "draw");
-                            if (isLight) outcome = (sB > sA) ? "win" : ((sA > sB) ? "loss" : "draw");
+                            if (sA === sB) {
+                                outcome = "draw";
+                            } else if (isDark) {
+                                outcome = (sA > sB) ? "win" : "loss";
+                            } else if (isLight) {
+                                outcome = (sB > sA) ? "win" : "loss";
+                            }
                         }
                     } else if (isPast) {
                         outcome = "archived";
@@ -9479,7 +9655,7 @@ function initFirebaseSync() {
 
         // ================= TAB 6: ROZBUDOWANY SYSTEM ODZNAK I STATYSTYK =================
         function calculatePlayerCareerOutcomes(playerName) {
-            if (!playerName) return { all: [], recent: [], totalWins: 0, totalLosses: 0 };
+            if (!playerName) return { all: [], recent: [], totalWins: 0, totalLosses: 0, totalDraws: 0 };
             const allMatches = [];
             Object.keys(AppState.months || {}).forEach(mName => {
                 (AppState.months[mName]?.matches || []).forEach(m => {
@@ -9498,8 +9674,14 @@ function initFirebaseSync() {
                 const teams = m.teams || null;
 
                 if (scoreStr && teams) {
-                    const darkMembers = teams.dark || [];
-                    const lightMembers = teams.light || [];
+                    let darkMembers = Array.isArray(teams.dark) ? teams.dark.filter(Boolean) : [];
+                    let lightMembers = Array.isArray(teams.light) ? teams.light.filter(Boolean) : [];
+                    if (!darkMembers.length && lightMembers.length) {
+                        darkMembers = attendees.filter(p => !lightMembers.includes(p));
+                    } else if (!lightMembers.length && darkMembers.length) {
+                        lightMembers = attendees.filter(p => !darkMembers.includes(p));
+                    }
+
                     const matchWithSets = scoreStr.match(/^(.*?)\s+(\d+)\s*:\s*(\d+)\s+/);
                     const matchSimple = scoreStr.match(/\s(\d+)\s*:\s*(\d+)\s/) || scoreStr.match(/(?:^|\s)(\d+)\s*:\s*(\d+)(?:\s|$)/);
                     let setsA = null, setsB = null;
@@ -9514,9 +9696,11 @@ function initFirebaseSync() {
                         if (darkMembers.includes(playerName)) {
                             if (setsA > setsB) outcomes.push('W');
                             else if (setsB > setsA) outcomes.push('L');
+                            else outcomes.push('R');
                         } else if (lightMembers.includes(playerName)) {
                             if (setsB > setsA) outcomes.push('W');
                             else if (setsA > setsB) outcomes.push('L');
+                            else outcomes.push('R');
                         }
                     }
                 }
@@ -9524,11 +9708,13 @@ function initFirebaseSync() {
 
             const totalWins = outcomes.filter(o => o === 'W').length;
             const totalLosses = outcomes.filter(o => o === 'L').length;
+            const totalDraws = outcomes.filter(o => o === 'R').length;
             return {
                 all: outcomes,
                 recent: outcomes.slice(-5),
                 totalWins,
-                totalLosses
+                totalLosses,
+                totalDraws
             };
         }
 
@@ -9578,8 +9764,13 @@ function initFirebaseSync() {
                             }
 
                             if (m.score && m.teams) {
-                                const dark = m.teams.dark || [];
-                                const light = m.teams.light || [];
+                                let dark = Array.isArray(m.teams.dark) ? m.teams.dark.filter(Boolean) : [];
+                                let light = Array.isArray(m.teams.light) ? m.teams.light.filter(Boolean) : [];
+                                if (!dark.length && light.length) {
+                                    dark = mainSquad.filter(p => !light.includes(p));
+                                } else if (!light.length && dark.length) {
+                                    light = mainSquad.filter(p => !dark.includes(p));
+                                }
                                 const resMatch = m.score.match(/\s(\d+)\s*:\s*(\d+)\s/);
                                 if (resMatch) {
                                     const sA = parseInt(resMatch[1], 10);
@@ -9936,10 +10127,10 @@ function initFirebaseSync() {
 
             const recordEl = document.getElementById('playerCardMatchRecord');
             if (recordEl) {
-                const totalScored = career.totalWins + career.totalLosses;
+                const totalScored = career.totalWins + career.totalLosses + (career.totalDraws || 0);
                 if (totalScored > 0) {
                     const pct = Math.round((career.totalWins / totalScored) * 100);
-                    recordEl.innerHTML = `<span class="text-emerald-400 font-extrabold">${career.totalWins}W</span> <span class="text-slate-500 mx-1">–</span> <span class="text-rose-400 font-extrabold">${career.totalLosses}L</span> <span class="text-amber-300 font-extrabold ml-1.5 text-[10.5px] bg-amber-950/80 border border-amber-800/60 px-1.5 py-0.5 rounded-md font-mono">(${pct}%)</span>`;
+                    recordEl.innerHTML = `<span class="text-emerald-400 font-extrabold">${career.totalWins}W</span> <span class="text-slate-500 mx-1">–</span> <span class="text-rose-400 font-extrabold">${career.totalLosses}L</span>${career.totalDraws ? ` <span class="text-slate-500 mx-1">–</span> <span class="text-amber-400 font-extrabold">${career.totalDraws}R</span>` : ''} <span class="text-amber-300 font-extrabold ml-1.5 text-[10.5px] bg-amber-950/80 border border-amber-800/60 px-1.5 py-0.5 rounded-md font-mono">(${pct}%)</span>`;
                 } else {
                     recordEl.innerHTML = `<span class="text-slate-500 font-medium text-[11px]">Brak rozegranych meczów</span>`;
                 }
@@ -9949,7 +10140,7 @@ function initFirebaseSync() {
             if (formEl) {
                 if (formOutcomes.length) {
                     formEl.innerHTML = formOutcomes.map(o => `
-                        <span class="w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-black shadow-sm" style="background-color: ${o === 'W' ? '#10b981' : '#ef4444'} !important; color: ${o === 'W' ? '#022c22' : '#ffffff'} !important;">${o}</span>
+                        <span class="w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-black shadow-sm" style="background-color: ${o === 'W' ? '#10b981' : (o === 'R' ? '#f59e0b' : '#ef4444')} !important; color: ${o === 'W' ? '#022c22' : (o === 'R' ? '#451a03' : '#ffffff')} !important;">${o}</span>
                     `).join('');
                 } else {
                     formEl.innerHTML = `<span class="text-slate-500 text-[11px]">-</span>`;
@@ -9982,7 +10173,14 @@ function initFirebaseSync() {
                 const advStats = calculateAdvancedMatchStats(AppState);
                 const pAdv = advStats?.playerAdvMap?.[playerName];
                 const winImpactEl = document.getElementById('playerCardWinImpact');
-                if (winImpactEl) winImpactEl.innerText = pAdv?.winImpactFormatted && pAdv.winImpactFormatted !== "-" ? `${pAdv.winImpactFormatted} (${pAdv.winImpact.won}W - ${pAdv.winImpact.lost}L)` : "-";
+                if (winImpactEl) {
+                    if (pAdv?.winImpactFormatted && pAdv.winImpactFormatted !== "-") {
+                        const drawsStr = pAdv.winImpact.draws ? ` - ${pAdv.winImpact.draws}R` : '';
+                        winImpactEl.innerText = `${pAdv.winImpactFormatted} (${pAdv.winImpact.won}W - ${pAdv.winImpact.lost}L${drawsStr})`;
+                    } else {
+                        winImpactEl.innerText = "-";
+                    }
+                }
                 const kryptoEl = document.getElementById('playerCardKryptonite');
                 if (kryptoEl) kryptoEl.innerText = pAdv?.kryptoniteRival && pAdv.kryptoniteRival !== "Brak" ? `${pAdv.kryptoniteRival} (${pAdv.kryptoniteSub})` : "Brak rywala (min. 3 mecze)";
                 const clutchEl = document.getElementById('playerCardClutch');
@@ -10472,8 +10670,15 @@ function initFirebaseSync() {
                     for (const m of matches) {
                         if (!m || m.isCancelled || !m.score || !m.teams) continue;
 
-                        const dark = Array.isArray(m.teams.dark) ? m.teams.dark.filter(Boolean) : [];
-                        const light = Array.isArray(m.teams.light) ? m.teams.light.filter(Boolean) : [];
+                        let dark = Array.isArray(m.teams.dark) ? m.teams.dark.filter(Boolean) : [];
+                        let light = Array.isArray(m.teams.light) ? m.teams.light.filter(Boolean) : [];
+                        if (!dark.length && light.length) {
+                            const attendees = (m.attendees || []).slice(0, 14);
+                            dark = attendees.filter(p => !light.includes(p));
+                        } else if (!light.length && dark.length) {
+                            const attendees = (m.attendees || []).slice(0, 14);
+                            light = attendees.filter(p => !dark.includes(p));
+                        }
                         if (!dark.length && !light.length) continue;
 
                         // Parsowanie głównego wyniku: "Drużyna Ciemna 3 : 1 Drużyna Jasna"
@@ -10482,8 +10687,9 @@ function initFirebaseSync() {
 
                         const matchSetsA = parseInt(matchScoreMatch[1], 10);
                         const matchSetsB = parseInt(matchScoreMatch[2], 10);
-                        if (isNaN(matchSetsA) || isNaN(matchSetsB) || matchSetsA === matchSetsB) continue;
+                        if (isNaN(matchSetsA) || isNaN(matchSetsB)) continue;
 
+                        const isDraw = (matchSetsA === matchSetsB);
                         const darkWonMatch = matchSetsA > matchSetsB;
                         const lightWonMatch = matchSetsB > matchSetsA;
 
@@ -10492,13 +10698,15 @@ function initFirebaseSync() {
                             ensurePlayer(p);
                             playerMatchStats[p].played++;
                             if (darkWonMatch) playerMatchStats[p].won++;
+                            else if (isDraw) playerMatchStats[p].draws = (playerMatchStats[p].draws || 0) + 1;
 
                             light.forEach(opp => {
                                 ensurePlayer(opp);
-                                if (!h2hStats[p][opp]) h2hStats[p][opp] = { against: 0, losses: 0, wins: 0 };
+                                if (!h2hStats[p][opp]) h2hStats[p][opp] = { against: 0, losses: 0, wins: 0, draws: 0 };
                                 h2hStats[p][opp].against++;
                                 if (darkWonMatch) h2hStats[p][opp].wins++;
-                                else h2hStats[p][opp].losses++;
+                                else if (lightWonMatch) h2hStats[p][opp].losses++;
+                                else h2hStats[p][opp].draws = (h2hStats[p][opp].draws || 0) + 1;
                             });
                         });
 
@@ -10506,18 +10714,20 @@ function initFirebaseSync() {
                             ensurePlayer(p);
                             playerMatchStats[p].played++;
                             if (lightWonMatch) playerMatchStats[p].won++;
+                            else if (isDraw) playerMatchStats[p].draws = (playerMatchStats[p].draws || 0) + 1;
 
                             dark.forEach(opp => {
                                 ensurePlayer(opp);
-                                if (!h2hStats[p][opp]) h2hStats[p][opp] = { against: 0, losses: 0, wins: 0 };
+                                if (!h2hStats[p][opp]) h2hStats[p][opp] = { against: 0, losses: 0, wins: 0, draws: 0 };
                                 h2hStats[p][opp].against++;
                                 if (lightWonMatch) h2hStats[p][opp].wins++;
-                                else h2hStats[p][opp].losses++;
+                                else if (darkWonMatch) h2hStats[p][opp].losses++;
+                                else h2hStats[p][opp].draws = (h2hStats[p][opp].draws || 0) + 1;
                             });
                         });
 
                         // 2. Ranking Najlepszych Duetów (Synergia) - pary w tej samej drużynie
-                        const processDuo = (teamArr, isWin) => {
+                        const processDuo = (teamArr, isWin, isDrawMatch) => {
                             for (let i = 0; i < teamArr.length; i++) {
                                 for (let j = i + 1; j < teamArr.length; j++) {
                                     const p1 = teamArr[i];
@@ -10529,16 +10739,18 @@ function initFirebaseSync() {
                                             p1: p1 < p2 ? p1 : p2,
                                             p2: p1 < p2 ? p2 : p1,
                                             together: 0,
-                                            wins: 0
+                                            wins: 0,
+                                            draws: 0
                                         };
                                     }
                                     duoStats[key].together++;
                                     if (isWin) duoStats[key].wins++;
+                                    else if (isDrawMatch) duoStats[key].draws = (duoStats[key].draws || 0) + 1;
                                 }
                             }
                         };
-                        processDuo(dark, darkWonMatch);
-                        processDuo(light, lightWonMatch);
+                        processDuo(dark, darkWonMatch, isDraw);
+                        processDuo(light, lightWonMatch, isDraw);
 
                         // 3 & 4. Bilans małych setów oraz Mistrz Piątych Setów (Clutch Player)
                         const parenMatch = m.score.match(/\((.*?)\)/);
@@ -10624,11 +10836,14 @@ function initFirebaseSync() {
                     .filter(([_, st]) => st.played >= 4)
                     .map(([name, st]) => {
                         const winPct = st.played > 0 ? Math.round((st.won / st.played) * 100) : 0;
+                        const draws = st.draws || 0;
+                        const lost = st.played - st.won - draws;
                         return {
                             name,
                             played: st.played,
                             won: st.won,
-                            lost: st.played - st.won,
+                            draws,
+                            lost,
                             winPct
                         };
                     })
@@ -10639,12 +10854,15 @@ function initFirebaseSync() {
                     .filter(d => d.together >= 3)
                     .map(d => {
                         const winPct = d.together > 0 ? Math.round((d.wins / d.together) * 100) : 0;
+                        const draws = d.draws || 0;
+                        const losses = d.together - d.wins - draws;
                         return {
                             p1: d.p1,
                             p2: d.p2,
                             together: d.together,
                             wins: d.wins,
-                            losses: d.together - d.wins,
+                            draws,
+                            losses,
                             winPct
                         };
                     })
@@ -10732,10 +10950,10 @@ function initFirebaseSync() {
                 ]));
 
                 allPlayers.forEach(p => {
-                    const mSt = playerMatchStats[p] || { played: 0, won: 0 };
+                    const mSt = playerMatchStats[p] || { played: 0, won: 0, draws: 0 };
                     const winPct = mSt.played > 0 ? Math.round((mSt.won / mSt.played) * 100) : 0;
                     const winImpactFormatted = mSt.played > 0 ? `${winPct}%` : "-";
-                    const winImpactSub = mSt.played >= 4 ? `${mSt.won}/${mSt.played} W` : (mSt.played > 0 ? `${mSt.won}/${mSt.played} (min. 4 mecze)` : "Brak meczów");
+                    const winImpactSub = mSt.played >= 4 ? `${mSt.won}/${mSt.played} W${mSt.draws ? ` (${mSt.draws}R)` : ''}` : (mSt.played > 0 ? `${mSt.won}/${mSt.played} (min. 4 mecze)` : "Brak meczów");
 
                     const krypto = playerKryptoniteMap[p] || null;
                     const kryptoniteRival = krypto ? krypto.rival : "Brak";
@@ -10755,7 +10973,7 @@ function initFirebaseSync() {
 
                     playerAdvMap[p] = {
                         name: p,
-                        winImpact: { played: mSt.played, won: mSt.won, lost: (mSt.played - mSt.won), winPct, isQualified: mSt.played >= 4 },
+                        winImpact: { played: mSt.played, won: mSt.won, draws: (mSt.draws || 0), lost: (mSt.played - mSt.won - (mSt.draws || 0)), winPct, isQualified: mSt.played >= 4 },
                         winImpactFormatted,
                         winImpactSub,
                         kryptonite: krypto,
@@ -10843,8 +11061,8 @@ function initFirebaseSync() {
                                                         <span class="font-bold text-white group-hover:text-emerald-300 whitespace-normal break-words leading-tight">${escapeHtml(item.name)}</span>
                                                     </button>
                                                 </td>
-                                                <td class="py-2.5 px-2 text-center font-mono text-[11px] text-slate-300 whitespace-nowrap">
-                                                    <span class="text-emerald-400 font-bold">${item.won}W</span> - <span class="text-rose-400 font-bold">${item.lost}L</span>
+                                                 <td class="py-2.5 px-2 text-center font-mono text-[11px] text-slate-300 whitespace-nowrap">
+                                                    <span class="text-emerald-400 font-bold">${item.won}W</span> - <span class="text-rose-400 font-bold">${item.lost}L</span>${item.draws ? ` - <span class="text-amber-400 font-bold">${item.draws}R</span>` : ''}
                                                     <span class="text-[10px] text-slate-500 block">(${pluralizeMatches(item.played)})</span>
                                                 </td>
                                                 <td class="py-2.5 px-2 text-right font-mono font-black text-emerald-400 text-xs sm:text-sm">
@@ -10897,7 +11115,7 @@ function initFirebaseSync() {
                                                     </div>
                                                 </td>
                                                 <td class="py-2.5 px-2 text-center font-mono text-[11px] text-slate-300 whitespace-nowrap">
-                                                    <span class="text-emerald-400 font-bold">${item.wins}W</span> - <span class="text-rose-400 font-bold">${item.losses}L</span>
+                                                    <span class="text-emerald-400 font-bold">${item.wins}W</span> - <span class="text-rose-400 font-bold">${item.losses}L</span>${item.draws ? ` - <span class="text-amber-400 font-bold">${item.draws}R</span>` : ''}
                                                     <span class="text-[10px] text-slate-500 block">(${pluralizeMatches(item.together)})</span>
                                                 </td>
                                                 <td class="py-2.5 px-2 text-right font-mono font-black text-emerald-400 text-xs sm:text-sm">
@@ -11233,21 +11451,28 @@ function initFirebaseSync() {
             const todayStr = getLocalDateKey();
             const isPlayed = m => isMatchHeld(m, todayStr);
 
+            const getMonthMatches = (pattern) => {
+                const key = Object.keys(AppState.months || {}).find(k => k.toLowerCase().includes(pattern.toLowerCase()));
+                return key ? (AppState.months[key]?.matches || []) : [];
+            };
+
             const scores = AppState.all_players.map(p => {
                 const base = AppState.base_games[p] || 0;
-                const lip = (AppState.months['Lipiec']?.matches || []).filter(m => isPlayed(m) && getMatchPlayingSquad(m).includes(p)).length;
-                const sie = (AppState.months['Sierpień']?.matches || []).filter(m => isPlayed(m) && getMatchPlayingSquad(m).includes(p)).length;
-                const wrz = (AppState.months['Wrzesień']?.matches || []).filter(m => isPlayed(m) && getMatchPlayingSquad(m).includes(p)).length;
+                const lip = getMonthMatches('lipiec').filter(m => isPlayed(m) && getMatchPlayingSquad(m).includes(p)).length;
+                const sie = getMonthMatches('sierpień').filter(m => isPlayed(m) && getMatchPlayingSquad(m).includes(p)).length;
+                const wrz = getMonthMatches('wrzesień').filter(m => isPlayed(m) && getMatchPlayingSquad(m).includes(p)).length;
+                const paz = getMonthMatches('październik').filter(m => isPlayed(m) && getMatchPlayingSquad(m).includes(p)).length;
                 
                 let other = 0;
                 Object.keys(AppState.months || {}).forEach(m => {
-                    if (!['Lipiec', 'Sierpień', 'Wrzesień'].includes(m)) {
+                    const ml = m.toLowerCase();
+                    if (!ml.includes('lipiec') && !ml.includes('sierpień') && !ml.includes('wrzesień') && !ml.includes('październik')) {
                         other += (AppState.months[m]?.matches || []).filter(x => isPlayed(x) && getMatchPlayingSquad(x).includes(p)).length;
                     }
                 });
-                const total = base + lip + sie + wrz + other;
+                const total = base + lip + sie + wrz + paz + other;
                 const career = calculatePlayerCareerOutcomes(p);
-                return { name: p, base, lip, sie, wrz: wrz + other, total, form: career.recent, totalWins: career.totalWins, totalLosses: career.totalLosses };
+                return { name: p, base, lip, sie, wrz, paz: paz + other, total, form: career.recent, totalWins: career.totalWins, totalLosses: career.totalLosses, totalDraws: career.totalDraws };
             });
 
             scores.sort((a, b) => b.total - a.total || a.name.localeCompare(b.name, 'pl'));
@@ -11262,15 +11487,15 @@ function initFirebaseSync() {
 
                 const isMe = (s.name === loggedPlayer);
 
-                const formHtml = (s.form.length || s.totalWins > 0 || s.totalLosses > 0) ? `
+                const formHtml = (s.form.length || s.totalWins > 0 || s.totalLosses > 0 || s.totalDraws > 0) ? `
                     <div class="flex flex-col items-center justify-center">
                         <div class="hidden sm:flex items-center gap-0.5">
                             ${s.form.map(o => `
-                                <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full flex items-center justify-center text-[6px] sm:text-[7px] font-black shadow-sm shrink-0" style="background-color: ${o === 'W' ? '#10b981' : '#ef4444'} !important; color: ${o === 'W' ? '#022c22' : '#ffffff'} !important;">${o}</span>
+                                <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full flex items-center justify-center text-[6px] sm:text-[7px] font-black shadow-sm shrink-0" style="background-color: ${o === 'W' ? '#10b981' : (o === 'R' ? '#f59e0b' : '#ef4444')} !important; color: ${o === 'W' ? '#022c22' : (o === 'R' ? '#451a03' : '#ffffff')} !important;">${o}</span>
                             `).join('')}
                         </div>
-                        <span class="text-[9px] sm:text-[10px] font-mono font-bold sm:mt-0.5 whitespace-nowrap bg-slate-950/80 sm:bg-transparent px-1.5 py-0.5 sm:p-0 rounded-md border border-slate-800/80 sm:border-0" title="Łączny bilans wszystkich rozegranych spotkań: ${s.totalWins}W - ${s.totalLosses}L">
-                            <span class="text-emerald-400 font-black">${s.totalWins}W</span> <span class="text-slate-600 sm:text-slate-500">-</span> <span class="text-rose-400 font-black">${s.totalLosses}L</span>
+                        <span class="text-[9px] sm:text-[10px] font-mono font-bold sm:mt-0.5 whitespace-nowrap bg-slate-950/80 sm:bg-transparent px-1.5 py-0.5 sm:p-0 rounded-md border border-slate-800/80 sm:border-0" title="Łączny bilans wszystkich rozegranych spotkań: ${s.totalWins}W - ${s.totalLosses}L${s.totalDraws ? ` - ${s.totalDraws}R` : ''}">
+                            <span class="text-emerald-400 font-black">${s.totalWins}W</span> <span class="text-slate-600 sm:text-slate-500">-</span> <span class="text-rose-400 font-black">${s.totalLosses}L</span>${s.totalDraws ? ` <span class="text-slate-600 sm:text-slate-500">-</span> <span class="text-amber-400 font-black">${s.totalDraws}R</span>` : ''}
                         </span>
                     </div>
                 ` : `<span class="text-slate-500 font-mono text-[9px]">-</span>`;
@@ -11290,7 +11515,7 @@ function initFirebaseSync() {
                                 ${getPlayerAvatarHtml(s.name, 'xs')}
                                 <div class="min-w-0 flex-1 leading-tight">
                                     <div class="flex items-center gap-1 min-w-0 flex-wrap">
-                                        <span class="${isMe ? 'text-emerald-300 font-bold' : ''} text-xs whitespace-normal break-words">${escapeHtml(s.name)}</span>
+                                        <span class="${isMe ? 'text-emerald-300 font-bold' : ''} text-xs whitespace-normal break-words">${formatPlayerNameHtml(s.name)}</span>
                                         ${isMe ? '<span class="text-[8.5px] font-black bg-emerald-950 text-emerald-300 border border-emerald-800/80 px-1 py-0.5 rounded shrink-0">TY</span>' : ''}
                                         ${streakBadge}
                                     </div>
@@ -11307,6 +11532,7 @@ function initFirebaseSync() {
                         <td class="hidden sm:table-cell py-2.5 px-1.5 text-center font-mono text-slate-300">${s.lip > 0 ? s.lip : '<span class="text-slate-600 font-normal">-</span>'}</td>
                         <td class="hidden sm:table-cell py-2.5 px-1.5 text-center font-mono text-slate-300">${s.sie > 0 ? s.sie : '<span class="text-slate-600 font-normal">-</span>'}</td>
                         <td class="hidden sm:table-cell py-2.5 px-1.5 text-center font-mono text-slate-300">${s.wrz > 0 ? s.wrz : '<span class="text-slate-600 font-normal">-</span>'}</td>
+                        <td class="hidden sm:table-cell py-2.5 px-1.5 text-center font-mono text-cyan-300 font-black">${s.paz > 0 ? s.paz : '<span class="text-slate-600 font-normal">-</span>'}</td>
                         <td class="py-2.5 px-2 text-right font-mono font-extrabold text-emerald-400 text-xs sm:text-sm shrink-0 w-12 sm:w-16">${s.total}</td>
                     </tr>
                 `;
@@ -11320,6 +11546,27 @@ function initFirebaseSync() {
         }
 
         // ================= TAB 5: MÓJ PROFIL & PANEL ORGANIZATORA =================
+        let currentProfileSubtab = 'stats';
+        function setProfileSubtab(subtab) {
+            currentProfileSubtab = subtab;
+            const subtabs = ['stats', 'chronicle', 'settings', 'admin'];
+            subtabs.forEach(t => {
+                const btn = document.getElementById(`profileSubtabBtn-${t}`);
+                const container = document.getElementById(`profileSubtabContainer-${t}`);
+                const isActive = (t === subtab);
+                if (container) {
+                    container.classList.toggle('hidden', !isActive);
+                }
+                if (btn) {
+                    if (isActive) {
+                        btn.className = "py-2 px-1 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black shadow-md flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs";
+                    } else {
+                        btn.className = "py-2 px-1 rounded-xl text-slate-400 hover:text-white font-extrabold flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs";
+                    }
+                }
+            });
+        }
+
         function renderProfileTab() {
             const container = document.getElementById('profileMainContainer');
             if (!container) return;
@@ -11338,6 +11585,13 @@ function initFirebaseSync() {
                 // Widok logowania / rejestracji PIN-em
                 const sortedPlayers = [...AppState.all_players].sort((a, b) => a.localeCompare(b, 'pl'));
                 container.innerHTML = `
+                    <!-- Section Header -->
+                    <div class="px-1 pb-1 max-w-md mx-auto">
+                        <h2 class="text-xl font-black text-white flex items-center gap-2">
+                            <span>👤</span> Strefa Gracza
+                        </h2>
+                    </div>
+
                     <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-5 shadow-2xl space-y-4 max-w-md mx-auto">
                         <div class="text-center space-y-1.5 pb-2 border-b border-slate-800">
                             <div class="w-14 h-14 mx-auto rounded-3xl bg-gradient-to-tr from-emerald-500 to-sky-500 p-0.5 shadow-lg flex items-center justify-center">
@@ -11365,17 +11619,28 @@ function initFirebaseSync() {
                             <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black py-3 rounded-2xl text-xs transition shadow-lg shadow-emerald-500/20">
                                 Otwórz mój profil 🚀
                             </button>
+
+                            <button type="button" onclick="openWelcomeGateModal(); showWelcomeRegisterView(true);" class="w-full bg-indigo-950/40 hover:bg-indigo-900/50 border border-indigo-800/60 text-indigo-300 font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1.5 mt-2">
+                                <span>✨</span>
+                                <span>Nie ma Cię na liście? Stwórz nowy profil</span>
+                            </button>
                         </form>
                     </div>
 
-                    <!-- Wybór motywu dla niezalogowanych -->
-                    <div class="bg-slate-900/60 border border-slate-800 rounded-3xl p-4 space-y-2.5 max-w-md mx-auto">
+                    <!-- Karta Wyboru Motywu dla niezalogowanych -->
+                    <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-4 sm:p-5 shadow-2xl space-y-3 max-w-md mx-auto mt-4">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-                                <span>🎨</span> Motyw aplikacji:
+                            <div>
+                                <h3 class="text-sm font-black text-white flex items-center gap-2">
+                                    <span>🎨</span> Motyw Aplikacji
+                                </h3>
+                                <p class="text-[11px] text-slate-400">Wybierz swój ulubiony wygląd (zapisze się na telefonie)</p>
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                                4 Opcje + Klasyk
                             </span>
                         </div>
-                        <div id="unloggedThemePickerContainer">
+                        <div id="unloggedThemePickerContainer" class="space-y-2">
                             ${getThemePickerHtml()}
                         </div>
                     </div>
@@ -11385,10 +11650,27 @@ function initFirebaseSync() {
 
             // Zalogowany użytkownik:
             const { badges, totalGames, mvpWins, attendedMatches, attendancePercent } = calculatePlayerBadges(loggedPlayer);
-            const formOutcomes = calculatePlayerForm(loggedPlayer);
+            const myCareer = calculatePlayerCareerOutcomes(loggedPlayer);
+            const formOutcomes = myCareer.recent;
+            const myTotalScored = myCareer.totalWins + myCareer.totalLosses + (myCareer.totalDraws || 0);
+            const myWinPct = myTotalScored > 0 ? Math.round((myCareer.totalWins / myTotalScored) * 100) : 0;
             const { bestPartner, topRival } = calculatePlayerChemistry(loggedPlayer);
+            const advStats = (typeof calculateAdvancedMatchStats === 'function') ? calculateAdvancedMatchStats(AppState) : null;
+            const pAdv = advStats?.playerAdvMap?.[loggedPlayer];
+            const seasonAwards = (typeof calculateSeasonSpecialAwards === 'function') ? calculateSeasonSpecialAwards(AppState) : null;
+            const myAwards = seasonAwards?.playerStats?.[loggedPlayer];
             const playerHistory = calculatePlayerMatchHistory(loggedPlayer);
             const isOrganizer = isOrganizerPlayer(loggedPlayer);
+            const latestPlayed = getLatestPlayedMatchInfo();
+            const latestAttendees = latestPlayed ? (latestPlayed.match.attendees || []).slice(0, 14) : [];
+            const needsMvpVote = latestPlayed && !isMvpVotingFinished(latestPlayed.match) && latestAttendees.includes(loggedPlayer) && !latestPlayed.match.votes?.[loggedPlayer];
+
+            // My Current Match Status
+            const currentMatch = AppState.months[AppState.currentMonth]?.matches[AppState.currentMatchIndex];
+            const attendees = currentMatch ? (currentMatch.attendees || []) : [];
+            const isSigned = attendees.includes(loggedPlayer);
+            const isInMain = (attendees.slice(0, 14)).includes(loggedPlayer);
+            const myPositions = getPlayerPositions(loggedPlayer);
 
             // My Billing
             const billingData = calculateMonthlyBilling(AppState.currentMonth);
@@ -11398,14 +11680,31 @@ function initFirebaseSync() {
             const mySaldo = myPaid - myDue;
             const isMyPaid = (myDue > 0 && mySaldo >= -0.05);
 
-            // My Current Match Status
-            const currentMatch = AppState.months[AppState.currentMonth]?.matches[AppState.currentMatchIndex];
-            const attendees = currentMatch ? (currentMatch.attendees || []) : [];
-            const isSigned = attendees.includes(loggedPlayer);
-            const isInMain = (attendees.slice(0, 14)).includes(loggedPlayer);
-            const myPositions = getPlayerPositions(loggedPlayer);
+            if (!isOrganizer && currentProfileSubtab === 'admin') {
+                currentProfileSubtab = 'stats';
+            }
+            if (isOrganizer && currentProfileSubtab === 'settings') {
+                currentProfileSubtab = 'admin';
+            }
+
+            const currentThemeId = localStorage.getItem('siatka_app_theme') || 'haaland-dark';
+            const themeNames = {
+                'haaland-dark': { name: 'Błękit Ciemny (Haaland)', icon: '❄️🌙' },
+                'haaland-light': { name: 'Błękit Jasny (Haaland)', icon: '❄️☀️' },
+                'mercurial-dark': { name: 'Róż Ciemny (Mercurial)', icon: '👟🌙' },
+                'mercurial-light': { name: 'Róż Jasny (Mercurial)', icon: '👟☀️' },
+                'classic': { name: 'Klasyczny (Oryginał)', icon: '🏐' }
+            };
+            const activeThemeInfo = themeNames[currentThemeId] || { name: 'Błękit Ciemny (Haaland)', icon: '❄️🌙' };
 
             container.innerHTML = `
+                <!-- Section Header -->
+                <div class="px-1 pb-1">
+                    <h2 class="text-xl font-black text-white flex items-center gap-2">
+                        <span>👤</span> Mój Profil & Ustawienia
+                    </h2>
+                </div>
+
                 <!-- 1. Karta Główna Gracza (Player Hub) -->
                 <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-4 sm:p-5 shadow-xl space-y-4 relative overflow-hidden">
                     
@@ -11437,30 +11736,21 @@ function initFirebaseSync() {
                         </button>
                     </div>
 
-                    <!-- Moje Pozycje na boisku (Multi-select) -->
-                    <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-3 sm:p-3.5 space-y-2.5">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[11px] font-extrabold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-                                <span>🏐</span> Moje Pozycje na boisku:
-                            </span>
-                            <span class="text-[10px] text-indigo-400 font-semibold">Zaznacz swoje role</span>
+                    ${needsMvpVote ? `
+                        <div class="bg-gradient-to-r from-amber-500/20 via-amber-950/40 to-slate-900 border-2 border-amber-500/60 rounded-2xl p-3 sm:p-3.5 flex items-center justify-between gap-3 shadow-lg shadow-amber-500/10 animate-pulse flex-wrap">
+                            <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                                <span class="text-2xl shrink-0">🗳️</span>
+                                <div class="min-w-0">
+                                    <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md inline-block">Czeka głosowanie MTV!</span>
+                                    <p class="text-xs font-bold text-white whitespace-normal break-words leading-tight mt-0.5">Mecz z ${escapeHtml(latestPlayed.match.date)}</p>
+                                    <p class="text-[11px] text-amber-200/90 mt-0.5 leading-snug">Grałeś w meczu — oddaj swój głos!</p>
+                                </div>
+                            </div>
+                            <button type="button" onclick="jumpToRecentMvp()" class="shrink-0 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-black px-3.5 py-2 rounded-xl text-xs transition shadow-md shadow-amber-500/20 whitespace-nowrap">
+                                Głosuj ➔
+                            </button>
                         </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
-                            ${Object.entries(VOLLEYBALL_POSITIONS).map(([code, def]) => {
-                                const isSelected = myPositions.includes(code);
-                                return `
-                                    <button type="button" onclick="toggleMyPosition('${code}')" class="px-2.5 py-2 rounded-xl text-xs font-bold border transition flex items-center justify-between gap-1.5 active:scale-95 ${isSelected ? 'bg-indigo-600/90 border-indigo-400 text-white shadow-md shadow-indigo-600/20' : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'}">
-                                        <span class="flex items-center gap-1.5 whitespace-normal break-words">
-                                            <span>${def.icon}</span>
-                                            <span class="whitespace-normal break-words">${def.name}</span>
-                                        </span>
-                                        <span class="text-[11px] font-mono shrink-0">${isSelected ? '✓' : ''}</span>
-                                    </button>
-                                `;
-                            }).join('')}
-                        </div>
-                        <p class="text-[10px] text-slate-400 leading-tight">Możesz zaznaczyć kilka pozycji! Ułatwia to automatyczne losowanie składów na pozycje (z podziałem na rozgrywających, skrzydłowych i środkowych).</p>
-                    </div>
+                    ` : ''}
 
                     <!-- Statystyki Gracza w Kapsułach -->
                     <div class="grid grid-cols-3 gap-2 text-center text-xs">
@@ -11477,47 +11767,208 @@ function initFirebaseSync() {
                             <span class="text-base sm:text-lg font-black text-sky-400 font-mono">${attendancePercent}%</span>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Forma z ostatnich 5 spotkań -->
-                    <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-3 flex items-center justify-between gap-2 text-xs">
-                        <span class="text-[11px] font-bold text-slate-300">Ostatnia forma (W/L):</span>
-                        <div class="flex items-center gap-1">
-                            ${formOutcomes.length ? formOutcomes.map(o => `
-                                <span class="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-black ${o === 'W' ? 'bg-emerald-500 text-slate-950' : 'bg-rose-500 text-white'}">${o}</span>
-                            `).join('') : '<span class="text-slate-500 text-[10px]">Brak rozegranych meczów</span>'}
+                <!-- Przełącznik Segmentowy (Sub-tabs Profilu) -->
+                <div class="bg-slate-900/90 border border-slate-800/80 p-1 rounded-2xl grid grid-cols-3 gap-1 text-xs font-bold shadow-md">
+                    <button type="button" id="profileSubtabBtn-stats" onclick="setProfileSubtab('stats')" class="py-2 px-1 rounded-xl text-slate-400 hover:text-white font-extrabold flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs">
+                        <span>📊</span>
+                        <span class="truncate">${isOrganizer ? 'Moje Staty' : 'Statystyki'}</span>
+                    </button>
+                    <button type="button" id="profileSubtabBtn-chronicle" onclick="setProfileSubtab('chronicle')" class="py-2 px-1 rounded-xl text-slate-400 hover:text-white font-extrabold flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs">
+                        <span>📜</span>
+                        <span class="truncate">Kronika</span>
+                    </button>
+                    ${isOrganizer ? `
+                    <button type="button" id="profileSubtabBtn-admin" onclick="setProfileSubtab('admin')" class="py-2 px-1 rounded-xl text-slate-400 hover:text-white font-extrabold flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs">
+                        <span>👑</span>
+                        <span class="truncate">Organizator</span>
+                    </button>
+                    ` : `
+                    <button type="button" id="profileSubtabBtn-settings" onclick="setProfileSubtab('settings')" class="py-2 px-1 rounded-xl text-slate-400 hover:text-white font-extrabold flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs">
+                        <span>⚙️</span>
+                        <span class="truncate">Ustawienia</span>
+                    </button>
+                    `}
+                </div>
+
+                <!-- PODWIDOK 1: STATYSTYKI -->
+                <div id="profileSubtabContainer-stats" class="space-y-3">
+                    
+                    <!-- Moje Pozycje na boisku (Multi-select) -->
+                    <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-3 sm:p-3.5 space-y-2.5 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-extrabold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                                <span>🏐</span> Moje Pozycje na boisku:
+                            </span>
+                            <span class="text-[10px] text-indigo-400 font-semibold">Zaznacz role</span>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                            ${Object.entries(VOLLEYBALL_POSITIONS).map(([code, def]) => {
+                                const isSelected = myPositions.includes(code);
+                                return `
+                                    <button type="button" onclick="toggleMyPosition('${code}')" class="px-2.5 py-2 rounded-xl text-xs font-bold border transition flex items-center justify-between gap-1.5 active:scale-95 ${isSelected ? 'bg-indigo-600/90 border-indigo-400 text-white shadow-md shadow-indigo-600/20' : 'bg-slate-950/80 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'}">
+                                        <span class="flex items-center gap-1.5 whitespace-normal break-words">
+                                            <span>${def.icon}</span>
+                                            <span class="whitespace-normal break-words">${def.name}</span>
+                                        </span>
+                                        <span class="text-[11px] font-mono shrink-0">${isSelected ? '✓' : ''}</span>
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+                        <p class="text-[10px] text-slate-400 leading-tight">Możesz zaznaczyć kilka pozycji! Ułatwia to automatyczne losowanie składów na pozycje (z podziałem na rozgrywających, skrzydłowych i środkowych).</p>
+                    </div>
+
+                    <!-- Bilans meczów & Ostatnia forma -->
+                    <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-3 space-y-2 text-xs shadow-sm">
+                        <div class="flex items-center justify-between gap-2 flex-wrap">
+                            <span class="text-[11px] font-bold text-slate-300 flex items-center gap-1.5">
+                                <span>⚖️</span> <span>Bilans meczów:</span>
+                            </span>
+                            <div class="font-mono text-xs font-bold text-slate-200">
+                                ${myTotalScored > 0 ? `
+                                    <span class="text-emerald-400 font-extrabold">${myCareer.totalWins}W</span>
+                                    <span class="text-slate-500 mx-1">–</span>
+                                    <span class="text-rose-400 font-extrabold">${myCareer.totalLosses}L</span>
+                                    ${myCareer.totalDraws ? `<span class="text-slate-500 mx-1">–</span><span class="text-amber-400 font-extrabold">${myCareer.totalDraws}R</span>` : ''}
+                                    <span class="text-amber-300 font-extrabold ml-1.5 text-[11px] bg-amber-950/80 border border-amber-800/60 px-1.5 py-0.5 rounded-md">(${myWinPct}%)</span>
+                                ` : '<span class="text-slate-500 text-[10px]">Brak rozegranych meczów</span>'}
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-800/60">
+                            <span class="text-[11px] font-bold text-slate-400">Ostatnia forma (W/L/R):</span>
+                            <div class="flex items-center gap-1">
+                                ${formOutcomes.length ? formOutcomes.map(o => `
+                                    <span class="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-black shadow-sm" style="background-color: ${o === 'W' ? '#10b981' : (o === 'R' ? '#f59e0b' : '#ef4444')} !important; color: ${o === 'W' ? '#022c22' : (o === 'R' ? '#451a03' : '#ffffff')} !important;">${o}</span>
+                                `).join('') : '<span class="text-slate-500 text-[10px]">Brak rozegranych meczów</span>'}
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 1B: Chemia Zespołowa & Duety -->
-                    <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-3 space-y-2 text-xs">
+                    <!-- Chemia Zespołowa & Duety -->
+                    <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-3 space-y-2 text-xs shadow-sm">
                         <span class="text-[11px] font-extrabold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
                             <span>🤝</span> Chemia Zespołowa & Duety
                         </span>
                         <div class="grid sm:grid-cols-2 gap-2 pt-0.5">
-                            <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2.5 flex items-center justify-between gap-2">
+                            <div class="bg-slate-950/70 border border-slate-800/80 rounded-xl p-2.5 flex items-center justify-between gap-2">
                                 <div class="min-w-0">
                                     <span class="text-[10px] text-slate-400 block font-semibold">🌟 Najlepszy partner:</span>
-                                    <strong class="text-white text-xs block whitespace-normal break-words">${bestPartner ? escapeHtml(bestPartner.name) : 'Brak danych'}</strong>
+                                    <strong class="text-white text-xs block whitespace-normal break-words leading-tight">${bestPartner ? escapeHtml(bestPartner.name) : 'Brak danych'}</strong>
                                 </div>
                                 ${bestPartner ? `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-emerald-950 text-emerald-400 border border-emerald-800 shrink-0 font-mono">${bestPartner.winPct}% W (${bestPartner.wins}/${bestPartner.together})</span>` : `<span class="text-slate-500 text-[10px]">-</span>`}
                             </div>
-                            <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2.5 flex items-center justify-between gap-2">
+                            <div class="bg-slate-950/70 border border-slate-800/80 rounded-xl p-2.5 flex items-center justify-between gap-2">
                                 <div class="min-w-0">
                                     <span class="text-[10px] text-slate-400 block font-semibold">⚔️ Główny rywal:</span>
-                                    <strong class="text-white text-xs block whitespace-normal break-words">${topRival ? escapeHtml(topRival.name) : 'Brak danych'}</strong>
+                                    <strong class="text-white text-xs block whitespace-normal break-words leading-tight">${topRival ? escapeHtml(topRival.name) : 'Brak danych'}</strong>
                                 </div>
                                 ${topRival ? `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-amber-950 text-amber-300 border border-amber-800 shrink-0 font-mono">${pluralizeMatches(topRival.against)}</span>` : `<span class="text-slate-500 text-[10px]">-</span>`}
                             </div>
                         </div>
                     </div>
 
+                    <!-- Zaawansowane Statystyki Meczowe Gracza -->
+                    <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-3 space-y-2 text-xs shadow-sm">
+                        <span class="text-[11px] font-extrabold text-slate-300 uppercase tracking-wider flex items-center justify-between">
+                            <span class="flex items-center gap-1.5">
+                                <span>📊</span> Zaawansowane Statystyki Meczowe
+                            </span>
+                            <span class="text-[10px] text-slate-500 font-normal">Sezon 2026</span>
+                        </span>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-0.5">
+                            <div class="bg-slate-950/70 border border-slate-800/80 rounded-xl p-2.5 flex flex-col justify-between">
+                                <span class="text-[10px] text-slate-400 font-semibold block">🎯 Win Impact</span>
+                                <div class="mt-1">
+                                    <strong class="text-emerald-400 text-sm font-mono font-black">${pAdv?.winImpactFormatted || '-'}</strong>
+                                    <span class="text-[9px] text-slate-400 block">${pAdv?.winImpactSub || 'Min. 4 mecze'}</span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-950/70 border border-slate-800/80 rounded-xl p-2.5 flex flex-col justify-between">
+                                <span class="text-[10px] text-slate-400 font-semibold block">🥊 Kryptonit</span>
+                                <div class="mt-1">
+                                    <strong class="text-rose-400 text-xs font-bold block whitespace-normal break-words leading-tight" title="${pAdv?.kryptoniteRival || ''}">${pAdv?.kryptoniteRival || 'Brak'}</strong>
+                                    <span class="text-[9px] text-slate-400 block">${pAdv?.kryptoniteSub || 'Brak rywala (min. 3 mecze)'}</span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-950/70 border border-slate-800/80 rounded-xl p-2.5 flex flex-col justify-between">
+                                <span class="text-[10px] text-slate-400 font-semibold block">🔥 Mistrz 5. Setów</span>
+                                <div class="mt-1">
+                                    <strong class="text-amber-400 text-sm font-mono font-black">${pAdv?.clutchFormatted || '-'}</strong>
+                                    <span class="text-[9px] text-slate-400 block">${pAdv?.clutchSub || 'Min. 2 tie-breaki'}</span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-950/70 border border-slate-800/80 rounded-xl p-2.5 flex flex-col justify-between">
+                                <span class="text-[10px] text-slate-400 font-semibold block">📈 Bilans Setów</span>
+                                <div class="mt-1">
+                                    <strong class="text-cyan-400 text-sm font-mono font-black">${pAdv?.setsDiffFormatted || '-'}</strong>
+                                    <span class="text-[9px] text-slate-400 block">${pAdv?.setsSub || '0-0'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Moje Wyróżnienia & Korony Meczowe -->
+                    <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-3 space-y-2.5 text-xs shadow-sm">
+                        <div class="flex items-center justify-between gap-2 border-b border-slate-800/60 pb-2">
+                            <span class="text-[11px] font-extrabold text-slate-300 uppercase tracking-wider flex items-center gap-1.5 min-w-0">
+                                <span>✨</span> <span class="truncate">Moje Wyróżnienia & Korony</span>
+                            </span>
+                            <span class="text-[10px] text-amber-300 font-bold bg-amber-950/80 border border-amber-800/70 px-2.5 py-0.5 rounded-full whitespace-nowrap shrink-0 inline-flex items-center gap-1 shadow-sm font-mono">
+                                <span>👑</span> <span>${(myAwards?.totalWins || 0) === 1 ? '1 korona' : (((myAwards?.totalWins || 0) >= 2 && (myAwards?.totalWins || 0) <= 4) ? `${myAwards?.totalWins} korony` : `${myAwards?.totalWins || 0} koron`)}</span>
+                            </span>
+                        </div>
+
+                        ${myAwards?.titles?.length ? `
+                            <div class="bg-gradient-to-r from-amber-500/15 via-amber-950/30 to-slate-900 border border-amber-500/40 rounded-xl p-2.5 flex items-center gap-2 flex-wrap">
+                                <span class="text-xs font-black text-amber-300 uppercase tracking-wider flex items-center gap-1">👑 Tytuł sezonu:</span>
+                                ${myAwards.titles.map(t => `
+                                    <span class="bg-slate-950/90 border border-amber-500/50 text-amber-200 font-bold px-2 py-0.5 rounded-lg text-xs flex items-center gap-1 shadow-sm">
+                                        <span>${t.icon}</span> <span>${escapeHtml(t.title)}</span>
+                                    </span>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-0.5">
+                            ${[
+                                { key: 'block', name: 'Czapa', icon: '🧱' },
+                                { key: 'spike', name: 'Gwóźdź', icon: '🔨' },
+                                { key: 'defense', name: 'Obrona', icon: '🐟' },
+                                { key: 'serve', name: 'Serwis', icon: '🌪️' }
+                            ].map(item => {
+                                const w = myAwards?.[item.key]?.wins || 0;
+                                return `
+                                    <div class="bg-slate-950/70 border ${w > 0 ? 'border-amber-500/40 bg-amber-950/10' : 'border-slate-800/80'} rounded-xl p-2.5 flex flex-col justify-between">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-[10px] text-slate-400 font-semibold flex items-center gap-1">
+                                                <span>${item.icon}</span> <span>${item.name}</span>
+                                            </span>
+                                            ${w > 0 ? `<span class="text-[9px] font-black text-amber-300 bg-amber-950 border border-amber-700/60 px-1.5 py-0.2 rounded">👑 KORONA</span>` : ''}
+                                        </div>
+                                        <div class="mt-2">
+                                            ${w > 0 ? `
+                                                <strong class="text-amber-300 text-xs sm:text-sm font-black block whitespace-normal break-words leading-tight">
+                                                    ${w}x Wygrana
+                                                </strong>
+                                            ` : `
+                                                <span class="text-slate-500 text-xs font-semibold block">—</span>
+                                            `}
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+
                     <!-- Gablota Odznak Gracza -->
-                    <div class="space-y-2 pt-1">
+                    <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-3 space-y-2 text-xs shadow-sm">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Moje Odznaki (${badges.length}):</span>
                             <button type="button" onclick="openBadgesLegend()" class="text-[10px] text-amber-400 hover:underline">Zobacz wszystkie odznaki ➔</button>
                         </div>
-                        <div class="flex flex-wrap gap-1.5">
+                        <div class="flex flex-wrap gap-1.5 pt-0.5">
                             ${badges.length ? badges.map(b => `
                                 <span class="bg-slate-950 border border-slate-800 px-2.5 py-1 rounded-xl text-xs flex items-center gap-1 text-slate-200">
                                     <span>${b.icon}</span>
@@ -11529,37 +11980,44 @@ function initFirebaseSync() {
                         </div>
                     </div>
 
-                    <!-- 1D: Osobista Kronika Spotkań -->
-                    <div class="space-y-2 pt-1">
+                </div>
+
+                <!-- PODWIDOK 2: KRONIKA (HISTORIA SPOTKAŃ) -->
+                <div id="profileSubtabContainer-chronicle" class="space-y-3 hidden">
+                    
+                    <!-- Osobista Kronika Spotkań -->
+                    <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-3.5 space-y-2 text-xs shadow-sm">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
                                 <span>📜</span> Moja Kronika Spotkań (${playerHistory.length}):
                             </span>
                             <span class="text-[10px] text-slate-400 font-mono">Występy na parkiecie</span>
                         </div>
-                        <div class="space-y-1.5 max-h-52 overflow-y-auto pr-1">
+                        <div class="space-y-1.5 max-h-96 overflow-y-auto pr-1">
                             ${playerHistory.length ? playerHistory.map(h => {
                                 let outcomeBadge = `<span class="text-[9px] font-bold px-2 py-0.5 rounded-md bg-slate-800 text-slate-400">⏳ Oczekuje</span>`;
                                 if (h.outcome === 'win') outcomeBadge = `<span class="text-[9px] font-black px-2 py-0.5 rounded-md bg-emerald-950 text-emerald-400 border border-emerald-800">🏆 Wygrana</span>`;
                                 else if (h.outcome === 'loss') outcomeBadge = `<span class="text-[9px] font-black px-2 py-0.5 rounded-md bg-rose-950 text-rose-400 border border-rose-800">❌ Porażka</span>`;
+                                else if (h.outcome === 'draw') outcomeBadge = `<span class="text-[9px] font-black px-2 py-0.5 rounded-md bg-amber-950 text-amber-300 border border-amber-800">⚖️ Remis</span>`;
                                 else if (h.outcome === 'archived') outcomeBadge = `<span class="text-[9px] font-bold px-2 py-0.5 rounded-md bg-slate-900 text-slate-300 border border-slate-700">✅ Rozegrany</span>`;
 
                                 return `
-                                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-2.5 flex items-center justify-between gap-2 text-xs">
+                                    <div onclick="openArchivedMatchModal(${toInlineArgument(h.date)}, ${toInlineArgument(h.monthName)})" title="Dotknij, aby zobaczyć podsumowanie tego meczu" class="bg-slate-950 hover:bg-slate-900 border border-slate-800 hover:border-emerald-500/50 rounded-xl p-2.5 flex items-center justify-between gap-2 text-xs cursor-pointer transition active:scale-[0.99] group">
                                         <div class="min-w-0">
                                             <div class="flex items-center gap-1.5 flex-wrap">
-                                                <span class="font-bold font-mono text-white">${escapeHtml(h.date)}</span>
+                                                <span class="font-bold font-mono text-white group-hover:text-emerald-300 transition">${escapeHtml(h.date)}</span>
                                                 <span class="text-[10px] text-slate-400">(${escapeHtml(h.monthName)})</span>
                                                 ${h.isMvpWinner ? `<span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800">👑 MTV</span>` : ''}
                                             </div>
-                                            <p class="text-[11px] text-slate-400 mt-0.5 flex items-center gap-1 whitespace-normal break-words">
+                                            <p class="text-[11px] text-slate-400 mt-0.5 flex items-center gap-1 whitespace-normal break-words leading-tight">
                                                 <span>${h.hasTeams ? (h.isDark ? '⬛' : '⬜') : '🏐'} ${escapeHtml(h.teamName)}</span>
                                                 <span class="text-slate-600">•</span>
                                                 <span class="font-mono text-slate-300">${escapeHtml(h.score)}</span>
                                             </p>
                                         </div>
-                                        <div class="shrink-0">
+                                        <div class="shrink-0 flex items-center gap-1.5">
                                             ${outcomeBadge}
+                                            <span class="text-slate-500 group-hover:text-emerald-400 font-bold text-xs transition">➔</span>
                                         </div>
                                     </div>
                                 `;
@@ -11571,232 +12029,430 @@ function initFirebaseSync() {
                         </div>
                     </div>
 
-                    <!-- Moje Finanse & Rozliczenie BLIK -->
-                    ${isOrganizer ? `
-                        <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-amber-500/40 rounded-2xl p-3.5 space-y-3">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold text-slate-200">Konto Organizatora (${escapeHtml(AppState.currentMonth)}):</span>
-                                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800">👑 Zbierasz wpłaty</span>
-                            </div>
+                </div>
 
-                            <!-- Szczegóły konta organizatora -->
-                            <div class="bg-slate-950/80 border border-slate-800/80 rounded-xl p-3 space-y-2 text-xs">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-slate-400">Twój numer telefonu (BLIK):</span>
-                                    <span class="font-mono font-black text-emerald-400 tracking-wider text-sm select-all">${escapeHtml(AppState.settings?.blikPhone || "697 013 447")}</span>
+                <!-- PODWIDOK 3 (ZAWODNIK): DEDYKOWANY PANEL USTAWIEŃ PROFILU -->
+                ${!isOrganizer ? `
+                <div id="profileSubtabContainer-settings" class="space-y-3.5 hidden">
+                    <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-4 sm:p-5 shadow-xl space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-9 h-9 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 flex items-center justify-center text-lg shadow-sm">
+                                    ⚙️
                                 </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-slate-400">Status składek:</span>
-                                    <span class="font-medium text-emerald-400">Pobierasz po 20 zł od graczy po każdej gierce</span>
+                                <div>
+                                    <h3 class="font-black text-sm sm:text-base text-white">Ustawienia Profilu Zawodnika</h3>
+                                    <p class="text-[10px] text-slate-400">Wygląd, awatar, kod PIN i rozliczenie z organizatorem</p>
                                 </div>
                             </div>
+                            <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-slate-300">
+                                Profil
+                            </span>
+                        </div>
 
-                            <div class="flex items-center justify-end pt-0.5">
-                                <button type="button" onclick="copyBlikNumber()" class="bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-bold px-3.5 py-2 rounded-xl text-xs transition border border-slate-700 flex items-center justify-center gap-1.5 shadow">
-                                    <span>📱</span> Kopiuj nr BLIK (${escapeHtml(AppState.settings?.blikPhone || "697 013 447")})
+                        <!-- Siatka Ustawień Zawodnika -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            
+                            <!-- 🎨 Wygląd & Motyw -->
+                            <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-3.5 flex flex-col justify-between gap-3 shadow-sm">
+                                <div class="flex items-center justify-between gap-2">
+                                    <div class="flex items-center gap-2 min-w-0">
+                                        <span class="text-xl shrink-0">🎨</span>
+                                        <div class="min-w-0">
+                                            <h4 class="text-xs font-bold text-white uppercase tracking-wider">Wygląd & Motyw</h4>
+                                            <p class="text-[10px] text-slate-400">Styl kolorów aplikacji</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-[11px] font-bold px-2.5 py-1 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 flex items-center gap-1.5 shrink-0">
+                                        <span>${activeThemeInfo.icon}</span> <span id="profileCurrentThemeDisplay">${escapeHtml(activeThemeInfo.name)}</span>
+                                    </span>
+                                </div>
+                                <button type="button" onclick="openThemePickerModal()" class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-slate-200 font-bold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-sm">
+                                    <span>🎨</span> Zmień motyw aplikacji ➔
                                 </button>
                             </div>
-                        </div>
-                    ` : `
-                        <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-3">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold text-slate-200">Moje składki (${escapeHtml(AppState.currentMonth)}):</span>
-                                ${isMyPaid ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">✅ Opłacone</span>` : `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-950 text-rose-400 border border-rose-800 font-bold">Do zapłaty: ${Math.max(0, myDue - myPaid).toFixed(2)} zł</span>`}
+
+                            <!-- 📷 Awatar / Zdjęcie -->
+                            <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-3.5 flex flex-col justify-between gap-3 shadow-sm">
+                                <div class="flex items-center justify-between gap-2">
+                                    <div class="flex items-center gap-2.5 min-w-0">
+                                        <div class="shrink-0">
+                                            ${getPlayerAvatarHtml(loggedPlayer, 'sm')}
+                                        </div>
+                                        <div class="min-w-0">
+                                            <h4 class="text-xs font-bold text-white uppercase tracking-wider">Awatar & Zdjęcie</h4>
+                                            <p class="text-[10px] text-slate-400">Widoczne na boisku i liście</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded-full shrink-0">Aktywny</span>
+                                </div>
+                                <button type="button" onclick="openAvatarPickerModal()" class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-slate-200 font-bold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-sm">
+                                    <span>📷</span> Zmień awatar lub zdjęcie ➔
+                                </button>
                             </div>
 
-                            <!-- Szczegóły wpłaty BLIK -->
-                            <div class="bg-slate-950/80 border border-slate-800/80 rounded-xl p-3 space-y-2 text-xs">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-slate-400">Numer telefonu (BLIK):</span>
-                                    <span class="font-mono font-black text-emerald-400 tracking-wider text-sm select-all">${escapeHtml(AppState.settings?.blikPhone || "697 013 447")}</span>
+                            <!-- 🔒 Bezpieczeństwo (PIN & Imię) -->
+                            <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-3.5 flex flex-col justify-between gap-3 shadow-sm">
+                                <div class="flex items-center justify-between gap-2">
+                                    <div class="flex items-center gap-2 min-w-0">
+                                        <span class="text-xl shrink-0">🔒</span>
+                                        <div class="min-w-0">
+                                            <h4 class="text-xs font-bold text-white uppercase tracking-wider">Bezpieczeństwo & PIN</h4>
+                                            <p class="text-[10px] text-slate-400">Kod dostępu i Twoje imię</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] text-indigo-300 font-bold bg-indigo-950/60 border border-indigo-800/60 px-2 py-0.5 rounded-full shrink-0">4-cyfry</span>
                                 </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-slate-400">Kwota do zapłaty:</span>
-                                    <strong class="font-mono text-sm ${!isMyPaid && myDue > 0 ? 'text-rose-400 font-black' : 'text-emerald-400 font-bold'}">${Math.max(0, myDue - myPaid).toFixed(2)} zł</strong>
-                                </div>
-                                <div class="flex items-center justify-between text-[11px] pt-1.5 border-t border-slate-800/60">
-                                    <span class="text-slate-400">Tytuł przelewu:</span>
-                                    <span class="font-mono text-slate-200 font-medium whitespace-normal break-words max-w-[190px]">Siatka ${escapeHtml(loggedPlayer)} ${escapeHtml(AppState.currentMonth)}</span>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button type="button" onclick="changeMyPinPrompt()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-slate-200 hover:text-emerald-300 font-bold py-2 px-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1 active:scale-95 shadow-sm">
+                                        <span>🔑</span> Zmień PIN
+                                    </button>
+                                    <button type="button" onclick="changeMyPlayerNamePrompt()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-indigo-500/50 text-slate-200 font-bold py-2 px-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1 active:scale-95 shadow-sm">
+                                        <span>✏️</span> Zmień imię
+                                    </button>
                                 </div>
                             </div>
 
-                            ${!isMyPaid && myDue > 0 ? `
-                                <div class="flex flex-col sm:flex-row gap-2 pt-0.5">
-                                    <button type="button" onclick="copyTransferTitle(${toInlineArgument(loggedPlayer)})" class="flex-1 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-black py-2.5 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5">
-                                        <span>📋</span> Kopiuj tytuł przelewu
-                                    </button>
-                                    <button type="button" onclick="copyBlikNumber()" class="shrink-0 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-bold px-3.5 py-2.5 rounded-xl text-xs transition border border-slate-700 flex items-center justify-center gap-1.5">
-                                        <span>📱</span> Kopiuj nr BLIK
-                                    </button>
+                            <!-- 🚪 Sesja na telefonie -->
+                            <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-3.5 flex flex-col justify-between gap-3 shadow-sm">
+                                <div class="flex items-center justify-between gap-2">
+                                    <div class="flex items-center gap-2 min-w-0">
+                                        <span class="text-xl shrink-0">🚪</span>
+                                        <div class="min-w-0">
+                                            <h4 class="text-xs font-bold text-white uppercase tracking-wider">Sesja Gracza</h4>
+                                            <p class="text-[10px] text-slate-400">Pamięć na tym telefonie</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 font-mono shrink-0">Zalogowany</span>
                                 </div>
-                            ` : ''}
+                                <button type="button" onclick="logoutPlayerAccount()" class="w-full bg-rose-950/30 hover:bg-rose-900/50 border border-rose-900/60 hover:border-rose-700 text-rose-300 font-bold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 active:scale-95 shadow-sm">
+                                    <span>🚪</span> Wyloguj się z profilu
+                                </button>
+                            </div>
+
+                            <!-- 💸 Moje Składki & Rozliczenie BLIK -->
+                            <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-3.5 space-y-3 shadow-sm sm:col-span-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xl">💸</span>
+                                        <div>
+                                            <h4 class="text-xs font-bold text-white uppercase tracking-wider">Moje Składki (${escapeHtml(AppState.currentMonth)})</h4>
+                                            <p class="text-[10px] text-slate-400">Rozliczenie gry z organizatorem</p>
+                                        </div>
+                                    </div>
+                                    ${isMyPaid ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">✅ Opłacone</span>` : `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-950 text-rose-400 border border-rose-800 font-bold">Do zapłaty: ${Math.max(0, myDue - myPaid).toFixed(2)} zł</span>`}
+                                </div>
+                                <div class="bg-slate-900/90 border border-slate-800/80 rounded-xl p-3 space-y-2 text-xs">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-400">Numer telefonu (BLIK):</span>
+                                        <span class="font-mono font-black text-emerald-400 tracking-wider text-sm select-all">${escapeHtml(AppState.settings?.blikPhone || "697 013 447")}</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-400">Kwota do zapłaty:</span>
+                                        <strong class="font-mono text-sm ${!isMyPaid && myDue > 0 ? 'text-rose-400 font-black' : 'text-emerald-400 font-bold'}">${Math.max(0, myDue - myPaid).toFixed(2)} zł</strong>
+                                    </div>
+                                    <div class="flex items-center justify-between text-[11px] pt-1.5 border-t border-slate-800/60">
+                                        <span class="text-slate-400">Tytuł przelewu:</span>
+                                        <span class="font-mono text-slate-200 font-medium whitespace-normal break-words max-w-[200px]">Siatka ${escapeHtml(loggedPlayer)} ${escapeHtml(AppState.currentMonth)}</span>
+                                    </div>
+                                </div>
+                                ${!isMyPaid && myDue > 0 ? `
+                                    <div class="flex flex-col sm:flex-row gap-2 pt-0.5">
+                                        <button type="button" onclick="copyTransferTitle(${toInlineArgument(loggedPlayer)})" class="flex-1 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-black py-2.5 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5">
+                                            <span>📋</span> Kopiuj tytuł przelewu
+                                        </button>
+                                        <button type="button" onclick="copyBlikNumber()" class="shrink-0 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-bold px-3.5 py-2.5 rounded-xl text-xs transition border border-slate-700 flex items-center justify-center gap-1.5">
+                                            <span>📱</span> Kopiuj nr BLIK
+                                        </button>
+                                    </div>
+                                ` : ''}
+                            </div>
+
                         </div>
-                    `}
-
-                    <!-- Ustawienia Konta -->
-                    <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-xs flex-wrap gap-2">
-                        <button type="button" onclick="changeMyPlayerNamePrompt()" class="text-slate-400 hover:text-indigo-300 font-semibold flex items-center gap-1 transition">
-                            ✏️ Zmień swoje imię
-                        </button>
-                        <button type="button" onclick="changeMyPinPrompt()" class="text-slate-400 hover:text-emerald-300 font-semibold flex items-center gap-1 transition">
-                            🔑 Zmień swój kod PIN
-                        </button>
                     </div>
-
+                    <div id="profileThemePickerContainer" class="hidden"></div>
                 </div>
+                ` : ''}
 
-                <!-- WYBÓR MOTYWU APLIKACJI -->
-                <div class="bg-slate-900/90 border border-slate-800/80 rounded-3xl p-4 sm:p-5 shadow-xl space-y-3">
-                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xl">🎨</span>
-                            <h3 class="font-bold text-xs uppercase tracking-wider text-white">Motyw Aplikacji</h3>
-                        </div>
-                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                            4 Opcje + Klasyk
-                        </span>
-                    </div>
-                    <div id="profileThemePickerContainer" class="space-y-2">
-                        ${getThemePickerHtml()}
-                    </div>
-                </div>
-
-                <!-- 2. STREFA ORGANIZATORA -->
+                <!-- PODWIDOK 3 (ORGANIZATOR): CENTRUM ZARZĄDZANIA & NARZĘDZIA ORGANIZATORA -->
                 ${isOrganizer ? `
+                <div id="profileSubtabContainer-admin" class="space-y-4 hidden">
+                    
+                    <!-- 1. Dedykowany Panel Narzędzi Organizatora -->
                     <div class="bg-gradient-to-br from-slate-900 via-amber-950/20 to-slate-950 border border-amber-800/60 rounded-3xl p-4 sm:p-5 shadow-xl space-y-4">
-                        <div class="flex items-center justify-between border-b border-amber-800/60 pb-2.5">
-                            <div class="flex items-center gap-2">
-                                <span class="text-2xl">👑</span>
+                        <div class="flex items-center justify-between border-b border-amber-800/40 pb-3">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-9 h-9 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center text-lg shadow-sm">
+                                    👑
+                                </div>
                                 <div>
-                                    <h3 class="font-black text-sm sm:text-base text-white">Strefa Organizatora</h3>
-                                    <p class="text-[10px] text-amber-300">Tylko Ty masz dostęp do tych funkcji</p>
+                                    <h3 class="font-black text-sm sm:text-base text-white">Centrum Zarządzania & Narzędzia Organizatora</h3>
+                                    <p class="text-[10px] text-amber-300">Wszystkie narzędzia administratorskie w jednym miejscu</p>
                                 </div>
                             </div>
+                            <span class="text-[9px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-2 py-0.5 rounded-full shrink-0">
+                                Admin
+                            </span>
                         </div>
-                        <!-- 2A: Szybkie Zarządzanie Ekipą & Terminarzem -->
+
+                        <!-- GRUPA 1: ⚙️ Parametry spotkań & Hala -->
                         <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-2.5">
                             <div class="flex items-center justify-between">
                                 <h4 class="font-extrabold text-xs text-white uppercase tracking-wider flex items-center gap-1.5">
-                                    <span>⚙️</span> Zarządzanie Ekipą &amp; Terminarzem
+                                    <span>⚙️</span> Parametry spotkań & Hala
                                 </h4>
+                                <span class="text-[9px] text-emerald-400 font-bold bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-800/80">Konfiguracja</span>
                             </div>
-                            <p class="text-[10px] text-slate-400">Dodawaj nowe mecze, generuj terminarze na kolejne miesiące oraz edytuj dane hali i BLIK:</p>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                <button type="button" onclick="openAddMatchModal()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-2 active:scale-95">
-                                    <span class="text-emerald-400">➕</span> Dodaj pojedynczy mecz
+                            <p class="text-[10px] text-slate-400">Godziny gry, zbiórka, adres hali, koszt oraz numer telefonu do BLIK:</p>
+                            <div class="bg-slate-900/90 border border-slate-800/90 rounded-xl p-2.5 space-y-1.5 text-xs text-slate-300">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-400">⏰ Zbiórka / rozgrzewka:</span>
+                                    <strong class="text-emerald-400 font-mono font-bold">${escapeHtml(AppState.settings?.warmupTime || "18:45")}</strong>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-400">🏐 Czas gry:</span>
+                                    <strong class="text-emerald-400 font-mono font-bold">${escapeHtml(AppState.settings?.startTime || "19:00")} - ${escapeHtml(AppState.settings?.gameEndTime || "21:00")}</strong>
+                                </div>
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-slate-400 shrink-0">📍 Adres hali:</span>
+                                    <strong class="text-slate-200 text-right whitespace-normal break-words">${escapeHtml(AppState.settings?.hallAddress || "Hala Sportowa")}</strong>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-400">💰 Koszt hali / opłata:</span>
+                                    <strong class="text-white font-mono font-bold">${AppState.settings?.hallCost || 240} zł (20 zł/os)</strong>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-400">📲 Numer BLIK (Arkadiusz):</span>
+                                    <strong class="text-emerald-400 font-mono font-bold">${escapeHtml(AppState.settings?.blikPhone || "697 013 447")}</strong>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                                <button type="button" onclick="openGroupSettingsModal()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-amber-500/50 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-2 active:scale-95 shadow-sm">
+                                    <span class="text-amber-400">⚙️</span> Edytuj dane ekipy i BLIK
                                 </button>
-                                <button type="button" onclick="openGenerateMonthModal()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-sky-500/50 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-2 active:scale-95">
-                                    <span class="text-sky-400">📅</span> Generuj na cały miesiąc
+                                <button type="button" onclick="openGroupSettingsModal(true)" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-indigo-500/50 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-2 active:scale-95 shadow-sm">
+                                    <span class="text-indigo-400">☁️</span> Konfiguracja Firebase
                                 </button>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-                                <button type="button" onclick="openGroupSettingsModal()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-amber-500/50 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-2 active:scale-95">
-                                    <span class="text-amber-400">⚙️</span> Edytuj dane ekipy i BLIK
+                                <button type="button" onclick="openAddMatchModal()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-2 active:scale-95 shadow-sm">
+                                    <span class="text-emerald-400">➕</span> Dodaj pojedynczy mecz
                                 </button>
-                                <button type="button" onclick="openGroupSettingsModal(true)" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-indigo-500/50 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-2 active:scale-95">
-                                    <span class="text-indigo-400">☁️</span> Konfiguracja Firebase
+                                <button type="button" onclick="openGenerateMonthModal()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-sky-500/50 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-2 active:scale-95 shadow-sm">
+                                    <span class="text-sky-400">📅</span> Generuj terminarz na miesiąc
                                 </button>
                             </div>
                         </div>
 
-
-                        <!-- 2B: Szybki Generator Dłużników na Messengera -->
+                        <!-- GRUPA 2: 📢 Komunikacja & Messenger -->
                         <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-2">
                             <div class="flex items-center justify-between">
                                 <h4 class="font-extrabold text-xs text-white uppercase tracking-wider flex items-center gap-1.5">
-                                    <span>💸</span> Przypomnienie o Składkach (Messenger)
+                                    <span>📢</span> Komunikacja & Messenger
                                 </h4>
+                                <span class="text-[9px] text-indigo-400 font-bold bg-indigo-950/80 px-2 py-0.5 rounded-full border border-indigo-800/80">1-Klik</span>
                             </div>
-                            <p class="text-[10px] text-slate-400">Generuje gotową wiadomość z listą osób, które jeszcze nie opłaciły hali za dany miesiąc, wraz z kwotami i numerem BLIK:</p>
+                            <p class="text-[10px] text-slate-400">Gotowy tekst z listą dłużników za dany miesiąc, kwotami i numerem BLIK do wklejenia w czat ekipy:</p>
                             <button type="button" onclick="copyDebtorsListMessage()" class="w-full bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-black py-2.5 rounded-xl text-xs transition shadow-md flex items-center justify-center gap-1.5">
                                 <span>📢</span> Kopiuj listę do opłacenia na Messengera
                             </button>
                         </div>
 
-                        <!-- Dyskretne Oceny Graczy (1-5 ⭐) -->
-                        <div class="bg-slate-950 border border-indigo-900/40 rounded-2xl p-3.5 space-y-2.5">
-                            <div class="flex items-center justify-between">
-                                <h4 class="font-extrabold text-xs text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">
-                                    <span>🤫</span> Ukryte Oceny Graczy (Balans 6v6)
+                        <!-- GRUPA 3: ⭐ Oceny umiejętności (Zwijany moduł) -->
+                        <details class="group bg-slate-950 border border-indigo-900/40 rounded-2xl overflow-hidden shadow-sm">
+                            <summary class="p-3.5 flex items-center justify-between cursor-pointer list-none select-none hover:bg-slate-900/50 transition">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-base">🤫</span>
+                                    <div>
+                                        <h4 class="font-extrabold text-xs text-indigo-300 uppercase tracking-wider">
+                                            Ukryte Oceny Graczy (Balans 6v6)
+                                        </h4>
+                                        <p class="text-[10px] text-slate-400">Gwiazdki 1-5★ używane do losowania równych składów</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2 shrink-0">
+                                    <span class="text-[9px] text-slate-400 font-medium bg-slate-900 px-2 py-0.5 rounded-full border border-slate-800">Tylko Admin</span>
+                                    <span class="text-xs text-slate-400 group-open:rotate-180 transition-transform duration-200">▼</span>
+                                </div>
+                            </summary>
+                            <div class="p-3.5 pt-0 space-y-2.5 border-t border-slate-800/60 mt-1">
+                                <div class="space-y-1.5 pt-2">
+                                    <input type="text" id="playerSkillsSearch" oninput="lastSkillsSearchQuery = this.value; renderPlayerSkillsGrid()" placeholder="🔍 Szukaj gracza do oceny..." class="w-full bg-slate-900/90 border border-slate-800 focus:border-amber-400 text-xs text-slate-100 placeholder-slate-500 rounded-xl px-3 py-1.5 focus:outline-none transition">
+                                    <div class="flex items-center justify-between text-[9px] text-slate-400 px-2 py-1 bg-slate-900/40 rounded-lg border border-slate-800/50">
+                                        <span class="text-slate-400 font-semibold">1★ Start</span>
+                                        <span class="text-slate-600">•</span>
+                                        <span class="text-slate-300 font-semibold">2★ Solid</span>
+                                        <span class="text-slate-600">•</span>
+                                        <span class="text-blue-300 font-semibold">3★ Średni</span>
+                                        <span class="text-slate-600">•</span>
+                                        <span class="text-amber-300 font-semibold">4★ Lider</span>
+                                        <span class="text-slate-600">•</span>
+                                        <span class="text-amber-400 font-bold">5★ PRO</span>
+                                    </div>
+                                </div>
+
+                                <div id="playerSkillsGrid" onscroll="if (this.scrollTop > 0) lastSkillsGridScrollTop = this.scrollTop;" class="space-y-2 max-h-80 overflow-y-auto pr-1">
+                                    <!-- Populated dynamically -->
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- GRUPA 4: 👥 Baza & Bezpieczeństwo -->
+                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-3.5">
+                            <div class="flex items-center justify-between border-b border-slate-800/60 pb-2">
+                                <h4 class="font-extrabold text-xs text-white uppercase tracking-wider flex items-center gap-1.5">
+                                    <span>👥</span> Baza Graczy & Bezpieczeństwo
                                 </h4>
-                                <span class="text-[9px] text-slate-400 font-medium bg-slate-900 px-2 py-0.5 rounded-full border border-slate-800">Tylko Ty widzisz</span>
+                                <span class="text-[9px] text-slate-400 bg-slate-900 px-2 py-0.5 rounded-full border border-slate-800">Użytkownicy</span>
                             </div>
 
+                            <!-- 4A: Reset PIN-u Gracza -->
                             <div class="space-y-1.5">
-                                <input type="text" id="playerSkillsSearch" oninput="lastSkillsSearchQuery = this.value; renderPlayerSkillsGrid()" placeholder="🔍 Szukaj gracza do oceny..." class="w-full bg-slate-900/90 border border-slate-800 focus:border-amber-400 text-xs text-slate-100 placeholder-slate-500 rounded-xl px-3 py-1.5 focus:outline-none transition">
-                                <div class="flex items-center justify-between text-[9px] text-slate-400 px-2 py-1 bg-slate-900/40 rounded-lg border border-slate-800/50">
-                                    <span class="text-slate-400 font-semibold">1★ Start</span>
-                                    <span class="text-slate-600">•</span>
-                                    <span class="text-slate-300 font-semibold">2★ Solid</span>
-                                    <span class="text-slate-600">•</span>
-                                    <span class="text-blue-300 font-semibold">3★ Średni</span>
-                                    <span class="text-slate-600">•</span>
-                                    <span class="text-amber-300 font-semibold">4★ Lider</span>
-                                    <span class="text-slate-600">•</span>
-                                    <span class="text-amber-400 font-bold">5★ PRO</span>
+                                <label class="text-[11px] font-bold text-slate-300 flex items-center gap-1">
+                                    <span>🔑</span> Resetuj PIN zapominalskiemu:
+                                </label>
+                                <div class="flex flex-col sm:flex-row gap-2">
+                                    <select id="resetPinPlayerSelect" class="flex-1 min-w-0 w-full bg-slate-900 border border-slate-700 text-xs text-white rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+                                        <option value="">-- Wybierz gracza --</option>
+                                        ${AppState.all_players.filter(p => !isOrganizerPlayer(p)).map(p => `
+                                            <option value="${escapeHtml(p)}">${escapeHtml(p)}${AppState.player_pins[p] ? ' (ma PIN)' : ' (brak PIN)'}</option>
+                                        `).join('')}
+                                    </select>
+                                    <button type="button" onclick="resetSelectedPlayerPin()" class="w-full sm:w-auto shrink-0 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5">
+                                        <span>🔑</span> Resetuj PIN
+                                    </button>
                                 </div>
                             </div>
 
-                            <div id="playerSkillsGrid" onscroll="if (this.scrollTop > 0) lastSkillsGridScrollTop = this.scrollTop;" class="space-y-1.5 max-h-72 overflow-y-auto pr-1">
-                                <!-- Populated dynamically -->
-                            </div>
-                        </div>
-
-                        <!-- Reset PIN-ów Zapominalskim -->
-                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <h4 class="font-extrabold text-xs text-white uppercase tracking-wider flex items-center gap-1">
-                                    <span>🔑</span> Reset PIN-u Gracza
-                                </h4>
-                            </div>
-                            <p class="text-[10px] text-slate-400">Jeśli ktoś zapomniał PIN-u, możesz go zresetować, aby mógł ustalić nowy:</p>
-                            <div class="flex flex-col sm:flex-row gap-2">
-                                <select id="resetPinPlayerSelect" class="flex-1 min-w-0 w-full bg-slate-900 border border-slate-700 text-xs text-white rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
-                                    <option value="">-- Wybierz gracza --</option>
-                                    ${AppState.all_players.filter(p => p !== getOrganizerName()).map(p => `
-                                        <option value="${escapeHtml(p)}">${escapeHtml(p)}${AppState.player_pins[p] ? ' (ma PIN)' : ' (brak PIN)'}</option>
-                                    `).join('')}
-                                </select>
-                                <button type="button" onclick="resetSelectedPlayerPin()" class="w-full sm:w-auto shrink-0 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5">
-                                    <span>🔑</span> Resetuj PIN
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Baza Graczy -->
-                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-2">
-                            <h4 class="font-extrabold text-xs text-white uppercase tracking-wider flex items-center gap-1">
-                                <span>👥</span> Baza Graczy (+ Dodaj nowego)
-                            </h4>
-                            <div class="flex gap-2">
-                                <input id="newPlayerNameInput" type="text" placeholder="Imię i nazwisko..." class="flex-1 min-w-0 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
-                                <button type="button" onclick="addNewPlayerToDirectory()" class="shrink-0 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition active:scale-95">
-                                    Dodaj
-                                </button>
-                            </div>
-                            <div id="playerDirectoryTags" class="flex flex-wrap gap-1.5 max-h-40 overflow-y-auto pt-1">
-                                <!-- Populated dynamically -->
-                            </div>
-                        </div>
-
-                        <!-- Kopia Zapasowa & Reset -->
-                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-2">
-                            <h4 class="font-extrabold text-xs text-white uppercase tracking-wider">⚙️ Kopia Zapasowa (JSON)</h4>
-                            <div class="flex flex-wrap gap-2 text-xs">
-                                <button type="button" onclick="exportDataJSON()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-xl font-semibold transition">
-                                    📥 Pobierz kopię
-                                </button>
-                                <label class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-xl font-semibold transition cursor-pointer">
-                                    📤 Wgraj kopię
-                                    <input type="file" onchange="importDataJSON(event)" accept=".json" class="hidden">
+                            <!-- 4B: Zarządzanie bazą graczy -->
+                            <div class="space-y-2 pt-1 border-t border-slate-800/60">
+                                <label class="text-[11px] font-bold text-slate-300 flex items-center gap-1">
+                                    <span>👤</span> Dodaj nowego zawodnika do bazy:
                                 </label>
-                                <button type="button" onclick="resetToInitialDataWithAuth()" class="bg-rose-950/60 hover:bg-rose-900/80 text-rose-300 border border-rose-900/50 px-3 py-1.5 rounded-xl font-semibold transition">
-                                    🔄 Reset bazy
+                                <div class="flex gap-2">
+                                    <input id="newPlayerNameInput" type="text" placeholder="Imię i nazwisko..." class="flex-1 min-w-0 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                                    <button type="button" onclick="addNewPlayerToDirectory()" class="shrink-0 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition active:scale-95">
+                                        Dodaj
+                                    </button>
+                                </div>
+                                <div id="playerDirectoryTags" class="flex flex-wrap gap-1.5 max-h-40 overflow-y-auto pt-1">
+                                    <!-- Populated dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- 4C: Kopia Zapasowa & Bezpieczeństwo Danych -->
+                            <div class="space-y-2 pt-1 border-t border-slate-800/60">
+                                <label class="text-[11px] font-bold text-slate-300 flex items-center gap-1">
+                                    <span>💾</span> Kopia zapasowa bazy danych:
+                                </label>
+                                <div class="flex flex-wrap gap-2 text-xs">
+                                    <button type="button" onclick="exportDataJSON()" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 px-3 py-1.5 rounded-xl font-semibold transition active:scale-95">
+                                        📥 Pobierz kopię (.json)
+                                    </button>
+                                    <label class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 px-3 py-1.5 rounded-xl font-semibold transition cursor-pointer active:scale-95">
+                                        📤 Wgraj kopię
+                                        <input type="file" onchange="importDataJSON(event)" accept=".json" class="hidden">
+                                    </label>
+                                    <button type="button" onclick="resetToInitialDataWithAuth()" class="bg-rose-950/60 hover:bg-rose-900/80 text-rose-300 border border-rose-900/50 px-3 py-1.5 rounded-xl font-semibold transition active:scale-95">
+                                        🔄 Reset bazy
+                                    </button>
+                                </div>
+                                <button type="button" onclick="checkEmergencyLocalStorageBackup()" class="w-full bg-amber-950/40 hover:bg-amber-900/60 border border-amber-800/60 text-amber-300 font-bold py-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5 mt-1 active:scale-95">
+                                    <span>🛡️</span>
+                                    <span>Sprawdź / Przywróć kopię z pamięci telefonu</span>
                                 </button>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
+
+                    <!-- 2. Ustawienia Profilu Organizatora (Arkadiusz) -->
+                    <div class="bg-slate-900/90 border border-slate-800/80 rounded-3xl p-4 sm:p-5 shadow-xl space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-800/60 pb-2.5">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xl">⚙️</span>
+                                <div>
+                                    <h4 class="font-bold text-xs text-white uppercase tracking-wider">Moje Ustawienia Profilu (${escapeHtml(loggedPlayer)})</h4>
+                                    <p class="text-[10px] text-slate-400">Osobiste ustawienia Twojego konta</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            
+                            <!-- Motyw -->
+                            <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-3 flex flex-col justify-between gap-2.5 shadow-sm">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                                        <span>🎨</span> Motyw
+                                    </span>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 shrink-0">
+                                        ${activeThemeInfo.icon} <span id="profileCurrentThemeDisplayAdmin">${escapeHtml(activeThemeInfo.name)}</span>
+                                    </span>
+                                </div>
+                                <button type="button" onclick="openThemePickerModal()" class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-slate-200 font-bold py-1.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1 active:scale-95">
+                                    Zmień motyw ➔
+                                </button>
+                            </div>
+
+                            <!-- Awatar -->
+                            <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-3 flex flex-col justify-between gap-2.5 shadow-sm">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                                        <span>📷</span> Mój Awatar
+                                    </span>
+                                    <div class="shrink-0">
+                                        ${getPlayerAvatarHtml(loggedPlayer, 'sm')}
+                                    </div>
+                                </div>
+                                <button type="button" onclick="openAvatarPickerModal()" class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-slate-200 font-bold py-1.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1 active:scale-95">
+                                    Zmień zdjęcie / awatar ➔
+                                </button>
+                            </div>
+
+                            <!-- PIN -->
+                            <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-3 flex flex-col justify-between gap-2.5 shadow-sm">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                                        <span>🔒</span> Bezpieczeństwo
+                                    </span>
+                                    <span class="text-[10px] text-indigo-300 font-bold">4-cyfry</span>
+                                </div>
+                                <button type="button" onclick="changeMyPinPrompt()" class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-slate-200 font-bold py-1.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1 active:scale-95">
+                                    Zmień swój PIN 🔑
+                                </button>
+                            </div>
+
+                            <!-- BLIK Organizatora (Kopiuj) -->
+                            <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-3 flex flex-col justify-between gap-2.5 shadow-sm">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                                        <span>📱</span> BLIK Organizatora
+                                    </span>
+                                    <span class="text-[10px] text-emerald-400 font-mono font-bold">${escapeHtml(AppState.settings?.blikPhone || "697 013 447")}</span>
+                                </div>
+                                <button type="button" onclick="copyBlikNumber()" class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-slate-200 font-bold py-1.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1 active:scale-95">
+                                    Kopiuj mój BLIK 📋
+                                </button>
+                            </div>
+
+                            <!-- Sesja -->
+                            <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-3 flex flex-col justify-between gap-2.5 shadow-sm sm:col-span-2">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                                        <span>🚪</span> Sesja
+                                    </span>
+                                    <span class="text-[10px] text-slate-400">Telefon</span>
+                                </div>
+                                <button type="button" onclick="logoutPlayerAccount()" class="w-full bg-rose-950/30 hover:bg-rose-900/50 border border-rose-900/60 text-rose-300 font-bold py-1.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1 active:scale-95">
+                                    Wyloguj profil 🚪
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="profileThemePickerContainer" class="hidden"></div>
+
+                </div>
                 ` : ''}
             `;
 
@@ -11804,6 +12460,8 @@ function initFirebaseSync() {
                 renderPlayerSkillsGrid();
                 renderPlayerDirectoryTags();
             }
+
+            setProfileSubtab(currentProfileSubtab);
 
             if (savedWinY > 0) {
                 window.scrollTo({ top: savedWinY, behavior: 'instant' });
@@ -12558,6 +13216,43 @@ function initFirebaseSync() {
                 openSetupWizardModal();
                 showToast("Zresetowano aplikację. Otwarto kreator konfiguracji.");
             });
+        }
+
+        function checkEmergencyLocalStorageBackup() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) {
+                alert("Brak zapisanej kopii w pamięci tej przeglądarki.");
+                return;
+            }
+            try {
+                const parsed = JSON.parse(raw);
+                let octCount = 0;
+                if (parsed.months?.['Październik']?.matches?.[0]?.attendees) {
+                    octCount = parsed.months['Październik'].matches[0].attendees.length;
+                }
+                const msg = `W pamięci lokalnej tego urządzenia wykryto stan grupy:\n` +
+                            `• Zapisani na pierwszy mecz października: ${octCount} os.\n\n` +
+                            `Czy chcesz przywrócić tę kopię i wysłać ją na żywo do chmury Firebase?`;
+                if (confirm(msg)) {
+                    AppState = parsed;
+                    ensureValidState();
+                    hasLoadedRemoteState = true;
+                    isOnlineSync = true;
+                    if (db) {
+                        db.ref(FIREBASE_DB_NODE).set(AppState).then(() => {
+                            showToast("Pomyślnie przywrócono stan z pamięci urządzenia do chmury! 🎉");
+                        }).catch(e => {
+                            alert("Błąd zapisu w chmurze: " + (e.message || e));
+                        });
+                    }
+                    try {
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(AppState));
+                    } catch(e) {}
+                    renderCurrentView();
+                }
+            } catch (e) {
+                alert("Błąd odczytu kopii: " + e.message);
+            }
         }
 
 
