@@ -7760,13 +7760,25 @@ function initFirebaseSync() {
             if (isAdmin && attendees.length > 0) {
                 if (adminBar) adminBar.classList.remove('hidden');
                 if (toggleFinalizeBtn) {
-                    toggleFinalizeBtn.innerText = isFinished ? "🔓 Otwórz głosowanie" : `👑 Zakończ i odkryj (${totalVotesCast}/${attendees.length})`;
-                    toggleFinalizeBtn.className = isFinished 
-                        ? "bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-3 py-1.5 rounded-xl text-[11px] transition shrink-0 active:scale-95 cursor-pointer"
-                        : "bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-3 py-1.5 rounded-xl text-[11px] transition shrink-0 active:scale-95 shadow-md shadow-amber-500/20 cursor-pointer";
+                    if (!isFinished) {
+                        toggleFinalizeBtn.innerText = `👑 Zakończ i odkryj (${totalVotesCast}/${attendees.length})`;
+                        toggleFinalizeBtn.className = "bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-3 py-1.5 rounded-xl text-[11px] transition shrink-0 active:scale-95 shadow-md shadow-amber-500/20 cursor-pointer";
+                    } else if (totalVotesCast < attendees.length) {
+                        toggleFinalizeBtn.innerText = "🔓 Wznów tajne głosowanie";
+                        toggleFinalizeBtn.className = "bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-3 py-1.5 rounded-xl text-[11px] transition shrink-0 active:scale-95 cursor-pointer";
+                    } else {
+                        toggleFinalizeBtn.innerText = "🔄 Zresetuj głosy (awaria)";
+                        toggleFinalizeBtn.className = "bg-rose-950/80 hover:bg-rose-900 text-rose-300 border border-rose-800/80 font-bold px-2.5 py-1 rounded-xl text-[10px] transition shrink-0 active:scale-95 shadow-sm cursor-pointer";
+                    }
                 }
                 if (adminStatusLabel) {
-                    adminStatusLabel.innerText = isFinished ? "Wyniki są ODKRYTE" : `Głosowanie tajne (${totalVotesCast}/${attendees.length})`;
+                    if (!isFinished) {
+                        adminStatusLabel.innerText = `Głosowanie tajne (${totalVotesCast}/${attendees.length})`;
+                    } else if (totalVotesCast < attendees.length) {
+                        adminStatusLabel.innerText = `Zamknięte przed czasem (${totalVotesCast}/${attendees.length})`;
+                    } else {
+                        adminStatusLabel.innerText = `Komplet głosów (${totalVotesCast}/${attendees.length}) ✅`;
+                    }
                 }
             } else {
                 if (adminBar) adminBar.classList.add('hidden');
@@ -7955,8 +7967,8 @@ function initFirebaseSync() {
             if (isFinished) {
                 const isMvpActive = (activeMvpCategory === 'mvp');
                 const isWomenActive = (activeMvpCategory === 'mvpWomen');
-                const mvpBadgeHtml = isMvpActive ? ` <span class="text-[9px] font-black uppercase text-amber-300 bg-amber-500/20 border border-amber-500/40 px-1.5 py-0.2 rounded ml-1 shrink-0">Wybrana kategoria ▼</span>` : '';
-                const womenBadgeHtml = isWomenActive ? ` <span class="text-[9px] font-black uppercase text-pink-300 bg-pink-500/20 border border-pink-500/40 px-1.5 py-0.2 rounded ml-1 shrink-0">Wybrana kategoria ▼</span>` : '';
+                const mvpBadgeHtml = '';
+                const womenBadgeHtml = '';
 
                 if (winnerHeaderLabel) winnerHeaderLabel.innerText = "OFICJALNE WYNIKI GŁOSOWANIA 🏆🌸";
 
@@ -8230,22 +8242,42 @@ function initFirebaseSync() {
                 const currentMatch = monthData?.matches[AppState.currentMatchIndex];
                 if (!currentMatch) return;
 
-                const currentClosed = isMvpVotingFinished(currentMatch);
-                currentMatch.mvpClosed = !currentClosed;
+                const attendees = (currentMatch.attendees || []).slice(0, 14);
+                const totalVotesCast = attendees.filter(p => Boolean(currentMatch.votes && currentMatch.votes[p])).length;
+                const isFinished = isMvpVotingFinished(currentMatch);
 
-                if (!currentClosed && typeof confetti === 'function') {
-                    confetti({
-                        particleCount: 120,
-                        spread: 80,
-                        origin: { y: 0.6 },
-                        colors: ['#f59e0b', '#10b981', '#fbbf24', '#38bdf8']
-                    });
+                // 1. Jeśli głosowanie było w toku (< attendees.length), admin zamyka je przed czasem
+                if (!isFinished) {
+                    currentMatch.mvpClosed = true;
+                    if (typeof confetti === 'function') {
+                        confetti({
+                            particleCount: 120,
+                            spread: 80,
+                            origin: { y: 0.6 },
+                            colors: ['#f59e0b', '#10b981', '#fbbf24', '#38bdf8']
+                        });
+                    }
+                    showToast("Odkryto wyniki MTV dla wszystkich! 👑");
+                } 
+                // 2. Jeśli głosowanie było przedwcześnie zamknięte przez admina (< attendees.length), wznawiamy
+                else if (totalVotesCast < attendees.length) {
+                    currentMatch.mvpClosed = false;
+                    showToast("Wznowiono tajne głosowanie MTV! 🗳️");
+                } 
+                // 3. Jeśli wszyscy oddali głosy (komplet) i admin klika przycisk awaryjny (reset)
+                else {
+                    const confirmReset = confirm("⚠️ Czy na pewno chcesz całkowicie zresetować głosy na ten mecz i otworzyć głosowanie od nowa?");
+                    if (!confirmReset) return;
+                    currentMatch.votes = {};
+                    if (currentMatch.votesWomen) currentMatch.votesWomen = {};
+                    if (currentMatch.specialVotes) currentMatch.specialVotes = {};
+                    currentMatch.mvpClosed = false;
+                    showToast("Zresetowano wszystkie głosy tego meczu! 🗳️");
                 }
 
                 syncState();
                 renderIntegratedMvpCard();
                 renderMatchesTab();
-                showToast(currentMatch.mvpClosed ? "Odkryto wyniki MTV dla wszystkich! 👑" : "Głosowanie zostało otwarte ponownie. 🔓");
             });
         }
 
@@ -8297,20 +8329,22 @@ function initFirebaseSync() {
             const tally = {};
             Object.values(votes).forEach(nom => tally[nom] = (tally[nom] || 0) + 1);
             const sortedNominees = Object.entries(tally).sort((a, b) => b[1] - a[1]);
-            const topNom = sortedNominees.length > 0 ? sortedNominees[0][0] : "";
             const maxV = sortedNominees.length > 0 ? sortedNominees[0][1] : 0;
+            const topNominees = sortedNominees.filter(n => n[1] === maxV && maxV > 0).map(n => n[0]);
             const totalVotes = Object.keys(votes).length;
-            const mvpWinner = (isFinished && topNom && maxV > 0) ? topNom : null;
+            const mvpWinners = (isFinished && maxV > 0) ? topNominees : [];
+            const mvpWinner = mvpWinners.length === 1 ? mvpWinners[0] : (mvpWinners.length > 1 ? mvpWinners.join(' & ') : null);
 
             // Women MTV (MTV Kobiet)
             const votesWomen = targetMatch.votesWomen || {};
             const tallyWomen = {};
             Object.values(votesWomen).forEach(nom => tallyWomen[nom] = (tallyWomen[nom] || 0) + 1);
             const sortedWomenNominees = Object.entries(tallyWomen).sort((a, b) => b[1] - a[1]);
-            const topWomenNom = sortedWomenNominees.length > 0 ? sortedWomenNominees[0][0] : "";
             const maxWomenV = sortedWomenNominees.length > 0 ? sortedWomenNominees[0][1] : 0;
+            const topWomenNominees = sortedWomenNominees.filter(n => n[1] === maxWomenV && maxWomenV > 0).map(n => n[0]);
             const totalWomenVotes = Object.keys(votesWomen).length;
-            const mvpWomenWinner = (isFinished && topWomenNom && maxWomenV > 0) ? topWomenNom : null;
+            const mvpWomenWinners = (isFinished && maxWomenV > 0) ? topWomenNominees : [];
+            const mvpWomenWinner = mvpWomenWinners.length === 1 ? mvpWomenWinners[0] : (mvpWomenWinners.length > 1 ? mvpWomenWinners.join(' & ') : null);
 
             const teams = targetMatch.teams || null;
             const darkName = teams?.darkName || "Drużyna Ciemna";
@@ -8420,7 +8454,6 @@ function initFirebaseSync() {
             if (mvpWinner) {
                 const pct = totalVotes > 0 ? Math.round((maxV / totalVotes) * 100) : 0;
                 const isArchivedMvpActive = (archivedActiveCategory === 'mvp');
-                const badgeActiveHtml = isArchivedMvpActive ? ` <span class="text-[8.5px] font-black uppercase text-amber-300 bg-amber-500/20 border border-amber-500/40 px-1.5 py-0.2 rounded ml-1 shrink-0">Wybrana kategoria ▼</span>` : '';
                 mvpHtml = `
                     <div onclick="setArchivedActiveCategory('mvp', '${escapeHtml(targetMatch.date)}')" class="cursor-pointer ${isArchivedMvpActive ? 'bg-gradient-to-r from-amber-500/20 via-amber-950/40 to-slate-900 border-2 border-amber-400 ring-1 ring-amber-400/50' : 'bg-gradient-to-r from-amber-500/15 via-amber-950/30 to-slate-900 border border-amber-500/50 hover:border-amber-400'} rounded-2xl p-2.5 shadow-md space-y-1.5 transition">
                         <div class="flex items-center justify-between gap-2">
@@ -8429,7 +8462,6 @@ function initFirebaseSync() {
                                 <div class="flex items-center gap-1.5 min-w-0 flex-wrap">
                                     <span class="text-[9px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded shadow-sm shrink-0">👑 MTV</span>
                                     <span class="text-xs sm:text-sm font-black text-white hover:text-amber-300 transition whitespace-normal break-words leading-tight">${formatPlayerNameHtml(mvpWinner)}</span>
-                                    ${badgeActiveHtml}
                                 </div>
                             </div>
                             <div class="text-right shrink-0">
@@ -8533,8 +8565,8 @@ function initFirebaseSync() {
                 const renderTeamRosterCompact = (roster) => {
                     if (!roster.length) return `<div class="text-[10px] text-slate-500 italic py-1 text-center">Brak graczy</div>`;
                     return roster.map(p => {
-                        const isPlayerMvp = (mvpWinner && p === mvpWinner);
-                        const isPlayerWomenMvp = (mvpWomenWinner && p === mvpWomenWinner);
+                        const isPlayerMvp = mvpWinners.includes(p);
+                        const isPlayerWomenMvp = mvpWomenWinners.includes(p);
                         const isGuest = !AppState.all_players.includes(p);
                         const posBadges = (typeof getPlayerPositionsBadgesHtml === 'function') ? getPlayerPositionsBadgesHtml(p) : '';
                         return `
@@ -8593,8 +8625,8 @@ function initFirebaseSync() {
                         </div>
                         <div class="grid grid-cols-2 gap-1">
                             ${mainSquad.map(p => {
-                                const isPlayerMvp = (mvpWinner && p === mvpWinner);
-                                const isPlayerWomenMvp = (mvpWomenWinner && p === mvpWomenWinner);
+                                const isPlayerMvp = mvpWinners.includes(p);
+                                const isPlayerWomenMvp = mvpWomenWinners.includes(p);
                                 const isGuest = !AppState.all_players.includes(p);
                                 const posBadges = (typeof getPlayerPositionsBadgesHtml === 'function') ? getPlayerPositionsBadgesHtml(p) : '';
                                 return `
@@ -9738,11 +9770,15 @@ function initFirebaseSync() {
                         const votes = m.votes || {};
                         const tally = {};
                         Object.values(votes).forEach(nom => tally[nom] = (tally[nom] || 0) + 1);
-                        let maxV = 0, topNom = "";
+                        let maxV = 0;
+                        let topLeaders = [];
                         Object.entries(tally).forEach(([nom, count]) => {
-                            if (count > maxV) { maxV = count; topNom = nom; }
+                            if (count > maxV) { maxV = count; topLeaders = [nom]; }
+                            else if (count === maxV && maxV > 0) { topLeaders.push(nom); }
                         });
-                        if (topNom === playerName && maxV > 0) isMvpWinner = true;
+                        const isWinner = (topLeaders.length === 1 && topLeaders[0] === playerName) ||
+                                         (m.date < '2026-10-17' && topLeaders.includes(playerName));
+                        if (isWinner && maxV > 0) isMvpWinner = true;
                     }
 
                     let displayScore = scoreStr;
@@ -9910,11 +9946,15 @@ function initFirebaseSync() {
                                 const votesMap = m.votes || {};
                                 const tally = {};
                                 Object.values(votesMap).forEach(nom => tally[nom] = (tally[nom] || 0) + 1);
-                                let maxV = 0, topNom = "";
+                                let maxV = 0;
+                                let topLeaders = [];
                                 Object.entries(tally).forEach(([nom, count]) => {
-                                    if (count > maxV) { maxV = count; topNom = nom; }
+                                    if (count > maxV) { maxV = count; topLeaders = [nom]; }
+                                    else if (count === maxV && maxV > 0) { topLeaders.push(nom); }
                                 });
-                                if (topNom === playerName && maxV > 0) {
+                                const isWinner = (topLeaders.length === 1 && topLeaders[0] === playerName) ||
+                                                 (m.date < '2026-10-17' && topLeaders.includes(playerName));
+                                if (isWinner && maxV > 0) {
                                     mvpWins++;
                                     const totalVotes = Object.keys(votesMap).length;
                                     if (totalVotes >= 4 && (maxV / totalVotes) >= 0.5) {
@@ -9926,11 +9966,15 @@ function initFirebaseSync() {
                                     const votesWMap = m.votesWomen || {};
                                     const tallyW = {};
                                     Object.values(votesWMap).forEach(nom => tallyW[nom] = (tallyW[nom] || 0) + 1);
-                                    let maxVW = 0, topNomW = "";
+                                    let maxVW = 0;
+                                    let topLeadersW = [];
                                     Object.entries(tallyW).forEach(([nom, count]) => {
-                                        if (count > maxVW) { maxVW = count; topNomW = nom; }
+                                        if (count > maxVW) { maxVW = count; topLeadersW = [nom]; }
+                                        else if (count === maxVW && maxVW > 0) { topLeadersW.push(nom); }
                                     });
-                                    if (topNomW === playerName && maxVW > 0) {
+                                    const isWomenWinner = (topLeadersW.length === 1 && topLeadersW[0] === playerName) ||
+                                                          (m.date < '2026-10-17' && topLeadersW.includes(playerName));
+                                    if (isWomenWinner && maxVW > 0) {
                                         mvpWomenWins++;
                                     }
                                 }
