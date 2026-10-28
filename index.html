@@ -1190,11 +1190,12 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        .scrollbar-none {
+        .scrollbar-none, .no-scrollbar {
             scrollbar-width: none;
             -ms-overflow-style: none;
+            -webkit-overflow-scrolling: touch;
         }
-        .scrollbar-none::-webkit-scrollbar {
+        .scrollbar-none::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
 
@@ -1413,15 +1414,21 @@
 
                 <!-- Match Sets Result Card -->
                 <div id="matchScoreDisplayCard" class="bg-slate-950/80 border border-slate-800/80 rounded-2xl p-3 sm:p-3.5 space-y-2 shadow-md">
-                    <div class="flex items-center justify-between gap-2 border-b border-slate-800/60 pb-2">
+                    <div class="flex items-center justify-between gap-2 border-b border-slate-800/60 pb-2 flex-wrap">
                         <div class="flex items-center gap-2">
                             <span class="w-6 h-6 rounded-lg bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-xs">📊</span>
                             <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Wynik meczu</span>
                         </div>
-                        <button type="button" id="editMatchScoreBtn" onclick="editMatchScorePrompt()" title="Wpisz lub edytuj wynik meczu" class="bg-slate-900 hover:bg-slate-800 text-amber-300 hover:text-amber-200 border border-amber-500/30 hover:border-amber-500/50 font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 transition active:scale-95 shrink-0 shadow-sm hidden">
-                            <span>✏️</span>
-                            <span id="editScoreBtnLabel">Wpisz wynik</span>
-                        </button>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <button type="button" id="matchReportScoreBtn" onclick="openCurrentMatchReportModal()" title="Zobacz oficjalny raport meczowy ze składami i MVP" class="bg-indigo-950/80 hover:bg-indigo-900 border border-indigo-800/80 hover:border-indigo-700 text-indigo-300 hover:text-indigo-200 font-bold px-2.5 py-1 rounded-xl text-[11px] flex items-center gap-1 transition active:scale-95 shadow-sm">
+                                <span>📑</span>
+                                <span>Raport meczowy</span>
+                            </button>
+                            <button type="button" id="editMatchScoreBtn" onclick="editMatchScorePrompt()" title="Wpisz lub edytuj wynik meczu" class="bg-slate-900 hover:bg-slate-800 text-amber-300 hover:text-amber-200 border border-amber-500/30 hover:border-amber-500/50 font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 transition active:scale-95 shrink-0 shadow-sm hidden">
+                                <span>✏️</span>
+                                <span id="editScoreBtnLabel">Wpisz wynik</span>
+                            </button>
+                        </div>
                     </div>
                     <div id="scoreText" class="min-w-0">
                         <div class="text-xs text-slate-500 py-0.5">Jeszcze nie wpisano wyniku spotkania</div>
@@ -1580,7 +1587,7 @@
                                     </select>
                                 </div>
 
-                                <!-- 4 Wyróżnienia Meczowe (Szufladka w stylu Apple) -->
+                                <!-- 5 Wyróżnień Meczowych (Szufladka w stylu Apple) -->
                                 <details id="awardsDetails" class="group bg-slate-900/40 border border-slate-800/80 rounded-2xl overflow-hidden transition shadow-sm">
                                     <summary class="p-2.5 sm:p-3 flex items-center justify-between cursor-pointer list-none select-none hover:bg-slate-900/80 transition">
                                         <span class="flex items-center gap-1.5 text-xs font-bold text-amber-300">
@@ -1589,7 +1596,7 @@
                                             <span class="text-[9.5px] text-slate-400 font-normal lowercase">(opcjonalne)</span>
                                         </span>
                                         <div class="flex items-center gap-1.5 text-slate-400">
-                                            <span id="awardsCounterBadge" class="text-[9.5px] font-bold text-amber-300 bg-amber-950/80 border border-amber-800/60 px-1.5 py-0.2 rounded-md hidden">0/4 wybrane</span>
+                                            <span id="awardsCounterBadge" class="text-[9.5px] font-bold text-amber-300 bg-amber-950/80 border border-amber-800/60 px-1.5 py-0.2 rounded-md hidden">0/5 wybrane</span>
                                             <span class="text-xs text-amber-400 transform group-open:rotate-180 transition-transform duration-200">▼</span>
                                         </div>
                                     </summary>
@@ -1617,6 +1624,12 @@
                                             <div>
                                                 <label for="voteAwardServe" class="block text-[10px] font-bold text-slate-300 mb-0.5 leading-tight">🌪️ Serwis Turbo:</label>
                                                 <select id="voteAwardServe" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-2.5 py-2 focus:outline-none focus:border-amber-500 cursor-pointer">
+                                                    <option value="">-- Pomiń --</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-span-2 sm:col-span-1">
+                                                <label for="voteAwardSetter" class="block text-[10px] font-bold text-slate-300 mb-0.5 leading-tight">🎯 Magik Rozegrania:</label>
+                                                <select id="voteAwardSetter" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-2.5 py-2 focus:outline-none focus:border-amber-500 cursor-pointer">
                                                     <option value="">-- Pomiń --</option>
                                                 </select>
                                             </div>
@@ -1895,17 +1908,21 @@
                 </h2>
             </div>
 
-            <!-- Przełącznik Segmentowy Hall of Fame (Ranking vs Rekordy vs Archiwum) -->
-            <div class="bg-slate-900/90 border border-slate-800/80 p-1 rounded-2xl grid grid-cols-3 gap-1 text-xs font-bold shadow-md">
-                <button type="button" id="hofSubtabBtn-ranking" onclick="setHallOfFameSubtab('ranking')" class="py-2 px-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black shadow-md flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs">
+            <!-- Przełącznik Segmentowy Hall of Fame (Ranking vs Rekordy vs Staty vs Archiwum) -->
+            <div class="bg-slate-900/90 border border-slate-800/80 p-1 rounded-2xl grid grid-cols-4 gap-1 text-xs font-bold shadow-md">
+                <button type="button" id="hofSubtabBtn-ranking" onclick="setHallOfFameSubtab('ranking')" class="py-2 px-1 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black shadow-md flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs">
                     <span>🏆</span>
                     <span class="truncate">Ranking</span>
                 </button>
-                <button type="button" id="hofSubtabBtn-records" onclick="setHallOfFameSubtab('records')" class="py-2 px-1.5 rounded-xl text-slate-400 hover:text-white font-extrabold flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs">
-                    <span>📊</span>
+                <button type="button" id="hofSubtabBtn-records" onclick="setHallOfFameSubtab('records')" class="py-2 px-1 rounded-xl text-slate-400 hover:text-white font-extrabold flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs">
+                    <span>👑</span>
                     <span class="truncate">Rekordy</span>
                 </button>
-                <button type="button" id="hofSubtabBtn-archive" onclick="setHallOfFameSubtab('archive')" class="py-2 px-1.5 rounded-xl text-slate-400 hover:text-white font-extrabold flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs">
+                <button type="button" id="hofSubtabBtn-stats" onclick="setHallOfFameSubtab('stats')" class="py-2 px-1 rounded-xl text-slate-400 hover:text-white font-extrabold flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs">
+                    <span>📊</span>
+                    <span class="truncate">Staty</span>
+                </button>
+                <button type="button" id="hofSubtabBtn-archive" onclick="setHallOfFameSubtab('archive')" class="py-2 px-1 rounded-xl text-slate-400 hover:text-white font-extrabold flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs">
                     <span>📜</span>
                     <span class="truncate">Archiwum</span>
                 </button>
@@ -2052,45 +2069,66 @@
             <!-- SUBTAB 2: REKORDY & STATYSTYKI -->
             <div id="hofSubtabContainer-records" class="space-y-3.5 hidden">
                 <!-- Season Records Book -->
-                <div class="bg-gradient-to-br from-slate-900 via-amber-950/20 to-slate-950 border border-amber-800/40 rounded-3xl p-4 sm:p-5 shadow-xl space-y-3">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xl">📖</span>
-                        <h3 class="font-black text-sm text-amber-300 uppercase tracking-wider">Księga Rekordów Sezonu 2026</h3>
+                <div class="bg-gradient-to-br from-slate-900 via-amber-950/15 to-slate-950 border border-amber-800/30 rounded-3xl p-3.5 sm:p-5 shadow-xl space-y-4">
+                    <div class="flex items-center justify-between gap-2 border-b border-amber-900/30 pb-2.5">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl">📖</span>
+                            <h3 class="font-black text-xs sm:text-sm text-amber-300 uppercase tracking-wider">Księga Rekordów Sezonu 2026</h3>
+                        </div>
+                        <span class="text-[10px] text-amber-400/80 font-bold font-mono bg-amber-950/60 border border-amber-800/50 px-2 py-0.5 rounded-full">Oficjalne</span>
                     </div>
-                    
-                    <div class="grid grid-cols-2 gap-2.5 text-xs">
-                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-2xl flex flex-col justify-between space-y-1">
-                            <span class="text-2xl">👑</span>
-                            <div>
-                                <span class="text-[10px] text-slate-400 font-bold uppercase">Król MTV</span>
-                                <p id="recordKingMvp" class="font-extrabold text-white text-xs sm:text-sm whitespace-normal break-words leading-tight mt-0.5">-</p>
+
+                    <!-- Bento Grid Rekordów Sezonu -->
+                    <div class="space-y-2.5">
+                        <!-- Hero Card: Król MVP (Full width, Royal look) -->
+                        <div class="bg-gradient-to-r from-amber-950/40 via-slate-950 to-amber-950/20 border border-amber-500/30 rounded-2xl p-3 sm:p-4 shadow-md transition hover:border-amber-500/50">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-base shadow-sm">
+                                        👑
+                                    </div>
+                                    <div>
+                                        <span class="text-[9.5px] sm:text-[10px] text-amber-300/90 font-black uppercase tracking-wider block leading-tight">Król MVP Sezonu</span>
+                                        <span class="text-[9px] text-slate-400 font-medium">Najwięcej statuetek gracza meczu</span>
+                                    </div>
+                                </div>
+                                <span id="recordKingMvpBadge" class="bg-amber-950 border border-amber-700/80 text-amber-300 text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded-full font-mono shadow-sm shrink-0 whitespace-nowrap">👑 -</span>
+                            </div>
+                            <div class="mt-2 pt-2 border-t border-amber-950/80">
+                                <p id="recordKingMvp" class="font-black text-white text-sm sm:text-base leading-snug break-words">-</p>
                             </div>
                         </div>
-                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-2xl flex flex-col justify-between space-y-1">
-                            <span class="text-2xl">⚡</span>
-                            <div>
-                                <span class="text-[10px] text-slate-400 font-bold uppercase">Lider Frekwencji</span>
-                                <p id="recordIronAttendance" class="font-extrabold text-emerald-400 text-xs sm:text-sm whitespace-normal break-words leading-tight mt-0.5">-</p>
+
+                        <!-- 2 Kolumny: Lider Frekwencji & Zacięty Mecz -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <div class="bg-slate-950/80 border border-slate-800/90 p-3 rounded-2xl flex items-center justify-between gap-2.5 shadow-sm">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <div class="w-8 h-8 rounded-xl bg-emerald-950/60 border border-emerald-800/60 flex items-center justify-center text-base shrink-0 shadow-sm">
+                                        ⚡
+                                    </div>
+                                    <div class="min-w-0">
+                                        <span class="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider block leading-tight">Lider Frekwencji</span>
+                                        <p id="recordIronAttendance" class="font-extrabold text-emerald-400 text-xs sm:text-sm whitespace-normal break-words mt-0.5 leading-tight">-</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-2xl flex flex-col justify-between space-y-1">
-                            <span class="text-2xl">⚔️</span>
-                            <div>
-                                <span class="text-[10px] text-slate-400 font-bold uppercase">Zacięty Mecz</span>
-                                <p id="recordMostClashMatch" class="font-extrabold text-amber-200 text-xs sm:text-sm whitespace-normal break-words leading-tight mt-0.5">-</p>
-                            </div>
-                        </div>
-                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-2xl flex flex-col justify-between space-y-1">
-                            <span class="text-2xl">💰</span>
-                            <div>
-                                <span class="text-[10px] text-slate-400 font-bold uppercase">Czyste Składki</span>
-                                <p id="recordCleanPayers" class="font-extrabold text-sky-400 text-xs sm:text-sm whitespace-normal break-words leading-tight mt-0.5">-</p>
+
+                            <div class="bg-slate-950/80 border border-slate-800/90 p-3 rounded-2xl flex items-center justify-between gap-2.5 shadow-sm">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <div class="w-8 h-8 rounded-xl bg-amber-950/60 border border-amber-800/60 flex items-center justify-center text-base shrink-0 shadow-sm">
+                                        ⚔️
+                                    </div>
+                                    <div class="min-w-0">
+                                        <span class="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider block leading-tight">Zacięty Mecz</span>
+                                        <p id="recordMostClashMatch" class="font-extrabold text-amber-200 text-xs sm:text-sm whitespace-normal break-words mt-0.5 leading-tight">-</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Władcy Parkietu – Wyróżnienia Sezonu (Czapa, Gwóźdź, Ryba, Turbo) -->
-                    <div class="pt-3 border-t border-slate-800 space-y-2">
+                    <div class="pt-3 border-t border-slate-800/80 space-y-2.5">
                         <div class="flex items-center justify-between gap-2">
                             <span class="text-[11px] font-black text-amber-300 uppercase tracking-wider flex items-center gap-1.5 min-w-0">
                                 <span>✨</span> <span class="truncate">Władcy Parkietu</span>
@@ -2100,59 +2138,119 @@
                                 <span>Głosy drużyny</span>
                             </span>
                         </div>
-                        <div class="grid grid-cols-2 gap-2 text-xs">
-                            <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-2xl flex flex-col justify-between space-y-1">
-                                <span class="text-xl">🧱</span>
-                                <div>
-                                    <span id="recordTitleBlock" class="text-[10px] text-slate-400 font-bold uppercase block leading-tight">Król Bloków</span>
-                                    <p id="recordKingBlock" class="font-extrabold text-white text-xs sm:text-sm whitespace-normal break-words leading-tight mt-0.5">-</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <!-- Blok -->
+                            <div class="bg-slate-950/80 border border-slate-800/80 p-2.5 sm:p-3 rounded-2xl flex items-center justify-between gap-2 shadow-sm transition hover:border-slate-700">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <div class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-base shrink-0">
+                                        🧱
+                                    </div>
+                                    <div class="min-w-0">
+                                        <span id="recordTitleBlock" class="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider block leading-tight">Król Bloków</span>
+                                        <p id="recordKingBlock" class="font-extrabold text-white text-xs sm:text-sm whitespace-normal break-words mt-0.5 leading-snug">-</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-2xl flex flex-col justify-between space-y-1">
-                                <span class="text-xl">🔨</span>
-                                <div>
-                                    <span id="recordTitleSpike" class="text-[10px] text-slate-400 font-bold uppercase block leading-tight">Król Ataku</span>
-                                    <p id="recordKingSpike" class="font-extrabold text-white text-xs sm:text-sm whitespace-normal break-words leading-tight mt-0.5">-</p>
+
+                            <!-- Atak -->
+                            <div class="bg-slate-950/80 border border-slate-800/80 p-2.5 sm:p-3 rounded-2xl flex items-center justify-between gap-2 shadow-sm transition hover:border-slate-700">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <div class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-base shrink-0">
+                                        🔨
+                                    </div>
+                                    <div class="min-w-0">
+                                        <span id="recordTitleSpike" class="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider block leading-tight">Król Ataku</span>
+                                        <p id="recordKingSpike" class="font-extrabold text-white text-xs sm:text-sm whitespace-normal break-words mt-0.5 leading-snug">-</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-2xl flex flex-col justify-between space-y-1">
-                                <span class="text-xl">🐟</span>
-                                <div>
-                                    <span id="recordTitleDefense" class="text-[10px] text-slate-400 font-bold uppercase block leading-tight">Król Obron</span>
-                                    <p id="recordKingDefense" class="font-extrabold text-white text-xs sm:text-sm whitespace-normal break-words leading-tight mt-0.5">-</p>
+
+                            <!-- Obrona -->
+                            <div class="bg-slate-950/80 border border-slate-800/80 p-2.5 sm:p-3 rounded-2xl flex items-center justify-between gap-2 shadow-sm transition hover:border-slate-700">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <div class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-base shrink-0">
+                                        🐟
+                                    </div>
+                                    <div class="min-w-0">
+                                        <span id="recordTitleDefense" class="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider block leading-tight">Król Obron</span>
+                                        <p id="recordKingDefense" class="font-extrabold text-white text-xs sm:text-sm whitespace-normal break-words mt-0.5 leading-snug">-</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-2xl flex flex-col justify-between space-y-1">
-                                <span class="text-xl">🌪️</span>
-                                <div>
-                                    <span id="recordTitleServe" class="text-[10px] text-slate-400 font-bold uppercase block leading-tight">Król Zagrywki</span>
-                                    <p id="recordKingServe" class="font-extrabold text-white text-xs sm:text-sm whitespace-normal break-words leading-tight mt-0.5">-</p>
+
+                            <!-- Serwis -->
+                            <div class="bg-slate-950/80 border border-slate-800/80 p-2.5 sm:p-3 rounded-2xl flex items-center justify-between gap-2 shadow-sm transition hover:border-slate-700">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <div class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-base shrink-0">
+                                        🚀
+                                    </div>
+                                    <div class="min-w-0">
+                                        <span id="recordTitleServe" class="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider block leading-tight">Serwis Turbo</span>
+                                        <p id="recordKingServe" class="font-extrabold text-white text-xs sm:text-sm whitespace-normal break-words mt-0.5 leading-snug">-</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Rozegranie -->
+                            <div class="bg-slate-950/80 border border-slate-800/80 p-2.5 sm:p-3 rounded-2xl flex items-center justify-between gap-2 shadow-sm transition hover:border-slate-700 sm:col-span-2">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <div class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-base shrink-0">
+                                        🎯
+                                    </div>
+                                    <div class="min-w-0">
+                                        <span id="recordTitleSetter" class="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider block leading-tight">Magik Rozegrania</span>
+                                        <p id="recordKingSetter" class="font-extrabold text-white text-xs sm:text-sm whitespace-normal break-words mt-0.5 leading-snug">-</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Zaawansowane Statystyki Meczowe Sezonu -->
+            </div>
+
+            <!-- SUBTAB 3: ZAAWANSOWANE STATYSTYKI -->
+            <div id="hofSubtabContainer-stats" class="space-y-3.5 hidden">
                 <div id="advancedStatsContainer" class="bg-slate-900/90 border border-slate-800/80 rounded-3xl p-4 sm:p-5 shadow-xl space-y-4">
                     <!-- Rendered dynamically by renderAdvancedStatsSection() -->
                 </div>
             </div>
 
-            <!-- SUBTAB 3: ARCHIWUM -->
+            <!-- SUBTAB 4: ARCHIWUM SPOTKAŃ -->
             <div id="hofSubtabContainer-archive" class="space-y-3.5 hidden">
-                <!-- Archiwum Rozegranych Spotkań w Sezonie -->
-                <div class="bg-slate-900/90 border border-slate-800/80 rounded-3xl p-4 sm:p-5 shadow-xl space-y-3">
-                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xl">📜</span>
-                            <h3 class="font-bold text-xs uppercase tracking-wider text-white">Archiwum Wszystkich Meczów</h3>
+                <!-- Nagłówek Archiwum + Bento Statystyki + Filtry -->
+                <div class="bg-slate-900/90 border border-slate-800/80 rounded-3xl p-4 sm:p-5 shadow-xl space-y-3.5">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3 gap-2">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <div class="w-9 h-9 rounded-2xl bg-emerald-950/80 border border-emerald-800/80 flex items-center justify-center text-lg shrink-0 shadow-sm">
+                                📜
+                            </div>
+                            <div class="min-w-0">
+                                <h3 class="font-black text-xs sm:text-sm uppercase tracking-wider text-white whitespace-normal break-words leading-tight">Kronika Spotkań</h3>
+                                <p class="text-[10px] text-slate-400 whitespace-normal break-words leading-tight mt-0.5">Oficjalne wyniki, składy i statuetki MVP</p>
+                            </div>
                         </div>
-                        <span class="text-[10px] text-slate-400">Wyniki i składy</span>
+                        <span id="archiveTotalBadge" class="text-[10px] sm:text-xs font-mono font-black text-emerald-300 bg-emerald-950/80 border border-emerald-800/80 px-2.5 py-1 rounded-full whitespace-nowrap shrink-0 shadow-sm">
+                            -
+                        </span>
                     </div>
-                    <div id="archiveMatchesList" class="space-y-2.5 max-h-80 overflow-y-auto pr-1">
+
+                    <!-- Bento Metrics Grid: Rozegrano, Tie-breaki, Frekwencja -->
+                    <div id="archiveStatsBento" class="grid grid-cols-3 gap-2 pt-0.5">
                         <!-- Populated dynamically -->
                     </div>
+
+                    <!-- Filtry Miesięcy (Pills) -->
+                    <div class="pt-1">
+                        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar scrollbar-none py-0.5" id="archiveMonthFilters">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lista Kart Meczowych (Natural flow, bez max-h-80) -->
+                <div id="archiveMatchesList" class="space-y-3">
+                    <!-- Populated dynamically by renderArchiveTab() -->
                 </div>
             </div>
 
@@ -2904,7 +3002,7 @@
                     <span class="text-base shrink-0">👑</span>
                     <div class="min-w-0">
                         <span class="text-[9.5px] uppercase font-black text-amber-400 block tracking-wider">Tytuł Sezonu</span>
-                        <strong id="playerCardSpecialAwards" class="text-amber-200 text-xs truncate block">-</strong>
+                        <strong id="playerCardSpecialAwards" class="text-amber-200 text-xs whitespace-normal break-words leading-tight block">-</strong>
                     </div>
                 </div>
                 <span class="text-[10px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded-full shrink-0">
@@ -3843,9 +3941,9 @@ function openGroupSettingsModal(focusFirebase = false) {
         const s = AppState.settings || {};
         document.getElementById('editGroupNameInput').value = s.groupName || AppState.groupName || 'Siatkówka';
         document.getElementById('editHallAddressInput').value = s.hallAddress || AppState.hallAddress || '';
-        document.getElementById('editWarmupTimeInput').value = s.warmupTime || AppState.warmupTime || '18:45';
-        document.getElementById('editStartTimeInput').value = s.startTime || AppState.startTime || '19:00';
-        document.getElementById('editEndTimeInput').value = s.gameEndTime || AppState.gameEndTime || '21:00';
+        document.getElementById('editWarmupTimeInput').value = s.warmupTime || AppState.warmupTime || '19:45';
+        document.getElementById('editStartTimeInput').value = s.startTime || AppState.startTime || '20:00';
+        document.getElementById('editEndTimeInput').value = s.gameEndTime || AppState.gameEndTime || '21:45';
         document.getElementById('editHallCostInput').value = s.hallCost || AppState.hallCost || 250;
         document.getElementById('editBlikPhoneInput').value = s.blikPhone || AppState.blikPhone || '';
         
@@ -3869,9 +3967,9 @@ function closeGroupSettingsModal() {
 function submitGroupSettings() {
     const groupName = document.getElementById('editGroupNameInput').value.trim() || 'Siatkówka';
     const hallAddress = document.getElementById('editHallAddressInput').value.trim() || 'Hala Sportowa';
-    const warmupTime = document.getElementById('editWarmupTimeInput').value || '18:45';
-    const startTime = document.getElementById('editStartTimeInput').value || '19:00';
-    const gameEndTime = document.getElementById('editEndTimeInput').value || '21:00';
+    const warmupTime = document.getElementById('editWarmupTimeInput').value || '19:45';
+    const startTime = document.getElementById('editStartTimeInput').value || '20:00';
+    const gameEndTime = document.getElementById('editEndTimeInput').value || '21:45';
     const hallCost = parseFloat(document.getElementById('editHallCostInput').value) || 250;
     const blikPhone = document.getElementById('editBlikPhoneInput').value.trim();
     const fbJsonRaw = document.getElementById('editFirebaseConfigJson').value.trim();
@@ -4035,6 +4133,24 @@ function initFirebaseSync() {
             }).join(' ');
         }
 
+        function getPlayerPositionsMicroBadgesHtml(playerName, maxShow = 2) {
+            const positions = getPlayerPositions(playerName);
+            if (!positions || !positions.length) return '';
+            const visible = positions.slice(0, maxShow);
+            const hiddenCount = positions.length - maxShow;
+
+            let html = visible.map(code => {
+                const def = VOLLEYBALL_POSITIONS[code] || VOLLEYBALL_POSITIONS['UNI'];
+                return `<span class="inline-flex items-center text-[8.5px] font-black px-1.5 py-0.5 rounded ${def.color} border shrink-0 select-none shadow-xs" title="${escapeHtml(def.name)}">${def.short}</span>`;
+            }).join(' ');
+
+            if (hiddenCount > 0) {
+                const hiddenDefs = positions.slice(maxShow).map(c => (VOLLEYBALL_POSITIONS[c]?.name || c)).join(', ');
+                html += ` <span class="inline-flex items-center text-[8px] font-bold px-1 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-700 shrink-0 select-none" title="Pozostałe pozycje: ${escapeHtml(hiddenDefs)}">+${hiddenCount}</span>`;
+            }
+            return html;
+        }
+
         function getSinglePositionBadgeHtml(roleKey) {
             const def = VOLLEYBALL_POSITIONS[roleKey] || VOLLEYBALL_POSITIONS['UNI'];
             return `<span class="inline-flex items-center gap-0.5 text-[9px] font-black px-1.5 py-0.5 rounded ${def.color} border shrink-0 select-none shadow-sm" title="${escapeHtml(def.name)}">${def.icon} ${def.name}</span>`;
@@ -4148,6 +4264,56 @@ function initFirebaseSync() {
             if (match.mvpClosed === true) return true;
             const votesCount = attendees.filter(p => Boolean(match.votes && match.votes[p])).length;
             return votesCount >= attendees.length && attendees.length > 0;
+        }
+
+        function getMatchMvpWinners(match) {
+            if (!match || match.isCancelled) return [];
+            if (!isMvpVotingFinished(match)) return [];
+
+            // 1. Zwycięzca dogrywki, jeśli dogrywka miała miejsce
+            if (match.mvpTieBreak && Array.isArray(match.mvpTieBreak.candidates) && match.mvpTieBreak.candidates.length > 1) {
+                if (match.mvpTieBreak.adminDecidedWinner) return [match.mvpTieBreak.adminDecidedWinner];
+                const tbVotes = match.mvpTieBreak.votes || {};
+                const tbTally = {};
+                match.mvpTieBreak.candidates.forEach(c => { tbTally[c] = 0; });
+                Object.entries(tbVotes).forEach(([voter, nominee]) => {
+                    if (match.mvpTieBreak.candidates.includes(nominee)) {
+                        tbTally[nominee] = (tbTally[nominee] || 0) + 1;
+                    }
+                });
+                let maxTb = -1;
+                let tbLeaders = [];
+                Object.entries(tbTally).forEach(([nom, cnt]) => {
+                    if (cnt > maxTb) { maxTb = cnt; tbLeaders = [nom]; }
+                    else if (cnt === maxTb) { tbLeaders.push(nom); }
+                });
+                if (tbLeaders.length === 1 && maxTb > 0) return [tbLeaders[0]];
+                return tbLeaders.length ? [tbLeaders[0]] : [];
+            }
+
+            // 2. Standardowe głosowanie
+            const votes = match.votes || {};
+            const tally = {};
+            Object.values(votes).forEach(nom => { tally[nom] = (tally[nom] || 0) + 1; });
+            let maxV = 0;
+            let leaders = [];
+            Object.entries(tally).forEach(([nom, count]) => {
+                if (count > maxV) { maxV = count; leaders = [nom]; }
+                else if (count === maxV && maxV > 0) { leaders.push(nom); }
+            });
+            if (maxV === 0 || leaders.length === 0) return [];
+
+            // Od 2026-10-17 obowiązuje dogrywka (runoff) – jeśli brak dogrywki lub jest remis w toku, brak pojedynczego zwycięzcy
+            if (match.date >= '2026-10-17') {
+                return leaders.length === 1 ? [leaders[0]] : [];
+            }
+            // Przed 2026-10-17: jeśli był remis w głosowaniu zasadniczym, obaj liderzy zostają MVP ex aequo
+            return leaders;
+        }
+
+        function getMatchMvpWinner(match) {
+            const winners = getMatchMvpWinners(match);
+            return winners.length > 0 ? winners[0] : null;
         }
 
         function isMatchFinished(match) {
@@ -7084,17 +7250,38 @@ function initFirebaseSync() {
             const attendees = (match.attendees || []).slice(0, 14);
             const femaleAttendees = attendees.filter(p => isFemalePlayer(p));
 
-            // 1. Sprawdzenie czy mecz jest w przyszłości
+            // 0. Sprawdzenie czy mecz jest odwołany
+            if (match.isCancelled) {
+                if (dateBadge) dateBadge.innerText = `Mecz: ${match.date} (Odwołany)`;
+                contentArea.innerHTML = `
+                    <div class="text-center py-6 space-y-3">
+                        <div class="text-4xl">🚫</div>
+                        <h3 class="text-base font-black text-white">Mecz został odwołany</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Spotkanie z dnia <strong class="text-rose-400 font-bold">${match.date}</strong> zostało odwołane. Głosowanie na MTV jest wyłączone.
+                        </p>
+                        <div class="pt-2">
+                            <button type="button" onclick="exitDedicatedMvpToApp(); window.close();" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-2xl text-xs transition border border-slate-700">
+                                Zamknij okno 👋
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // 1. Sprawdzenie czy mecz jeszcze się nie odbył / trwa (odblokowanie po godzinie gry lub po wpisaniu wyniku)
             const todayStr = getLocalDateKey();
-            const isFutureMatch = (match.date || '') > todayStr && !match.score;
-            if (isFutureMatch) {
-                if (dateBadge) dateBadge.innerText = `Mecz: ${match.date} (Planowany)`;
+            if (!isMatchFinished(match)) {
+                const endTimeStr = AppState.settings?.gameEndTime || "21:45";
+                const isToday = (match.date === todayStr);
+                if (dateBadge) dateBadge.innerText = `Mecz: ${match.date} (Oczekuje)`;
                 contentArea.innerHTML = `
                     <div class="text-center py-6 space-y-3">
                         <div class="text-4xl animate-bounce">⏳</div>
                         <h3 class="text-base font-black text-white">Mecz jeszcze się nie odbył</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            Spotkanie zaplanowane na <strong class="text-amber-400 font-bold">${match.date}</strong> jeszcze się nie odbyło. Głosowanie na MTV zostanie odblokowane w dniu meczu po rozegraniu gry! 🏐
+                            Spotkanie zaplanowane na <strong class="text-amber-400 font-bold">${match.date}</strong> ${isToday ? `odbywa się dzisiaj. Głosowanie na MTV zostanie odblokowane po zakończeniu meczu (o godz. <strong class="text-amber-400 font-mono">${endTimeStr}</strong>)` : `jeszcze się nie odbyło. Głosowanie zostanie odblokowane po rozegraniu meczu`} (lub po wpisaniu wyniku spotkania)! 🏐
                         </p>
                         <div class="pt-2">
                             <button type="button" onclick="exitDedicatedMvpToApp(); window.close();" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-2xl text-xs transition border border-slate-700">
@@ -7298,7 +7485,7 @@ function initFirebaseSync() {
                                 <span class="text-[9.5px] text-slate-400 font-normal lowercase">(opcjonalne)</span>
                             </span>
                             <div class="flex items-center gap-1.5 text-slate-400">
-                                <span id="dedAwardsCounterBadge" class="text-[9.5px] font-bold text-amber-300 bg-amber-950/80 border border-amber-800/60 px-1.5 py-0.2 rounded-md hidden">0/4 wybrane</span>
+                                <span id="dedAwardsCounterBadge" class="text-[9.5px] font-bold text-amber-300 bg-amber-950/80 border border-amber-800/60 px-1.5 py-0.2 rounded-md hidden">0/5 wybrane</span>
                                 <span class="text-xs text-amber-400 transform group-open:rotate-180 transition-transform duration-200">▼</span>
                             </div>
                         </summary>
@@ -7326,6 +7513,12 @@ function initFirebaseSync() {
                                 <div>
                                     <label for="dedVoteAwardServe" class="block text-[10px] font-bold text-slate-300 mb-0.5 leading-tight">🌪️ Serwis (turbo):</label>
                                     <select id="dedVoteAwardServe" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-2.5 py-2 focus:outline-none focus:border-amber-500 cursor-pointer">
+                                        <option value="">-- Pomiń --</option>
+                                    </select>
+                                </div>
+                                <div class="col-span-2 sm:col-span-1">
+                                    <label for="dedVoteAwardSetter" class="block text-[10px] font-bold text-slate-300 mb-0.5 leading-tight">🎯 Magik (rozegranie):</label>
+                                    <select id="dedVoteAwardSetter" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-2.5 py-2 focus:outline-none focus:border-amber-500 cursor-pointer">
                                         <option value="">-- Pomiń --</option>
                                     </select>
                                 </div>
@@ -7473,6 +7666,7 @@ function initFirebaseSync() {
             const spikeNominee = document.getElementById('dedVoteAwardSpike')?.value?.trim() || '';
             const defenseNominee = document.getElementById('dedVoteAwardDefense')?.value?.trim() || '';
             const serveNominee = document.getElementById('dedVoteAwardServe')?.value?.trim() || '';
+            const setterNominee = document.getElementById('dedVoteAwardSetter')?.value?.trim() || '';
 
             if (!voter) return alert("Wybierz siebie z listy obecnych graczy!");
             if (!nominee) return alert("Wybierz zawodnika, na którego oddajesz głos na ogólne MTV!");
@@ -7482,9 +7676,13 @@ function initFirebaseSync() {
             if (!info || !info.match) return alert("Brak danych meczu.");
 
             const match = info.match;
-            const todayStr = getLocalDateKey();
-            if ((match.date || '') > todayStr && !match.score) {
-                return alert("Głosowanie na MTV tego meczu nie jest jeszcze otwarte. Zostanie odblokowane w dniu meczu po rozegraniu gry! 🏐");
+            if (match.isCancelled) {
+                return alert("Ten mecz został odwołany — głosowanie na MTV jest wyłączone!");
+            }
+
+            if (!isMatchFinished(match)) {
+                const endTimeStr = AppState.settings?.gameEndTime || "21:45";
+                return alert(`Głosowanie na MTV zostanie odblokowane po zakończeniu meczu (o godz. ${endTimeStr}) lub po wpisaniu wyniku spotkania! 🏐`);
             }
 
             const attendees = (match.attendees || []).slice(0, 14);
@@ -7548,7 +7746,8 @@ function initFirebaseSync() {
                     block: (blockNominee && blockNominee !== voter && attendeesList.includes(blockNominee)) ? blockNominee : '',
                     spike: (spikeNominee && spikeNominee !== voter && attendeesList.includes(spikeNominee)) ? spikeNominee : '',
                     defense: (defenseNominee && defenseNominee !== voter && attendeesList.includes(defenseNominee)) ? defenseNominee : '',
-                    serve: (serveNominee && serveNominee !== voter && attendeesList.includes(serveNominee)) ? serveNominee : ''
+                    serve: (serveNominee && serveNominee !== voter && attendeesList.includes(serveNominee)) ? serveNominee : '',
+                    setter: (setterNominee && setterNominee !== voter && attendeesList.includes(setterNominee)) ? setterNominee : ''
                 };
 
                 attendeesCount = attendeesList.length;
@@ -7700,10 +7899,10 @@ function initFirebaseSync() {
             const femaleAttendees = attendees.filter(p => isFemalePlayer(p));
 
             const todayStr = getLocalDateKey();
-            const isFutureMatch = (currentMatch.date || '') > todayStr && !currentMatch.score;
+            const isStrictFuture = (currentMatch.date || '') > todayStr && !currentMatch.score;
 
             // Jeśli mecz jest w przyszłości - automatycznie resetujemy jakiekolwiek przedwczesne/testowe głosy
-            if (isFutureMatch) {
+            if (isStrictFuture) {
                 if (currentMatch.votes && Object.keys(currentMatch.votes).length > 0) {
                     currentMatch.votes = {};
                     if (currentMatch.votesWomen) currentMatch.votesWomen = {};
@@ -7804,20 +8003,50 @@ function initFirebaseSync() {
                 return;
             }
 
-            // 1. Sprawdzenie czy mecz jest w przyszłości
-            if (isFutureMatch) {
+            // 0. Sprawdzenie czy mecz jest odwołany
+            if (currentMatch.isCancelled) {
+                if (winnerHeaderLabel) winnerHeaderLabel.innerText = "STATUS MECZU";
+                if (winnerName) winnerName.innerText = "Mecz został odwołany";
+                if (winnerVotes) winnerVotes.innerText = "Dla odwołanego terminu głosowanie na MTV jest wyłączone.";
+                if (womenWinnerBox) womenWinnerBox.classList.add('hidden');
+                if (specialAwardsContainer) specialAwardsContainer.innerHTML = '';
+                if (votingFormNotice && votingFormFields) {
+                    votingFormNotice.innerHTML = `
+                        <div class="py-3 space-y-2 text-center">
+                            <span class="text-3xl block">🚫</span>
+                            <h4 class="font-bold text-xs text-rose-400">Głosowanie MTV niedostępne</h4>
+                            <p class="text-[11px] text-slate-400 max-w-xs mx-auto leading-relaxed">
+                                Spotkanie zostało odwołane — wybór gracza meczu jest wyłączony.
+                            </p>
+                        </div>
+                    `;
+                    votingFormNotice.classList.remove('hidden');
+                    votingFormFields.classList.add('hidden');
+                }
+                if (resultsList) resultsList.innerHTML = `<div class="p-3 text-center text-xs text-slate-500">Brak głosowania dla odwołanego meczu.</div>`;
+                if (whoVotedList) whoVotedList.innerHTML = `<p class="text-slate-500 italic text-xs">Mecz odwołany.</p>`;
+                if (whoVotedProgressRatio) whoVotedProgressRatio.innerText = "—";
+                if (adminBar) adminBar.classList.add('hidden');
+                return;
+            }
+
+            // 1. Sprawdzenie czy mecz jeszcze się nie odbył / trwa (odblokowanie po godzinie zakończenia lub po wpisaniu wyniku)
+            if (!isMatchFinished(currentMatch)) {
+                const endTimeStr = AppState.settings?.gameEndTime || "21:45";
+                const isToday = (currentMatch.date === todayStr);
+                const timeInfo = isToday ? `dzisiaj po godz. ${endTimeStr}` : `po rozegraniu meczu`;
                 if (winnerHeaderLabel) winnerHeaderLabel.innerText = "STATUS MECZU";
                 if (winnerName) winnerName.innerText = "Mecz jeszcze się nie odbył";
-                if (winnerVotes) winnerVotes.innerText = `Głosowanie na MTV zostanie otwarte w dniu meczu (${currentMatch.date}) po zakończeniu gry. 🏐`;
+                if (winnerVotes) winnerVotes.innerText = `Głosowanie na MTV zostanie otwarte ${timeInfo} (lub po wpisaniu wyniku). 🏐`;
                 if (womenWinnerBox) womenWinnerBox.classList.add('hidden');
                 if (specialAwardsContainer) specialAwardsContainer.innerHTML = '';
                 if (votingFormNotice && votingFormFields) {
                     votingFormNotice.innerHTML = `
                         <div class="py-2 space-y-2 text-center">
                             <span class="text-3xl block">⏳</span>
-                            <h4 class="font-bold text-xs text-amber-300">Głosowanie MTV oczekuje na mecz</h4>
+                            <h4 class="font-bold text-xs text-amber-300">Głosowanie MTV oczekuje na zakończenie meczu</h4>
                             <p class="text-[11px] text-slate-400 max-w-xs mx-auto leading-relaxed">
-                                Spotkanie zaplanowane na <strong class="text-white">${currentMatch.date}</strong> jeszcze się nie odbyło. Głosowanie na najlepszego gracza zostanie odblokowane po rozegraniu meczu! 🏐
+                                Spotkanie zaplanowane na <strong class="text-white">${currentMatch.date}</strong> ${isToday ? `odbywa się dzisiaj. Głosowanie zostanie odblokowane po zakończeniu gry (o godz. <strong class="text-amber-400 font-mono">${endTimeStr}</strong>)` : `jeszcze się nie odbyło. Głosowanie zostanie odblokowane po meczu`} (lub po wpisaniu wyniku spotkania)! 🏐
                             </p>
                         </div>
                     `;
@@ -8100,6 +8329,7 @@ function initFirebaseSync() {
             const spikeNominee = document.getElementById('voteAwardSpike')?.value?.trim() || '';
             const defenseNominee = document.getElementById('voteAwardDefense')?.value?.trim() || '';
             const serveNominee = document.getElementById('voteAwardServe')?.value?.trim() || '';
+            const setterNominee = document.getElementById('voteAwardSetter')?.value?.trim() || '';
 
             const monthData = AppState.months[AppState.currentMonth];
             const currentMatch = monthData?.matches[AppState.currentMatchIndex];
@@ -8109,10 +8339,13 @@ function initFirebaseSync() {
             const femaleAttendees = attendees.filter(p => isFemalePlayer(p));
             const womenNominee = document.getElementById('womenNomineeSelect')?.value?.trim();
 
-            const todayStr = getLocalDateKey();
-            const isFutureMatch = Boolean(currentMatch.date && currentMatch.date > todayStr && !currentMatch.score);
-            if (isFutureMatch) {
-                return alert("Głosowanie na MTV dla tego meczu jeszcze się nie rozpoczęło (mecz w przyszłości)!");
+            if (currentMatch.isCancelled) {
+                return alert("Ten mecz został odwołany — głosowanie na MTV jest wyłączone!");
+            }
+
+            if (!isMatchFinished(currentMatch)) {
+                const endTimeStr = AppState.settings?.gameEndTime || "21:45";
+                return alert(`Głosowanie na MTV zostanie odblokowane po zakończeniu meczu (o godz. ${endTimeStr}) lub po wpisaniu wyniku spotkania! 🏐`);
             }
 
             if (loggedPlayer && !attendees.includes(loggedPlayer)) {
@@ -8194,7 +8427,8 @@ function initFirebaseSync() {
                     block: (blockNominee && blockNominee !== voter && attendeesList.includes(blockNominee)) ? blockNominee : '',
                     spike: (spikeNominee && spikeNominee !== voter && attendeesList.includes(spikeNominee)) ? spikeNominee : '',
                     defense: (defenseNominee && defenseNominee !== voter && attendeesList.includes(defenseNominee)) ? defenseNominee : '',
-                    serve: (serveNominee && serveNominee !== voter && attendeesList.includes(serveNominee)) ? serveNominee : ''
+                    serve: (serveNominee && serveNominee !== voter && attendeesList.includes(serveNominee)) ? serveNominee : '',
+                    setter: (setterNominee && setterNominee !== voter && attendeesList.includes(setterNominee)) ? setterNominee : ''
                 };
 
                 attendeesCount = attendeesList.length;
@@ -8287,6 +8521,16 @@ function initFirebaseSync() {
         function closeArchivedMatchModal() {
             const modal = document.getElementById('archivedMatchModal');
             if (modal) modal.classList.add('hidden');
+        }
+
+        function openCurrentMatchReportModal() {
+            const monthData = AppState.months?.[AppState.currentMonth];
+            const currentMatch = monthData?.matches?.[AppState.currentMatchIndex];
+            if (!currentMatch) {
+                if (typeof showToast === 'function') showToast("Nie wybrano meczu do wyświetlenia raportu!");
+                return;
+            }
+            openArchivedMatchModal(currentMatch.date, AppState.currentMonth);
         }
 
         function openArchivedMatchModal(dateStr, monthName = null) {
@@ -8524,7 +8768,8 @@ function initFirebaseSync() {
                     { key: 'block', title: 'Czapa Meczu', icon: '🧱' },
                     { key: 'spike', title: 'Gwóźdź Meczu', icon: '🔨' },
                     { key: 'defense', title: 'Obrona Życia', icon: '🛡️' },
-                    { key: 'serve', title: 'Serwis Turbo', icon: '🚀' }
+                    { key: 'serve', title: 'Serwis Turbo', icon: '🚀' },
+                    { key: 'setter', title: 'Magik Rozegrania', icon: '🎯' }
                 ];
                 const hasAnySpecial = catMeta.some(c => aw[c.key]?.winners?.length > 0);
                 if (hasAnySpecial) {
@@ -8537,20 +8782,39 @@ function initFirebaseSync() {
                                 <span class="text-[9px] text-slate-400 font-medium">Zwycięzcy głosowania</span>
                             </div>
                             <div class="grid grid-cols-2 gap-1.5">
-                                ${catMeta.map(c => {
+                                ${catMeta.map((c, idx) => {
                                     const info = aw[c.key];
-                                    const winCount = info.winners.length;
-                                    const winStr = winCount > 0 ? info.winners.map(w => escapeHtml(w)).join(' & ') : '<span class="text-slate-600 font-normal">—</span>';
-                                    const voteStr = info.maxVotes > 0 ? pluralizeVotes(info.maxVotes) : '';
+                                    const winCount = info?.winners?.length || 0;
+                                    const voteStr = (info && info.maxVotes > 0) ? pluralizeVotes(info.maxVotes) : '';
+                                    const spanClass = (idx === 4) ? 'col-span-2 sm:col-span-1' : '';
+
+                                    let winnersHtml = '<div class="text-[10px] text-slate-600 font-normal mt-1 leading-tight">—</div>';
+                                    if (winCount === 1) {
+                                        winnersHtml = `
+                                            <div class="text-[10.5px] sm:text-[11px] font-black text-white mt-1 leading-tight whitespace-normal break-words" title="${escapeHtml(info.winners[0])}">
+                                                ${escapeHtml(info.winners[0])}
+                                            </div>
+                                        `;
+                                    } else if (winCount > 1) {
+                                        winnersHtml = `
+                                            <div class="flex flex-col gap-0.5 mt-1">
+                                                ${info.winners.map(w => `
+                                                    <div class="text-[9.5px] sm:text-[10px] font-black text-white leading-tight flex items-center gap-1 min-w-0" title="${escapeHtml(w)}">
+                                                        <span class="w-1 h-1 rounded-full bg-amber-400 shrink-0"></span>
+                                                        <span class="whitespace-normal break-words">${escapeHtml(w)}</span>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        `;
+                                    }
+
                                     return `
-                                        <div class="bg-slate-900/90 border border-slate-800/80 p-2 rounded-xl flex flex-col justify-between shadow-sm">
+                                        <div class="bg-slate-900/90 border border-slate-800/80 p-2 rounded-xl flex flex-col justify-between min-h-[46px] shadow-sm ${spanClass}">
                                             <div class="flex items-center justify-between gap-1 text-[9px] text-slate-400 font-bold">
                                                 <span class="whitespace-nowrap">${c.icon} ${c.title}</span>
-                                                ${voteStr ? `<span class="text-amber-400 font-mono shrink-0 whitespace-nowrap text-[8.5px]">${voteStr}</span>` : ''}
+                                                ${voteStr ? `<span class="text-amber-400 font-mono shrink-0 whitespace-nowrap text-[8.5px]">${voteStr}${winCount > 1 ? ' (remis)' : ''}</span>` : ''}
                                             </div>
-                                            <div class="text-[10.5px] sm:text-[11px] font-black ${winCount > 0 ? 'text-white' : 'text-slate-600'} truncate mt-0.5" title="${winCount > 0 ? info.winners.join(', ') : ''}">
-                                                ${winStr}
-                                            </div>
+                                            ${winnersHtml}
                                         </div>
                                     `;
                                 }).join('')}
@@ -8563,23 +8827,32 @@ function initFirebaseSync() {
             let teamsHtml = '';
             if (darkRoster.length > 0 || lightRoster.length > 0) {
                 const renderTeamRosterCompact = (roster) => {
-                    if (!roster.length) return `<div class="text-[10px] text-slate-500 italic py-1 text-center">Brak graczy</div>`;
+                    if (!roster.length) return `<div class="text-[10px] text-slate-500 italic py-2 text-center">Brak graczy</div>`;
                     return roster.map(p => {
                         const isPlayerMvp = mvpWinners.includes(p);
                         const isPlayerWomenMvp = mvpWomenWinners.includes(p);
                         const isGuest = !AppState.all_players.includes(p);
-                        const posBadges = (typeof getPlayerPositionsBadgesHtml === 'function') ? getPlayerPositionsBadgesHtml(p) : '';
+                        const posBadges = (typeof getPlayerPositionsMicroBadgesHtml === 'function') 
+                            ? getPlayerPositionsMicroBadgesHtml(p, 2) 
+                            : ((typeof getPlayerPositionsBadgesHtml === 'function') ? getPlayerPositionsBadgesHtml(p) : '');
+
+                        const rowBorder = isPlayerMvp 
+                            ? 'bg-amber-950/30 border-amber-500/50 hover:border-amber-400 text-amber-200' 
+                            : (isPlayerWomenMvp 
+                                ? 'bg-pink-950/30 border-pink-500/50 hover:border-pink-400 text-pink-200' 
+                                : 'bg-slate-900/60 border-slate-800/80 hover:border-slate-700 text-slate-200');
+
                         return `
-                            <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" title="Dotknij, aby zobaczyć profil gracza" class="flex items-center justify-between gap-1 py-1 px-1 rounded-lg hover:bg-slate-800/60 cursor-pointer transition ${isPlayerMvp ? 'bg-amber-950/40 border border-amber-500/40 text-amber-200' : (isPlayerWomenMvp ? 'bg-pink-950/40 border border-pink-500/40 text-pink-200' : 'text-slate-200')}">
-                                <div class="flex items-center gap-1.5 min-w-0 flex-1 flex-wrap">
+                            <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" title="Dotknij, aby zobaczyć profil gracza" class="flex items-center justify-between gap-1.5 py-1 px-2 rounded-xl border transition cursor-pointer select-none min-h-[34px] hover:bg-white/5 ${rowBorder}">
+                                <div class="flex items-center gap-1.5 min-w-0 flex-1">
                                     ${getPlayerAvatarHtml(p, 'xs')}
                                     <span class="font-bold text-[10.5px] sm:text-[11px] leading-tight whitespace-normal break-words ${isPlayerMvp ? 'text-amber-300 font-black' : (isPlayerWomenMvp ? 'text-pink-300 font-black' : '')}">
                                         ${isPlayerMvp ? '👑 ' : (isPlayerWomenMvp ? '👸 ' : '')}${formatPlayerNameHtml(p)}
                                     </span>
-                                    ${posBadges ? `<span class="inline-flex items-center gap-0.5">${posBadges}</span>` : ''}
-                                </div>
-                                <div class="flex items-center gap-1 shrink-0">
                                     ${isGuest ? `<span class="text-[8px] text-slate-500 font-medium shrink-0">(gość)</span>` : ''}
+                                </div>
+                                <div class="flex items-center gap-1 shrink-0 ml-1">
+                                    ${posBadges}
                                 </div>
                             </div>
                         `;
@@ -8597,7 +8870,7 @@ function initFirebaseSync() {
                                 </div>
                                 ${darkWon ? `<span class="text-[8.5px] font-black uppercase text-emerald-400 shrink-0">🏆 WIN</span>` : (isDraw ? `<span class="text-[8.5px] font-black uppercase text-amber-300 shrink-0">⚖️ REMIS</span>` : '')}
                             </div>
-                            <div class="space-y-0.5">
+                            <div class="space-y-1">
                                 ${renderTeamRosterCompact(darkRoster)}
                             </div>
                         </div>
@@ -8611,7 +8884,7 @@ function initFirebaseSync() {
                                 </div>
                                 ${lightWon ? `<span class="text-[8.5px] font-black uppercase text-emerald-400 shrink-0">🏆 WIN</span>` : (isDraw ? `<span class="text-[8.5px] font-black uppercase text-amber-300 shrink-0">⚖️ REMIS</span>` : '')}
                             </div>
-                            <div class="space-y-0.5">
+                            <div class="space-y-1">
                                 ${renderTeamRosterCompact(lightRoster)}
                             </div>
                         </div>
@@ -8619,26 +8892,37 @@ function initFirebaseSync() {
                 `;
             } else {
                 teamsHtml = `
-                    <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-2 space-y-1 pt-0.5">
-                        <div class="border-b border-slate-800/80 pb-1 text-[11px]">
+                    <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-2.5 space-y-1.5 pt-1">
+                        <div class="border-b border-slate-800/80 pb-1.5 text-[11px]">
                             <strong class="font-black text-slate-300">Skład meczu (${pluralizePlayers(mainSquad.length)})</strong>
                         </div>
-                        <div class="grid grid-cols-2 gap-1">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                             ${mainSquad.map(p => {
                                 const isPlayerMvp = mvpWinners.includes(p);
                                 const isPlayerWomenMvp = mvpWomenWinners.includes(p);
                                 const isGuest = !AppState.all_players.includes(p);
-                                const posBadges = (typeof getPlayerPositionsBadgesHtml === 'function') ? getPlayerPositionsBadgesHtml(p) : '';
+                                const posBadges = (typeof getPlayerPositionsMicroBadgesHtml === 'function') 
+                                    ? getPlayerPositionsMicroBadgesHtml(p, 2) 
+                                    : '';
+
+                                const rowBorder = isPlayerMvp 
+                                    ? 'bg-amber-950/30 border-amber-500/50 hover:border-amber-400 text-amber-200' 
+                                    : (isPlayerWomenMvp 
+                                        ? 'bg-pink-950/30 border-pink-500/50 hover:border-pink-400 text-pink-200' 
+                                        : 'bg-slate-900/60 border-slate-800/80 hover:border-slate-700 text-slate-200');
+
                                 return `
-                                    <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" class="flex items-center justify-between gap-1 py-1 px-1 rounded-lg hover:bg-slate-800/60 cursor-pointer transition ${isPlayerMvp ? 'bg-amber-950/40 border border-amber-500/40 text-amber-200' : (isPlayerWomenMvp ? 'bg-pink-950/40 border border-pink-500/40 text-pink-200' : 'text-slate-200')}">
-                                        <div class="flex items-center gap-1.5 min-w-0 flex-1 flex-wrap">
+                                    <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" title="Dotknij, aby zobaczyć profil gracza" class="flex items-center justify-between gap-1.5 py-1 px-2 rounded-xl border transition cursor-pointer select-none min-h-[34px] hover:bg-white/5 ${rowBorder}">
+                                        <div class="flex items-center gap-1.5 min-w-0 flex-1">
                                             ${getPlayerAvatarHtml(p, 'xs')}
                                             <span class="font-bold text-[10.5px] sm:text-[11px] leading-tight whitespace-normal break-words ${isPlayerMvp ? 'text-amber-300 font-black' : (isPlayerWomenMvp ? 'text-pink-300 font-black' : '')}">
                                                 ${isPlayerMvp ? '👑 ' : (isPlayerWomenMvp ? '👸 ' : '')}${formatPlayerNameHtml(p)}
                                             </span>
-                                            ${posBadges ? `<span class="inline-flex items-center gap-0.5">${posBadges}</span>` : ''}
+                                            ${isGuest ? `<span class="text-[8px] text-slate-500 font-medium shrink-0">(gość)</span>` : ''}
                                         </div>
-                                        ${isGuest ? `<span class="text-[8px] text-slate-500 font-medium shrink-0">(gość)</span>` : ''}
+                                        <div class="flex items-center gap-1 shrink-0 ml-1">
+                                            ${posBadges}
+                                        </div>
                                     </div>
                                 `;
                             }).join('')}
@@ -8705,6 +8989,39 @@ function initFirebaseSync() {
         }
 
 
+        let currentArchiveMonthFilter = 'all';
+
+        function setArchiveMonthFilter(filterMonth) {
+            currentArchiveMonthFilter = filterMonth;
+            renderArchiveTab();
+        }
+
+        function parseMatchSetsScore(scoreStr) {
+            if (!scoreStr) return null;
+            const matchWithSets = scoreStr.match(/^(.*?)\s+(\d+)\s*:\s*(\d+)\s+(.*?)\s*\((.*?)\)$/);
+            if (matchWithSets) {
+                return {
+                    setsA: parseInt(matchWithSets[2].trim(), 10),
+                    setsB: parseInt(matchWithSets[3].trim(), 10)
+                };
+            }
+            const matchSimple = scoreStr.match(/\s(\d+)\s*:\s*(\d+)\s/);
+            if (matchSimple) {
+                return {
+                    setsA: parseInt(matchSimple[1], 10),
+                    setsB: parseInt(matchSimple[2], 10)
+                };
+            }
+            const bareMatch = scoreStr.split('(')[0].match(/(\d+)\s*:\s*(\d+)/);
+            if (bareMatch) {
+                return {
+                    setsA: parseInt(bareMatch[1], 10),
+                    setsB: parseInt(bareMatch[2], 10)
+                };
+            }
+            return null;
+        }
+
         function renderArchiveTab() {
             const container = document.getElementById('archiveMatchesList');
             if (!container) return;
@@ -8721,76 +9038,235 @@ function initFirebaseSync() {
             const historyMatches = allMatches.filter(m => (m.date < todayStr || m.score) && !m.isCancelled);
             historyMatches.sort((a, b) => b.date.localeCompare(a.date));
 
+            // Extract unique months for filters
+            const uniqueMonths = [];
+            historyMatches.forEach(m => {
+                if (m.monthName && !uniqueMonths.includes(m.monthName)) {
+                    uniqueMonths.push(m.monthName);
+                }
+            });
+
+            // If selected filter is no longer valid, reset to 'all'
+            if (currentArchiveMonthFilter !== 'all' && !uniqueMonths.includes(currentArchiveMonthFilter)) {
+                currentArchiveMonthFilter = 'all';
+            }
+
+            const totalMatches = historyMatches.length;
+            const filteredMatches = currentArchiveMonthFilter === 'all'
+                ? historyMatches
+                : historyMatches.filter(m => m.monthName === currentArchiveMonthFilter);
+
+            const isFiltered = (currentArchiveMonthFilter !== 'all');
+            const displayMatchesCount = filteredMatches.length;
+
+            // Calculate metrics for the active view (filtered by selected month or full season)
+            let tieBreaksCount = 0;
+            let totalSquadAttendees = 0;
+
+            filteredMatches.forEach(m => {
+                const squad = getMatchPlayingSquad(m);
+                totalSquadAttendees += squad.length;
+
+                const parsed = parseMatchSetsScore(m.score);
+                if (parsed && ((parsed.setsA === 3 && parsed.setsB === 2) || (parsed.setsA === 2 && parsed.setsB === 3))) {
+                    tieBreaksCount++;
+                }
+            });
+
+            const avgAttendance = displayMatchesCount > 0 ? (totalSquadAttendees / displayMatchesCount).toFixed(1) : '0';
+            const tieBreaksPct = displayMatchesCount > 0 ? Math.round((tieBreaksCount / displayMatchesCount) * 100) : 0;
+
+            // Render Total Badge (shows count for active view)
+            const totalBadge = document.getElementById('archiveTotalBadge');
+            if (totalBadge) {
+                totalBadge.innerText = displayMatchesCount > 0 ? pluralizeMatches(displayMatchesCount) : '0 meczów';
+            }
+
+            // Render Bento Grid (3 cards - dynamically reflecting selected month)
+            const bentoContainer = document.getElementById('archiveStatsBento');
+            if (bentoContainer) {
+                bentoContainer.innerHTML = `
+                    <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-2.5 sm:p-3 text-center space-y-0.5 shadow-sm transition">
+                        <span class="text-base sm:text-lg block">🏐</span>
+                        <div class="font-mono font-black text-white text-sm sm:text-base leading-tight">${displayMatchesCount}</div>
+                        <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold block uppercase tracking-wider">${isFiltered ? 'W tym msc' : 'Rozegrano'}</span>
+                    </div>
+                    <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-2.5 sm:p-3 text-center space-y-0.5 shadow-sm transition">
+                        <span class="text-base sm:text-lg block">⚔️</span>
+                        <div class="font-mono font-black text-amber-300 text-sm sm:text-base leading-tight">${tieBreaksCount}</div>
+                        <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold block uppercase tracking-wider" title="${tieBreaksPct}% meczów w wybranym okresie">Tie-breaki (${tieBreaksPct}%)</span>
+                    </div>
+                    <div class="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-2.5 sm:p-3 text-center space-y-0.5 shadow-sm transition">
+                        <span class="text-base sm:text-lg block">👥</span>
+                        <div class="font-mono font-black text-emerald-400 text-sm sm:text-base leading-tight">${avgAttendance}</div>
+                        <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold block uppercase tracking-wider">Śr. graczy</span>
+                    </div>
+                `;
+            }
+
+            // Render Month Filter Pills
+            const filtersContainer = document.getElementById('archiveMonthFilters');
+            if (filtersContainer) {
+                const monthPills = [
+                    { id: 'all', label: 'Wszystkie', count: totalMatches },
+                    ...uniqueMonths.map(mName => ({
+                        id: mName,
+                        label: mName,
+                        count: historyMatches.filter(m => m.monthName === mName).length
+                    }))
+                ];
+
+                filtersContainer.innerHTML = monthPills.map(p => {
+                    const isActive = (currentArchiveMonthFilter === p.id);
+                    return `
+                        <button type="button" onclick="setArchiveMonthFilter(${toInlineArgument(p.id)})" class="py-1.5 px-3 rounded-xl text-xs font-bold whitespace-nowrap transition active:scale-95 flex items-center gap-2 shrink-0 ${isActive ? 'bg-emerald-500 text-slate-950 font-black shadow-md shadow-emerald-500/20' : 'bg-slate-950 hover:bg-slate-900 text-slate-300 hover:text-white border border-slate-800 font-bold'}">
+                            <span>${escapeHtml(p.label)}</span>
+                            <span class="text-[11px] font-mono font-black px-2 py-0.5 rounded-full ${isActive ? 'bg-slate-950 text-emerald-400 shadow-sm' : 'bg-slate-800/90 text-emerald-400 border border-slate-700/80 shadow-sm'}">${p.count}</span>
+                        </button>
+                    `;
+                }).join('');
+            }
+
             if (!historyMatches.length) {
-                container.innerHTML = `<div class="p-6 text-center text-xs text-slate-500">Brak archiwalnych spotkań. Wyniki pojawią się tutaj po rozegraniu pierwszych meczów!</div>`;
+                container.innerHTML = `<div class="bg-slate-900/90 border border-slate-800/80 rounded-3xl p-8 text-center text-xs text-slate-500 shadow-xl space-y-2">
+                    <span class="text-2xl block">🏐</span>
+                    <strong class="text-slate-300 font-bold block text-sm">Brak archiwalnych spotkań</strong>
+                    <p class="text-slate-500 text-[11px]">Wyniki meczów i statystyki pojawią się tutaj po rozegraniu piątkowych spotkań!</p>
+                </div>`;
                 return;
             }
 
-            container.innerHTML = historyMatches.map(m => {
-                const attendees = (m.attendees || []).slice(0, 14);
-                const score = m.score || "Brak wpisanego wyniku";
+            if (!filteredMatches.length) {
+                container.innerHTML = `<div class="bg-slate-900/90 border border-slate-800/80 rounded-3xl p-8 text-center text-xs text-slate-500 shadow-xl space-y-2">
+                    <span class="text-2xl block">📅</span>
+                    <strong class="text-slate-300 font-bold block text-sm">Brak spotkań w wybranym miesiącu</strong>
+                    <p class="text-slate-500 text-[11px]">Wybierz inny miesiąc lub kliknij "Wszystkie", aby zobaczyć pełną kronikę.</p>
+                </div>`;
+                return;
+            }
+
+            container.innerHTML = filteredMatches.map(m => {
+                const attendees = getMatchPlayingSquad(m);
                 const teams = m.teams || null;
+                const isFinished = isMvpVotingFinished(m);
+                const votes = m.votes || {};
+
+                // MVP calculation via getMatchMvpWinners
+                const mvpWinners = isFinished ? getMatchMvpWinners(m) : [];
+                const mvpTally = {};
+                Object.values(votes).forEach(nom => mvpTally[nom] = (mvpTally[nom] || 0) + 1);
+                let maxV = 0;
+                Object.values(mvpTally).forEach(c => { if (c > maxV) maxV = c; });
+                const totalVotes = Object.keys(votes).length;
+                const mvpPct = totalVotes > 0 ? Math.round((maxV / totalVotes) * 100) : 0;
+
+                // Special awards preview (Czapa, Gwóźdź, Obrona, Serwis Turbo)
+                const specialAwards = isFinished ? getMatchSpecialAwardWinners(m) : null;
+                const specialChips = [];
+                if (specialAwards) {
+                    const catMeta = [
+                        { key: 'block', icon: '🧱', label: 'Czapa' },
+                        { key: 'spike', icon: '🔨', label: 'Gwóźdź' },
+                        { key: 'defense', icon: '🛡️', label: 'Obrona' },
+                        { key: 'serve', icon: '🚀', label: 'Serwis' },
+                        { key: 'setter', icon: '🎯', label: 'Rozegranie' }
+                    ];
+                    catMeta.forEach(c => {
+                        const info = specialAwards[c.key];
+                        if (info && info.winners && info.winners.length > 0) {
+                            const isTie = info.winners.length > 1;
+                            const wNames = info.winners.join(' & ');
+                            specialChips.push(`
+                                <span class="inline-flex items-center gap-1.5 bg-slate-950/90 border border-slate-800/90 px-2.5 py-1 rounded-xl text-[10.5px] sm:text-xs text-slate-300 shadow-sm shrink-0 whitespace-nowrap">
+                                    <span>${c.icon}</span>
+                                    <span class="text-slate-400 font-semibold">${c.label}:</span>
+                                    <span class="font-bold text-white">${escapeHtml(wNames)}</span>
+                                    ${isTie ? '<span class="text-[9.5px] text-amber-400 font-semibold font-mono">(remis)</span>' : ''}
+                                </span>
+                            `);
+                        }
+                    });
+                }
+
                 const darkName = teams?.darkName || "Drużyna Ciemna";
                 const lightName = teams?.lightName || "Drużyna Jasna";
-                const isFinished = isMvpVotingFinished(m);
+                const hasTeams = Boolean(teams && (teams.dark?.length || teams.light?.length));
+                const formattedDate = formatPolishDateWithDay(m.date);
 
-                const votes = m.votes || {};
-                const tally = {};
-                Object.values(votes).forEach(nom => tally[nom] = (tally[nom] || 0) + 1);
-                let maxV = 0, topNom = "";
-                Object.entries(tally).forEach(([nom, count]) => {
-                    if (count > maxV) { maxV = count; topNom = nom; }
-                });
+                let mvpBannerHtml = '';
+                if (mvpWinners.length > 0) {
+                    const isExAequo = mvpWinners.length > 1;
+                    mvpBannerHtml = `
+                        <div class="bg-gradient-to-r from-amber-500/15 via-amber-950/30 to-slate-950 border border-amber-500/30 rounded-2xl px-3 py-2 flex items-center justify-between gap-2 shadow-sm">
+                            <div class="flex items-center gap-2 min-w-0 flex-1">
+                                <span class="text-base shrink-0">👑</span>
+                                <div class="min-w-0 flex-1">
+                                    <span class="text-[9px] text-amber-300 font-black uppercase tracking-wider block leading-tight">MVP Spotkania ${isExAequo ? '(Ex aequo)' : ''}</span>
+                                    <span class="text-xs sm:text-sm font-black text-white whitespace-normal break-words block leading-tight mt-0.5">${escapeHtml(mvpWinners.join(' & '))}</span>
+                                </div>
+                            </div>
+                            ${maxV > 0 ? `
+                                <span class="text-[10px] sm:text-[11px] font-mono font-black text-amber-300 bg-amber-950/90 border border-amber-700/60 px-2 py-0.5 rounded-lg whitespace-nowrap shadow-sm shrink-0">
+                                    ${pluralizeVotes(maxV)} <span class="text-amber-400/80 font-bold text-[9px]">(${mvpPct}%)</span>
+                                </span>
+                            ` : ''}
+                        </div>
+                    `;
+                } else if (totalVotes > 0) {
+                    mvpBannerHtml = `
+                        <div class="bg-slate-950/60 border border-slate-800 rounded-xl px-3 py-1.5 flex items-center gap-2 text-xs">
+                            <span>🔒</span>
+                            <span class="text-slate-400 text-[11px]">Głosowanie tajne w toku <strong class="text-amber-300">(${pluralizeVotes(totalVotes)})</strong></span>
+                        </div>
+                    `;
+                }
 
                 return `
-                    <div onclick="openArchivedMatchModal(${toInlineArgument(m.date)}, ${toInlineArgument(m.monthName)})" title="Dotknij, aby zobaczyć pełny raport, wynik i MTV" class="bg-slate-950 hover:bg-slate-900/90 border border-slate-800 hover:border-slate-700 rounded-2xl p-3.5 space-y-2.5 shadow-md cursor-pointer transition active:scale-[0.99]">
-                        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
-                            <div class="flex items-center gap-2">
-                                <span class="text-xs font-black font-mono text-emerald-400 bg-emerald-950 px-2.5 py-0.5 rounded-full border border-emerald-800/80">
-                                    ${escapeHtml(m.date)}
+                    <div onclick="openArchivedMatchModal(${toInlineArgument(m.date)}, ${toInlineArgument(m.monthName)})" title="Dotknij, aby zobaczyć pełny raport meczu, składy i statuetki" class="bg-slate-900/90 hover:bg-slate-800/70 border border-slate-800/80 hover:border-emerald-500/50 rounded-3xl p-3.5 sm:p-4 space-y-3 shadow-xl transition cursor-pointer active:scale-[0.99] group">
+                        
+                        <!-- Header: Data & Frekwencja -->
+                        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2.5 gap-2 flex-wrap">
+                            <div class="flex items-center gap-2 min-w-0">
+                                <span class="text-xs font-black text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded-xl border border-emerald-800/80 group-hover:border-emerald-500/80 transition flex items-center gap-1.5 shadow-sm">
+                                    <span>📅</span>
+                                    <span class="truncate">${escapeHtml(formattedDate)}</span>
                                 </span>
-                                <span class="text-[11px] text-slate-400 font-semibold">${escapeHtml(m.monthName)}</span>
+                                <span class="text-[10px] text-slate-400 font-bold bg-slate-950 px-2 py-0.5 rounded-lg border border-slate-800 shrink-0">
+                                    ${escapeHtml(m.monthName)}
+                                </span>
                             </div>
-                            <span class="text-[10px] font-bold text-slate-400 font-mono">Frekwencja: ${attendees.length}/14</span>
+                            <span class="text-[10.5px] font-bold text-slate-400 font-mono bg-slate-950 border border-slate-800 px-2.5 py-1 rounded-xl flex items-center gap-1 shadow-sm shrink-0">
+                                <span>👥</span>
+                                <span>${attendees.length}/${getMatchPlayingLimit(m)}</span>
+                            </span>
                         </div>
 
-                        <div class="bg-slate-900/80 border border-slate-800/80 p-3 rounded-2xl space-y-2">
-                            <div class="flex items-center justify-between gap-2 border-b border-slate-800/60 pb-1.5 text-xs">
-                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Wynik meczu</span>
-                                <div class="text-right">
-                                    <span class="text-[10px] text-slate-400 font-semibold">MTV meczu: </span>
-                                    <span class="text-xs font-extrabold text-white">${isFinished && topNom ? `👑 ${escapeHtml(topNom)} (${maxV} gł.)` : (Object.keys(votes).length > 0 ? '🔒 Głosowanie tajne' : 'Brak')}</span>
-                                </div>
-                            </div>
-                            <div class="min-w-0">
-                                ${m.score ? formatScoreHtml(m.score) : '<div class="text-xs text-slate-500 py-0.5 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-slate-600"></span><span>Brak wpisanego wyniku</span></div>'}
-                            </div>
+                        <!-- Scoreboard -->
+                        <div class="bg-slate-950/90 border border-slate-800/80 p-2.5 sm:p-3 rounded-2xl">
+                            ${m.score ? formatScoreHtml(m.score) : '<div class="text-xs text-slate-500 py-1 text-center italic">Brak oficjalnego wyniku</div>'}
                         </div>
 
-                        ${teams && (teams.dark?.length || teams.light?.length) ? `
-                            <div class="grid grid-cols-2 gap-2 text-[11px] pt-1">
-                                <div class="bg-slate-900/50 p-2 rounded-xl border border-slate-800">
-                                    <span class="font-bold text-slate-300 flex items-center gap-1 mb-1 whitespace-normal break-words text-[10px]">
-                                        <span class="w-2 h-2 rounded-full bg-slate-600 shrink-0"></span> ${escapeHtml(darkName)}
-                                    </span>
-                                    <ul class="text-slate-400 space-y-0.5 text-[10px]">
-                                        ${(teams.dark || []).map(p => `<li class="whitespace-normal break-words">• ${escapeHtml(p)}</li>`).join('')}
-                                    </ul>
-                                </div>
-                                <div class="bg-slate-900/50 p-2 rounded-xl border border-slate-800">
-                                    <span class="font-bold text-slate-300 flex items-center gap-1 mb-1 whitespace-normal break-words text-[10px]">
-                                        <span class="w-2 h-2 rounded-full bg-white shrink-0"></span> ${escapeHtml(lightName)}
-                                    </span>
-                                    <ul class="text-slate-400 space-y-0.5 text-[10px]">
-                                        ${(teams.light || []).map(p => `<li class="whitespace-normal break-words">• ${escapeHtml(p)}</li>`).join('')}
-                                    </ul>
-                                </div>
+                        <!-- MVP Banner -->
+                        ${mvpBannerHtml}
+
+                        <!-- Special Awards Chips -->
+                        ${specialChips.length > 0 ? `
+                            <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                                ${specialChips.join('')}
                             </div>
-                        ` : `
-                            <div class="text-[10px] text-slate-500 italic">
-                                Skład: ${attendees.map(escapeHtml).join(', ')}
-                            </div>
-                        `}
+                        ` : ''}
+
+                        <!-- Card Footer -->
+                        <div class="flex items-center justify-between text-[11px] pt-1 text-slate-400 border-t border-slate-800/70 gap-2">
+                            <span class="flex items-center gap-1.5 text-slate-300 truncate min-w-0 flex-1">
+                                <span>📋</span>
+                                <span class="truncate">${hasTeams ? `Składy: ${escapeHtml(darkName)} vs ${escapeHtml(lightName)}` : `Skład (${pluralizePlayers(attendees.length)})`}</span>
+                            </span>
+                            <span class="text-emerald-400 group-hover:text-emerald-300 font-bold flex items-center gap-1 transition shrink-0 pl-1">
+                                <span>Pełny raport</span>
+                                <span class="group-hover:translate-x-0.5 transition font-black">➔</span>
+                            </span>
+                        </div>
                     </div>
                 `;
             }).join('');
@@ -10140,7 +10616,16 @@ function initFirebaseSync() {
             }
 
             // Domyślne: Inicjały
-            const initials = playerName.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+            const cleanForInitials = String(playerName || '').replace(/\(.*?\)/g, '').trim();
+            const words = cleanForInitials.split(/\s+/).filter(Boolean);
+            let initials = '';
+            if (words.length >= 2) {
+                initials = (words[0][0] + words[1][0]).toUpperCase();
+            } else if (words.length === 1) {
+                initials = words[0].slice(0, 2).toUpperCase();
+            } else {
+                initials = String(playerName || '').slice(0, 2).toUpperCase();
+            }
             const bgGradient = isOrganizer ? 'bg-gradient-to-tr from-amber-600 to-rose-600' : 'bg-gradient-to-tr from-slate-800 to-slate-700';
             return `<div class="${sizeClass} ${imgRadius} flex items-center justify-center ${bgGradient} text-white font-black ${textSize} border ${borderClass} select-none shrink-0 shadow-sm leading-none ${extraClasses}"><span>${initials}</span></div>`;
         }
@@ -10399,7 +10884,8 @@ function initFirebaseSync() {
                         { key: 'block', icon: '🧱', name: 'Czapa' },
                         { key: 'spike', icon: '🔨', name: 'Gwóźdź' },
                         { key: 'defense', icon: '🐟', name: 'Obrona' },
-                        { key: 'serve', icon: '🌪️', name: 'Serwis' }
+                        { key: 'serve', icon: '🌪️', name: 'Serwis' },
+                        { key: 'setter', icon: '🎯', name: 'Rozegranie' }
                     ];
                     catMeta.forEach(c => {
                         const w = pAwards[c.key]?.wins || 0;
@@ -10543,7 +11029,8 @@ function initFirebaseSync() {
                 { id: prefix === 'ded' ? 'dedVoteAwardBlock' : 'voteAwardBlock', key: 'block' },
                 { id: prefix === 'ded' ? 'dedVoteAwardSpike' : 'voteAwardSpike', key: 'spike' },
                 { id: prefix === 'ded' ? 'dedVoteAwardDefense' : 'voteAwardDefense', key: 'defense' },
-                { id: prefix === 'ded' ? 'dedVoteAwardServe' : 'voteAwardServe', key: 'serve' }
+                { id: prefix === 'ded' ? 'dedVoteAwardServe' : 'voteAwardServe', key: 'serve' },
+                { id: prefix === 'ded' ? 'dedVoteAwardSetter' : 'voteAwardSetter', key: 'setter' }
             ];
 
             let selectedCount = 0;
@@ -10564,7 +11051,7 @@ function initFirebaseSync() {
             const detailsEl = document.getElementById(detailsId);
             if (badgeEl) {
                 if (selectedCount > 0) {
-                    badgeEl.innerText = `${selectedCount}/4 wybrane`;
+                    badgeEl.innerText = `${selectedCount}/5 wybrane`;
                     badgeEl.classList.remove('hidden');
                 } else {
                     badgeEl.classList.add('hidden');
@@ -10581,24 +11068,26 @@ function initFirebaseSync() {
                 block: { winners: [], maxVotes: 0 },
                 spike: { winners: [], maxVotes: 0 },
                 defense: { winners: [], maxVotes: 0 },
-                serve: { winners: [], maxVotes: 0 }
+                serve: { winners: [], maxVotes: 0 },
+                setter: { winners: [], maxVotes: 0 }
             };
 
             if (!match || !match.specialVotes || typeof match.specialVotes !== 'object') {
                 return result;
             }
 
-            const tallies = { block: {}, spike: {}, defense: {}, serve: {} };
+            const tallies = { block: {}, spike: {}, defense: {}, serve: {}, setter: {} };
             attendees.forEach(p => {
                 tallies.block[p] = 0;
                 tallies.spike[p] = 0;
                 tallies.defense[p] = 0;
                 tallies.serve[p] = 0;
+                tallies.setter[p] = 0;
             });
 
             Object.entries(match.specialVotes).forEach(([voter, vObj]) => {
                 if (!attendees.includes(voter) || !vObj || typeof vObj !== 'object') return;
-                ['block', 'spike', 'defense', 'serve'].forEach(cat => {
+                ['block', 'spike', 'defense', 'serve', 'setter'].forEach(cat => {
                     const cand = vObj[cat];
                     if (cand && cand !== voter && attendees.includes(cand)) {
                         tallies[cat][cand] = (tallies[cat][cand] || 0) + 1;
@@ -10606,7 +11095,7 @@ function initFirebaseSync() {
                 });
             });
 
-            ['block', 'spike', 'defense', 'serve'].forEach(cat => {
+            ['block', 'spike', 'defense', 'serve', 'setter'].forEach(cat => {
                 let maxV = 0;
                 Object.entries(tallies[cat]).forEach(([_, count]) => {
                     if (count > maxV) maxV = count;
@@ -10665,7 +11154,8 @@ function initFirebaseSync() {
                 { key: 'block', title: 'Czapa Meczu (Blok)', icon: '🧱', short: 'Czapa' },
                 { key: 'spike', title: 'Gwóźdź Meczu (Atak)', icon: '🔨', short: 'Gwóźdź' },
                 { key: 'defense', title: 'Obrona Życia (Obrona)', icon: '🐟', short: 'Obrona' },
-                { key: 'serve', title: 'Serwis Turbo (Zagrywka)', icon: '🌪️', short: 'Serwis' }
+                { key: 'serve', title: 'Serwis Turbo (Zagrywka)', icon: '🌪️', short: 'Serwis' },
+                { key: 'setter', title: 'Magik Rozegrania (Rozegranie)', icon: '🎯', short: 'Rozegr.' }
             ];
 
             const currentCatMeta = cats.find(c => c.key === activeCat) || cats[0];
@@ -10673,7 +11163,7 @@ function initFirebaseSync() {
                 ? `toggleArchivedVotersViewMode('${escapeHtml(match.date)}')` 
                 : `toggleMvpVotersViewMode()`;
 
-            const gridColsClass = cats.length === 6 ? 'grid-cols-6' : 'grid-cols-5';
+            const gridColsClass = cats.length === 7 ? 'grid-cols-7' : (cats.length === 6 ? 'grid-cols-6' : 'grid-cols-5');
 
             const tabsHtml = `
                 <div class="grid ${gridColsClass} gap-1 p-0.5 bg-slate-900 border border-slate-800/80 rounded-xl text-center">
@@ -10703,11 +11193,12 @@ function initFirebaseSync() {
                                 <span class="text-[9.5px] text-amber-400 font-mono font-bold">Wybór ➔ 🏆 ${formatPlayerNameHtml(mvpChoice)}</span>
                             </div>
                             <div class="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[9.5px] text-slate-400">
-                                ${womenChoice ? `<div class="truncate col-span-2 text-pink-300 font-semibold">🌸 MTV Kobiet: <span class="text-white">${formatPlayerNameHtml(womenChoice)}</span></div>` : ''}
-                                <div class="truncate">🧱 Czapa: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.block || '—')}</span></div>
-                                <div class="truncate">🔨 Gwóźdź: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.spike || '—')}</span></div>
-                                <div class="truncate">🐟 Obrona: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.defense || '—')}</span></div>
-                                <div class="truncate">🌪️ Serwis: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.serve || '—')}</span></div>
+                                ${womenChoice ? `<div class="col-span-2 text-pink-300 font-semibold whitespace-normal break-words">🌸 MTV Kobiet: <span class="text-white">${formatPlayerNameHtml(womenChoice)}</span></div>` : ''}
+                                <div class="whitespace-normal break-words">🧱 Czapa: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.block || '—')}</span></div>
+                                <div class="whitespace-normal break-words">🔨 Gwóźdź: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.spike || '—')}</span></div>
+                                <div class="whitespace-normal break-words">🐟 Obrona: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.defense || '—')}</span></div>
+                                <div class="whitespace-normal break-words">🌪️ Serwis: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.serve || '—')}</span></div>
+                                <div class="whitespace-normal break-words col-span-2 sm:col-span-1">🎯 Rozegranie: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.setter || '—')}</span></div>
                             </div>
                         </div>
                     `;
@@ -10776,7 +11267,7 @@ function initFirebaseSync() {
                             <div class="flex items-center gap-1.5 min-w-0 pr-2">
                                 <span class="text-xs shrink-0">${isWinner ? '👑' : `${index + 1}.`}</span>
                                 ${(typeof getPlayerAvatarHtml === 'function') ? getPlayerAvatarHtml(name, 'xs') : ''}
-                                <span class="font-bold ${isWinner ? 'text-amber-300 font-black' : 'text-slate-200'} truncate">
+                                <span class="font-bold ${isWinner ? 'text-amber-300 font-black' : 'text-slate-200'} whitespace-normal break-words">
                                     ${formatPlayerNameHtml(name)}
                                 </span>
                             </div>
@@ -10806,7 +11297,7 @@ function initFirebaseSync() {
                     <div class="flex items-center justify-between text-xs border-b border-slate-800/70 pb-1.5 pt-0.5">
                         <div class="flex items-center gap-1.5 min-w-0">
                             <span class="text-sm">${currentCatMeta.icon}</span>
-                            <strong class="text-amber-300 font-black text-xs truncate">${currentCatMeta.title}</strong>
+                            <strong class="text-amber-300 font-black text-xs whitespace-normal break-words">${currentCatMeta.title}</strong>
                             <span class="text-[10px] font-mono text-slate-400 font-bold">(${catTotalVotes} głosów)</span>
                         </div>
                         <button type="button" onclick="${toggleFn}" class="text-[9.5px] font-bold text-slate-300 hover:text-amber-300 bg-slate-900 border border-slate-800 px-2 py-0.5 rounded-md transition shrink-0 active:scale-95 cursor-pointer">
@@ -10827,10 +11318,11 @@ function initFirebaseSync() {
                 { key: 'block', title: 'Czapa Meczu', icon: '🧱' },
                 { key: 'spike', title: 'Gwóźdź Meczu', icon: '🔨' },
                 { key: 'defense', title: 'Obrona Życia', icon: '🐟' },
-                { key: 'serve', title: 'Serwis Turbo', icon: '🌪️' }
+                { key: 'serve', title: 'Serwis Turbo', icon: '🌪️' },
+                { key: 'setter', title: 'Magik Rozegrania', icon: '🎯' }
             ];
 
-            const hasAny = catMeta.some(c => aw[c.key].winners.length > 0);
+            const hasAny = catMeta.some(c => aw[c.key]?.winners?.length > 0);
 
             if (compact) {
                 if (!hasAny) {
@@ -10849,17 +11341,18 @@ function initFirebaseSync() {
                             <span class="text-[8.5px] text-slate-400 font-semibold bg-slate-950 border border-slate-800 px-1.5 py-0.2 rounded">Dotknij kafelka, by poznać głosy</span>
                         </div>
                         <div class="grid grid-cols-2 gap-1.5">
-                            ${catMeta.map(c => {
+                            ${catMeta.map((c, idx) => {
                                 const info = aw[c.key];
-                                const winCount = info.winners.length;
+                                const winCount = info?.winners?.length || 0;
                                 const winStr = winCount > 0 ? info.winners.map(w => escapeHtml(w)).join(' & ') : '—';
-                                const voteStr = info.maxVotes > 0 ? pluralizeVotes(info.maxVotes) : '';
+                                const voteStr = (info && info.maxVotes > 0) ? pluralizeVotes(info.maxVotes) : '';
                                 const isActive = (activeCat === c.key);
                                 const onclickStr = isArchived 
                                     ? `setArchivedActiveCategory('${c.key}', '${escapeHtml(match.date)}')` 
                                     : `setMvpActiveCategory('${c.key}')`;
+                                const spanClass = (idx === 4) ? 'col-span-2 sm:col-span-1' : '';
                                 return `
-                                    <div onclick="${onclickStr}" class="award-card cursor-pointer ${isActive ? 'bg-amber-950/40 border-amber-400 ring-1 ring-amber-400/50' : 'bg-slate-950/80 hover:bg-slate-800/80 border-slate-800/80'} border p-1.5 rounded-xl flex flex-col justify-between transition active:scale-95 shadow-sm">
+                                    <div onclick="${onclickStr}" class="award-card cursor-pointer ${isActive ? 'bg-amber-950/40 border-amber-400 ring-1 ring-amber-400/50' : 'bg-slate-950/80 hover:bg-slate-800/80 border-slate-800/80'} border p-1.5 rounded-xl flex flex-col justify-between transition active:scale-95 shadow-sm ${spanClass}">
                                         <div class="flex items-center justify-between gap-1 text-[9px] text-slate-400 font-bold">
                                             <span class="whitespace-nowrap">${c.icon} ${c.title}</span>
                                             ${voteStr ? `<span class="text-amber-400 font-mono shrink-0 whitespace-nowrap">${voteStr}</span>` : ''}
@@ -10889,26 +11382,45 @@ function initFirebaseSync() {
                         </div>
                     ` : `
                         <div class="grid grid-cols-2 gap-1.5 sm:gap-2">
-                            ${catMeta.map(c => {
+                            ${catMeta.map((c, idx) => {
                                 const info = aw[c.key];
-                                const winCount = info.winners.length;
-                                const winStr = winCount > 0 ? info.winners.map(w => escapeHtml(w)).join(' & ') : 'Brak nominacji';
-                                const voteStr = info.maxVotes > 0 ? pluralizeVotes(info.maxVotes) : '';
+                                const winCount = info?.winners?.length || 0;
+                                const voteStr = (info && info.maxVotes > 0) ? pluralizeVotes(info.maxVotes) : '';
                                 const isActive = (activeCat === c.key);
                                 const onclickStr = isArchived 
                                     ? `setArchivedActiveCategory('${c.key}', '${escapeHtml(match.date)}')` 
                                     : `setMvpActiveCategory('${c.key}')`;
+                                const spanClass = (idx === 4) ? 'col-span-2 sm:col-span-1' : '';
+
+                                let winnersHtml = '<div class="text-xs font-black text-slate-500 leading-tight">Brak nominacji</div>';
+                                if (winCount === 1) {
+                                    winnersHtml = `
+                                        <div class="text-xs font-black text-white whitespace-normal break-words leading-tight" title="${escapeHtml(info.winners[0])}">
+                                            ${escapeHtml(info.winners[0])}
+                                        </div>
+                                    `;
+                                } else if (winCount > 1) {
+                                    winnersHtml = `
+                                        <div class="flex flex-col gap-0.5">
+                                            ${info.winners.map(w => `
+                                                <div class="text-[10px] sm:text-[11px] font-black text-white leading-tight flex items-center gap-1 min-w-0" title="${escapeHtml(w)}">
+                                                    <span class="w-1 h-1 rounded-full bg-amber-400 shrink-0"></span>
+                                                    <span class="whitespace-normal break-words">${escapeHtml(w)}</span>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    `;
+                                }
+
                                 return `
-                                    <div onclick="${onclickStr}" class="award-card cursor-pointer ${isActive ? 'bg-amber-950/30 border-2 border-amber-400/80 ring-1 ring-amber-400/30 shadow-sm' : 'bg-slate-900/90 hover:bg-slate-800/80 border border-slate-800'} p-2 rounded-xl flex flex-col justify-between space-y-1 transition active:scale-95">
+                                    <div onclick="${onclickStr}" class="award-card cursor-pointer ${isActive ? 'bg-amber-950/30 border-2 border-amber-400/80 ring-1 ring-amber-400/30 shadow-sm' : 'bg-slate-900/90 hover:bg-slate-800/80 border border-slate-800'} p-2 rounded-xl flex flex-col justify-between min-h-[50px] space-y-1 transition active:scale-95 ${spanClass}">
                                         <div class="flex items-center justify-between gap-1">
                                             <span class="text-[10px] font-bold text-slate-400 flex items-center gap-1">
                                                 <span>${c.icon}</span> <span class="leading-tight">${c.title}</span>
                                             </span>
-                                            ${voteStr ? `<span class="text-[9px] font-mono font-bold text-amber-400 shrink-0">${voteStr}</span>` : ''}
+                                            ${voteStr ? `<span class="text-[9px] font-mono font-bold text-amber-400 shrink-0">${voteStr}${winCount > 1 ? ' (remis)' : ''}</span>` : ''}
                                         </div>
-                                        <div class="text-xs font-black ${winCount > 0 ? 'text-white' : 'text-slate-500'} whitespace-normal break-words leading-tight">
-                                            ${winStr}
-                                        </div>
+                                        ${winnersHtml}
                                     </div>
                                 `;
                             }).join('')}
@@ -10919,12 +11431,13 @@ function initFirebaseSync() {
         }
 
         function calculateSeasonSpecialAwards(state = AppState) {
-            const cats = ['block', 'spike', 'defense', 'serve'];
+            const cats = ['block', 'spike', 'defense', 'serve', 'setter'];
             const catLabels = {
                 block: { m: "Król Bloków", f: "Królowa Bloków", icon: "🧱" },
                 spike: { m: "Król Ataku", f: "Królowa Ataku", icon: "🔨" },
                 defense: { m: "Król Obron", f: "Królowa Obron", icon: "🐟" },
-                serve: { m: "Król Zagrywki", f: "Królowa Zagrywki", icon: "🌪️" }
+                serve: { m: "Serwis Turbo", f: "Serwis Turbo", icon: "🚀" },
+                setter: { m: "Magik Rozegrania", f: "Magiczka Rozegrania", icon: "🎯" }
             };
 
             const defaultResult = {
@@ -10932,7 +11445,8 @@ function initFirebaseSync() {
                     block: { title: "Król Bloków", leadersStr: "-", wins: 0, votes: 0, isTied: false },
                     spike: { title: "Król Ataku", leadersStr: "-", wins: 0, votes: 0, isTied: false },
                     defense: { title: "Król Obron", leadersStr: "-", wins: 0, votes: 0, isTied: false },
-                    serve: { title: "Król Zagrywki", leadersStr: "-", wins: 0, votes: 0, isTied: false }
+                    serve: { title: "Serwis Turbo", leadersStr: "-", wins: 0, votes: 0, isTied: false },
+                    setter: { title: "Magik Rozegrania", leadersStr: "-", wins: 0, votes: 0, isTied: false }
                 },
                 playerStats: {}
             };
@@ -10947,6 +11461,7 @@ function initFirebaseSync() {
                         spike: { wins: 0, votes: 0 },
                         defense: { wins: 0, votes: 0 },
                         serve: { wins: 0, votes: 0 },
+                        setter: { wins: 0, votes: 0 },
                         totalWins: 0,
                         totalVotes: 0,
                         titles: []
@@ -10959,7 +11474,7 @@ function initFirebaseSync() {
                         if (!isMvpVotingFinished(m) || !m.specialVotes || typeof m.specialVotes !== 'object') return;
                         const attendees = getMatchPlayingSquad(m);
 
-                        const matchTallies = { block: {}, spike: {}, defense: {}, serve: {} };
+                        const matchTallies = { block: {}, spike: {}, defense: {}, serve: {}, setter: {} };
                         attendees.forEach(p => {
                             cats.forEach(c => { matchTallies[c][p] = 0; });
                         });
@@ -10976,6 +11491,7 @@ function initFirebaseSync() {
                                             spike: { wins: 0, votes: 0 },
                                             defense: { wins: 0, votes: 0 },
                                             serve: { wins: 0, votes: 0 },
+                                            setter: { wins: 0, votes: 0 },
                                             totalWins: 0,
                                             totalVotes: 0,
                                             titles: []
@@ -10999,6 +11515,7 @@ function initFirebaseSync() {
                                                 spike: { wins: 0, votes: 0 },
                                                 defense: { wins: 0, votes: 0 },
                                                 serve: { wins: 0, votes: 0 },
+                                                setter: { wins: 0, votes: 0 },
                                                 totalWins: 0,
                                                 totalVotes: 0,
                                                 titles: []
@@ -11764,7 +12281,7 @@ function initFirebaseSync() {
         let currentHofSubtab = 'ranking';
         function setHallOfFameSubtab(subtab) {
             currentHofSubtab = subtab;
-            const subtabs = ['ranking', 'records', 'archive'];
+            const subtabs = ['ranking', 'records', 'stats', 'archive'];
             subtabs.forEach(t => {
                 const btn = document.getElementById(`hofSubtabBtn-${t}`);
                 const container = document.getElementById(`hofSubtabContainer-${t}`);
@@ -11774,28 +12291,30 @@ function initFirebaseSync() {
                 }
                 if (btn) {
                     if (isActive) {
-                        btn.className = "py-2 px-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black shadow-md flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs";
+                        btn.className = "py-2 px-1 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black shadow-md flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs";
                     } else {
-                        btn.className = "py-2 px-1.5 rounded-xl text-slate-400 hover:text-white font-extrabold flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs";
+                        btn.className = "py-2 px-1 rounded-xl text-slate-400 hover:text-white font-extrabold flex items-center justify-center gap-1 transition active:scale-95 text-[11px] sm:text-xs";
                     }
                 }
             });
+
+            if (subtab === 'records' && typeof renderSeasonRecords === 'function') {
+                renderSeasonRecords();
+            } else if (subtab === 'stats' && typeof renderAdvancedStatsSection === 'function') {
+                renderAdvancedStatsSection();
+            } else if (subtab === 'archive' && typeof renderArchiveTab === 'function') {
+                renderArchiveTab();
+            }
         }
 
         function renderSeasonRecords() {
             const mvpTally = {};
             Object.keys(AppState.months || {}).forEach(mName => {
                 (AppState.months[mName]?.matches || []).forEach(m => {
-                    if (isMvpVotingFinished(m)) {
-                        const votes = m.votes || {};
-                        const tally = {};
-                        Object.values(votes).forEach(nom => tally[nom] = (tally[nom] || 0) + 1);
-                        let maxV = 0, topNom = "";
-                        Object.entries(tally).forEach(([nom, count]) => {
-                            if (count > maxV) { maxV = count; topNom = nom; }
-                        });
-                        if (topNom && maxV > 0) mvpTally[topNom] = (mvpTally[topNom] || 0) + 1;
-                    }
+                    const winners = getMatchMvpWinners(m);
+                    winners.forEach(w => {
+                        mvpTally[w] = (mvpTally[w] || 0) + 1;
+                    });
                 });
             });
 
@@ -11807,8 +12326,12 @@ function initFirebaseSync() {
                 .filter(([_, count]) => count === topMvpCount && count > 0)
                 .map(([nom]) => nom);
             const kingMvpEl = document.getElementById('recordKingMvp');
+            const kingMvpBadgeEl = document.getElementById('recordKingMvpBadge');
             if (kingMvpEl) {
-                kingMvpEl.innerText = topMvpCount > 0 ? `${topMvpNominees.join(' & ')} (${topMvpCount}x 👑)` : "Sezon w toku";
+                kingMvpEl.innerText = topMvpCount > 0 ? topMvpNominees.join(' & ') : "Sezon w toku";
+            }
+            if (kingMvpBadgeEl) {
+                kingMvpBadgeEl.innerText = topMvpCount > 0 ? `${topMvpCount}x 👑` : "-";
             }
 
             // Władcy Parkietu – Wyróżnienia Sezonu
@@ -11820,7 +12343,14 @@ function initFirebaseSync() {
                     const kEl = document.getElementById(kingId);
                     if (tEl && l) tEl.innerText = l.title;
                     if (kEl && l) {
-                        kEl.innerText = l.wins > 0 ? `${l.leadersStr} (${l.wins}x)` : "Sezon w toku";
+                        if (l.wins > 0) {
+                            const leadersFormatted = (l.leaderList && l.leaderList.length > 2)
+                                ? `${l.leaderList.slice(0, -1).join(', ')} i ${l.leaderList[l.leaderList.length - 1]}`
+                                : l.leadersStr;
+                            kEl.innerText = `${leadersFormatted} (${l.wins}x)`;
+                        } else {
+                            kEl.innerText = "Sezon w toku";
+                        }
                     }
                 };
 
@@ -11828,6 +12358,7 @@ function initFirebaseSync() {
                 updateSeasonCard('recordTitleSpike', 'recordKingSpike', 'spike');
                 updateSeasonCard('recordTitleDefense', 'recordKingDefense', 'defense');
                 updateSeasonCard('recordTitleServe', 'recordKingServe', 'serve');
+                updateSeasonCard('recordTitleSetter', 'recordKingSetter', 'setter');
             }
 
             const todayStr = getLocalDateKey();
@@ -11853,26 +12384,14 @@ function initFirebaseSync() {
             Object.keys(AppState.months || {}).forEach(mName => {
                 (AppState.months[mName]?.matches || []).forEach(m => {
                     if (m.score && (m.score.includes('3 : 2') || m.score.includes('2 : 3') || m.score.includes('26:') || m.score.includes('28:'))) {
-                        clashMatchText = `${m.date} (${m.score.split('(')[0].trim()})`;
+                        const scoreClean = m.score.replace(/Drużyna\s*/gi, '').split('(')[0].trim();
+                        const dateFormatted = m.date.slice(5).replace('-', '.');
+                        clashMatchText = `${dateFormatted} • ${scoreClean}`;
                     }
                 });
             });
             const clashEl = document.getElementById('recordMostClashMatch');
             if (clashEl) clashEl.innerText = clashMatchText;
-
-            let cleanCount = 0;
-            AppState.all_players.forEach(p => {
-                let due = 0, paid = 0;
-                Object.keys(AppState.months || {}).forEach(m => {
-                    const b = calculateMonthlyBilling(m);
-                    const info = b.playersMap[p] || { costDue: 0, paid: 0 };
-                    due += info.costDue;
-                    paid += info.paid;
-                });
-                if ((paid - due) >= -0.05 && due > 0) cleanCount++;
-            });
-            const cleanPayersEl = document.getElementById('recordCleanPayers');
-            if (cleanPayersEl) cleanPayersEl.innerText = `${pluralizePlayers(cleanCount)} ze statusem 100%`;
         }
 
         function formatPodiumPlayerNameHtml(fullName, isFirst = false) {
@@ -12206,7 +12725,8 @@ function initFirebaseSync() {
                     { key: 'block', icon: '🧱', name: 'Czapa' },
                     { key: 'spike', icon: '🔨', name: 'Gwóźdź' },
                     { key: 'defense', icon: '🐟', name: 'Obrona' },
-                    { key: 'serve', icon: '🌪️', name: 'Serwis' }
+                    { key: 'serve', icon: '🌪️', name: 'Serwis' },
+                    { key: 'setter', icon: '🎯', name: 'Rozegranie' }
                 ];
                 catMeta.forEach(c => {
                     const w = myAwards[c.key]?.wins || 0;
@@ -12237,7 +12757,7 @@ function initFirebaseSync() {
             const myDue = myBillingInfo.costDue;
             const myPaid = myBillingInfo.paid;
             const mySaldo = myPaid - myDue;
-            const isMyPaid = (myDue > 0 && mySaldo >= -0.05);
+            const isMyPaid = (mySaldo >= -0.05);
 
             if (!isOrganizer && currentProfileSubtab === 'admin') {
                 currentProfileSubtab = 'stats';
@@ -12467,7 +12987,7 @@ function initFirebaseSync() {
                             <span class="text-base shrink-0">👑</span>
                             <div class="min-w-0">
                                 <span class="text-[9.5px] uppercase font-black text-amber-400 block tracking-wider">Tytuł Sezonu</span>
-                                <strong class="text-amber-200 text-xs truncate block">${specialAwardsText}</strong>
+                                <strong class="text-amber-200 text-xs whitespace-normal break-words leading-tight block">${specialAwardsText}</strong>
                             </div>
                         </div>
                         <span class="text-[10px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded-full shrink-0">
@@ -12642,7 +13162,7 @@ function initFirebaseSync() {
                                         <span>💸</span>
                                         <span class="text-xs">Składki (${escapeHtml(AppState.currentMonth)})</span>
                                     </div>
-                                    ${isMyPaid ? `<span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">✅ Opłacone</span>` : `<span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-rose-950 text-rose-400 border border-rose-800 font-mono">Do zapłaty: ${Math.max(0, myDue - myPaid).toFixed(2)} zł</span>`}
+                                    ${isMyPaid ? `<span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">✅ ${myDue === 0 ? 'Rozliczone (0 zł)' : 'Opłacone'}</span>` : `<span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-rose-950 text-rose-400 border border-rose-800 font-mono">Do zapłaty: ${Math.max(0, myDue - myPaid).toFixed(2)} zł</span>`}
                                 </div>
                                 <div class="bg-slate-900/90 border border-slate-800/80 rounded-xl p-2.5 flex items-center justify-between text-xs">
                                     <div>
@@ -12717,11 +13237,11 @@ function initFirebaseSync() {
                             <div class="bg-slate-900/90 border border-slate-800/90 rounded-xl p-2.5 space-y-1.5 text-xs text-slate-300">
                                 <div class="flex items-center justify-between">
                                     <span class="text-slate-400">⏰ Zbiórka / rozgrzewka:</span>
-                                    <strong class="text-emerald-400 font-mono font-bold">${escapeHtml(AppState.settings?.warmupTime || "18:45")}</strong>
+                                    <strong class="text-emerald-400 font-mono font-bold">${escapeHtml(AppState.settings?.warmupTime || "19:45")}</strong>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-slate-400">🏐 Czas gry:</span>
-                                    <strong class="text-emerald-400 font-mono font-bold">${escapeHtml(AppState.settings?.startTime || "19:00")} - ${escapeHtml(AppState.settings?.gameEndTime || "21:00")}</strong>
+                                    <strong class="text-emerald-400 font-mono font-bold">${escapeHtml(AppState.settings?.startTime || "20:00")} - ${escapeHtml(AppState.settings?.gameEndTime || "21:45")}</strong>
                                 </div>
                                 <div class="flex items-center justify-between gap-2">
                                     <span class="text-slate-400 shrink-0">📍 Adres hali:</span>
