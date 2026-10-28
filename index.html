@@ -5590,17 +5590,17 @@ function initFirebaseSync() {
 
             const subtabMvpBadge = document.getElementById('matchSubtabMvpBadge');
             if (subtabMvpBadge) {
-                if (isCancelled) {
+                if (isCancelled || mainPlayers.length === 0) {
                     subtabMvpBadge.classList.add('hidden');
                 } else {
                     const isFinished = isMvpVotingFinished(currentMatch);
-                    const votesCount = Object.keys(currentMatch.votes || {}).length;
+                    const validVotesCount = mainPlayers.filter(p => Boolean(currentMatch.votes && currentMatch.votes[p])).length;
                     if (isFinished) {
                         subtabMvpBadge.classList.remove('hidden');
                         subtabMvpBadge.innerText = "👑";
-                    } else if (votesCount > 0) {
+                    } else if (validVotesCount > 0) {
                         subtabMvpBadge.classList.remove('hidden');
-                        subtabMvpBadge.innerText = `${votesCount}/14`;
+                        subtabMvpBadge.innerText = `${validVotesCount}/${mainPlayers.length}`;
                     } else {
                         subtabMvpBadge.classList.add('hidden');
                     }
@@ -8832,10 +8832,6 @@ function initFirebaseSync() {
                         const isPlayerMvp = mvpWinners.includes(p);
                         const isPlayerWomenMvp = mvpWomenWinners.includes(p);
                         const isGuest = !AppState.all_players.includes(p);
-                        const posBadges = (typeof getPlayerPositionsMicroBadgesHtml === 'function') 
-                            ? getPlayerPositionsMicroBadgesHtml(p, 2) 
-                            : ((typeof getPlayerPositionsBadgesHtml === 'function') ? getPlayerPositionsBadgesHtml(p) : '');
-
                         const rowBorder = isPlayerMvp 
                             ? 'bg-amber-950/30 border-amber-500/50 hover:border-amber-400 text-amber-200' 
                             : (isPlayerWomenMvp 
@@ -8843,17 +8839,14 @@ function initFirebaseSync() {
                                 : 'bg-slate-900/60 border-slate-800/80 hover:border-slate-700 text-slate-200');
 
                         return `
-                            <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" title="Dotknij, aby zobaczyć profil gracza" class="flex items-center justify-between gap-1.5 py-1 px-2 rounded-xl border transition cursor-pointer select-none min-h-[34px] hover:bg-white/5 ${rowBorder}">
-                                <div class="flex items-center gap-1.5 min-w-0 flex-1">
+                            <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" title="Dotknij, aby zobaczyć profil gracza" class="flex items-center justify-between gap-1.5 py-1.5 px-2 rounded-xl border transition cursor-pointer select-none hover:bg-white/5 ${rowBorder}">
+                                <div class="flex items-center gap-2 min-w-0 flex-1">
                                     ${getPlayerAvatarHtml(p, 'xs')}
-                                    <span class="font-bold text-[10.5px] sm:text-[11px] leading-tight whitespace-normal break-words ${isPlayerMvp ? 'text-amber-300 font-black' : (isPlayerWomenMvp ? 'text-pink-300 font-black' : '')}">
+                                    <span class="font-bold text-[11px] sm:text-xs leading-tight whitespace-normal break-words ${isPlayerMvp ? 'text-amber-300 font-black' : (isPlayerWomenMvp ? 'text-pink-300 font-black' : '')}">
                                         ${isPlayerMvp ? '👑 ' : (isPlayerWomenMvp ? '👸 ' : '')}${formatPlayerNameHtml(p)}
                                     </span>
-                                    ${isGuest ? `<span class="text-[8px] text-slate-500 font-medium shrink-0">(gość)</span>` : ''}
                                 </div>
-                                <div class="flex items-center gap-1 shrink-0 ml-1">
-                                    ${posBadges}
-                                </div>
+                                ${isGuest ? `<span class="text-[8px] text-slate-500 font-medium shrink-0">(gość)</span>` : ''}
                             </div>
                         `;
                     }).join('');
@@ -8901,10 +8894,6 @@ function initFirebaseSync() {
                                 const isPlayerMvp = mvpWinners.includes(p);
                                 const isPlayerWomenMvp = mvpWomenWinners.includes(p);
                                 const isGuest = !AppState.all_players.includes(p);
-                                const posBadges = (typeof getPlayerPositionsMicroBadgesHtml === 'function') 
-                                    ? getPlayerPositionsMicroBadgesHtml(p, 2) 
-                                    : '';
-
                                 const rowBorder = isPlayerMvp 
                                     ? 'bg-amber-950/30 border-amber-500/50 hover:border-amber-400 text-amber-200' 
                                     : (isPlayerWomenMvp 
@@ -8912,17 +8901,14 @@ function initFirebaseSync() {
                                         : 'bg-slate-900/60 border-slate-800/80 hover:border-slate-700 text-slate-200');
 
                                 return `
-                                    <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" title="Dotknij, aby zobaczyć profil gracza" class="flex items-center justify-between gap-1.5 py-1 px-2 rounded-xl border transition cursor-pointer select-none min-h-[34px] hover:bg-white/5 ${rowBorder}">
-                                        <div class="flex items-center gap-1.5 min-w-0 flex-1">
+                                    <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(p)});" title="Dotknij, aby zobaczyć profil gracza" class="flex items-center justify-between gap-1.5 py-1.5 px-2 rounded-xl border transition cursor-pointer select-none hover:bg-white/5 ${rowBorder}">
+                                        <div class="flex items-center gap-2 min-w-0 flex-1">
                                             ${getPlayerAvatarHtml(p, 'xs')}
-                                            <span class="font-bold text-[10.5px] sm:text-[11px] leading-tight whitespace-normal break-words ${isPlayerMvp ? 'text-amber-300 font-black' : (isPlayerWomenMvp ? 'text-pink-300 font-black' : '')}">
+                                            <span class="font-bold text-[11px] sm:text-xs leading-tight whitespace-normal break-words ${isPlayerMvp ? 'text-amber-300 font-black' : (isPlayerWomenMvp ? 'text-pink-300 font-black' : '')}">
                                                 ${isPlayerMvp ? '👑 ' : (isPlayerWomenMvp ? '👸 ' : '')}${formatPlayerNameHtml(p)}
                                             </span>
-                                            ${isGuest ? `<span class="text-[8px] text-slate-500 font-medium shrink-0">(gość)</span>` : ''}
                                         </div>
-                                        <div class="flex items-center gap-1 shrink-0 ml-1">
-                                            ${posBadges}
-                                        </div>
+                                        ${isGuest ? `<span class="text-[8px] text-slate-500 font-medium shrink-0">(gość)</span>` : ''}
                                     </div>
                                 `;
                             }).join('')}
