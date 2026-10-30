@@ -175,7 +175,7 @@
         /* Wyłączenie ciemnych gradientów Tailwind na wszystkich kontenerach i kartach */
         [data-theme="haaland-light"] div[class*="from-slate-"],
         [data-theme="haaland-light"] section[class*="from-slate-"],
-        [data-theme="haaland-light"] [class*="bg-gradient-to"]:not(button):not(.tab-active):not([class*="from-amber"]):not([class*="from-emerald"]):not([class*="from-indigo"]) {
+        [data-theme="haaland-light"] [class*="bg-gradient-to"]:not(button):not(.tab-active):not([class*="from-emerald"]):not([class*="from-indigo"]):not(.match-card-mvp-banner):not(.match-modal-mvp-banner):not(.match-modal-women-mvp-banner) {
             background-image: none !important;
         }
 
@@ -346,9 +346,11 @@
             color: #4338ca !important;
             border-color: #c7d2fe !important;
         }
+        [data-theme="haaland-light"] .text-amber-100,
+        [data-theme="haaland-light"] .text-amber-200,
         [data-theme="haaland-light"] .text-amber-300,
         [data-theme="haaland-light"] .text-amber-400 {
-            color: #b45309 !important;
+            color: #78350f !important;
         }
         [data-theme="haaland-light"] .text-sky-400 {
             color: #0284c7 !important;
@@ -486,7 +488,7 @@
         /* Wyłączenie ciemnych gradientów Tailwind na wszystkich kontenerach i kartach */
         [data-theme="mercurial-light"] div[class*="from-slate-"],
         [data-theme="mercurial-light"] section[class*="from-slate-"],
-        [data-theme="mercurial-light"] [class*="bg-gradient-to"]:not(button):not(.tab-active):not([class*="from-amber"]):not([class*="from-emerald"]):not([class*="from-indigo"]) {
+        [data-theme="mercurial-light"] [class*="bg-gradient-to"]:not(button):not(.tab-active):not([class*="from-emerald"]):not([class*="from-indigo"]):not(.match-card-mvp-banner):not(.match-modal-mvp-banner):not(.match-modal-women-mvp-banner) {
             background-image: none !important;
         }
 
@@ -657,9 +659,11 @@
             color: #be123c !important;
             border-color: #fbcfe8 !important;
         }
+        [data-theme="mercurial-light"] .text-amber-100,
+        [data-theme="mercurial-light"] .text-amber-200,
         [data-theme="mercurial-light"] .text-amber-300,
         [data-theme="mercurial-light"] .text-amber-400 {
-            color: #b45309 !important;
+            color: #78350f !important;
         }
         [data-theme="mercurial-light"] .text-sky-400 {
             color: #e11d48 !important;
@@ -795,6 +799,256 @@
             color: #ffffff !important;
             border-color: #be123c !important;
             box-shadow: 0 1px 3px rgba(225, 29, 72, 0.35) !important;
+        }
+
+        /* ================= KARTA ZWYCIĘZCY MVP I WYRÓŻNIENIA W JASNYCH MOTYWACH ================= */
+        [data-theme="haaland-light"] #mvpWinnerContainer,
+        [data-theme="mercurial-light"] #mvpWinnerContainer {
+            background-color: #fef3c7 !important;
+            background-image: linear-gradient(180deg, #fffdf5 0%, #fef3c7 60%, #fde68a 100%) !important;
+            border-color: #f59e0b !important;
+            box-shadow: 0 4px 18px -2px rgba(245, 158, 11, 0.22) !important;
+        }
+        [data-theme="haaland-light"] #mvpWinnerContainer #mvpWinnerHeaderLabel,
+        [data-theme="mercurial-light"] #mvpWinnerContainer #mvpWinnerHeaderLabel {
+            color: #b45309 !important;
+            font-weight: 800 !important;
+        }
+        [data-theme="haaland-light"] #mvpWinnerContainer #mvpWinnerName,
+        [data-theme="haaland-light"] #mvpWinnerContainer #mvpWinnerName *,
+        [data-theme="mercurial-light"] #mvpWinnerContainer #mvpWinnerName,
+        [data-theme="mercurial-light"] #mvpWinnerContainer #mvpWinnerName * {
+            color: #78350f !important;
+            font-weight: 900 !important;
+        }
+        [data-theme="haaland-light"] #mvpWinnerContainer #mvpWinnerVotes,
+        [data-theme="haaland-light"] #mvpWinnerContainer #mvpWinnerVotes *,
+        [data-theme="mercurial-light"] #mvpWinnerContainer #mvpWinnerVotes,
+        [data-theme="mercurial-light"] #mvpWinnerContainer #mvpWinnerVotes * {
+            color: #92400e !important;
+            font-weight: 700 !important;
+        }
+        [data-theme="haaland-light"] #mvpWinnerContainer #mvpMainWinnerBox,
+        [data-theme="mercurial-light"] #mvpWinnerContainer #mvpMainWinnerBox {
+            background-color: #fef3c7 !important;
+            border-color: #fcd34d !important;
+        }
+        [data-theme="haaland-light"] #mvpWinnerContainer #mvpWomenWinnerBox,
+        [data-theme="mercurial-light"] #mvpWinnerContainer #mvpWomenWinnerBox {
+            background-color: #fff1f2 !important;
+            background-image: linear-gradient(180deg, #fff5f7 0%, #ffe4e6 100%) !important;
+            border-color: #fb7185 !important;
+        }
+        [data-theme="haaland-light"] #mvpWinnerContainer #mvpWomenWinnerBox p,
+        [data-theme="mercurial-light"] #mvpWinnerContainer #mvpWomenWinnerBox p {
+            color: #be123c !important;
+            font-weight: 800 !important;
+        }
+        [data-theme="haaland-light"] #mvpWinnerContainer #mvpWomenWinnerName,
+        [data-theme="haaland-light"] #mvpWinnerContainer #mvpWomenWinnerName *,
+        [data-theme="mercurial-light"] #mvpWinnerContainer #mvpWomenWinnerName,
+        [data-theme="mercurial-light"] #mvpWinnerContainer #mvpWomenWinnerName * {
+            color: #881337 !important;
+            font-weight: 900 !important;
+        }
+        [data-theme="haaland-light"] #mvpWinnerContainer #mvpWomenWinnerVotes,
+        [data-theme="haaland-light"] #mvpWinnerContainer #mvpWomenWinnerVotes *,
+        [data-theme="mercurial-light"] #mvpWinnerContainer #mvpWomenWinnerVotes,
+        [data-theme="mercurial-light"] #mvpWinnerContainer #mvpWomenWinnerVotes * {
+            color: #9f1239 !important;
+            font-weight: 700 !important;
+        }
+        [data-theme="haaland-light"] .award-card,
+        [data-theme="mercurial-light"] .award-card {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+        }
+        [data-theme="haaland-light"] .award-card[class*="border-amber"],
+        [data-theme="mercurial-light"] .award-card[class*="border-amber"],
+        [data-theme="haaland-light"] .award-card.ring-amber-400\/50,
+        [data-theme="mercurial-light"] .award-card.ring-amber-400\/50,
+        [data-theme="haaland-light"] .award-card.border-amber-400,
+        [data-theme="mercurial-light"] .award-card.border-amber-400 {
+            background-color: #fef3c7 !important;
+            border-color: #f59e0b !important;
+        }
+
+        /* ================= PODIUM TOP 3 W HALL OF FAME W JASNYCH MOTYWACH ================= */
+        [data-theme="haaland-light"] #hallOfFamePodiumContainer > div:nth-child(1),
+        [data-theme="mercurial-light"] #hallOfFamePodiumContainer > div:nth-child(1) {
+            /* 2. Miejsce (Srebro) */
+            background-color: #ffffff !important;
+            background-image: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 4px 15px -2px rgba(100, 116, 139, 0.12) !important;
+        }
+        [data-theme="haaland-light"] #hallOfFamePodiumContainer > div:nth-child(2),
+        [data-theme="mercurial-light"] #hallOfFamePodiumContainer > div:nth-child(2) {
+            /* 1. Miejsce / Lider (Złoto) */
+            background-color: #fef3c7 !important;
+            background-image: linear-gradient(180deg, #fffdf5 0%, #fef3c7 60%, #fde68a 100%) !important;
+            border-color: #f59e0b !important;
+            box-shadow: 0 8px 24px -4px rgba(245, 158, 11, 0.28) !important;
+        }
+        [data-theme="haaland-light"] #hallOfFamePodiumContainer > div:nth-child(2) .text-amber-200,
+        [data-theme="mercurial-light"] #hallOfFamePodiumContainer > div:nth-child(2) .text-amber-200,
+        [data-theme="haaland-light"] #hallOfFamePodiumContainer > div:nth-child(2) .text-amber-300\/90,
+        [data-theme="mercurial-light"] #hallOfFamePodiumContainer > div:nth-child(2) .text-amber-300\/90 {
+            color: #78350f !important;
+            font-weight: 900 !important;
+        }
+        [data-theme="haaland-light"] #hallOfFamePodiumContainer > div:nth-child(2) .text-amber-400,
+        [data-theme="mercurial-light"] #hallOfFamePodiumContainer > div:nth-child(2) .text-amber-400 {
+            color: #b45309 !important;
+            font-weight: 900 !important;
+        }
+        [data-theme="haaland-light"] #hallOfFamePodiumContainer > div:nth-child(2) .text-slate-300,
+        [data-theme="mercurial-light"] #hallOfFamePodiumContainer > div:nth-child(2) .text-slate-300 {
+            color: #92400e !important;
+        }
+        [data-theme="haaland-light"] #hallOfFamePodiumContainer > div:nth-child(2) .ring-amber-400,
+        [data-theme="mercurial-light"] #hallOfFamePodiumContainer > div:nth-child(2) .ring-amber-400 {
+            background-color: #ffffff !important;
+        }
+        [data-theme="haaland-light"] #hallOfFamePodiumContainer > div:nth-child(3),
+        [data-theme="mercurial-light"] #hallOfFamePodiumContainer > div:nth-child(3) {
+            /* 3. Miejsce (Brąz) */
+            background-color: #ffffff !important;
+            background-image: linear-gradient(180deg, #ffffff 0%, #ffedd5 100%) !important;
+            border-color: #fdba74 !important;
+            box-shadow: 0 4px 15px -2px rgba(217, 119, 6, 0.12) !important;
+        }
+        [data-theme="haaland-light"] #hallOfFamePodiumContainer > div:nth-child(3) .text-amber-300,
+        [data-theme="mercurial-light"] #hallOfFamePodiumContainer > div:nth-child(3) .text-amber-300 {
+            color: #c2410c !important;
+            font-weight: 900 !important;
+        }
+        [data-theme="haaland-light"] #hallOfFamePodiumContainer > div:nth-child(3) .ring-amber-700\/80,
+        [data-theme="mercurial-light"] #hallOfFamePodiumContainer > div:nth-child(3) .ring-amber-700\/80 {
+            background-color: #ffffff !important;
+        }
+        [data-theme="haaland-light"] #hallOfFamePodiumContainer span.bg-amber-500\/20,
+        [data-theme="mercurial-light"] #hallOfFamePodiumContainer span.bg-amber-500\/20 {
+            background-color: #fde68a !important;
+            border-color: #f59e0b !important;
+            color: #92400e !important;
+        }
+        [data-theme="haaland-light"] #hallOfFamePodiumContainer span.bg-amber-900\/40,
+        [data-theme="mercurial-light"] #hallOfFamePodiumContainer span.bg-amber-900\/40 {
+            background-color: #ffedd5 !important;
+            border-color: #fdba74 !important;
+            color: #c2410c !important;
+        }
+
+        /* ================= KARTA KRÓLA MVP W KSIĘDZE REKORDÓW W JASNYCH MOTYWACH ================= */
+        [data-theme="haaland-light"] #recordKingMvpCard,
+        [data-theme="mercurial-light"] #recordKingMvpCard {
+            background-color: #fef3c7 !important;
+            background-image: linear-gradient(135deg, #fffdf5 0%, #fef3c7 60%, #fde68a 100%) !important;
+            border-color: #f59e0b !important;
+            box-shadow: 0 4px 18px -2px rgba(245, 158, 11, 0.22) !important;
+        }
+        [data-theme="haaland-light"] #recordKingMvpCard #recordKingMvp,
+        [data-theme="mercurial-light"] #recordKingMvpCard #recordKingMvp {
+            color: #78350f !important;
+            font-weight: 900 !important;
+        }
+        [data-theme="haaland-light"] #recordKingMvpCard #recordKingMvpBadge,
+        [data-theme="mercurial-light"] #recordKingMvpCard #recordKingMvpBadge {
+            background-color: #ffffff !important;
+            border-color: #f59e0b !important;
+            color: #92400e !important;
+        }
+        [data-theme="haaland-light"] #recordKingMvpCard span.text-amber-300\/90,
+        [data-theme="mercurial-light"] #recordKingMvpCard span.text-amber-300\/90 {
+            color: #92400e !important;
+            font-weight: 800 !important;
+        }
+        [data-theme="haaland-light"] #recordKingMvpCard span.text-slate-400,
+        [data-theme="mercurial-light"] #recordKingMvpCard span.text-slate-400 {
+            color: #b45309 !important;
+        }
+        [data-theme="haaland-light"] #recordKingMvpCard .border-amber-950\/80,
+        [data-theme="mercurial-light"] #recordKingMvpCard .border-amber-950\/80 {
+            border-color: #fde68a !important;
+        }
+        [data-theme="haaland-light"] #recordKingMvpCard .bg-amber-500\/10,
+        [data-theme="mercurial-light"] #recordKingMvpCard .bg-amber-500\/10 {
+            background-color: #fde68a !important;
+            border-color: #f59e0b !important;
+        }
+
+        /* ================= PASEK MVP NA LIŚCIE MECZÓW I W MODALU RAPORTU ================= */
+        [data-theme="haaland-light"] .match-card-mvp-banner,
+        [data-theme="mercurial-light"] .match-card-mvp-banner,
+        [data-theme="haaland-light"] .match-modal-mvp-banner,
+        [data-theme="mercurial-light"] .match-modal-mvp-banner,
+        [data-theme="haaland-light"] .profile-vote-alert-banner,
+        [data-theme="mercurial-light"] .profile-vote-alert-banner,
+        [data-theme="haaland-light"] #playerCardSpecialAwardsCard,
+        [data-theme="mercurial-light"] #playerCardSpecialAwardsCard {
+            background-color: #fef3c7 !important;
+            background-image: linear-gradient(90deg, #fffdf5 0%, #fef3c7 65%, #fde68a 100%) !important;
+            border-color: #f59e0b !important;
+            box-shadow: 0 2px 10px -1px rgba(245, 158, 11, 0.2) !important;
+        }
+        [data-theme="haaland-light"] .match-card-mvp-banner span.text-amber-300,
+        [data-theme="mercurial-light"] .match-card-mvp-banner span.text-amber-300,
+        [data-theme="haaland-light"] .match-modal-mvp-banner span.text-amber-300,
+        [data-theme="mercurial-light"] .match-modal-mvp-banner span.text-amber-300,
+        [data-theme="haaland-light"] #playerCardSpecialAwardsCard span.text-amber-300,
+        [data-theme="mercurial-light"] #playerCardSpecialAwardsCard span.text-amber-300 {
+            color: #92400e !important;
+            font-weight: 800 !important;
+        }
+        [data-theme="haaland-light"] .match-card-mvp-banner span.text-white,
+        [data-theme="mercurial-light"] .match-card-mvp-banner span.text-white,
+        [data-theme="haaland-light"] .match-modal-mvp-banner span.text-white,
+        [data-theme="mercurial-light"] .match-modal-mvp-banner span.text-white,
+        [data-theme="haaland-light"] .profile-vote-alert-banner p.text-white,
+        [data-theme="mercurial-light"] .profile-vote-alert-banner p.text-white,
+        [data-theme="haaland-light"] #playerCardSpecialAwardsCard span.text-white,
+        [data-theme="mercurial-light"] #playerCardSpecialAwardsCard span.text-white {
+            color: #78350f !important;
+            font-weight: 900 !important;
+        }
+        [data-theme="haaland-light"] .match-card-mvp-banner span.bg-amber-950\/90,
+        [data-theme="mercurial-light"] .match-card-mvp-banner span.bg-amber-950\/90,
+        [data-theme="haaland-light"] .match-modal-mvp-banner span.bg-amber-950\/80,
+        [data-theme="mercurial-light"] .match-modal-mvp-banner span.bg-amber-950\/80 {
+            background-color: #ffffff !important;
+            border-color: #f59e0b !important;
+            color: #92400e !important;
+        }
+        [data-theme="haaland-light"] .match-card-mvp-banner span.text-amber-400\/80,
+        [data-theme="mercurial-light"] .match-card-mvp-banner span.text-amber-400\/80,
+        [data-theme="haaland-light"] .match-modal-mvp-banner span.text-amber-400,
+        [data-theme="mercurial-light"] .match-modal-mvp-banner span.text-amber-400 {
+            color: #b45309 !important;
+        }
+        [data-theme="haaland-light"] .profile-vote-alert-banner p.text-amber-200\/90,
+        [data-theme="mercurial-light"] .profile-vote-alert-banner p.text-amber-200\/90 {
+            color: #b45309 !important;
+        }
+
+        /* Pasek MTV Kobiet (wersja Arka) */
+        [data-theme="haaland-light"] .match-modal-women-mvp-banner,
+        [data-theme="mercurial-light"] .match-modal-women-mvp-banner {
+            background-color: #fff1f2 !important;
+            background-image: linear-gradient(90deg, #fff5f7 0%, #ffe4e6 65%, #fecdd3 100%) !important;
+            border-color: #fb7185 !important;
+            box-shadow: 0 2px 10px -1px rgba(244, 63, 94, 0.2) !important;
+        }
+        [data-theme="haaland-light"] .match-modal-women-mvp-banner span.text-white,
+        [data-theme="mercurial-light"] .match-modal-women-mvp-banner span.text-white {
+            color: #881337 !important;
+            font-weight: 900 !important;
+        }
+        [data-theme="haaland-light"] .match-modal-women-mvp-banner span.bg-pink-950\/80,
+        [data-theme="mercurial-light"] .match-modal-women-mvp-banner span.bg-pink-950\/80 {
+            background-color: #ffffff !important;
+            border-color: #fb7185 !important;
+            color: #9f1239 !important;
         }
 
         /* ================= KARTA MOJA SKŁADKA W KAŻDYM MOTYWIE ================= */
@@ -1259,6 +1513,568 @@
             animation: fadeInScale 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
+                /* ================= KARTA MECZOWA PRZEDMECZOWA (PEŁNA INTEGRACJA Z MOTYWAMI) ================= */
+        /* 1. PRZYCISKI AKCJI */
+        #tab-teams .matchday-action-btn,
+        #tab-teams .team-swap-btn {
+            background-color: #0f172a !important;
+            color: #f1f5f9 !important;
+            border: 1px solid #334155 !important;
+        }
+        #tab-teams .matchday-action-btn:hover,
+        #tab-teams .team-swap-btn:hover {
+            background-color: #1e293b !important;
+            color: #ffffff !important;
+        }
+        #tab-teams .matchday-copy-btn {
+            background-color: rgba(14, 165, 233, 0.18) !important;
+            color: #38bdf8 !important;
+            border: 1px solid rgba(56, 189, 248, 0.5) !important;
+        }
+        #tab-teams .matchday-copy-btn:hover {
+            background-color: rgba(14, 165, 233, 0.3) !important;
+            color: #ffffff !important;
+        }
+
+        /* Przyciski w motywach jasnych */
+        [data-theme="haaland-light"] #tab-teams .matchday-action-btn,
+        [data-theme="haaland-light"] #tab-teams .team-swap-btn,
+        [data-theme="mercurial-light"] #tab-teams .matchday-action-btn,
+        [data-theme="mercurial-light"] #tab-teams .team-swap-btn {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+        }
+        [data-theme="haaland-light"] #tab-teams .matchday-action-btn:hover,
+        [data-theme="haaland-light"] #tab-teams .team-swap-btn:hover,
+        [data-theme="mercurial-light"] #tab-teams .matchday-action-btn:hover,
+        [data-theme="mercurial-light"] #tab-teams .team-swap-btn:hover {
+            background-color: #f8fafc !important;
+            color: #0284c7 !important;
+            border-color: #94a3b8 !important;
+        }
+        [data-theme="haaland-light"] #tab-teams .matchday-copy-btn,
+        [data-theme="mercurial-light"] #tab-teams .matchday-copy-btn {
+            background-color: #0284c7 !important;
+            color: #ffffff !important;
+            border: 1px solid #0284c7 !important;
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25) !important;
+        }
+        [data-theme="haaland-light"] #tab-teams .matchday-copy-btn:hover,
+        [data-theme="mercurial-light"] #tab-teams .matchday-copy-btn:hover {
+            background-color: #0369a1 !important;
+            color: #ffffff !important;
+        }
+
+        /* ========================================================================= */
+        /* A. MOTYW CIEMNY KARTY (Haaland Dark / Mercurial Dark / Classic) */
+        /* ========================================================================= */
+        #teamsCourtView .matchday-card-container,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-card-container,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-card-container {
+            background: linear-gradient(180deg, #0d1527 0%, #060913 100%) !important;
+            background-color: #060913 !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+            color: #f1f5f9 !important;
+        }
+
+        #teamsCourtView .matchday-header,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-header,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-header {
+            background: transparent !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+        }
+        #teamsCourtView .matchday-title,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-title,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-title {
+            color: #ffffff !important;
+            font-weight: 900 !important;
+        }
+        #teamsCourtView .matchday-subtitle,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-subtitle,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-subtitle {
+            color: #94a3b8 !important;
+        }
+        #teamsCourtView .matchday-date,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-date,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-date {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+        #teamsCourtView .matchday-location,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-location,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-location {
+            color: #cbd5e1 !important;
+        }
+        #teamsCourtView .matchday-time-badge,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-time-badge,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-time-badge {
+            background-color: rgba(6, 78, 59, 0.85) !important;
+            color: #34d399 !important;
+            border: 1px solid rgba(16, 185, 129, 0.45) !important;
+        }
+
+        /* Drużyna Ciemna (Dark Card) */
+        #teamsCourtView .matchday-dark-header,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-dark-header,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-dark-header {
+            background: linear-gradient(90deg, #020617 0%, #0f172a 100%) !important;
+            border: 1px solid #334155 !important;
+        }
+        #teamsCourtView #matchdayDarkTitle,
+        [data-theme="haaland-dark"] #teamsCourtView #matchdayDarkTitle,
+        [data-theme="mercurial-dark"] #teamsCourtView #matchdayDarkTitle {
+            color: #ffffff !important;
+            font-weight: 900 !important;
+        }
+        #teamsCourtView .matchday-dark-badge,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-dark-badge,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-dark-badge {
+            background-color: #020617 !important;
+            color: #cbd5e1 !important;
+            border: 1px solid #475569 !important;
+        }
+        #teamsCourtView .player-chip-dark,
+        [data-theme="haaland-dark"] #teamsCourtView .player-chip-dark,
+        [data-theme="mercurial-dark"] #teamsCourtView .player-chip-dark {
+            background-color: #020617 !important;
+            border: 1px solid #334155 !important;
+        }
+        #teamsCourtView .player-chip-dark .player-name,
+        [data-theme="haaland-dark"] #teamsCourtView .player-chip-dark .player-name,
+        [data-theme="mercurial-dark"] #teamsCourtView .player-chip-dark .player-name {
+            color: #f8fafc !important;
+            font-weight: 700 !important;
+        }
+        #teamsCourtView .player-chip-dark .player-avatar,
+        [data-theme="haaland-dark"] #teamsCourtView .player-chip-dark .player-avatar,
+        [data-theme="mercurial-dark"] #teamsCourtView .player-chip-dark .player-avatar {
+            background-color: #0f172a !important;
+            border: 1px solid #334155 !important;
+            color: #cbd5e1 !important;
+        }
+        #teamsCourtView .player-chip-dark-empty,
+        [data-theme="haaland-dark"] #teamsCourtView .player-chip-dark-empty,
+        [data-theme="mercurial-dark"] #teamsCourtView .player-chip-dark-empty {
+            background-color: rgba(2, 6, 23, 0.4) !important;
+            border: 1px dashed #334155 !important;
+            color: #64748b !important;
+        }
+
+        /* VS Separator (Dark Card) */
+        #teamsCourtView .matchday-vs-badge,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-vs-badge,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-vs-badge {
+            background-color: #0f172a !important;
+            color: #94a3b8 !important;
+            border: 1px solid #334155 !important;
+        }
+        #teamsCourtView .matchday-divider,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-divider,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-divider {
+            border-color: #1e293b !important;
+        }
+
+        /* Drużyna Jasna (Dark Card) */
+        #teamsCourtView .matchday-light-header,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-light-header,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-light-header {
+            background: linear-gradient(90deg, #ffffff 0%, #f1f5f9 100%) !important;
+            border: 1px solid #cbd5e1 !important;
+        }
+        #teamsCourtView #matchdayLightTitle,
+        [data-theme="haaland-dark"] #teamsCourtView #matchdayLightTitle,
+        [data-theme="mercurial-dark"] #teamsCourtView #matchdayLightTitle {
+            color: #0f172a !important;
+            font-weight: 900 !important;
+        }
+        #teamsCourtView .matchday-light-badge,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-light-badge,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-light-badge {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
+        }
+        #teamsCourtView .player-chip-light,
+        [data-theme="haaland-dark"] #teamsCourtView .player-chip-light,
+        [data-theme="mercurial-dark"] #teamsCourtView .player-chip-light {
+            background-color: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12) !important;
+        }
+        #teamsCourtView .player-chip-light .player-name,
+        [data-theme="haaland-dark"] #teamsCourtView .player-chip-light .player-name,
+        [data-theme="mercurial-dark"] #teamsCourtView .player-chip-light .player-name {
+            color: #0f172a !important;
+            font-weight: 700 !important;
+        }
+        #teamsCourtView .player-chip-light .player-avatar,
+        [data-theme="haaland-dark"] #teamsCourtView .player-chip-light .player-avatar,
+        [data-theme="mercurial-dark"] #teamsCourtView .player-chip-light .player-avatar {
+            background-color: #f1f5f9 !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #0f172a !important;
+            font-weight: 700 !important;
+        }
+        #teamsCourtView .player-chip-light-empty,
+        [data-theme="haaland-dark"] #teamsCourtView .player-chip-light-empty,
+        [data-theme="mercurial-dark"] #teamsCourtView .player-chip-light-empty {
+            background-color: rgba(255, 255, 255, 0.75) !important;
+            border: 1px dashed #cbd5e1 !important;
+            color: #475569 !important;
+        }
+
+        /* Stat Box (Dark Card) */
+        #teamsCourtView .matchday-stat-box,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-stat-box,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-stat-box {
+            background-color: #020617 !important;
+            border: 1px solid #1e293b !important;
+        }
+        #teamsCourtView #matchdayFactCategory,
+        [data-theme="haaland-dark"] #teamsCourtView #matchdayFactCategory,
+        [data-theme="mercurial-dark"] #teamsCourtView #matchdayFactCategory {
+            color: #38bdf8 !important;
+            font-weight: 900 !important;
+        }
+        #teamsCourtView #matchdayFactBadge,
+        [data-theme="haaland-dark"] #teamsCourtView #matchdayFactBadge,
+        [data-theme="mercurial-dark"] #teamsCourtView #matchdayFactBadge {
+            color: #64748b !important;
+        }
+        #teamsCourtView #matchdayFactText,
+        [data-theme="haaland-dark"] #teamsCourtView #matchdayFactText,
+        [data-theme="mercurial-dark"] #teamsCourtView #matchdayFactText {
+            color: #f1f5f9 !important;
+            font-weight: 500 !important;
+        }
+        #teamsCourtView .matchday-progress-bg,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-progress-bg,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-progress-bg {
+            background-color: #1e293b !important;
+        }
+        #teamsCourtView .matchday-progress-sky,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-progress-sky,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-progress-sky {
+            background-color: #38bdf8 !important;
+        }
+        #teamsCourtView .matchday-progress-amber,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-progress-amber,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-progress-amber {
+            background-color: #fbbf24 !important;
+        }
+        #teamsCourtView .matchday-progress-emerald,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-progress-emerald,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-progress-emerald {
+            background-color: #34d399 !important;
+        }
+        #teamsCourtView .matchday-progress-slate,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-progress-slate,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-progress-slate {
+            background-color: #475569 !important;
+        }
+        #teamsCourtView .matchday-stat-left-sky,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-stat-left-sky,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-stat-left-sky {
+            color: #7dd3fc !important;
+            font-weight: 700 !important;
+        }
+        #teamsCourtView .matchday-stat-right-amber,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-stat-right-amber,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-stat-right-amber {
+            color: #fde047 !important;
+            font-weight: 700 !important;
+        }
+        #teamsCourtView .matchday-stat-left-emerald,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-stat-left-emerald,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-stat-left-emerald {
+            color: #6ee7b7 !important;
+            font-weight: 700 !important;
+        }
+        #teamsCourtView .matchday-stat-right-slate,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-stat-right-slate,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-stat-right-slate {
+            color: #94a3b8 !important;
+            font-weight: 700 !important;
+        }
+
+        /* Stopka (Dark Card) */
+        #teamsCourtView .matchday-footer,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-footer,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-footer {
+            background: transparent !important;
+            background-color: transparent !important;
+        }
+        #teamsCourtView .matchday-footer-left,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-footer-left,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-footer-left {
+            color: #94a3b8 !important;
+        }
+        #teamsCourtView .matchday-footer-right,
+        [data-theme="haaland-dark"] #teamsCourtView .matchday-footer-right,
+        [data-theme="mercurial-dark"] #teamsCourtView .matchday-footer-right {
+            color: #fbbf24 !important;
+            font-weight: 700 !important;
+        }
+
+        /* ========================================================================= */
+        /* B. MOTYW JASNY KARTY (Haaland Light / Mercurial Light) */
+        /* ========================================================================= */
+        [data-theme="haaland-light"] #teamsCourtView .matchday-card-container,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-card-container {
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.04) !important;
+            color: #0f172a !important;
+        }
+
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-card-container {
+            border-color: #fbcfe8 !important;
+            box-shadow: 0 10px 30px -5px rgba(225, 29, 72, 0.08), 0 0 0 1px rgba(225, 29, 72, 0.04) !important;
+        }
+
+        /* Header (Light Card) */
+        [data-theme="haaland-light"] #teamsCourtView .matchday-header,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-header {
+            background: transparent !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            border-bottom: 1px solid #f1f5f9 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-title,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-title {
+            color: #0f172a !important;
+            font-weight: 900 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-subtitle,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-subtitle {
+            color: #64748b !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-date,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-date {
+            color: #0f172a !important;
+            font-weight: 800 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-location,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-location {
+            color: #64748b !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-time-badge,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-time-badge {
+            background-color: #ecfdf5 !important;
+            color: #059669 !important;
+            border: 1px solid #a7f3d0 !important;
+        }
+
+        /* Drużyna Ciemna (Light Card - Czyste czarne kafelki na jasnym tle) */
+        [data-theme="haaland-light"] #teamsCourtView .matchday-dark-header,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-dark-header {
+            background: linear-gradient(90deg, #090d16 0%, #1e293b 100%) !important;
+            border: 1px solid #0f172a !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView #matchdayDarkTitle,
+        [data-theme="mercurial-light"] #teamsCourtView #matchdayDarkTitle {
+            color: #ffffff !important;
+            font-weight: 900 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-dark-badge,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-dark-badge {
+            background-color: #000000 !important;
+            color: #cbd5e1 !important;
+            border: 1px solid #334155 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .player-chip-dark,
+        [data-theme="mercurial-light"] #teamsCourtView .player-chip-dark {
+            background-color: #090d16 !important;
+            border: 1px solid #1e293b !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .player-chip-dark .player-name,
+        [data-theme="mercurial-light"] #teamsCourtView .player-chip-dark .player-name {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .player-chip-dark .player-avatar,
+        [data-theme="mercurial-light"] #teamsCourtView .player-chip-dark .player-avatar {
+            background-color: #1e293b !important;
+            border: 1px solid #334155 !important;
+            color: #cbd5e1 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .player-chip-dark-empty,
+        [data-theme="mercurial-light"] #teamsCourtView .player-chip-dark-empty {
+            background-color: #f8fafc !important;
+            border: 1px dashed #cbd5e1 !important;
+            color: #94a3b8 !important;
+        }
+
+        /* VS Separator (Light Card) */
+        [data-theme="haaland-light"] #teamsCourtView .matchday-vs-badge,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-vs-badge {
+            background-color: #f1f5f9 !important;
+            color: #64748b !important;
+            border: 1px solid #cbd5e1 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-divider,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-divider {
+            border-color: #e2e8f0 !important;
+        }
+
+        /* Drużyna Jasna (Light Card - Eleganckie białe kafelki) */
+        [data-theme="haaland-light"] #teamsCourtView .matchday-light-header,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-light-header {
+            background: #f8fafc !important;
+            border: 1px solid #cbd5e1 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView #matchdayLightTitle,
+        [data-theme="mercurial-light"] #teamsCourtView #matchdayLightTitle {
+            color: #0f172a !important;
+            font-weight: 900 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-light-badge,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-light-badge {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .player-chip-light,
+        [data-theme="mercurial-light"] #teamsCourtView .player-chip-light {
+            background-color: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .player-chip-light .player-name,
+        [data-theme="mercurial-light"] #teamsCourtView .player-chip-light .player-name {
+            color: #0f172a !important;
+            font-weight: 700 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .player-chip-light .player-avatar,
+        [data-theme="mercurial-light"] #teamsCourtView .player-chip-light .player-avatar {
+            background-color: #f1f5f9 !important;
+            border: 1px solid #e2e8f0 !important;
+            color: #0f172a !important;
+            font-weight: 700 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .player-chip-light-empty,
+        [data-theme="mercurial-light"] #teamsCourtView .player-chip-light-empty {
+            background-color: #ffffff !important;
+            border: 1px dashed #e2e8f0 !important;
+            color: #94a3b8 !important;
+        }
+
+        /* Stat Box (Light Card) */
+        [data-theme="haaland-light"] #teamsCourtView .matchday-stat-box,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-stat-box {
+            background-color: #f8fafc !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView #matchdayFactCategory,
+        [data-theme="mercurial-light"] #teamsCourtView #matchdayFactCategory {
+            color: #0284c7 !important;
+            font-weight: 900 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView #matchdayFactBadge,
+        [data-theme="mercurial-light"] #teamsCourtView #matchdayFactBadge {
+            color: #64748b !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView #matchdayFactText,
+        [data-theme="mercurial-light"] #teamsCourtView #matchdayFactText {
+            color: #1e293b !important;
+            font-weight: 600 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-progress-bg,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-progress-bg {
+            background-color: #e2e8f0 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-progress-sky,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-progress-sky {
+            background-color: #0ea5e9 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-progress-amber,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-progress-amber {
+            background-color: #f59e0b !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-progress-emerald,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-progress-emerald {
+            background-color: #10b981 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-progress-slate,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-progress-slate {
+            background-color: #94a3b8 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-stat-left-sky,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-stat-left-sky {
+            color: #0284c7 !important;
+            font-weight: 700 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-stat-right-amber,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-stat-right-amber {
+            color: #d97706 !important;
+            font-weight: 700 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-stat-left-emerald,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-stat-left-emerald {
+            color: #059669 !important;
+            font-weight: 700 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-stat-right-slate,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-stat-right-slate {
+            color: #475569 !important;
+            font-weight: 700 !important;
+        }
+
+        /* Stopka (Light Card) */
+        [data-theme="haaland-light"] #teamsCourtView .matchday-footer,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-footer {
+            background: transparent !important;
+            background-color: transparent !important;
+            border-top: 1px solid #f1f5f9 !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-footer-left,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-footer-left {
+            color: #64748b !important;
+        }
+
+        [data-theme="haaland-light"] #teamsCourtView .matchday-footer-right,
+        [data-theme="mercurial-light"] #teamsCourtView .matchday-footer-right {
+            color: #d97706 !important;
+            font-weight: 700 !important;
+        }
+
         /* Stylizowane Boisko Siatkarskie */
         .volleyball-court {
             background: linear-gradient(180deg, #0b1426 0%, #060a14 50%, #0b1426 100%);
@@ -1345,14 +2161,6 @@
                             Archiwum
                         </button>
                     </div>
-                    <div class="flex items-center gap-1 shrink-0">
-                        <button type="button" onclick="scrollMatchDates(-1)" title="Przewiń w lewo" class="w-7 h-7 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs font-bold transition active:scale-95 shadow-sm">
-                            &#9664;
-                        </button>
-                        <button type="button" onclick="scrollMatchDates(1)" title="Przewiń w prawo" class="w-7 h-7 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs font-bold transition active:scale-95 shadow-sm">
-                            &#9654;
-                        </button>
-                    </div>
                 </div>
                 <div id="matchDatesContainer" class="flex gap-2 overflow-x-auto pb-1 scroll-smooth" style="-webkit-overflow-scrolling: touch; touch-action: pan-x;">
                     <!-- Populated dynamically -->
@@ -1384,6 +2192,13 @@
                         <span id="matchStatusBadge" class="hidden text-[11px] font-extrabold text-rose-400 uppercase tracking-wider bg-rose-950/80 border border-rose-800/80 px-2.5 py-0.5 rounded-full">
                             &#128683; ODWOŁANY
                         </span>
+                        <span id="matchLockedBadge" class="hidden text-[10px] font-black uppercase px-2 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                            🔒 Zapisy zamknięte
+                        </span>
+                        <button type="button" id="quickLockToggleBtn" onclick="toggleLockCurrentMatchWithAuth()" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-lg transition active:scale-95 border">
+                            🔒 Zamknij listę
+                        </button>
+
                     </div>
                     <div class="flex items-center gap-1 shrink-0">
                         <button type="button" onclick="selectAdjacentMatch(-1)" title="Poprzedni mecz" class="px-2.5 py-1 bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold rounded-xl border border-slate-800 transition active:scale-95 flex items-center gap-1 shadow-sm">
@@ -1451,7 +2266,10 @@
                             <span class="text-[10px] text-slate-500 group-open:rotate-180 transition-transform duration-200">▼</span>
                         </summary>
                         <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-1.5 pt-2 pb-0.5">
-                            <button type="button" id="cancelMatchBtn" onclick="toggleCancelCurrentMatchWithAuth()" class="w-full sm:w-auto bg-slate-950/80 hover:bg-slate-900 border border-slate-800 hover:border-rose-900/50 text-slate-300 hover:text-rose-400 font-semibold px-2.5 py-1.5 rounded-xl flex items-center justify-center gap-1.5 transition whitespace-nowrap active:scale-95 text-[11px] sm:text-xs">
+                                                        <button type="button" id="lockMatchBtn" onclick="toggleLockCurrentMatchWithAuth()" class="w-full sm:w-auto bg-slate-950/80 hover:bg-slate-900 border border-slate-800 hover:border-amber-900/50 text-slate-300 hover:text-amber-400 font-semibold px-2.5 py-1.5 rounded-xl flex items-center justify-center gap-1.5 transition whitespace-nowrap active:scale-95 text-[11px] sm:text-xs">
+                                🔒 Zamknij zapisy
+                            </button>
+<button type="button" id="cancelMatchBtn" onclick="toggleCancelCurrentMatchWithAuth()" class="w-full sm:w-auto bg-slate-950/80 hover:bg-slate-900 border border-slate-800 hover:border-rose-900/50 text-slate-300 hover:text-rose-400 font-semibold px-2.5 py-1.5 rounded-xl flex items-center justify-center gap-1.5 transition whitespace-nowrap active:scale-95 text-[11px] sm:text-xs">
                                 🚫 Odwołaj
                             </button>
                             <button type="button" onclick="clearCurrentMatchSquadWithAuth()" class="w-full sm:w-auto bg-slate-950/80 hover:bg-slate-900 border border-slate-800 hover:border-amber-900/50 text-amber-400/90 hover:text-amber-300 font-semibold px-2.5 py-1.5 rounded-xl flex items-center justify-center gap-1.5 transition whitespace-nowrap active:scale-95 text-[11px] sm:text-xs" title="Wyczyść całą listę zapisanych graczy">
@@ -1592,16 +2410,16 @@
                                     <summary class="p-2.5 sm:p-3 flex items-center justify-between cursor-pointer list-none select-none hover:bg-slate-900/80 transition">
                                         <span class="flex items-center gap-1.5 text-xs font-bold text-amber-300">
                                             <span>✨</span>
-                                            <span>Wyróżnienia za akcje meczu</span>
+                                            <span>Wyróżnienia za akcje &amp; Fair Play</span>
                                             <span class="text-[9.5px] text-slate-400 font-normal lowercase">(opcjonalne)</span>
                                         </span>
                                         <div class="flex items-center gap-1.5 text-slate-400">
-                                            <span id="awardsCounterBadge" class="text-[9.5px] font-bold text-amber-300 bg-amber-950/80 border border-amber-800/60 px-1.5 py-0.2 rounded-md hidden">0/5 wybrane</span>
+                                            <span id="awardsCounterBadge" class="text-[9.5px] font-bold text-amber-300 bg-amber-950/80 border border-amber-800/60 px-1.5 py-0.2 rounded-md hidden">0/6 wybrane</span>
                                             <span class="text-xs text-amber-400 transform group-open:rotate-180 transition-transform duration-200">▼</span>
                                         </div>
                                     </summary>
                                     <div class="p-3 pt-0 border-t border-slate-800/60 space-y-2">
-                                        <p class="text-[10px] text-slate-400 pt-1.5">Wybierz zawodników, którzy wyróżnili się konkretną akcją (lub pomiń):</p>
+                                        <p class="text-[10px] text-slate-400 pt-1.5">Wybierz zawodników, którzy wyróżnili się konkretną akcją lub postawą Fair Play (lub pomiń):</p>
                                         <div class="grid grid-cols-2 gap-1.5 sm:gap-2 text-xs">
                                             <div>
                                                 <label for="voteAwardBlock" class="block text-[10px] font-bold text-slate-300 mb-0.5 leading-tight">🧱 Czapa (blok):</label>
@@ -1627,9 +2445,15 @@
                                                     <option value="">-- Pomiń --</option>
                                                 </select>
                                             </div>
-                                            <div class="col-span-2 sm:col-span-1">
+                                            <div>
                                                 <label for="voteAwardSetter" class="block text-[10px] font-bold text-slate-300 mb-0.5 leading-tight">🎯 Magik Rozegrania:</label>
                                                 <select id="voteAwardSetter" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-2.5 py-2 focus:outline-none focus:border-amber-500 cursor-pointer">
+                                                    <option value="">-- Pomiń --</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label for="voteAwardFairPlay" class="block text-[10px] font-bold text-emerald-300 mb-0.5 leading-tight">🤝 Fair Play (Czysta Gra):</label>
+                                                <select id="voteAwardFairPlay" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-2.5 py-2 focus:outline-none focus:border-emerald-500 cursor-pointer">
                                                     <option value="">-- Pomiń --</option>
                                                 </select>
                                             </div>
@@ -1712,7 +2536,7 @@
                             <span>📋</span><span>Lista & Wybór</span>
                         </button>
                         <button type="button" id="viewModeCourtBtn" onclick="setTeamsViewMode('court')" class="px-3 py-1 rounded-xl font-bold text-slate-400 hover:text-white transition text-[11px] flex items-center gap-1">
-                            <span>🏐</span><span>Boisko & Pozycje</span>
+                            <span>👕</span><span>Karta meczu</span>
                         </button>
                     </div>
                 </div>
@@ -1736,6 +2560,16 @@
 
                 <!-- WIDOK 1: LISTY DRUŻYN Z MOŻLIWOŚCIĄ RĘCZNEGO PRZYPISYWANIA I PRZENOSZENIA -->
                 <div id="teamsListView" class="grid sm:grid-cols-2 gap-4 pt-1">
+<!-- Pasek akcji wyboru składu: Zamiana kolorów drużyn -->
+                    <div id="teamSwapActionRow" class="sm:col-span-2 flex items-center justify-between px-1 flex-wrap gap-2 pb-0.5">
+                        <span class="text-[11px] font-bold text-slate-400">Podział na Ciemnych i Jasnych</span>
+                        <button type="button" onclick="swapMatchTeamsColors()" class="team-swap-btn py-1 px-2.5 rounded-xl border text-[11px] font-bold flex items-center gap-1.5 transition active:scale-95 shadow-sm" title="Zamień kolory koszulek dla obu drużyn">
+                            <span>🔄</span>
+                            <span>Zamień kolory drużyn</span>
+                        </button>
+                    </div>
+
+                    
                     
                     <!-- Team Dark -->
                     <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-3 shadow-md flex flex-col justify-between">
@@ -1783,64 +2617,136 @@
 
                 </div>
 
-                <!-- WIDOK 2: GRAFICZNE BOISKO SIATKARSKIE (GRA NA POZYCJE) -->
+                <!-- WIDOK 2: NOWOCZESNA KARTA MECZOWA PRZEDMECZOWA (ZAPOWIEDŹ NA MESSENGERA) -->
                 <div id="teamsCourtView" class="hidden space-y-3">
-                    
-                    <!-- Baner Taktyczny & Legenda Pozycji -->
-                    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3 shadow-lg space-y-2">
-                        <div class="flex items-center justify-between gap-2 flex-wrap">
-                            <div class="flex items-center gap-2">
-                                <span class="text-base">🏐</span>
-                                <div>
-                                    <h4 class="font-extrabold text-xs text-white">Ustawienie Taktyczne (Rotacja Wyjściowa)</h4>
-                                    <p id="courtTacticalSubtitle" class="text-[10px] text-slate-400">Pozycje strefowe: P4, P3, P2 (Atak) • P5, P6, P1 (Obrona)</p>
+                    <!-- Pasek akcji karty meczowej -->
+                    <div class="flex items-center justify-between gap-1.5 flex-wrap">
+                        <button type="button" onclick="cycleMatchdayStatFact()" class="matchday-action-btn py-1.5 px-3 rounded-xl border text-[11px] font-bold flex items-center justify-center gap-1.5 transition active:scale-95 shadow-sm">
+                            <span>📊</span>
+                            <span>Inna statystyka</span>
+                        </button>
+                        <button type="button" onclick="downloadMatchdayImage()" class="matchday-copy-btn py-1.5 px-3.5 rounded-xl border text-[11px] font-bold flex items-center justify-center gap-1.5 transition active:scale-95 shadow-sm" title="Pobierz grafikę jako plik PNG">
+                            <span>📥</span>
+                            <span>Pobierz</span>
+                        </button>
+                    </div>
+
+                    <!-- GŁÓWNA KARTA MECZOWA (Czysty styl sportowy) -->
+                    <div id="matchdayCard" class="matchday-card-container w-full max-w-[420px] mx-auto rounded-[24px] p-4 relative overflow-hidden flex flex-col justify-between shadow-2xl select-none">
+                        
+                        <!-- 1. Header (używa div.matchday-header, aby uniknąć resetu tła tagu header) -->
+                        <div class="matchday-header space-y-1.5 pb-3 border-b matchday-divider">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-xl bg-sky-500/20 border border-sky-400/40 flex items-center justify-center text-sm shrink-0">
+                                        🏐
+                                    </div>
+                                    <div>
+                                        <h3 id="matchdayCardGroupName" class="text-sm font-black tracking-tight leading-none matchday-title">AKS Laurowa</h3>
+                                        <span id="matchdayMatchNumberText" class="text-[10px] font-medium matchday-subtitle">Mecz #16 • Sezon 2026</span>
+                                    </div>
+                                </div>
+
+                                <div class="text-right shrink-0">
+                                    <span class="text-[11px] font-mono font-black matchday-time-badge px-2 py-0.5 rounded-lg inline-block">
+                                        20:00 - 21:45
+                                    </span>
+                                    <span class="text-[9.5px] matchday-subtitle block mt-0.5">Zbiórka 19:45</span>
                                 </div>
                             </div>
-                            <div id="courtMatchFormatBadge" class="bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 px-2.5 py-1 rounded-xl font-mono text-[10px] font-black">
-                                6v6
-                            </div>
-                        </div>
 
-                        <!-- Legenda Pozycji -->
-                        <div class="flex items-center gap-1.5 flex-wrap pt-1 border-t border-slate-800/60 text-[9.5px]">
-                            <span class="text-slate-500 font-bold uppercase tracking-wider text-[8px] mr-1">Rola:</span>
-                            <span class="px-2 py-0.5 rounded-lg bg-indigo-950/80 text-indigo-300 border border-indigo-500/40 font-bold" title="Rozgrywający">🎯 S: Rozegranie</span>
-                            <span class="px-2 py-0.5 rounded-lg bg-rose-950/80 text-rose-300 border border-rose-500/40 font-bold" title="Atakujący">🔨 OP: Atak</span>
-                            <span class="px-2 py-0.5 rounded-lg bg-sky-950/80 text-sky-300 border border-sky-500/40 font-bold" title="Przyjmujący">🛡️ OH: Przyjęcie</span>
-                            <span class="px-2 py-0.5 rounded-lg bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 font-bold" title="Środkowy bloku">🧱 MB: Środek</span>
-                            <span class="px-2 py-0.5 rounded-lg bg-amber-950/80 text-amber-300 border border-amber-500/40 font-bold" title="Libero (Obrona)">⚡ L: Libero</span>
-                        </div>
-                    </div>
-
-                    <!-- Stylizowane Boisko Siatkarskie z Podziałem na Strefy -->
-                    <div class="volleyball-court rounded-3xl p-3 sm:p-4 min-h-[460px] flex flex-col justify-between overflow-hidden shadow-2xl relative border-2 border-sky-500/40 bg-gradient-to-b from-[#0a1222] via-[#070d18] to-[#0a1222]">
-                        
-                        <!-- Dark Team Half (Top Half) -->
-                        <div id="courtDarkHalf" class="space-y-2 z-10">
-                            <!-- Populated dynamically -->
-                        </div>
-
-                        <!-- Central Net (SIATKA) -->
-                        <div class="relative my-3 py-1 flex items-center justify-center z-20">
-                            <div class="absolute left-0 top-0 bottom-0 w-2 bg-[repeating-linear-gradient(0deg,#ef4444,#ef4444_6px,#ffffff_6px,#ffffff_12px)] rounded-full shadow-lg border border-red-950" title="Antenka lewa"></div>
-                            <div class="w-full h-8 bg-slate-950/95 border-y-2 border-white/90 relative overflow-hidden flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.15)]">
-                                <div class="absolute inset-0 opacity-25 bg-[radial-gradient(#ffffff_1.2px,transparent_1.2px)] [background-size:6px_6px]"></div>
-                                <span class="relative z-10 bg-slate-950 border border-slate-700 text-[10px] font-black px-4 py-0.5 rounded-full text-slate-100 tracking-widest shadow-md flex items-center gap-1.5">
-                                    <span class="text-amber-400">🏐</span>
-                                    <span>SIATKA</span>
-                                    <span class="text-amber-400">🏐</span>
+                            <div class="flex items-center justify-between text-xs pt-1">
+                                <span class="font-bold text-[11px] matchday-date" id="matchdayDateText">Piątek, 24 października</span>
+                                <span class="text-[10.5px] matchday-location flex items-center gap-1">
+                                    <span>📍</span> Szkoła, ul. Myśliborska 25
                                 </span>
                             </div>
-                            <div class="absolute right-0 top-0 bottom-0 w-2 bg-[repeating-linear-gradient(0deg,#ef4444,#ef4444_6px,#ffffff_6px,#ffffff_12px)] rounded-full shadow-lg border border-red-950" title="Antenka prawa"></div>
                         </div>
 
-                        <!-- Light Team Half (Bottom Half) -->
-                        <div id="courtLightHalf" class="space-y-2 z-10">
-                            <!-- Populated dynamically -->
+                        <!-- 2. Drużyna Ciemna -->
+                        <div class="space-y-2 pt-3">
+                            <div class="matchday-dark-header flex items-center justify-between px-3 py-1.5 rounded-xl border shadow-sm">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-slate-900 border border-slate-500"></span>
+                                    <span id="matchdayDarkTitle" class="text-xs font-black tracking-wide">DRUŻYNA CIEMNA</span>
+                                </div>
+                                <span class="matchday-dark-badge text-[9.5px] font-bold px-2 py-0.5 rounded-md border">
+                                    👕 Ciemna koszulka
+                                </span>
+                            </div>
+
+                            <div id="matchdayDarkGrid" class="grid grid-cols-2 gap-1.5">
+                                <!-- Renderowane w JS -->
+                            </div>
                         </div>
 
+                        <!-- 3. Separator VS -->
+                        <div class="relative flex items-center justify-center my-2.5">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t matchday-divider"></div>
+                            </div>
+                            <div class="matchday-vs-badge relative px-3 py-0.5 rounded-full border text-[9.5px] font-black tracking-widest uppercase">
+                                VS
+                            </div>
+                        </div>
+
+                        <!-- 4. Drużyna Jasna -->
+                        <div class="space-y-2">
+                            <div class="matchday-light-header flex items-center justify-between px-3 py-1.5 rounded-xl border shadow-sm">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-white border border-slate-400"></span>
+                                    <span id="matchdayLightTitle" class="text-xs font-black tracking-wide">DRUŻYNA JASNA</span>
+                                </div>
+                                <span class="matchday-light-badge text-[9.5px] font-bold px-2 py-0.5 rounded-md border font-mono">
+                                    🎽 Jasna koszulka
+                                </span>
+                            </div>
+
+                            <div id="matchdayLightGrid" class="grid grid-cols-2 gap-1.5">
+                                <!-- Renderowane w JS -->
+                            </div>
+                        </div>
+
+                        <!-- 5. Ciekawostka Statystyczna -->
+                        <div class="matchday-stat-box mt-3 p-3 rounded-2xl border space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="text-xs">📊</span>
+                                    <span id="matchdayFactCategory" class="text-[10px] font-black uppercase tracking-wider">CIEKAWOSTKA STATYSTYCZNA</span>
+                                </div>
+                                <span id="matchdayFactBadge" class="text-[9px] font-mono">1 / 4</span>
+                            </div>
+
+                            <p id="matchdayFactText" class="text-xs font-medium leading-relaxed">
+                                <!-- Wypełniane w JS -->
+                            </p>
+
+                            <div id="matchdayFactVisual" class="pt-0.5">
+                                <!-- Wypełniane w JS -->
+                            </div>
+                        </div>
+
+                        <!-- 6. Stopka -->
+                        <div class="matchday-footer mt-2.5 pt-2 border-t matchday-divider flex items-center justify-between text-[9.5px]">
+                            <span class="matchday-footer-left">Zbiórka 19:45 na rozgrzewkę</span>
+                            <span class="matchday-footer-right">Głosowanie MVP po meczu w apce 👑</span>
+                        </div>
                     </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             </div>
         </section>
@@ -1972,12 +2878,21 @@
                             <span>🏅</span> Księga Osiągnięć &amp; Trofeów
                         </span>
                         <span class="flex items-center gap-2 text-[10px] text-slate-400 font-bold">
-                            <span>12 odznak do zdobycia</span>
+                            <span>13 odznak do zdobycia</span>
                             <span class="transform group-open:rotate-180 transition-transform duration-200 text-amber-400 text-xs">▼</span>
                         </span>
                     </summary>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-xs pt-3 mt-3 border-t border-slate-800/80">
+                        <!-- Fair Play -->
+                        <div class="bg-slate-950 border border-slate-800/80 rounded-2xl p-2.5 flex items-start gap-2.5">
+                            <span class="text-xl shrink-0 mt-0.5">🤝</span>
+                            <div class="min-w-0 flex-1">
+                                <strong class="block text-white text-xs font-bold">Nagroda Fair Play</strong>
+                                <p class="text-slate-400 text-[11px] leading-relaxed">Wzorowa postawa sportowa, kultura gry i szacunek do rywali.</p>
+                            </div>
+                        </div>
+
                         <div class="bg-slate-950 border border-slate-800/80 rounded-2xl p-2.5 flex items-start gap-2.5">
                             <span class="text-xl shrink-0 mt-0.5">⭐</span>
                             <div class="min-w-0 flex-1">
@@ -2081,7 +2996,7 @@
                     <!-- Bento Grid Rekordów Sezonu -->
                     <div class="space-y-2.5">
                         <!-- Hero Card: Król MVP (Full width, Royal look) -->
-                        <div class="bg-gradient-to-r from-amber-950/40 via-slate-950 to-amber-950/20 border border-amber-500/30 rounded-2xl p-3 sm:p-4 shadow-md transition hover:border-amber-500/50">
+                        <div id="recordKingMvpCard" class="bg-gradient-to-r from-amber-950/40 via-slate-950 to-amber-950/20 border border-amber-500/30 rounded-2xl p-3 sm:p-4 shadow-md transition hover:border-amber-500/50">
                             <div class="flex items-center justify-between gap-2">
                                 <div class="flex items-center gap-2">
                                     <div class="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-base shadow-sm">
@@ -2738,7 +3653,16 @@
                             <span class="flex items-center gap-1.5"><span>☁️</span> Konfiguracja Firebase:</span>
                             <span class="text-[9px] text-slate-400 font-normal">JSON firebaseConfig</span>
                         </label>
-                        <textarea id="editFirebaseConfigJson" rows="4" placeholder='{"apiKey": "...", "databaseURL": "...", "projectId": "..."}' class="w-full bg-slate-900 border border-slate-700 text-slate-300 rounded-xl p-2.5 font-mono text-[10px] focus:outline-none focus:border-emerald-500"></textarea>
+                        <textarea id="editFirebaseConfigJson" rows="4" placeholder='{"apiKey": "...", "databaseURL": "...", "projectId": "..."}
+
+            // 5. KATEGORIA FAIR PLAY & POSTAWA SPORTOWA
+            const fpCount = (AppState.fair_play && AppState.fair_play[playerName]) || 0;
+            if (fpCount > 0) {
+                badges.push({
+                    icon: "đź¤ť",
+                    title: `Nagroda Fair Play: ${fpCount > 1 ? fpCount + 'x ' : ''}Wzorowa postawa sportowa i duch gry`
+                });
+            }' class="w-full bg-slate-900 border border-slate-700 text-slate-300 rounded-xl p-2.5 font-mono text-[10px] focus:outline-none focus:border-emerald-500"></textarea>
                         <p class="text-[10px] text-slate-400 leading-relaxed">Wklej obiekt JSON wygenerowany w konsoli Google Firebase. Po zapisaniu dane natychmiast synchronizują się na żywo między wszystkimi telefonami graczy.</p>
                     </div>
                 </div>
@@ -2751,9 +3675,9 @@
         </div>
     </div>
 
-    <!-- Theme Picker Modal (Pomysł Mikołaja - 4 motywy + Klasyk) -->
-    <div id="themePickerModal" role="dialog" aria-modal="true" aria-labelledby="themePickerModalTitle" onclick="if(event.target === this) closeThemePickerModal()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center ios-safe-modal-overlay hidden overflow-y-auto">
-        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 max-w-sm w-full space-y-4 shadow-2xl animate-fade-in max-h-[82dvh] sm:max-h-[86dvh] overflow-y-auto my-auto">
+    <!-- Theme Picker Modal (Kompaktowy na każdy telefon) -->
+    <div id="themePickerModal" role="dialog" aria-modal="true" aria-labelledby="themePickerModalTitle" onclick="if(event.target === this) closeThemePickerModal()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 ios-safe-modal-overlay hidden overflow-y-auto">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-5 max-w-sm w-full space-y-3.5 shadow-2xl animate-fade-in max-h-[90dvh] overflow-y-auto my-auto">
             <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
                 <div class="flex items-center gap-2.5">
                     <span class="text-2xl">🎨</span>
@@ -2771,7 +3695,7 @@
             </div>
 
             <div class="pt-1">
-                <button type="button" onclick="closeThemePickerModal()" class="w-full bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 font-bold py-2.5 rounded-2xl text-xs transition">
+                <button type="button" onclick="closeThemePickerModal()" class="w-full bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 font-bold py-2.5 rounded-2xl text-xs transition cursor-pointer">
                     Gotowe
                 </button>
             </div>
@@ -2905,7 +3829,10 @@
                         <p id="playerCardSubtext" class="text-xs text-slate-400 mt-0.5">Karta zawodnika w sezonie 2026</p>
                     </div>
                 </div>
-                <button type="button" onclick="closePlayerCardModal()" aria-label="Zamknij" class="text-slate-400 hover:text-white font-bold text-lg min-w-[44px] min-h-[44px] flex items-center justify-center -mr-2 -mt-1">✕</button>
+                            
+
+
+            <button type="button" onclick="closePlayerCardModal()" aria-label="Zamknij" class="text-slate-400 hover:text-white font-bold text-lg min-w-[44px] min-h-[44px] flex items-center justify-center -mr-2 -mt-1">✕</button>
             </div>
 
             <!-- Quick Stats 3-box -->
@@ -3022,6 +3949,22 @@
                     <!-- Badges injected dynamically -->
                 </div>
             </div>
+
+                        <!-- Admin: Przyznaj Fair Play -->
+            <div id="playerCardFairPlayAdmin" class="hidden bg-slate-950/80 border border-amber-600/40 rounded-2xl p-2.5 flex items-center justify-between gap-2 text-xs">
+                <div class="flex items-center gap-2 min-w-0">
+                    <span class="text-base shrink-0">🤝</span>
+                    <div class="min-w-0">
+                        <strong class="text-white text-xs block leading-tight">Nagroda Fair Play</strong>
+                        <span class="text-[10px] text-slate-400 block">Wyróżnienia: <strong id="playerCardFairPlayCount" class="text-amber-400 font-mono">0</strong></span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1 shrink-0">
+                    <button type="button" onclick="decrementFairPlay(currentCardPlayerName)" class="w-7 h-7 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 font-bold flex items-center justify-center transition active:scale-95" title="Odejmij wyróżnienie">-</button>
+                    <button type="button" onclick="incrementFairPlay(currentCardPlayerName)" class="px-2.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[11px] flex items-center gap-1 transition active:scale-95 shadow-sm" title="Przyznaj odznakę Fair Play">+ Przyznaj 🤝</button>
+                </div>
+            </div>
+
 
             <button type="button" onclick="closePlayerCardModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2.5 rounded-2xl text-xs transition">
                 Zamknij
@@ -3233,6 +4176,7 @@ const EMPTY_INITIAL_STATE = {
         "Wiktor Strulak": ["OP", "OH"],
         "Wiktoria Lewandowska": ["L"]
     },
+    fair_play: {},
     base_games: {},
     player_skills: {
         "Andrii Kutsela": 3,
@@ -3345,7 +4289,36 @@ const EMPTY_INITIAL_STATE = {
                 "Ula Olszewska": { paid: 20 },
                 "Wiktor Strulak": { paid: 20 }
             }
+        },
+        "Listopad 2026": {
+            matches: [
+                { cost: 240, date: "2026-11-02", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-11-05", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-11-09", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-11-12", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-11-16", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-11-19", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-11-23", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-11-26", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-11-30", isCancelled: false, mvpClosed: false, attendees: [] }
+            ],
+            rozliczenia: {}
+        },
+        "Grudzień 2026": {
+            matches: [
+                { cost: 240, date: "2026-12-03", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-12-07", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-12-10", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-12-14", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-12-17", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-12-21", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-12-24", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-12-28", isCancelled: false, mvpClosed: false, attendees: [] },
+                { cost: 240, date: "2026-12-31", isCancelled: false, mvpClosed: false, attendees: [] }
+            ],
+            rozliczenia: {}
         }
+
     },
     settings: {
         groupName: "AKS Laurowa",
@@ -3544,7 +4517,8 @@ function submitSetupWizard() {
         },
         player_avatars: {},
         player_positions: {},
-        base_games: {},
+        fair_play: {},
+    base_games: {},
         player_skills: {},
         months: {
             [monthLabel]: {
@@ -3771,21 +4745,36 @@ function submitGenerateMonth() {
         function setAppTheme(themeKey) {
             localStorage.setItem('siatka_app_theme', themeKey);
             applyAppTheme(themeKey);
-            const names = {
-                'haaland-dark': '❄️🌙 Błękit Ciemny (Haaland)',
-                'haaland-light': '❄️☀️ Błękit Jasny (Haaland)',
-                'mercurial-dark': '👟🌙 Róż Ciemny (Mercurial)',
-                'mercurial-light': '👟☀️ Róż Jasny (Mercurial)',
-                'classic': '🏐 Klasyczny (Oryginał)'
+            const themeInfoMap = {
+                'haaland-dark': { name: 'Błękit Ciemny', icon: '🌙' },
+                'haaland-light': { name: 'Błękit Jasny', icon: '☀️' },
+                'mercurial-dark': { name: 'Róż Ciemny', icon: '🌙' },
+                'mercurial-light': { name: 'Róż Jasny', icon: '☀️' },
+                'classic': { name: 'Klasyczny', icon: '🏐' }
             };
+            const info = themeInfoMap[themeKey] || { name: themeKey, icon: '🎨' };
             if (typeof showToast === 'function') {
-                showToast(`Zastosowano motyw: ${names[themeKey] || themeKey}`);
+                showToast(`Zastosowano motyw: ${info.icon} ${info.name}`);
             }
             renderThemePickerOptions();
             const badge = document.getElementById('profileCurrentThemeDisplay');
-            if (badge) badge.innerText = names[themeKey] || themeKey;
+            if (badge) {
+                const parent = badge.parentElement;
+                if (parent) {
+                    parent.innerHTML = `<span>${info.icon}</span> <span id="profileCurrentThemeDisplay">${escapeHtml(info.name)}</span>`;
+                } else {
+                    badge.innerText = info.name;
+                }
+            }
             const badgeAdmin = document.getElementById('profileCurrentThemeDisplayAdmin');
-            if (badgeAdmin) badgeAdmin.innerText = names[themeKey] || themeKey;
+            if (badgeAdmin) {
+                const parent = badgeAdmin.parentElement;
+                if (parent) {
+                    parent.innerHTML = `<span>${info.icon}</span> <span id="profileCurrentThemeDisplayAdmin">${escapeHtml(info.name)}</span>`;
+                } else {
+                    badgeAdmin.innerText = info.name;
+                }
+            }
         }
 
         function applyAppTheme(themeKey) {
@@ -3819,8 +4808,7 @@ function submitGenerateMonth() {
                 {
                     key: 'haaland-dark',
                     name: 'Błękit Ciemny',
-                    tag: 'Haaland',
-                    icon: '❄️🌙',
+                    icon: '🌙',
                     typeBadge: 'Ciemny',
                     accentColor: '#38bdf8',
                     accentTextColor: '#0c1322',
@@ -3829,8 +4817,7 @@ function submitGenerateMonth() {
                 {
                     key: 'haaland-light',
                     name: 'Błękit Jasny',
-                    tag: 'Haaland',
-                    icon: '❄️☀️',
+                    icon: '☀️',
                     typeBadge: 'Jasny',
                     accentColor: '#0284c7',
                     accentTextColor: '#ffffff',
@@ -3839,8 +4826,7 @@ function submitGenerateMonth() {
                 {
                     key: 'mercurial-dark',
                     name: 'Róż Ciemny',
-                    tag: 'Mercurial',
-                    icon: '👟🌙',
+                    icon: '🌙',
                     typeBadge: 'Ciemny',
                     accentColor: '#ff1783',
                     accentTextColor: '#08080c',
@@ -3849,8 +4835,7 @@ function submitGenerateMonth() {
                 {
                     key: 'mercurial-light',
                     name: 'Róż Jasny',
-                    tag: 'Mercurial',
-                    icon: '👟☀️',
+                    icon: '☀️',
                     typeBadge: 'Jasny',
                     accentColor: '#e11d48',
                     accentTextColor: '#ffffff',
@@ -3858,46 +4843,38 @@ function submitGenerateMonth() {
                 },
                 {
                     key: 'classic',
-                    name: 'Klasyczny (Oryginał)',
-                    tag: 'Granat & Szmaragd',
+                    name: 'Klasyczny',
                     icon: '🏐',
-                    typeBadge: 'Klasyk',
+                    typeBadge: 'Ciemny',
                     accentColor: '#10b981',
                     accentTextColor: '#022c22',
-                    bgPreview: 'background: linear-gradient(135deg, #070a12 0%, #11192c 100%);',
-                    colSpan: 'col-span-2'
+                    bgPreview: 'background: linear-gradient(135deg, #070a12 0%, #11192c 100%);'
                 }
             ];
 
             const cards = themes.map(t => {
                 const isCurrent = (t.key === currentTheme);
                 return `
-                    <div onclick="setAppTheme('${t.key}')" class="p-2.5 rounded-2xl border transition cursor-pointer flex flex-col justify-between gap-2 active:scale-[0.98] ${t.colSpan || ''} ${isCurrent ? 'ring-2 ring-emerald-400 bg-slate-800/80 border-emerald-400 shadow-md' : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'}">
-                        <!-- Mini wzór wyglądu -->
-                        <div class="h-7 rounded-xl px-2 flex items-center justify-between border border-white/10 shadow-inner" style="${t.bgPreview}">
-                            <span class="text-xs leading-none">${t.icon}</span>
-                            <div class="flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full" style="background-color: ${t.accentColor}; box-shadow: 0 0 5px ${t.accentColor};"></span>
-                                <span class="text-[8px] font-black px-1.5 py-0.5 rounded-full" style="background-color: ${t.accentColor}; color: ${t.accentTextColor};">${t.typeBadge}</span>
+                    <div onclick="setAppTheme('${t.key}')" class="p-2 sm:p-2.5 rounded-2xl border transition cursor-pointer flex items-center justify-between gap-3 active:scale-[0.98] ${isCurrent ? 'ring-2 ring-emerald-400 bg-slate-800/90 border-emerald-400 shadow-md' : 'bg-slate-950/60 border-slate-800 hover:border-slate-700 hover:bg-slate-900/60'}">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border border-white/10 shadow-inner" style="${t.bgPreview}">
+                                <span class="text-sm leading-none">${t.icon}</span>
+                            </div>
+                            <div class="min-w-0">
+                                <span class="block font-black text-xs text-white leading-tight truncate">${t.name}</span>
+                                <span class="block text-[9.5px] text-slate-400 leading-tight mt-0.5">${t.typeBadge}</span>
                             </div>
                         </div>
-                        <!-- Tytuł i przycisk stanu -->
-                        <div class="flex items-center justify-between gap-1 pt-0.5 min-w-0 flex-wrap">
-                            <div class="min-w-0 flex-1">
-                                <span class="block font-black text-xs text-white leading-tight whitespace-normal break-words">${t.name}</span>
-                                <span class="block text-[9.5px] text-slate-400 leading-tight whitespace-normal break-words mt-0.5">${t.tag}</span>
-                            </div>
-                            <div class="shrink-0">
-                                ${isCurrent 
-                                    ? '<span class="text-[9px] bg-emerald-500 text-slate-950 font-black px-1.5 py-0.5 rounded-md shadow-sm whitespace-nowrap">✓ Aktywny</span>' 
-                                    : '<span class="text-[9px] text-slate-500 font-bold px-1.5 py-0.5 rounded-md border border-slate-800 hover:border-slate-700 whitespace-nowrap">Wybierz</span>'}
-                            </div>
+                        <div class="shrink-0">
+                            ${isCurrent 
+                                ? '<span class="text-[9px] bg-emerald-500 text-slate-950 font-black px-2 py-0.5 rounded-lg shadow-sm whitespace-nowrap">✓ Aktywny</span>' 
+                                : '<span class="text-[9px] text-slate-400 font-semibold px-2 py-0.5 rounded-lg border border-slate-800 hover:border-slate-700 whitespace-nowrap">Wybierz</span>'}
                         </div>
                     </div>
                 `;
             }).join('');
 
-            return `<div class="grid grid-cols-2 gap-2.5">${cards}</div>`;
+            return `<div class="space-y-2">${cards}</div>`;
         }
 
         function renderThemePickerOptions() {
@@ -4729,6 +5706,10 @@ function initFirebaseSync() {
 
         function handleUrlNavigationParams() {
             const urlParams = new URLSearchParams(window.location.search);
+            const targetTheme = urlParams.get('theme');
+            if (targetTheme && ['haaland-dark', 'haaland-light', 'mercurial-dark', 'mercurial-light', 'classic'].includes(targetTheme)) {
+                applyAppTheme(targetTheme);
+            }
             const targetTab = urlParams.get('tab');
             const targetMatchDate = urlParams.get('match') || urlParams.get('mtv') || urlParams.get('mvp') || urlParams.get('vote') || urlParams.get('glosuj');
             const isMvpLink = urlParams.has('mtv') || urlParams.has('mvp') || urlParams.has('vote') || urlParams.has('glosuj');
@@ -4765,6 +5746,9 @@ function initFirebaseSync() {
 
             if (targetTab && ['matches', 'teams', 'billing', 'halloffame', 'profile'].includes(targetTab)) {
                 switchTab(targetTab);
+                if (targetTab === 'teams' && urlParams.get('view') === 'court') {
+                    setTimeout(() => { if (typeof setTeamsViewMode === 'function') setTeamsViewMode('court'); }, 150);
+                }
             }
         }
 
@@ -4877,9 +5861,17 @@ function initFirebaseSync() {
 
 
         function checkUserAuthSession() {
-            loggedPlayer = localStorage.getItem(ACTIVE_PLAYER_KEY) || '';
-            const org = getOrganizerName();
-            isAdmin = (loggedPlayer && loggedPlayer === org) || (localStorage.getItem(IS_ADMIN_KEY) === 'true');
+            const urlParams = new URLSearchParams(window.location.search);
+            const org = getOrganizerName() || "Arkadiusz KurdziaĹ‚ek";
+            if (urlParams.get('admin') === '1' || urlParams.has('admin')) {
+                loggedPlayer = org;
+                isAdmin = true;
+                localStorage.setItem(ACTIVE_PLAYER_KEY, loggedPlayer);
+                localStorage.setItem(IS_ADMIN_KEY, 'true');
+            } else {
+                loggedPlayer = localStorage.getItem(ACTIVE_PLAYER_KEY) || '';
+                isAdmin = (loggedPlayer && loggedPlayer === org) || (localStorage.getItem(IS_ADMIN_KEY) === 'true');
+            }
             updateAdminUI();
             if (AppState && AppState.isConfigured && typeof checkWelcomeGate === 'function') {
                 checkWelcomeGate();
@@ -4973,6 +5965,46 @@ function initFirebaseSync() {
                     AppState.months["Październik 2026"].matches = octMatches.filter(m => m.date !== "2026-10-01");
                 }
             }
+
+            if (!AppState.fair_play || typeof AppState.fair_play !== 'object') {
+                AppState.fair_play = {};
+            }
+
+            // Upewnij się, że harmonogram na koniec roku (Listopad 2026 i Grudzień 2026) jest obecny
+            const ensureScheduleForMonth = (year, monthIdx, monthLabel) => {
+                const playingDays = AppState.settings?.playingDays || [1, 4];
+                const cost = AppState.settings?.hallCost || 240;
+                const genMatches = (typeof generateMatchesForMonth === 'function') 
+                    ? generateMatchesForMonth(year, monthIdx, playingDays, cost) 
+                    : [];
+                if (!AppState.months[monthLabel]) {
+                    AppState.months[monthLabel] = {
+                        matches: genMatches,
+                        rozliczenia: {}
+                    };
+                } else {
+                    if (!Array.isArray(AppState.months[monthLabel].matches) || AppState.months[monthLabel].matches.length === 0) {
+                        AppState.months[monthLabel].matches = genMatches;
+                    } else {
+                        const existingDates = new Set(AppState.months[monthLabel].matches.map(m => m.date));
+                        let hasNew = false;
+                        genMatches.forEach(nm => {
+                            if (!existingDates.has(nm.date)) {
+                                AppState.months[monthLabel].matches.push(nm);
+                                hasNew = true;
+                            }
+                        });
+                        if (hasNew) {
+                            AppState.months[monthLabel].matches.sort((a, b) => a.date.localeCompare(b.date));
+                        }
+                    }
+                }
+            };
+
+            ensureScheduleForMonth(2026, 10, "Listopad 2026");
+            const decKey = (typeof POLISH_MONTHS !== 'undefined' && POLISH_MONTHS[11]) ? `${POLISH_MONTHS[11]} 2026` : "Grudzień 2026";
+            ensureScheduleForMonth(2026, 11, decKey);
+
 
             const sortedMonths = getSortedMonths();
             if (sortedMonths.length > 0) {
@@ -5269,9 +6301,10 @@ function initFirebaseSync() {
             const select = document.getElementById('monthSelect');
             if (!select) return;
             const sortedMonths = getSortedMonths();
-            select.innerHTML = sortedMonths.map(m => `
-                <option value="${escapeHtml(m)}" ${m === AppState.currentMonth ? 'selected' : ''}>${escapeHtml(m)}</option>
-            `).join('');
+            select.innerHTML = sortedMonths.map(m => {
+                const label = m.replace(/\s*\d{4}$/, '');
+                return `<option value="${escapeHtml(m)}" ${m === AppState.currentMonth ? 'selected' : ''}>${escapeHtml(label)}</option>`;
+            }).join('');
         }
 
         function changeMonth(mName) {
@@ -5493,31 +6526,35 @@ function initFirebaseSync() {
                     const isFull = attendeesCount >= 14;
                     const isPast = (m.date || '') < todayStr;
                     const isAdvanceLocked = isMatchLockedAdvance(m);
+                    const isManualLocked = Boolean(m.isManualLocked);
                     const dayDisplay = (getShortDayName(m.date) ? getShortDayName(m.date) + ' ' : '') + (m.date || '').slice(5);
 
                     return `
-                        <button type="button" id="match-date-btn-${idx}" onclick="selectMatch(${idx})" title="${isAdvanceLocked ? 'Zapisy zablokowane do zakończenia najbliższego meczu 🔒' : (isPast ? 'Mecz archiwalny' : 'Termin meczu')}" class="px-3 py-2 rounded-2xl border text-xs font-extrabold transition shrink-0 flex items-center gap-2 active:scale-95 shadow-sm ${
+                        <button type="button" id="match-date-btn-${idx}" onclick="selectMatch(${idx})" title="${isManualLocked ? 'Zapisy na ten mecz zostały zamknięte przez Organizatora 🔒' : (isAdvanceLocked ? 'Zapisy zablokowane do zakończenia najbliższego meczu 🔒' : (isPast ? 'Mecz archiwalny' : 'Termin meczu'))}" class="px-3 py-2 rounded-2xl border text-xs font-extrabold transition shrink-0 flex items-center gap-2 active:scale-95 shadow-sm ${
                             isSelected 
                                 ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 border-emerald-400 shadow-md shadow-emerald-500/20 ring-2 ring-emerald-400/40' 
                                 : isPast
                                     ? 'bg-slate-950 text-slate-500 border-slate-800/80 hover:border-slate-700'
-                                    : isAdvanceLocked
+                                    : (isManualLocked || isAdvanceLocked)
                                         ? 'bg-slate-950 text-slate-300 border-slate-800/80 hover:border-slate-700'
                                         : 'bg-slate-950 text-slate-200 border-slate-800 hover:border-slate-700'
                         }">
-                            <span>${isPast ? '⏳' : (isAdvanceLocked ? '🔒' : '📅')} ${dayDisplay}</span>
+                            <span>${isPast ? '📅' : (isManualLocked ? '🔒' : (isAdvanceLocked ? '🔒' : '📅'))} ${dayDisplay}</span>
                             <span class="text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
                                 isSelected 
                                     ? 'bg-slate-950/20 text-slate-950 font-black' 
                                     : isFull 
                                         ? 'bg-emerald-950 text-emerald-400 border border-emerald-800/60' 
-                                        : isAdvanceLocked
+                                        : isManualLocked
                                             ? 'bg-slate-900 text-amber-300 border border-amber-800/40'
-                                            : 'bg-slate-900 text-slate-400 border border-slate-800'
+                                            : isAdvanceLocked
+                                                ? 'bg-slate-900 text-amber-300 border border-amber-800/40'
+                                                : 'bg-slate-900 text-slate-400 border border-slate-800'
                             }">${mainCount}/14</span>
                         </button>
                     `;
                 }).join('');
+
 
                 setTimeout(() => {
                     const activePill = document.getElementById(`match-date-btn-${AppState.currentMatchIndex}`);
@@ -5627,7 +6664,46 @@ function initFirebaseSync() {
             if (isCancelled) {
                 statusBadge.classList.remove('hidden');
                 cancelBtn.innerText = "✅ Przywróć mecz";
-            } else {
+            }
+
+            const isManualLocked = Boolean(currentMatch.isManualLocked);
+            const lockedBadge = document.getElementById('matchLockedBadge');
+            const quickLockBtn = document.getElementById('quickLockToggleBtn');
+            const lockAdminBtn = document.getElementById('lockMatchBtn');
+
+            if (lockedBadge) {
+                if (isManualLocked && !isCancelled) {
+                    lockedBadge.classList.remove('hidden');
+                } else {
+                    lockedBadge.classList.add('hidden');
+                }
+            }
+
+            if (quickLockBtn) {
+                if (isAdmin && !isCancelled) {
+                    quickLockBtn.classList.remove('hidden');
+                    if (isManualLocked) {
+                        quickLockBtn.innerText = "Otwórz listę 🔓";
+                        quickLockBtn.className = "text-[10px] font-bold px-2 py-0.5 rounded-lg transition active:scale-95 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40";
+                    } else {
+                        quickLockBtn.innerText = "Zamknij listę 🔒";
+                        quickLockBtn.className = "text-[10px] font-bold px-2 py-0.5 rounded-lg transition active:scale-95 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-amber-300 border border-slate-700";
+                    }
+                } else {
+                    quickLockBtn.classList.add('hidden');
+                }
+            }
+
+            if (lockAdminBtn) {
+                if (isManualLocked) {
+                    lockAdminBtn.innerText = "🔓 Otwórz zapisy na mecz";
+                    lockAdminBtn.className = "w-full sm:w-auto bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 font-semibold px-2.5 py-1.5 rounded-xl flex items-center justify-center gap-1.5 transition whitespace-nowrap active:scale-95 text-[11px] sm:text-xs";
+                } else {
+                    lockAdminBtn.innerText = "🔒 Zamknij zapisy na mecz";
+                    lockAdminBtn.className = "w-full sm:w-auto bg-slate-950/80 hover:bg-slate-900 border border-slate-800 hover:border-amber-900/50 text-slate-300 hover:text-amber-400 font-semibold px-2.5 py-1.5 rounded-xl flex items-center justify-center gap-1.5 transition whitespace-nowrap active:scale-95 text-[11px] sm:text-xs";
+                }
+            }
+ else {
                 statusBadge.classList.add('hidden');
                 cancelBtn.innerText = "🚫 Odwołaj mecz (0 zł)";
             }
@@ -5650,6 +6726,42 @@ function initFirebaseSync() {
                     fastJoinSection.innerHTML = `
                         <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3 text-center text-xs text-slate-400">
                             Ten mecz już się odbył (termin archiwalny).
+                        </div>
+                    `;
+                                } else if (isManualLocked && !isAdmin) {
+                    const isUserSigned = loggedPlayer && attendees.includes(loggedPlayer);
+                    const isInMain = isUserSigned && mainPlayers.includes(loggedPlayer);
+
+                    fastJoinSection.innerHTML = `
+                        <div class="space-y-2">
+                            ${isUserSigned ? `
+                                <div class="bg-slate-950 border border-emerald-800/80 rounded-2xl p-3 flex items-center justify-between gap-2">
+                                    <div class="flex items-center gap-2.5 min-w-0">
+                                        ${getPlayerAvatarHtml(loggedPlayer, 'sm')}
+                                        <div class="min-w-0">
+                                            <p class="text-xs font-extrabold text-white whitespace-normal break-words">Jeste\u015b na li\u015bcie tego meczu</p>
+                                            <p class="text-[11px] ${isInMain ? 'text-emerald-400' : 'text-amber-400'} font-semibold">
+                                                ${isInMain ? '\u2705 Sk\u0142ad G\u0142\u00f3wny (14)' : '\u23f3 Lista Rezerwowa'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="removePlayerFromCurrentMatch(${toInlineArgument(loggedPlayer)})" class="text-xs font-bold text-rose-400 hover:text-rose-300 bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-xl transition shrink-0">
+                                        Wypisz mnie \u2715
+                                    </button>
+                                </div>
+                            ` : ''}
+
+                            <div class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border border-amber-500/40 rounded-2xl p-4 text-center space-y-2 shadow-inner">
+                                <div class="w-10 h-10 mx-auto rounded-full bg-amber-950/70 border border-amber-600/70 flex items-center justify-center text-lg text-amber-300 shadow-sm">
+                                    \uD83D\uDD12
+                                </div>
+                                <div class="space-y-1">
+                                    <h4 class="text-xs font-black uppercase tracking-wider text-amber-300">Zapisy zamkni\u0119te przez Organizatora</h4>
+                                    <p class="text-[11px] text-slate-300 max-w-md mx-auto leading-relaxed">
+                                        Arkadiusz zamkn\u0105\u0142 list\u0119 na ten mecz. Sk\u0142ad zosta\u0142 ostatecznie skompletowany (${mainPlayers.length}/14).
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     `;
                 } else if (isAdvanceLocked && !isAdmin) {
@@ -5696,14 +6808,26 @@ function initFirebaseSync() {
                     `;
                 } else {
                     let adminLockNotice = '';
-                    if (isAdvanceLocked && isAdmin) {
+                    if (isManualLocked && isAdmin) {
                         adminLockNotice = `
-                            <div class="bg-amber-950/40 border border-amber-600/50 rounded-2xl p-2.5 flex items-center justify-between gap-2 text-xs">
+                            <div class="bg-amber-500/15 dark:bg-amber-950/50 border border-amber-500/40 dark:border-amber-600/60 rounded-2xl p-2.5 flex items-center justify-between gap-2 text-xs shadow-sm">
                                 <div class="flex items-center gap-2">
-                                    <span class="text-amber-400 text-sm">🔒</span>
-                                    <span class="text-amber-200 text-[11px]">Dla graczy zapisy są zablokowane do końca najbliższego meczu (${escapeHtml(nearestDayDisplay)}). Jako Organizator masz uprawnienia do dopisywania.</span>
+                                    <span class="text-amber-600 dark:text-amber-400 text-sm shrink-0">\uD83D\uDD12</span>
+                                    <span class="text-amber-950 dark:text-amber-200 text-[11px] font-semibold leading-snug">Zapisy na ten mecz s\u0105 zamkni\u0119te dla graczy (${mainPlayers.length}/14). Jako Organizator masz uprawnienia do dopisywania os\u00f3b lub otwarcia listy.</span>
                                 </div>
-                                <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800 shrink-0">Admin</span>
+                                <button type="button" onclick="toggleLockCurrentMatchWithAuth()" class="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[10px] shrink-0 transition shadow-sm active:scale-95">
+                                    Otw\u00f3rz \uD83D\uDD13
+                                </button>
+                            </div>
+                        `;
+                    } else if (isAdvanceLocked && isAdmin) {
+                        adminLockNotice = `
+                            <div class="bg-amber-500/15 dark:bg-amber-950/50 border border-amber-500/40 dark:border-amber-600/50 rounded-2xl p-2.5 flex items-center justify-between gap-2 text-xs shadow-sm">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-amber-600 dark:text-amber-400 text-sm shrink-0">🔒</span>
+                                    <span class="text-amber-950 dark:text-amber-200 text-[11px] font-semibold leading-snug">Dla graczy zapisy są zablokowane do końca najbliższego meczu (${escapeHtml(nearestDayDisplay)}). Jako Organizator masz uprawnienia do dopisywania.</span>
+                                </div>
+                                <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded bg-amber-200/90 dark:bg-amber-950 text-amber-950 dark:text-amber-300 border border-amber-400 dark:border-amber-800 shrink-0">Admin</span>
                             </div>
                         `;
                     }
@@ -5945,6 +7069,12 @@ function initFirebaseSync() {
                 return;
             }
 
+            if (!isAdmin && currentMatch.isManualLocked) {
+                alert("Zapisy na ten mecz zosta\u0142y zamkni\u0119te przez Organizatora! \uD83D\uDD12");
+                isMatchActionPending = false;
+                return;
+            }
+
             if (!isAdmin && isMatchLockedAdvance(currentMatch)) {
                 const nearest = getNearestUpcomingMatchInfo();
                 const nearestDate = nearest ? `${getShortDayName(nearest.date)} ${nearest.date}` : 'najbliższej';
@@ -5993,6 +7123,11 @@ function initFirebaseSync() {
             const monthData = AppState.months[AppState.currentMonth];
             const currentMatch = monthData?.matches[AppState.currentMatchIndex];
             if (!currentMatch) return;
+
+            if (!isAdmin && currentMatch.isManualLocked) {
+                alert("Zapisy na ten mecz zosta\u0142y zamkni\u0119te przez Organizatora! \uD83D\uDD12");
+                return;
+            }
 
             if (!isAdmin && isMatchLockedAdvance(currentMatch)) {
                 const nearest = getNearestUpcomingMatchInfo();
@@ -6109,6 +7244,49 @@ function initFirebaseSync() {
             });
         }
 
+        let currentCardPlayerName = '';
+
+        function toggleLockCurrentMatchWithAuth() {
+            requireAdminAuth(() => {
+                const monthData = AppState.months[AppState.currentMonth];
+                const currentMatch = monthData?.matches[AppState.currentMatchIndex];
+                if (!currentMatch) return;
+
+                currentMatch.isManualLocked = !currentMatch.isManualLocked;
+                syncState();
+                renderCurrentView();
+                showToast(currentMatch.isManualLocked ? "Zapisy na ten mecz zostały zablokowane 🔒" : "Zapisy na mecz zostały otwarte 🔓");
+            });
+        }
+
+        function incrementFairPlay(playerName) {
+            requireAdminAuth(() => {
+                if (!playerName) return;
+                if (!AppState.fair_play || typeof AppState.fair_play !== 'object') AppState.fair_play = {};
+                AppState.fair_play[playerName] = (AppState.fair_play[playerName] || 0) + 1;
+                syncState();
+                openPlayerCardModal(playerName);
+                renderCurrentView();
+                showToast(`Przyznano Nagrodę Fair Play dla: ${playerName}! 🤝`);
+            });
+        }
+
+        function decrementFairPlay(playerName) {
+            requireAdminAuth(() => {
+                if (!playerName) return;
+                if (!AppState.fair_play || !AppState.fair_play[playerName]) return;
+                AppState.fair_play[playerName] = Math.max(0, AppState.fair_play[playerName] - 1);
+                if (AppState.fair_play[playerName] === 0) {
+                    delete AppState.fair_play[playerName];
+                }
+                syncState();
+                openPlayerCardModal(playerName);
+                renderCurrentView();
+                showToast(`Zaktualizowano Fair Play dla: ${playerName}`);
+            });
+        }
+
+
         function toggleCancelCurrentMatchWithAuth() {
             requireAdminAuth(() => {
                 const monthData = AppState.months[AppState.currentMonth];
@@ -6157,6 +7335,7 @@ function initFirebaseSync() {
                 listBtn.className = "px-3 py-1 rounded-xl font-bold text-slate-400 hover:text-white transition text-[11px] flex items-center gap-1";
                 courtView.classList.remove('hidden');
                 listView.classList.add('hidden');
+                if (unassignedCard) unassignedCard.classList.add('hidden');
             }
             renderTeamsTab();
         }
@@ -6839,7 +8018,6 @@ function initFirebaseSync() {
                                     <div class="flex items-center gap-1.5 min-w-0 flex-1">
                                         ${getPlayerAvatarHtml(p, 'xs')}
                                         <span class="font-semibold ${isMe ? 'text-emerald-300 font-bold' : 'text-slate-200'} truncate">${escapeHtml(p)}${isMe ? ' ⭐' : ''}</span>
-                                        ${typeof getPlayerPositionsBadgesHtml === 'function' ? getPlayerPositionsBadgesHtml(p) : ''}
                                     </div>
                                     ${isAdmin ? `
                                     <div class="flex items-center gap-1 shrink-0">
@@ -6887,18 +8065,14 @@ function initFirebaseSync() {
             if (dark.length === 0) {
                 darkListEl.innerHTML = `<div class="p-6 text-center text-xs text-slate-600">Brak graczy. ${isAdmin ? 'Przypisz ręcznie z listy powyżej lub kliknij "🎲 Losuj równe składy".' : 'Organizator nie przydzielił jeszcze składów.'}</div>`;
             } else {
-                const darkRoles = teams.darkRoles || {};
                 darkListEl.innerHTML = dark.map((p, i) => {
                     const isMe = (p === loggedPlayer);
-                    const pRole = darkRoles[p];
-                    const roleBadge = pRole ? getSinglePositionBadgeHtml(pRole) : getPlayerPositionsBadgesHtml(p);
                     return `
                         <div class="bg-slate-900 border ${isMe ? 'border-emerald-500/60 bg-emerald-950/10' : 'border-slate-800/90'} px-2.5 py-2 rounded-xl text-xs flex items-center justify-between gap-2 shadow-sm">
                             <div class="flex items-center gap-1.5 min-w-0 flex-1">
                                 <span class="w-2 h-2 rounded-full bg-slate-400 border border-slate-300 shadow-sm shrink-0" title="Drużyna Ciemna"></span>
                                 <span class="font-mono text-slate-500 font-bold w-4 shrink-0 text-right">${i+1}.</span>
                                 <span class="font-semibold ${isMe ? 'text-emerald-300 font-bold' : 'text-slate-200'} whitespace-normal break-words" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐' : ''}</span>
-                                ${roleBadge}
                             </div>
                             ${isAdmin ? `
                             <div class="flex items-center gap-1 shrink-0">
@@ -6933,18 +8107,14 @@ function initFirebaseSync() {
             if (light.length === 0) {
                 lightListEl.innerHTML = `<div class="p-6 text-center text-xs text-slate-600">Brak graczy. ${isAdmin ? 'Przypisz ręcznie z listy powyżej lub kliknij "🎲 Losuj równe składy".' : 'Organizator nie przydzielił jeszcze składów.'}</div>`;
             } else {
-                const lightRoles = teams.lightRoles || {};
                 lightListEl.innerHTML = light.map((p, i) => {
                     const isMe = (p === loggedPlayer);
-                    const pRole = lightRoles[p];
-                    const roleBadge = pRole ? getSinglePositionBadgeHtml(pRole) : getPlayerPositionsBadgesHtml(p);
                     return `
                         <div class="bg-slate-900 border ${isMe ? 'border-emerald-500/60 bg-emerald-950/10' : 'border-slate-800/90'} px-2.5 py-2 rounded-xl text-xs flex items-center justify-between gap-2 shadow-sm">
                             <div class="flex items-center gap-1.5 min-w-0 flex-1">
                                 <span class="w-2 h-2 rounded-full bg-amber-400 border border-amber-300 shadow-sm shadow-amber-400/50 shrink-0" title="Drużyna Jasna"></span>
                                 <span class="font-mono text-slate-500 font-bold w-4 shrink-0 text-right">${i+1}.</span>
                                 <span class="font-semibold ${isMe ? 'text-emerald-300 font-bold' : 'text-slate-200'} whitespace-normal break-words" title="${escapeHtml(p)}">${escapeHtml(p)}${isMe ? ' ⭐' : ''}</span>
-                                ${roleBadge}
                             </div>
                             ${isAdmin ? `
                             <div class="flex items-center gap-1 shrink-0">
@@ -7007,91 +8177,8 @@ function initFirebaseSync() {
                 }
             }
 
-            if (courtDarkHalf) {
-                const darkAvg = dark.length ? (dark.reduce((sum, p) => sum + (AppState.player_skills?.[p] || 3), 0) / dark.length).toFixed(1) : '0.0';
-                const tacticalDark = getTacticalPositionsForTeam(dark, teams.darkRoles);
-
-                let darkHalfHtml = `
-                    <!-- Dark Team Header -->
-                    <div class="flex items-center justify-between px-2 py-1 flex-wrap gap-1">
-                        <div class="flex items-center gap-2 cursor-pointer group" onclick="${isAdmin ? `editTeamNamePrompt('dark')` : ''}" title="${isAdmin ? 'Kliknij, aby zmienić nazwę drużyny' : ''}">
-                            <span id="courtDarkTitle" class="text-xs font-black text-slate-300 uppercase tracking-wider bg-slate-950/90 px-2.5 py-1 rounded-xl border border-slate-700 flex items-center gap-1.5 group-hover:border-slate-500 transition">
-                                <span>⬛</span>
-                                <span>${escapeHtml(darkName)}</span>
-                                ${isAdmin ? '<span class="text-[10px] text-slate-500 group-hover:text-slate-300">✏️</span>' : ''}
-                            </span>
-                        </div>
-                        <div class="flex items-center gap-1.5">
-                            <span class="text-[10px] font-bold text-amber-400 bg-slate-950/80 border border-slate-800 px-2 py-0.5 rounded-lg" title="Średnia ocena drużyny">★ ${darkAvg}</span>
-                            <span class="text-[10px] font-mono font-bold text-slate-400 bg-slate-950/80 border border-slate-800 px-2 py-0.5 rounded-lg">${dark.length}/7</span>
-                        </div>
-                    </div>
-
-                    <!-- Libero / 7th Player Slot -->
-                    ${renderTacticalLiberoBanner(tacticalDark.libero, true, dark.length)}
-
-                    <!-- Linia Obrony (Back Row: P5, P6, P1) -->
-                    <div class="grid grid-cols-3 gap-2 text-center">
-                        ${renderTacticalZoneCard(tacticalDark.zones.z5, ZONE_DEFINITIONS.z5, true)}
-                        ${renderTacticalZoneCard(tacticalDark.zones.z6, ZONE_DEFINITIONS.z6, true)}
-                        ${renderTacticalZoneCard(tacticalDark.zones.z1, ZONE_DEFINITIONS.z1, true)}
-                    </div>
-
-                    <!-- 3-meter Attack Line Divider -->
-                    ${renderCourtAttackLineDivider()}
-
-                    <!-- Linia Ataku (Front Row przy siatce: P4, P3, P2) -->
-                    <div class="grid grid-cols-3 gap-2 text-center">
-                        ${renderTacticalZoneCard(tacticalDark.zones.z4, ZONE_DEFINITIONS.z4, true)}
-                        ${renderTacticalZoneCard(tacticalDark.zones.z3, ZONE_DEFINITIONS.z3, true)}
-                        ${renderTacticalZoneCard(tacticalDark.zones.z2, ZONE_DEFINITIONS.z2, true)}
-                    </div>
-                `;
-                courtDarkHalf.innerHTML = darkHalfHtml;
-            }
-
-            if (courtLightHalf) {
-                const lightAvg = light.length ? (light.reduce((sum, p) => sum + (AppState.player_skills?.[p] || 3), 0) / light.length).toFixed(1) : '0.0';
-                const tacticalLight = getTacticalPositionsForTeam(light, teams.lightRoles);
-
-                let lightHalfHtml = `
-                    <!-- Linia Ataku (Front Row przy siatce: P4, P3, P2) -->
-                    <div class="grid grid-cols-3 gap-2 text-center">
-                        ${renderTacticalZoneCard(tacticalLight.zones.z4, ZONE_DEFINITIONS.z4, false)}
-                        ${renderTacticalZoneCard(tacticalLight.zones.z3, ZONE_DEFINITIONS.z3, false)}
-                        ${renderTacticalZoneCard(tacticalLight.zones.z2, ZONE_DEFINITIONS.z2, false)}
-                    </div>
-
-                    <!-- 3-meter Attack Line Divider -->
-                    ${renderCourtAttackLineDivider()}
-
-                    <!-- Linia Obrony (Back Row: P5, P6, P1) -->
-                    <div class="grid grid-cols-3 gap-2 text-center">
-                        ${renderTacticalZoneCard(tacticalLight.zones.z5, ZONE_DEFINITIONS.z5, false)}
-                        ${renderTacticalZoneCard(tacticalLight.zones.z6, ZONE_DEFINITIONS.z6, false)}
-                        ${renderTacticalZoneCard(tacticalLight.zones.z1, ZONE_DEFINITIONS.z1, false)}
-                    </div>
-
-                    <!-- Libero / 7th Player Slot -->
-                    ${renderTacticalLiberoBanner(tacticalLight.libero, false, light.length)}
-
-                    <!-- Light Team Header -->
-                    <div class="flex items-center justify-between px-2 py-1 flex-wrap gap-1">
-                        <div class="flex items-center gap-2 cursor-pointer group" onclick="${isAdmin ? `editTeamNamePrompt('light')` : ''}" title="${isAdmin ? 'Kliknij, aby zmienić nazwę drużyny' : ''}">
-                            <span id="courtLightTitle" class="text-xs font-black text-amber-300 uppercase tracking-wider bg-slate-950/90 px-2.5 py-1 rounded-xl border border-amber-700/80 flex items-center gap-1.5 group-hover:border-amber-500 transition">
-                                <span>⬜</span>
-                                <span>${escapeHtml(lightName)}</span>
-                                ${isAdmin ? '<span class="text-[10px] text-amber-500 group-hover:text-amber-300">✏️</span>' : ''}
-                            </span>
-                        </div>
-                        <div class="flex items-center gap-1.5">
-                            <span class="text-[10px] font-bold text-amber-400 bg-slate-950/80 border border-slate-800 px-2 py-0.5 rounded-lg" title="Średnia ocena drużyny">★ ${lightAvg}</span>
-                            <span class="text-[10px] font-mono font-bold text-amber-400 bg-slate-950/80 border border-slate-800 px-2 py-0.5 rounded-lg">${light.length}/7</span>
-                        </div>
-                    </div>
-                `;
-                courtLightHalf.innerHTML = lightHalfHtml;
-            }
+            // 4. Render Matchday Card (Karta meczowa & zapowiedĹş na Messengera)
+            renderMatchdayCard(dark, light, currentMatch);
 
             // 5. Update Balance indicator (Styl Apple)
             if (balanceInd) {
@@ -7105,6 +8192,483 @@ function initFirebaseSync() {
                     balanceInd.innerHTML = `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 font-bold text-[11px] shadow-sm"><span>⏳</span><span>Dobieranie składów: ${totalAssigned}/${mainSquad.length} (${dark.length} vs ${light.length})</span></span>`;
                 }
             }
+        }
+
+                // ================= MATCHDAY CARD (ZAPOWIEDŹ MECZOWA) =================
+        let matchdayFactIdx = 0;
+
+        function getMatchdayInitials(name) {
+            if (!name || typeof name !== 'string') return "?";
+            const parts = name.trim().split(/\s+/);
+            if (parts.length >= 2) {
+                return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+            }
+            return parts[0].slice(0, 2).toUpperCase();
+        }
+
+        function getMatchdayFactsList(dark, light, currentMatch) {
+            let darkWinsMonth = 0, lightWinsMonth = 0;
+            let darkWinsSeason = 0, lightWinsSeason = 0;
+
+            const currentMonthName = AppState.currentMonth || "Październik";
+            const months = AppState.months || {};
+
+            for (const mName of Object.keys(months)) {
+                const matches = months[mName]?.matches || [];
+                for (const m of matches) {
+                    if (!m || m.isCancelled || !m.score) continue;
+                    let darkWon = false, lightWon = false, isScoreValid = false;
+
+                    if (typeof m.score === 'object' && m.score.dark !== undefined && m.score.light !== undefined) {
+                        isScoreValid = true;
+                        if (m.score.dark > m.score.light) darkWon = true;
+                        else if (m.score.light > m.score.dark) lightWon = true;
+                    } else if (typeof m.score === 'string') {
+                        const matchScoreMatch = m.score.match(/\s(\d+)\s*:\s*(\d+)\s/);
+                        if (matchScoreMatch) {
+                            const sA = parseInt(matchScoreMatch[1], 10);
+                            const sB = parseInt(matchScoreMatch[2], 10);
+                            if (!isNaN(sA) && !isNaN(sB) && sA !== sB) {
+                                isScoreValid = true;
+                                if (sA > sB) darkWon = true;
+                                else if (sB > sA) lightWon = true;
+                            }
+                        }
+                    }
+
+                    if (isScoreValid) {
+                        if (darkWon) {
+                            darkWinsSeason++;
+                            if (mName.toLowerCase().includes(currentMonthName.toLowerCase())) darkWinsMonth++;
+                        } else if (lightWon) {
+                            lightWinsSeason++;
+                            if (mName.toLowerCase().includes(currentMonthName.toLowerCase())) lightWinsMonth++;
+                        }
+                    }
+                }
+            }
+
+            const monthTotal = darkWinsMonth + lightWinsMonth || 1;
+            const monthDarkPct = Math.round((darkWinsMonth / monthTotal) * 100);
+
+            const seasonTotal = darkWinsSeason + lightWinsSeason || 1;
+            const seasonDarkPct = Math.round((darkWinsSeason / seasonTotal) * 100);
+
+            // Obliczamy faktyczną liczbę rozegranych meczów w sezonie dla każdego gracza
+            const todayStr = (typeof getLocalDateKey === 'function') ? getLocalDateKey() : new Date().toISOString().slice(0, 10);
+            function getPlayerTotalMatches(p) {
+                if (!p) return 0;
+                const base = (AppState.base_games && AppState.base_games[p]) || 0;
+                let played = 0;
+                Object.keys(months).forEach(mName => {
+                    const mList = months[mName]?.matches || [];
+                    mList.forEach(m => {
+                        if (!m || m.isCancelled) return;
+                        const isHeld = (typeof isMatchHeld === 'function') ? isMatchHeld(m, todayStr) : (Boolean(m.score) || (m.date && m.date <= todayStr));
+                        if (!isHeld) return;
+                        const squad = (typeof getMatchPlayingSquad === 'function') ? getMatchPlayingSquad(m) : (m.attendees || []).slice(0, 14);
+                        if (squad.includes(p)) {
+                            played++;
+                        }
+                    });
+                });
+                return base + played;
+            }
+
+            function getLeader(teamPlayers) {
+                if (!teamPlayers || teamPlayers.length === 0) return { name: 'Zawodnicy', matches: 0 };
+                let best = { name: teamPlayers[0], matches: getPlayerTotalMatches(teamPlayers[0]) };
+                teamPlayers.forEach(p => {
+                    const mCount = getPlayerTotalMatches(p);
+                    if (mCount > best.matches) {
+                        best = { name: p, matches: mCount };
+                    }
+                });
+                return best;
+            }
+
+            const darkLeader = getLeader(dark);
+            const lightLeader = getLeader(light);
+
+            let topDuo = null;
+            try {
+                const adv = (typeof calculateAdvancedMatchStats === 'function') ? calculateAdvancedMatchStats() : null;
+                const duoStats = adv?.duoStats || {};
+                const checkTeamPairs = (teamList) => {
+                    if (!teamList || teamList.length < 2) return;
+                    for (let i = 0; i < teamList.length; i++) {
+                        for (let j = i + 1; j < teamList.length; j++) {
+                            const pA = teamList[i];
+                            const pB = teamList[j];
+                            const key = pA < pB ? `${pA}|||${pB}` : `${pB}|||${pA}`;
+                            const st = duoStats[key];
+                            if (st && st.together >= 2) {
+                                const winPct = Math.round((st.wins / st.together) * 100);
+                                if (!topDuo || st.together > topDuo.together || (st.together === topDuo.together && winPct > topDuo.winPct)) {
+                                    topDuo = { p1: st.p1, p2: st.p2, together: st.together, wins: st.wins, winPct };
+                                }
+                            }
+                        }
+                    }
+                };
+                checkTeamPairs(dark);
+                checkTeamPairs(light);
+            } catch(e) {}
+
+            const facts = [
+                {
+                    category: `STAWKA W ${currentMonthName.toUpperCase()}`,
+                    text: `Bilans w tym miesiącu: Ciemni wygrali ${darkWinsMonth} z ${monthTotal} meczów (${monthDarkPct}%). Czy Jaśni doprowadzą dziś do remisu w miesiącu?`,
+                    darkLabel: `Ciemni: ${darkWinsMonth}W (${monthDarkPct}%)`,
+                    lightLabel: `Jaśni: ${lightWinsMonth}W (${100 - monthDarkPct}%)`,
+                    pct: monthDarkPct,
+                    theme: 'month'
+                }
+            ];
+
+            if (darkLeader.matches > 0 && lightLeader.matches > 0) {
+                const totalM = darkLeader.matches + lightLeader.matches;
+                const darkPct = Math.round((darkLeader.matches / totalM) * 100);
+                facts.push({
+                    category: `STARCIE LIDERÓW OBECNOŚCI`,
+                    text: `Pojedynek filarów ligi: ${darkLeader.name} (${darkLeader.matches} meczów) staje dziś naprzeciwko ${lightLeader.name} (${lightLeader.matches} meczów)!`,
+                    darkLabel: `${darkLeader.name.split(' ')[0]}: ${darkLeader.matches}M (${darkPct}%)`,
+                    lightLabel: `${lightLeader.name.split(' ')[0]}: ${lightLeader.matches}M (${100 - darkPct}%)`,
+                    pct: darkPct,
+                    theme: 'leaders'
+                });
+            }
+
+            if (topDuo && topDuo.together >= 2) {
+                const duoLosses = Math.max(0, topDuo.together - topDuo.wins);
+                facts.push({
+                    category: `CHEMIA W ZESPOLE (DUET)`,
+                    text: `Najbardziej zgrany duet w składzie: ${topDuo.p1} i ${topDuo.p2} rozegrali razem już ${topDuo.together} spotkań, notując ${topDuo.winPct}% zwycięstw!`,
+                    darkLabel: `Wygrane: ${topDuo.wins} (${topDuo.winPct}%)`,
+                    lightLabel: `Porażki: ${duoLosses}`,
+                    pct: topDuo.winPct,
+                    theme: 'duo'
+                });
+            }
+
+            // Statystyka tie-breaków
+            let tieBreakMatches = 0;
+            let totalFinishedMatches = 0;
+            for (const mName of Object.keys(months)) {
+                const matches = months[mName]?.matches || [];
+                for (const m of matches) {
+                    if (!m || m.isCancelled || !m.score) continue;
+                    if (typeof m.score === 'string') {
+                        const matchScoreMatch = m.score.match(/\s(\d+)\s*:\s*(\d+)\s/);
+                        if (matchScoreMatch) {
+                            totalFinishedMatches++;
+                            const sA = parseInt(matchScoreMatch[1], 10);
+                            const sB = parseInt(matchScoreMatch[2], 10);
+                            if ((sA === 2 && sB === 1) || (sA === 1 && sB === 2) || (sA === 3 && sB === 2) || (sA === 2 && sB === 3)) {
+                                tieBreakMatches++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (totalFinishedMatches >= 3 && tieBreakMatches > 0) {
+                const tbPct = Math.round((tieBreakMatches / totalFinishedMatches) * 100);
+                facts.push({
+                    category: `WALKA DO SAMEGO KOŃCA`,
+                    text: `Aż ${tieBreakMatches} z dotychczasowych ${totalFinishedMatches} meczów sezonu (${tbPct}%) rozstrzygało się dopiero w decydującym secie!`,
+                    darkLabel: `Tie-breaki: ${tieBreakMatches} (${tbPct}%)`,
+                    lightLabel: `Pozostałe: ${totalFinishedMatches - tieBreakMatches}`,
+                    pct: tbPct,
+                    theme: 'month'
+                });
+            }
+
+            facts.push({
+                category: `BILANS CAŁEGO SEZONU 2026`,
+                text: `W całym sezonie 2026: Ciemni mają ${darkWinsSeason} wygranych (${seasonDarkPct}%), Jaśni ${lightWinsSeason} wygranych (${100 - seasonDarkPct}%). Wyrównana rywalizacja!`,
+                darkLabel: `Ciemni: ${darkWinsSeason}W`,
+                lightLabel: `Jaśni: ${lightWinsSeason}W`,
+                pct: seasonDarkPct,
+                theme: 'season'
+            });
+
+            return facts;
+        }
+
+        function renderMatchdayFact(dark, light, currentMatch) {
+            const factCat = document.getElementById('matchdayFactCategory');
+            const factBadge = document.getElementById('matchdayFactBadge');
+            const factText = document.getElementById('matchdayFactText');
+            const factVisual = document.getElementById('matchdayFactVisual');
+            if (!factText || !factVisual) return;
+
+            const facts = getMatchdayFactsList(dark, light, currentMatch);
+            const idx = matchdayFactIdx % facts.length;
+            const f = facts[idx];
+
+            if (factCat) factCat.textContent = f.category;
+            if (factBadge) factBadge.textContent = `${idx + 1} / ${facts.length}`;
+            factText.textContent = f.text;
+
+            const leftPct = f.pct;
+            const rightPct = 100 - f.pct;
+
+            if (f.theme === 'duo') {
+                factVisual.innerHTML = `
+                    <div class="h-2 w-full rounded-full overflow-hidden flex matchday-progress-bg">
+                        <div class="matchday-progress-emerald h-full transition-all duration-300" style="width: ${leftPct}%"></div>
+                        <div class="matchday-progress-slate h-full transition-all duration-300" style="width: ${rightPct}%"></div>
+                    </div>
+                    <div class="flex justify-between text-[8.5px] font-mono mt-1">
+                        <span class="matchday-stat-left-emerald">${escapeHtml(f.darkLabel)}</span>
+                        <span class="matchday-stat-right-slate">${escapeHtml(f.lightLabel)}</span>
+                    </div>
+                `;
+            } else {
+                factVisual.innerHTML = `
+                    <div class="h-2 w-full rounded-full overflow-hidden flex matchday-progress-bg">
+                        <div class="matchday-progress-sky h-full transition-all duration-300" style="width: ${leftPct}%"></div>
+                        <div class="matchday-progress-amber h-full transition-all duration-300" style="width: ${rightPct}%"></div>
+                    </div>
+                    <div class="flex justify-between text-[8.5px] font-mono mt-1">
+                        <span class="matchday-stat-left-sky">${escapeHtml(f.darkLabel)}</span>
+                        <span class="matchday-stat-right-amber">${escapeHtml(f.lightLabel)}</span>
+                    </div>
+                `;
+            }
+        }
+
+        function cycleMatchdayStatFact() {
+            matchdayFactIdx++;
+            const monthData = AppState.months[AppState.currentMonth];
+            const currentMatch = monthData?.matches[AppState.currentMatchIndex];
+            const teams = currentMatch ? ensureMatchTeamsObject(currentMatch) : { dark: [], light: [] };
+            renderMatchdayFact(teams.dark, teams.light, currentMatch);
+        }
+
+        function swapMatchTeamsColors() {
+            const monthData = AppState.months[AppState.currentMonth];
+            const currentMatch = monthData?.matches[AppState.currentMatchIndex];
+            if (!currentMatch) return;
+
+            const teams = ensureMatchTeamsObject(currentMatch);
+            const tempDark = [...(teams.dark || [])];
+            teams.dark = [...(teams.light || [])];
+            teams.light = tempDark;
+
+            if (isAdmin && typeof saveData === 'function') {
+                saveData();
+            }
+            renderTeamsTab();
+            showToast("Zamieniono kolory drużyn! 🔄");
+        }
+
+        function downloadMatchdayBlob(blob) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            const today = new Date().toISOString().slice(0, 10);
+            a.href = url;
+            a.download = `karta-meczowa-${today}.png`;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 1000);
+        }
+
+        async function ensureHtml2CanvasLoaded() {
+            if (typeof html2canvas !== 'undefined') return true;
+            try {
+                await new Promise((resolve, reject) => {
+                    const s = document.createElement('script');
+                    s.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+                    s.onload = resolve;
+                    s.onerror = reject;
+                    document.head.appendChild(s);
+                });
+                return true;
+            } catch (e) {
+                console.error("Failed to load html2canvas:", e);
+                return false;
+            }
+        }
+
+        async function copyMatchdayImage() {
+            const card = document.getElementById('matchdayCard');
+            if (!card) return;
+
+            const loaded = await ensureHtml2CanvasLoaded();
+            if (!loaded) {
+                showToast("Błąd ładowania generatora grafiki.");
+                return;
+            }
+
+            showToast("Przygotowuję dociętą grafikę... 📸");
+
+            try {
+                const canvas = await html2canvas(card, {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: null,
+                    logging: false
+                });
+
+                canvas.toBlob(async (blob) => {
+                    if (!blob) {
+                        showToast("Nie udało się utworzyć obrazu.");
+                        return;
+                    }
+
+                    let copied = false;
+                    if (navigator.clipboard && window.ClipboardItem && navigator.clipboard.write) {
+                        try {
+                            await navigator.clipboard.write([
+                                new ClipboardItem({ 'image/png': blob })
+                            ]);
+                            copied = true;
+                            showToast("Skopiowano grafikę do schowka! 📸 (Wklej Ctrl+V na Messengera)");
+                        } catch (err) {
+                            console.warn("ClipboardItem write failed, fallback to download:", err);
+                        }
+                    }
+
+                    if (!copied) {
+                        downloadMatchdayBlob(blob);
+                        showToast("Pobrano dociętą grafikę karty meczowej! 🖼️");
+                    }
+                }, 'image/png');
+            } catch (err) {
+                console.error("Błąd renderowania karty do grafiki:", err);
+                showToast("Wystąpił błąd podczas generowania grafiki.");
+            }
+        }
+
+        async function downloadMatchdayImage() {
+            const card = document.getElementById('matchdayCard');
+            if (!card) return;
+
+            const loaded = await ensureHtml2CanvasLoaded();
+            if (!loaded) {
+                showToast("Błąd ładowania generatora grafiki.");
+                return;
+            }
+
+            showToast("Generuję plik graficzny... 🖼️");
+
+            try {
+                const canvas = await html2canvas(card, {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: null,
+                    logging: false
+                });
+
+                canvas.toBlob((blob) => {
+                    if (!blob) {
+                        showToast("Nie udało się utworzyć pliku.");
+                        return;
+                    }
+                    downloadMatchdayBlob(blob);
+                    showToast("Pobrano grafikę karty meczowej! 🖼️");
+                }, 'image/png');
+            } catch (err) {
+                console.error("Błąd pobierania grafiki:", err);
+                showToast("Wystąpił błąd podczas pobierania grafiki.");
+            }
+        }
+
+        function renderMatchdayCard(dark, light, currentMatch) {
+            const dateEl = document.getElementById('matchdayDateText');
+            const numEl = document.getElementById('matchdayMatchNumberText');
+            const groupTitleEl = document.getElementById('matchdayCardGroupName');
+            const darkTitleEl = document.getElementById('matchdayDarkTitle');
+            const lightTitleEl = document.getElementById('matchdayLightTitle');
+            const darkGrid = document.getElementById('matchdayDarkGrid');
+            const lightGrid = document.getElementById('matchdayLightGrid');
+
+            if (groupTitleEl) {
+                groupTitleEl.textContent = AppState.groupName || "AKS Laurowa";
+            }
+            if (dateEl && currentMatch) {
+                dateEl.textContent = currentMatch.date || "";
+            }
+            if (numEl) {
+                const mIdx = (AppState.currentMatchIndex !== undefined) ? AppState.currentMatchIndex + 1 : 16;
+                numEl.textContent = `Mecz #${mIdx} • Sezon 2026`;
+            }
+
+            const teams = currentMatch ? (currentMatch.teams || {}) : {};
+            const darkName = teams.darkName || "DRUŻYNA CIEMNA";
+            const lightName = teams.lightName || "DRUŻYNA JASNA";
+            if (darkTitleEl) darkTitleEl.textContent = darkName.toUpperCase();
+            if (lightTitleEl) lightTitleEl.textContent = lightName.toUpperCase();
+
+            // Render Dark Team Chips (2 kolumny) - CIEMNE kafelki z białym tekstem
+            if (darkGrid) {
+                let darkHtml = "";
+                const displaySlots = Math.max(6, dark.length);
+                for (let i = 0; i < displaySlots; i++) {
+                    if (i < dark.length) {
+                        const p = dark[i];
+                        const isMe = (p === loggedPlayer);
+                        darkHtml += `
+                            <div class="player-chip-dark rounded-xl px-2.5 py-2 flex items-center gap-2 ${isMe ? 'ring-2 ring-sky-400' : ''}">
+                                <div class="player-avatar w-6 h-6 rounded-full flex items-center justify-center text-[9.5px] font-bold shrink-0">
+                                    ${getMatchdayInitials(p)}
+                                </div>
+                                <span class="player-name text-[11.5px] truncate" title="${escapeHtml(p)}">${escapeHtml(p)}</span>
+                            </div>
+                        `;
+                    } else {
+                        darkHtml += `
+                            <div class="player-chip-dark-empty rounded-xl px-2.5 py-2 flex items-center gap-2 border border-dashed">
+                                <div class="w-6 h-6 rounded-full border border-dashed border-slate-700 flex items-center justify-center text-[9px] shrink-0">
+                                    #${i+1}
+                                </div>
+                                <span class="text-[11px] italic">Wolne miejsce</span>
+                            </div>
+                        `;
+                    }
+                }
+                darkGrid.innerHTML = darkHtml;
+            }
+
+            // Render Light Team Chips (2 kolumny) - BIAŁE kafelki z ciemnym tekstem
+            if (lightGrid) {
+                let lightHtml = "";
+                const displaySlots = Math.max(6, light.length);
+                for (let i = 0; i < displaySlots; i++) {
+                    if (i < light.length) {
+                        const p = light[i];
+                        const isMe = (p === loggedPlayer);
+                        lightHtml += `
+                            <div class="player-chip-light rounded-xl px-2.5 py-2 flex items-center gap-2 ${isMe ? 'ring-2 ring-sky-500' : ''}">
+                                <div class="player-avatar w-6 h-6 rounded-full flex items-center justify-center text-[9.5px] font-bold shrink-0">
+                                    ${getMatchdayInitials(p)}
+                                </div>
+                                <span class="player-name text-[11.5px] truncate" title="${escapeHtml(p)}">${escapeHtml(p)}</span>
+                            </div>
+                        `;
+                    } else {
+                        lightHtml += `
+                            <div class="player-chip-light-empty rounded-xl px-2.5 py-2 flex items-center gap-2 border border-dashed">
+                                <div class="w-6 h-6 rounded-full border border-dashed border-slate-400 flex items-center justify-center text-[9px] shrink-0">
+                                    #${i+1}
+                                </div>
+                                <span class="text-[11px] italic">Wolne miejsce</span>
+                            </div>
+                        `;
+                    }
+                }
+                lightGrid.innerHTML = lightHtml;
+            }
+
+            // Render Ciekawostka Statystyczna
+            renderMatchdayFact(dark, light, currentMatch);
         }
 
         function editTeamNamePrompt(teamKey) {
@@ -7481,16 +9045,16 @@ function initFirebaseSync() {
                         <summary class="p-2.5 sm:p-3 flex items-center justify-between cursor-pointer list-none select-none hover:bg-slate-900 transition">
                             <span class="flex items-center gap-1.5 text-xs font-bold text-amber-300">
                                 <span>✨</span>
-                                <span>Wyróżnienia za akcje meczu</span>
+                                <span>Wyróżnienia za akcje &amp; Fair Play</span>
                                 <span class="text-[9.5px] text-slate-400 font-normal lowercase">(opcjonalne)</span>
                             </span>
                             <div class="flex items-center gap-1.5 text-slate-400">
-                                <span id="dedAwardsCounterBadge" class="text-[9.5px] font-bold text-amber-300 bg-amber-950/80 border border-amber-800/60 px-1.5 py-0.2 rounded-md hidden">0/5 wybrane</span>
+                                <span id="dedAwardsCounterBadge" class="text-[9.5px] font-bold text-amber-300 bg-amber-950/80 border border-amber-800/60 px-1.5 py-0.2 rounded-md hidden">0/6 wybrane</span>
                                 <span class="text-xs text-amber-400 transform group-open:rotate-180 transition-transform duration-200">▼</span>
                             </div>
                         </summary>
                         <div class="p-3 pt-0 border-t border-slate-800/60 space-y-2">
-                            <p class="text-[10px] text-slate-400 pt-1.5">Wybierz zawodników, którzy wyróżnili się konkretną akcją (lub pomiń):</p>
+                            <p class="text-[10px] text-slate-400 pt-1.5">Wybierz zawodników, którzy wyróżnili się konkretną akcją lub postawą Fair Play (lub pomiń):</p>
                             <div class="grid grid-cols-2 gap-2 text-left text-xs">
                                 <div>
                                     <label for="dedVoteAwardBlock" class="block text-[10px] font-bold text-slate-300 mb-0.5 leading-tight">🧱 Czapa (blok):</label>
@@ -7516,9 +9080,15 @@ function initFirebaseSync() {
                                         <option value="">-- Pomiń --</option>
                                     </select>
                                 </div>
-                                <div class="col-span-2 sm:col-span-1">
+                                <div>
                                     <label for="dedVoteAwardSetter" class="block text-[10px] font-bold text-slate-300 mb-0.5 leading-tight">🎯 Magik (rozegranie):</label>
                                     <select id="dedVoteAwardSetter" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-2.5 py-2 focus:outline-none focus:border-amber-500 cursor-pointer">
+                                        <option value="">-- Pomiń --</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="dedVoteAwardFairPlay" class="block text-[10px] font-bold text-emerald-300 mb-0.5 leading-tight">🤝 Fair Play (Czysta Gra):</label>
+                                    <select id="dedVoteAwardFairPlay" class="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-white rounded-xl px-2.5 py-2 focus:outline-none focus:border-emerald-500 cursor-pointer">
                                         <option value="">-- Pomiń --</option>
                                     </select>
                                 </div>
@@ -7667,6 +9237,7 @@ function initFirebaseSync() {
             const defenseNominee = document.getElementById('dedVoteAwardDefense')?.value?.trim() || '';
             const serveNominee = document.getElementById('dedVoteAwardServe')?.value?.trim() || '';
             const setterNominee = document.getElementById('dedVoteAwardSetter')?.value?.trim() || '';
+            const fairplayNominee = document.getElementById('dedVoteAwardFairPlay')?.value?.trim() || '';
 
             if (!voter) return alert("Wybierz siebie z listy obecnych graczy!");
             if (!nominee) return alert("Wybierz zawodnika, na którego oddajesz głos na ogólne MTV!");
@@ -7747,7 +9318,8 @@ function initFirebaseSync() {
                     spike: (spikeNominee && spikeNominee !== voter && attendeesList.includes(spikeNominee)) ? spikeNominee : '',
                     defense: (defenseNominee && defenseNominee !== voter && attendeesList.includes(defenseNominee)) ? defenseNominee : '',
                     serve: (serveNominee && serveNominee !== voter && attendeesList.includes(serveNominee)) ? serveNominee : '',
-                    setter: (setterNominee && setterNominee !== voter && attendeesList.includes(setterNominee)) ? setterNominee : ''
+                    setter: (setterNominee && setterNominee !== voter && attendeesList.includes(setterNominee)) ? setterNominee : '',
+                    fairplay: (fairplayNominee && fairplayNominee !== voter && attendeesList.includes(fairplayNominee)) ? fairplayNominee : ''
                 };
 
                 attendeesCount = attendeesList.length;
@@ -8330,6 +9902,7 @@ function initFirebaseSync() {
             const defenseNominee = document.getElementById('voteAwardDefense')?.value?.trim() || '';
             const serveNominee = document.getElementById('voteAwardServe')?.value?.trim() || '';
             const setterNominee = document.getElementById('voteAwardSetter')?.value?.trim() || '';
+            const fairplayNominee = document.getElementById('voteAwardFairPlay')?.value?.trim() || '';
 
             const monthData = AppState.months[AppState.currentMonth];
             const currentMatch = monthData?.matches[AppState.currentMatchIndex];
@@ -8428,7 +10001,8 @@ function initFirebaseSync() {
                     spike: (spikeNominee && spikeNominee !== voter && attendeesList.includes(spikeNominee)) ? spikeNominee : '',
                     defense: (defenseNominee && defenseNominee !== voter && attendeesList.includes(defenseNominee)) ? defenseNominee : '',
                     serve: (serveNominee && serveNominee !== voter && attendeesList.includes(serveNominee)) ? serveNominee : '',
-                    setter: (setterNominee && setterNominee !== voter && attendeesList.includes(setterNominee)) ? setterNominee : ''
+                    setter: (setterNominee && setterNominee !== voter && attendeesList.includes(setterNominee)) ? setterNominee : '',
+                    fairplay: (fairplayNominee && fairplayNominee !== voter && attendeesList.includes(fairplayNominee)) ? fairplayNominee : ''
                 };
 
                 attendeesCount = attendeesList.length;
@@ -8699,7 +10273,7 @@ function initFirebaseSync() {
                 const pct = totalVotes > 0 ? Math.round((maxV / totalVotes) * 100) : 0;
                 const isArchivedMvpActive = (archivedActiveCategory === 'mvp');
                 mvpHtml = `
-                    <div onclick="setArchivedActiveCategory('mvp', '${escapeHtml(targetMatch.date)}')" class="cursor-pointer ${isArchivedMvpActive ? 'bg-gradient-to-r from-amber-500/20 via-amber-950/40 to-slate-900 border-2 border-amber-400 ring-1 ring-amber-400/50' : 'bg-gradient-to-r from-amber-500/15 via-amber-950/30 to-slate-900 border border-amber-500/50 hover:border-amber-400'} rounded-2xl p-2.5 shadow-md space-y-1.5 transition">
+                    <div onclick="setArchivedActiveCategory('mvp', '${escapeHtml(targetMatch.date)}')" class="match-modal-mvp-banner cursor-pointer ${isArchivedMvpActive ? 'bg-gradient-to-r from-amber-500/20 via-amber-950/40 to-slate-900 border-2 border-amber-400 ring-1 ring-amber-400/50' : 'bg-gradient-to-r from-amber-500/15 via-amber-950/30 to-slate-900 border border-amber-500/50 hover:border-amber-400'} rounded-2xl p-2.5 shadow-md space-y-1.5 transition">
                         <div class="flex items-center justify-between gap-2">
                             <div class="flex items-center gap-2 min-w-0">
                                 ${getPlayerAvatarHtml(mvpWinner, 'sm')}
@@ -8742,7 +10316,7 @@ function initFirebaseSync() {
             if (mvpWomenWinner) {
                 const pctW = totalWomenVotes > 0 ? Math.round((maxWomenV / totalWomenVotes) * 100) : 0;
                 mvpWomenHtml = `
-                    <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWomenWinner)});" title="Dotknij, aby zobaczyć profil gracza" class="cursor-pointer bg-gradient-to-r from-pink-500/20 via-pink-950/30 to-slate-900 border border-pink-500/50 hover:border-pink-400 rounded-2xl p-2.5 shadow-md transition active:scale-95">
+                    <div onclick="closeArchivedMatchModal(); openPlayerCardModal(${toInlineArgument(mvpWomenWinner)});" title="Dotknij, aby zobaczyć profil gracza" class="match-modal-women-mvp-banner cursor-pointer bg-gradient-to-r from-pink-500/20 via-pink-950/30 to-slate-900 border border-pink-500/50 hover:border-pink-400 rounded-2xl p-2.5 shadow-md transition active:scale-95">
                         <div class="flex items-center justify-between gap-2">
                             <div class="flex items-center gap-2 min-w-0">
                                 ${getPlayerAvatarHtml(mvpWomenWinner, 'sm')}
@@ -9183,7 +10757,7 @@ function initFirebaseSync() {
                 if (mvpWinners.length > 0) {
                     const isExAequo = mvpWinners.length > 1;
                     mvpBannerHtml = `
-                        <div class="bg-gradient-to-r from-amber-500/15 via-amber-950/30 to-slate-950 border border-amber-500/30 rounded-2xl px-3 py-2 flex items-center justify-between gap-2 shadow-sm">
+                        <div class="match-card-mvp-banner bg-gradient-to-r from-amber-500/15 via-amber-950/30 to-slate-950 border border-amber-500/30 rounded-2xl px-3 py-2 flex items-center justify-between gap-2 shadow-sm">
                             <div class="flex items-center gap-2 min-w-0 flex-1">
                                 <span class="text-base shrink-0">👑</span>
                                 <div class="min-w-0 flex-1">
@@ -10070,7 +11644,10 @@ function initFirebaseSync() {
 
             // Update Subtitle
             const subEl = document.getElementById('billingMonthSubtitle');
-            if (subEl) subEl.innerText = `Miesiąc: ${AppState.currentMonth} (20 zł / gierka)`;
+            if (subEl) {
+                const cleanMonth = (AppState.currentMonth || '').replace(/\s*\d{4}$/, '');
+                subEl.innerText = `MiesiÄ…c: ${cleanMonth} (20 zĹ‚ / gierka)`;
+            }
 
             // Update Mode Buttons
             const matchBtn = document.getElementById('billingModeMatchBtn');
@@ -10471,10 +12048,25 @@ function initFirebaseSync() {
             if (totalGames >= 12) badges.push({ icon: "🏅", title: `Weteran: ${totalGames} rozegranych gier` });
             if (baseGames === 0 && attendedMatches >= 3) badges.push({ icon: "🚀", title: "Świeża Krew: Nowy gracz z min. 3 grami" });
 
-            // 4. KATEGORIA ZAANGAŻOWANIE
+            // 4. KATEGORIA ZAANGAŻOWANIE & FAIR PLAY
             if (matchesWithVoting >= 3 && (votesCast / matchesWithVoting) >= 0.7) {
                 badges.push({ icon: "🎖️", title: "Aktywny Sędzia: Głosuje w min. 70% swoich gier" });
             }
+
+            let fairPlayWins = 0;
+            Object.keys(AppState.months || {}).forEach(mName => {
+                const matches = AppState.months[mName]?.matches || [];
+                matches.forEach(m => {
+                    if (isMvpVotingFinished(m) && m.specialVotes && typeof m.specialVotes === 'object') {
+                        const aw = getMatchSpecialAwardWinners(m);
+                        if (aw.fairplay && aw.fairplay.winners && aw.fairplay.winners.includes(playerName)) {
+                            fairPlayWins++;
+                        }
+                    }
+                });
+            });
+            if (fairPlayWins === 1) badges.push({ icon: "🤝", title: "Czysta Gra: 1x Nagroda Fair Play meczu" });
+            if (fairPlayWins >= 2) badges.push({ icon: "🤝", title: `Wzór Fair Play: ${fairPlayWins}x Nagroda Fair Play meczu` });
 
             const attendancePercent = totalAvailableSeasonMatches > 0 ? Math.round((attendedMatches / totalAvailableSeasonMatches) * 100) : 0;
 
@@ -10871,7 +12463,9 @@ function initFirebaseSync() {
                         { key: 'spike', icon: '🔨', name: 'Gwóźdź' },
                         { key: 'defense', icon: '🐟', name: 'Obrona' },
                         { key: 'serve', icon: '🌪️', name: 'Serwis' },
-                        { key: 'setter', icon: '🎯', name: 'Rozegranie' }
+                        { key: 'setter', icon: '🎯', name: 'Rozegranie' },
+                    { key: 'fairplay', icon: '🤝', name: 'Fair Play' },
+                        { key: 'fairplay', icon: '🤝', name: 'Fair Play' }
                     ];
                     catMeta.forEach(c => {
                         const w = pAwards[c.key]?.wins || 0;
@@ -10926,6 +12520,18 @@ function initFirebaseSync() {
                             </div>
                         `;
                     }).join('');
+                }
+            }
+
+                        currentCardPlayerName = playerName;
+            const fpAdminBox = document.getElementById('playerCardFairPlayAdmin');
+            const fpCountEl = document.getElementById('playerCardFairPlayCount');
+            if (fpAdminBox) {
+                if (isAdmin) {
+                    fpAdminBox.classList.remove('hidden');
+                    if (fpCountEl) fpCountEl.innerText = (AppState.fair_play && AppState.fair_play[playerName]) || 0;
+                } else {
+                    fpAdminBox.classList.add('hidden');
                 }
             }
 
@@ -11016,10 +12622,14 @@ function initFirebaseSync() {
                 { id: prefix === 'ded' ? 'dedVoteAwardSpike' : 'voteAwardSpike', key: 'spike' },
                 { id: prefix === 'ded' ? 'dedVoteAwardDefense' : 'voteAwardDefense', key: 'defense' },
                 { id: prefix === 'ded' ? 'dedVoteAwardServe' : 'voteAwardServe', key: 'serve' },
-                { id: prefix === 'ded' ? 'dedVoteAwardSetter' : 'voteAwardSetter', key: 'setter' }
+                { id: prefix === 'ded' ? 'dedVoteAwardSetter' : 'voteAwardSetter', key: 'setter' },
+                { id: prefix === 'ded' ? 'dedVoteAwardFairPlay' : 'voteAwardFairPlay', key: 'fairplay' }
             ];
 
             let selectedCount = 0;
+            const badgeId = prefix === 'ded' ? 'dedAwardsCounterBadge' : 'awardsCounterBadge';
+            const badgeEl = document.getElementById(badgeId);
+
             awards.forEach(a => {
                 const select = document.getElementById(a.id);
                 if (!select) return;
@@ -11029,15 +12639,28 @@ function initFirebaseSync() {
                 select.innerHTML = `<option value="">-- Pomiń --</option>` + availableCandidates.map(p => {
                     return `<option value="${escapeHtml(p)}" ${p === currentVal ? 'selected' : ''}>${escapeHtml(p)}</option>`;
                 }).join('');
+                select.onchange = () => {
+                    let c = 0;
+                    awards.forEach(x => {
+                        const s = document.getElementById(x.id);
+                        if (s && s.value) c++;
+                    });
+                    if (badgeEl) {
+                        if (c > 0) {
+                            badgeEl.innerText = `${c}/6 wybrane`;
+                            badgeEl.classList.remove('hidden');
+                        } else {
+                            badgeEl.classList.add('hidden');
+                        }
+                    }
+                };
             });
 
-            const badgeId = prefix === 'ded' ? 'dedAwardsCounterBadge' : 'awardsCounterBadge';
-            const badgeEl = document.getElementById(badgeId);
             const detailsId = prefix === 'ded' ? 'dedAwardsDetails' : 'awardsDetails';
             const detailsEl = document.getElementById(detailsId);
             if (badgeEl) {
                 if (selectedCount > 0) {
-                    badgeEl.innerText = `${selectedCount}/5 wybrane`;
+                    badgeEl.innerText = `${selectedCount}/6 wybrane`;
                     badgeEl.classList.remove('hidden');
                 } else {
                     badgeEl.classList.add('hidden');
@@ -11055,25 +12678,29 @@ function initFirebaseSync() {
                 spike: { winners: [], maxVotes: 0 },
                 defense: { winners: [], maxVotes: 0 },
                 serve: { winners: [], maxVotes: 0 },
-                setter: { winners: [], maxVotes: 0 }
+                setter: { winners: [], maxVotes: 0 },
+                fairplay: { winners: [], maxVotes: 0 }
             };
 
             if (!match || !match.specialVotes || typeof match.specialVotes !== 'object') {
                 return result;
             }
 
-            const tallies = { block: {}, spike: {}, defense: {}, serve: {}, setter: {} };
+            const tallies = { block: {}, spike: {}, defense: {}, serve: {}, setter: {}, fairplay: {} };
             attendees.forEach(p => {
                 tallies.block[p] = 0;
                 tallies.spike[p] = 0;
                 tallies.defense[p] = 0;
                 tallies.serve[p] = 0;
                 tallies.setter[p] = 0;
+                tallies.fairplay[p] = 0;
             });
+
+            const specCats = ['block', 'spike', 'defense', 'serve', 'setter', 'fairplay'];
 
             Object.entries(match.specialVotes).forEach(([voter, vObj]) => {
                 if (!attendees.includes(voter) || !vObj || typeof vObj !== 'object') return;
-                ['block', 'spike', 'defense', 'serve', 'setter'].forEach(cat => {
+                specCats.forEach(cat => {
                     const cand = vObj[cat];
                     if (cand && cand !== voter && attendees.includes(cand)) {
                         tallies[cat][cand] = (tallies[cat][cand] || 0) + 1;
@@ -11081,7 +12708,7 @@ function initFirebaseSync() {
                 });
             });
 
-            ['block', 'spike', 'defense', 'serve', 'setter'].forEach(cat => {
+            specCats.forEach(cat => {
                 let maxV = 0;
                 Object.entries(tallies[cat]).forEach(([_, count]) => {
                     if (count > maxV) maxV = count;
@@ -11141,7 +12768,8 @@ function initFirebaseSync() {
                 { key: 'spike', title: 'Gwóźdź Meczu (Atak)', icon: '🔨', short: 'Gwóźdź' },
                 { key: 'defense', title: 'Obrona Życia (Obrona)', icon: '🐟', short: 'Obrona' },
                 { key: 'serve', title: 'Serwis Turbo (Zagrywka)', icon: '🌪️', short: 'Serwis' },
-                { key: 'setter', title: 'Magik Rozegrania (Rozegranie)', icon: '🎯', short: 'Rozegr.' }
+                { key: 'setter', title: 'Magik Rozegrania (Rozegranie)', icon: '🎯', short: 'Rozegr.' },
+                { key: 'fairplay', title: 'Nagroda Fair Play (Czysta Gra)', icon: '🤝', short: 'Fair Play' }
             ];
 
             const currentCatMeta = cats.find(c => c.key === activeCat) || cats[0];
@@ -11149,18 +12777,17 @@ function initFirebaseSync() {
                 ? `toggleArchivedVotersViewMode('${escapeHtml(match.date)}')` 
                 : `toggleMvpVotersViewMode()`;
 
-            const gridColsClass = cats.length === 7 ? 'grid-cols-7' : (cats.length === 6 ? 'grid-cols-6' : 'grid-cols-5');
-
             const tabsHtml = `
-                <div class="grid ${gridColsClass} gap-1 p-0.5 bg-slate-900 border border-slate-800/80 rounded-xl text-center">
+                <div class="flex items-center gap-1 overflow-x-auto no-scrollbar p-1 bg-slate-900 border border-slate-800/80 rounded-xl">
                     ${cats.map(c => {
                         const isActive = (c.key === currentCatMeta.key);
                         const onclickStr = isArchived 
                             ? `setArchivedActiveCategory('${c.key}', '${escapeHtml(match.date)}')` 
                             : `setMvpActiveCategory('${c.key}')`;
                         return `
-                            <button type="button" onclick="${onclickStr}" class="py-1 px-0.5 rounded-lg text-[9.5px] sm:text-[10px] font-black transition cursor-pointer ${isActive ? 'bg-amber-500 text-slate-950 shadow-sm' : 'text-slate-400 hover:text-white'}">
-                                <span class="block text-xs">${c.icon}</span> ${c.short}
+                            <button type="button" onclick="${onclickStr}" class="py-1 px-2.5 rounded-lg text-[10px] font-black transition cursor-pointer shrink-0 flex items-center gap-1 ${isActive ? 'bg-amber-500 text-slate-950 shadow-sm' : 'text-slate-400 hover:text-white bg-slate-950/60'}">
+                                <span class="text-xs">${c.icon}</span>
+                                <span>${c.short}</span>
                             </button>
                         `;
                     }).join('')}
@@ -11184,7 +12811,8 @@ function initFirebaseSync() {
                                 <div class="whitespace-normal break-words">🔨 Gwóźdź: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.spike || '—')}</span></div>
                                 <div class="whitespace-normal break-words">🐟 Obrona: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.defense || '—')}</span></div>
                                 <div class="whitespace-normal break-words">🌪️ Serwis: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.serve || '—')}</span></div>
-                                <div class="whitespace-normal break-words col-span-2 sm:col-span-1">🎯 Rozegranie: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.setter || '—')}</span></div>
+                                <div class="whitespace-normal break-words">🎯 Rozegranie: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.setter || '—')}</span></div>
+                                <div class="whitespace-normal break-words text-emerald-300">🤝 Fair Play: <span class="text-slate-200 font-semibold">${formatPlayerNameHtml(s.fairplay || '—')}</span></div>
                             </div>
                         </div>
                     `;
@@ -11305,7 +12933,8 @@ function initFirebaseSync() {
                 { key: 'spike', title: 'Gwóźdź Meczu', icon: '🔨' },
                 { key: 'defense', title: 'Obrona Życia', icon: '🐟' },
                 { key: 'serve', title: 'Serwis Turbo', icon: '🌪️' },
-                { key: 'setter', title: 'Magik Rozegrania', icon: '🎯' }
+                { key: 'setter', title: 'Magik Rozegrania', icon: '🎯' },
+                { key: 'fairplay', title: 'Fair Play', icon: '🤝' }
             ];
 
             const hasAny = catMeta.some(c => aw[c.key]?.winners?.length > 0);
@@ -11327,7 +12956,7 @@ function initFirebaseSync() {
                             <span class="text-[8.5px] text-slate-400 font-semibold bg-slate-950 border border-slate-800 px-1.5 py-0.2 rounded">Dotknij kafelka, by poznać głosy</span>
                         </div>
                         <div class="grid grid-cols-2 gap-1.5">
-                            ${catMeta.map((c, idx) => {
+                            ${catMeta.map((c) => {
                                 const info = aw[c.key];
                                 const winCount = info?.winners?.length || 0;
                                 const winStr = winCount > 0 ? info.winners.map(w => escapeHtml(w)).join(' & ') : '—';
@@ -11336,9 +12965,8 @@ function initFirebaseSync() {
                                 const onclickStr = isArchived 
                                     ? `setArchivedActiveCategory('${c.key}', '${escapeHtml(match.date)}')` 
                                     : `setMvpActiveCategory('${c.key}')`;
-                                const spanClass = (idx === 4) ? 'col-span-2 sm:col-span-1' : '';
                                 return `
-                                    <div onclick="${onclickStr}" class="award-card cursor-pointer ${isActive ? 'bg-amber-950/40 border-amber-400 ring-1 ring-amber-400/50' : 'bg-slate-950/80 hover:bg-slate-800/80 border-slate-800/80'} border p-1.5 rounded-xl flex flex-col justify-between transition active:scale-95 shadow-sm ${spanClass}">
+                                    <div onclick="${onclickStr}" class="award-card cursor-pointer ${isActive ? 'bg-amber-950/40 border-amber-400 ring-1 ring-amber-400/50' : 'bg-slate-950/80 hover:bg-slate-800/80 border-slate-800/80'} border p-1.5 rounded-xl flex flex-col justify-between transition active:scale-95 shadow-sm">
                                         <div class="flex items-center justify-between gap-1 text-[9px] text-slate-400 font-bold">
                                             <span class="whitespace-nowrap">${c.icon} ${c.title}</span>
                                             ${voteStr ? `<span class="text-amber-400 font-mono shrink-0 whitespace-nowrap">${voteStr}</span>` : ''}
@@ -11368,7 +12996,7 @@ function initFirebaseSync() {
                         </div>
                     ` : `
                         <div class="grid grid-cols-2 gap-1.5 sm:gap-2">
-                            ${catMeta.map((c, idx) => {
+                            ${catMeta.map((c) => {
                                 const info = aw[c.key];
                                 const winCount = info?.winners?.length || 0;
                                 const voteStr = (info && info.maxVotes > 0) ? pluralizeVotes(info.maxVotes) : '';
@@ -11376,7 +13004,6 @@ function initFirebaseSync() {
                                 const onclickStr = isArchived 
                                     ? `setArchivedActiveCategory('${c.key}', '${escapeHtml(match.date)}')` 
                                     : `setMvpActiveCategory('${c.key}')`;
-                                const spanClass = (idx === 4) ? 'col-span-2 sm:col-span-1' : '';
 
                                 let winnersHtml = '<div class="text-xs font-black text-slate-500 leading-tight">Brak nominacji</div>';
                                 if (winCount === 1) {
@@ -11399,7 +13026,7 @@ function initFirebaseSync() {
                                 }
 
                                 return `
-                                    <div onclick="${onclickStr}" class="award-card cursor-pointer ${isActive ? 'bg-amber-950/30 border-2 border-amber-400/80 ring-1 ring-amber-400/30 shadow-sm' : 'bg-slate-900/90 hover:bg-slate-800/80 border border-slate-800'} p-2 rounded-xl flex flex-col justify-between min-h-[50px] space-y-1 transition active:scale-95 ${spanClass}">
+                                    <div onclick="${onclickStr}" class="award-card cursor-pointer ${isActive ? 'bg-amber-950/30 border-2 border-amber-400/80 ring-1 ring-amber-400/30 shadow-sm' : 'bg-slate-900/90 hover:bg-slate-800/80 border border-slate-800'} p-2 rounded-xl flex flex-col justify-between min-h-[50px] space-y-1 transition active:scale-95">
                                         <div class="flex items-center justify-between gap-1">
                                             <span class="text-[10px] font-bold text-slate-400 flex items-center gap-1">
                                                 <span>${c.icon}</span> <span class="leading-tight">${c.title}</span>
@@ -11417,13 +13044,14 @@ function initFirebaseSync() {
         }
 
         function calculateSeasonSpecialAwards(state = AppState) {
-            const cats = ['block', 'spike', 'defense', 'serve', 'setter'];
+            const cats = ['block', 'spike', 'defense', 'serve', 'setter', 'fairplay'];
             const catLabels = {
                 block: { m: "Król Bloków", f: "Królowa Bloków", icon: "🧱" },
                 spike: { m: "Król Ataku", f: "Królowa Ataku", icon: "🔨" },
                 defense: { m: "Król Obron", f: "Królowa Obron", icon: "🐟" },
                 serve: { m: "Serwis Turbo", f: "Serwis Turbo", icon: "🚀" },
-                setter: { m: "Magik Rozegrania", f: "Magiczka Rozegrania", icon: "🎯" }
+                setter: { m: "Magik Rozegrania", f: "Magiczka Rozegrania", icon: "🎯" },
+                fairplay: { m: "Dżentelmen Parkietu", f: "Dama Parkietu", icon: "🤝" }
             };
 
             const defaultResult = {
@@ -11432,7 +13060,8 @@ function initFirebaseSync() {
                     spike: { title: "Król Ataku", leadersStr: "-", wins: 0, votes: 0, isTied: false },
                     defense: { title: "Król Obron", leadersStr: "-", wins: 0, votes: 0, isTied: false },
                     serve: { title: "Serwis Turbo", leadersStr: "-", wins: 0, votes: 0, isTied: false },
-                    setter: { title: "Magik Rozegrania", leadersStr: "-", wins: 0, votes: 0, isTied: false }
+                    setter: { title: "Magik Rozegrania", leadersStr: "-", wins: 0, votes: 0, isTied: false },
+                    fairplay: { title: "Dżentelmen Parkietu", leadersStr: "-", wins: 0, votes: 0, isTied: false }
                 },
                 playerStats: {}
             };
@@ -11448,6 +13077,7 @@ function initFirebaseSync() {
                         defense: { wins: 0, votes: 0 },
                         serve: { wins: 0, votes: 0 },
                         setter: { wins: 0, votes: 0 },
+                        fairplay: { wins: 0, votes: 0 },
                         totalWins: 0,
                         totalVotes: 0,
                         titles: []
@@ -11460,7 +13090,7 @@ function initFirebaseSync() {
                         if (!isMvpVotingFinished(m) || !m.specialVotes || typeof m.specialVotes !== 'object') return;
                         const attendees = getMatchPlayingSquad(m);
 
-                        const matchTallies = { block: {}, spike: {}, defense: {}, serve: {}, setter: {} };
+                        const matchTallies = { block: {}, spike: {}, defense: {}, serve: {}, setter: {}, fairplay: {} };
                         attendees.forEach(p => {
                             cats.forEach(c => { matchTallies[c][p] = 0; });
                         });
@@ -11478,6 +13108,7 @@ function initFirebaseSync() {
                                             defense: { wins: 0, votes: 0 },
                                             serve: { wins: 0, votes: 0 },
                                             setter: { wins: 0, votes: 0 },
+                                            fairplay: { wins: 0, votes: 0 },
                                             totalWins: 0,
                                             totalVotes: 0,
                                             titles: []
@@ -11502,6 +13133,7 @@ function initFirebaseSync() {
                                                 defense: { wins: 0, votes: 0 },
                                                 serve: { wins: 0, votes: 0 },
                                                 setter: { wins: 0, votes: 0 },
+                                                fairplay: { wins: 0, votes: 0 },
                                                 totalWins: 0,
                                                 totalVotes: 0,
                                                 titles: []
@@ -12712,7 +14344,8 @@ function initFirebaseSync() {
                     { key: 'spike', icon: '🔨', name: 'Gwóźdź' },
                     { key: 'defense', icon: '🐟', name: 'Obrona' },
                     { key: 'serve', icon: '🌪️', name: 'Serwis' },
-                    { key: 'setter', icon: '🎯', name: 'Rozegranie' }
+                    { key: 'setter', icon: '🎯', name: 'Rozegranie' },
+                    { key: 'fairplay', icon: '🤝', name: 'Fair Play' }
                 ];
                 catMeta.forEach(c => {
                     const w = myAwards[c.key]?.wins || 0;
@@ -12754,13 +14387,13 @@ function initFirebaseSync() {
 
             const currentThemeId = localStorage.getItem('siatka_app_theme') || 'haaland-dark';
             const themeNames = {
-                'haaland-dark': { name: 'Błękit Ciemny (Haaland)', icon: '❄️🌙' },
-                'haaland-light': { name: 'Błękit Jasny (Haaland)', icon: '❄️☀️' },
-                'mercurial-dark': { name: 'Róż Ciemny (Mercurial)', icon: '👟🌙' },
-                'mercurial-light': { name: 'Róż Jasny (Mercurial)', icon: '👟☀️' },
-                'classic': { name: 'Klasyczny (Oryginał)', icon: '🏐' }
+                'haaland-dark': { name: 'Błękit Ciemny', icon: '🌙' },
+                'haaland-light': { name: 'Błękit Jasny', icon: '☀️' },
+                'mercurial-dark': { name: 'Róż Ciemny', icon: '🌙' },
+                'mercurial-light': { name: 'Róż Jasny', icon: '☀️' },
+                'classic': { name: 'Klasyczny', icon: '🏐' }
             };
-            const activeThemeInfo = themeNames[currentThemeId] || { name: 'Błękit Ciemny (Haaland)', icon: '❄️🌙' };
+            const activeThemeInfo = themeNames[currentThemeId] || { name: 'Błękit Ciemny', icon: '🌙' };
 
             container.innerHTML = `
                 <!-- Section Header -->
@@ -12802,7 +14435,7 @@ function initFirebaseSync() {
                     </div>
 
                     ${needsMvpVote ? `
-                        <div class="bg-gradient-to-r from-amber-500/20 via-amber-950/40 to-slate-900 border-2 border-amber-500/60 rounded-2xl p-3 sm:p-3.5 flex items-center justify-between gap-3 shadow-lg shadow-amber-500/10 animate-pulse flex-wrap">
+                        <div class="profile-vote-alert-banner bg-gradient-to-r from-amber-500/20 via-amber-950/40 to-slate-900 border-2 border-amber-500/60 rounded-2xl p-3 sm:p-3.5 flex items-center justify-between gap-3 shadow-lg shadow-amber-500/10 animate-pulse flex-wrap">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
                                 <span class="text-2xl shrink-0">🗳️</span>
                                 <div class="min-w-0">
@@ -13729,6 +15362,15 @@ function initFirebaseSync() {
                 return;
             }
             const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('admin') || urlParams.get('admin') === '1') {
+                closeWelcomeGateModal();
+                return;
+            }
+            if (urlParams.has('guest') || urlParams.get('guest') === '1') {
+                sessionStorage.setItem('siatka_guest_mode', 'true');
+                closeWelcomeGateModal();
+                return;
+            }
             const isMvpLink = urlParams.has('mtv') || urlParams.has('mvp') || urlParams.has('vote') || urlParams.has('glosuj');
             if (isMvpLink) {
                 // Link MVP otwiera dedykowany, odizolowany panel głosowania.
